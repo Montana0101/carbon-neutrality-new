@@ -1,0 +1,170 @@
+@import '~antd/dist/antd.css';
+
+.app {
+  text-align: center;
+  height    : 100%;
+  box-sizing: border-box;
+}
+
+// 顶部导航栏
+.app-header {
+  position: absolute;
+  top     : 0rem;
+  left    : 0.3rem;
+  right   : 0.3rem;
+  display : flex;
+
+  // flex-direction: column;
+  //   align-items    : center;
+  // justify-content: space-between;
+  color              : white;
+  height             : 0.7rem;
+  z-index            : 9999;
+  box-sizing         : border-box;
+  // background-color: yellowgreen;
+
+  .header-left {
+    flex           : 2;
+    border         : 1px solid red;
+    display        : flex;
+    align-items    : center;
+    justify-content: center;
+  }
+
+  .header-right {
+    flex           : 5;
+    border         : 1px solid gray;
+    display        : flex;
+    justify-content: flex-end;
+  }
+
+
+}
+
+.app-header>img {
+  // width: 0.5rem;
+  height    : 100%;
+  transform : scale(1);
+  transition: transform 1.3s;
+}
+
+// logo动画
+.app-header>img:hover {
+  transform: scale(1.3);
+}
+
+
+
+// 内容区域
+.app>main {
+  width : 100%;
+  height: 100%;
+}
+
+// 底部区域
+footer {
+  position       : fixed;
+  bottom         : 0.3rem;
+  left           : 0.5rem;
+  right          : 0.5rem;
+  display        : flex;
+  justify-content: space-between;
+  align-items    : center;
+
+  &>span {
+    color    : rgba(111, 111, 111, 1);
+    font-size: 0.1rem;
+  }
+
+  &>div {
+    display    : flex;
+    align-items: center;
+    color      : rgba(111, 111, 111, 1);
+    font-size  : 0.1rem;
+
+    // 信标
+    &>section {
+      position: relative;
+
+      // 悬浮框
+      .active {
+        bottom : 0.2rem;
+        height : 1.3rem;
+        opacity: 1;
+      }
+
+      &>div {
+        position: absolute;
+        height  : 1.3rem;
+        right   : 0.5rem;
+        width   : 4.4rem;
+        bottom  : -1.3rem;
+        display : flex;
+        color   : white;
+        opacity : 0;
+
+        transition: bottom 0.7s ease-in, opacity 0.5s ease-in;
+
+        &>.left {
+          flex           : 3;
+          display        : flex;
+          flex-direction : column;
+          justify-content: space-evenly;
+        }
+
+        &>.right {
+          flex           : 2;
+          display        : flex;
+          flex-direction : column;
+          justify-content: space-evenly;
+        }
+
+        .item {
+          display        : flex;
+          justify-content: flex-start;
+        }
+      }
+    }
+  }
+}
+
+
+footer ul {
+  display: flex;
+}
+
+footer ul li {
+  margin-left   : 0.1rem;
+  display       : flex;
+  flex-direction: column;
+  position      : relative;
+}
+
+footer ul .icon {
+  width: 0.2rem;
+}
+
+// 二维码
+footer ul .qr {
+  position  : absolute;
+  width     : 0.7rem;
+  height    : 0.7rem;
+  bottom    : 0.5rem;
+  opacity   : 0;
+  transition: all 0.3s ease-in;
+}
+
+footer ul .qrOn {
+  bottom : 0.25rem;
+  opacity: 1;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

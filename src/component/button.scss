@@ -1,0 +1,39 @@
+.navigate_button {
+    border    : 2px solid white;
+    margin-top: 0.2rem;
+    padding   : 0.1rem 0.3rem;
+    font-size : 0.12rem;
+    position  : relative;
+    z-index: 999;
+    color:white;
+}
+
+
+.navigate_button:hover {
+    color:black;
+    z-index: 99999;
+}
+
+
+.navigate_button::after {
+    content            : " ";
+    position           : absolute;
+    display            : flex;
+    justify-content    : center;
+    align-items        : center;
+    bottom             : 0;
+    top                : 0.32rem;
+    left               : 0;
+    right              : 0;
+    background-color   : #D6D6D600;
+    transition         : all 1.6s ease-in-out;
+    z-index: -11;
+}
+
+.navigate_button:hover::after {
+    content            : " ";
+    color              : white;
+    top                : 0;
+    background-color   : #D6D6D6;
+    z-index: -1;
+}
