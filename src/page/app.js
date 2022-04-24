@@ -41,6 +41,7 @@ const imgs = [
   }
 ]
 
+const titles=["首页",'科学研究','新闻中心','关于我们','加入我们','双碳资料','大事件']
 
 function App() {
   const [inx, setInx] = useState(-1)
@@ -48,10 +49,8 @@ function App() {
   return (
     <div className="app">
       <header className="app-header">
-
-
         <section className='header-left'>
-          <img src={logo} alt="" style={{ height: '90%', marginRight: "0.1rem" }} />
+          <img src={logo} alt="" style={{ height: '80%', marginRight: "0.1rem" }} />
           <div style={{
             height: "70%", display: "flex", flexDirection: "column", justifyContent: 'center',
             alignItems: 'flex-start', boxSizing: "border-box",
@@ -66,26 +65,37 @@ function App() {
           </div>
         </section>
         <section className='header-right'>
-          <div style={{ height: "50%", background: "red",display:"flex",justifyContent:'flex-end',
-          alignItems:"center" }}>
-            <Input placeholder="Basic usage" />
-            <SearchOutlined />
-            <Button type="link" block>
+          <div style={{
+            height: "50%", display: "flex", justifyContent: 'flex-end',
+            alignItems: "center",padding:'0.07rem 0',boxSizing:"border-box"
+          }}>
+            <Input placeholder="请输入企业名称" style={{width:"2rem",height:"100%"}} placeholder-style={{fontSize:"0.14rem"}}/>
+            <SearchOutlined style={{ color: "#51AA52" ,width:"0.5rem"}} />
+            <div style={{ color: "#51AA52", fontSize: "0.14rem",width:"0.5rem" }}>
               登录
-        </Button>
-            <Button type="link" block>
+            </div>
+            <div style={{ color: "#51AA52", fontSize: "0.14rem",width:"0.5rem" }}>
               注册
-    </Button>
+           </div>
           </div>
-          <ul style={{ height: "50%", background: "grey" }}></ul>
+          <ul style={{ height: "50%", background: "#51AA52",width:"100%",display:"flex",
+          justifyContent:'space-between'}}>
+            {titles.map((item)=>{
+              return (
+                <li style={{color:"white",fontWeight:"bold",height:"100%",display:"flex",flex:1,
+                 alignItems:'center',justifyContent:"center",fontSize:"0.14rem"}}>
+                  {item}
+                </li>
+              )
+            })}
+          </ul>
         </section>
       </header>
       <main>
         <Routers />
       </main>
 
-      <footer>
-        {/* <span>© 2012-2021 上海北斗卫星导航平台有限公司 版权所有</span> */}
+      {/* <footer>
         <div>
           <ul onMouseLeave={() => {
             setInx(-1)
@@ -104,7 +114,7 @@ function App() {
             }
           </ul>
         </div>
-      </footer>
+      </footer> */}
     </div>
   );
 }

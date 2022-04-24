@@ -87,7 +87,7 @@ export default function Home() {
                 // bindHandleScroll(e) // 滚轮翻页事件
             }}>
             {page()}
-            <ul className="indicate" onMouseOver={() => {
+            {/* <ul className="indicate" onMouseOver={() => {
                 setExpand(true)
             }} onMouseLeave={() => {
                 setExpand(false)
@@ -104,7 +104,7 @@ export default function Home() {
                         </li>
                     )
                 })}
-            </ul>
+            </ul> */}
         </div>
     )
 }

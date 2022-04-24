@@ -1,62 +1,154 @@
-
-
 body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-      sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    height: 100%;
-    font-size:0.16rem;
-  }
-  
-  code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-      monospace;
-  }
-  
-  html{
-    height: 100%;
-    font-size: 100px;
-    overflow-y: hidden;
-  }
-  
-  *{background-color: transparent; font-size: inherit;color: inherit;}
-  
-  body,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,dd,pre,code,form,fieldset,legend,input,
-  textarea,p,blockquote,th,td,hr,button,article,aside,details,figcaption,figure,footer,header,
-  menu,nav,section{margin: 0;padding: 0;list-style-type: none;border: none;outline: none;}
-  
-  a{text-decoration: none;color: #333; outline: 0;}
-  
-  li{list-style: none;}
-  
-  img{vertical-align: top;/*display:block;*/ border: none;}
-  
-  input{outline:none;}
-  
-  i,em{font-style: normal;}
-  
-  h1,h2,h4,h5,h6,h3,b,strong{font-weight: normal;}
-  
-  table{border-collapse: collapse;}
-  
-  .clear:after{content:"."; display: block; clear: both; height: 0; visibility: hidden;}
-  
-  .fl{float:left;}
-  
-  .fr{float:right;}
-  
-  .border{border:none!important;background: none!important;}
-  
-  main, section, nav, article, aside, header, footer, address {display: block;}
-  
-  #root{
-    height: 100%;
-  }
-  
-  ::-webkit-scrollbar {
-    width: 0px;
-  }
-  
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing : antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  height                 : 100%;
+  font-size              : 0.16rem;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+html {
+  height    : 100%;
+  font-size : 100px;
+  overflow-y: hidden;
+}
+
+* {
+  background-color: transparent;
+  font-size       : inherit;
+  color           : inherit;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+ol,
+li,
+dl,
+dt,
+dd,
+pre,
+code,
+form,
+fieldset,
+legend,
+input,
+textarea,
+p,
+blockquote,
+th,
+td,
+hr,
+button,
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+menu,
+nav,
+section {
+  margin         : 0;
+  padding        : 0;
+  list-style-type: none;
+  border         : none;
+  outline        : none;
+}
+
+a {
+  text-decoration: none;
+  color          : #333;
+  outline        : 0;
+}
+
+li {
+  list-style: none;
+}
+
+img {
+  vertical-align: top;
+  /*display     :block;*/
+  border        : none;
+}
+
+input {
+  outline: none;
+}
+
+i,
+em {
+  font-style: normal;
+}
+
+h1,
+h2,
+h4,
+h5,
+h6,
+h3,
+b,
+strong {
+  font-weight: normal;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+.clear:after {
+  content   : ".";
+  display   : block;
+  clear     : both;
+  height    : 0;
+  visibility: hidden;
+}
+
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+
+.border {
+  border    : none !important;
+  background: none !important;
+}
+
+main,
+section,
+nav,
+article,
+aside,
+header,
+footer,
+address {
+  display: block;
+}
+
+#root {
+  height: 100%;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+ul {
+  margin: 0 !important; 
+}
