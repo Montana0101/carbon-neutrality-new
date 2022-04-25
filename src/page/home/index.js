@@ -56,7 +56,7 @@ export default function Home() {
 
     // 一屏
     useEffect(()=>{
-        document.getElementsByTagName("html")[0].style.overflow="hidden"
+        // document.getElementsByTagName("html")[0].style.overflow="hidden"
     },[])
 
     const prevPage = prevPageNo.current;

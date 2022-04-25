@@ -8,7 +8,7 @@ export const NavigateButton = (props) => {
         ()=>{
             history.push(props.path)
         }
-    }>
+    } style={{color:props.color,border:`1px solid ${props.color}`}}>
         {props.content}
     </div>
 }

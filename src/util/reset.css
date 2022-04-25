@@ -17,7 +17,7 @@ code {
 html {
   height    : 100%;
   font-size : 100px;
-  overflow-y: hidden;
+  /* overflow-y: hidden; */
 }
 
 * {
@@ -151,4 +151,7 @@ address {
 
 ul {
   margin: 0 !important; 
+}
+p{
+  margin:0 !important;
 }
