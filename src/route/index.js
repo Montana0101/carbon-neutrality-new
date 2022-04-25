@@ -47,18 +47,18 @@ const Routers = (props) => {
     return (
         <Router>
             <>
-          
-                <Switch>
 
+                <Switch>
+                    <Route path="/">
+                        <Home />
+                    </Route>
                     <Route path="/news/1" exact component={NewsDetail1}>
                     </Route>
                     <Route path="/news/2" exact component={NewsDetail2}>
                     </Route>
                     <Route path="/news/3" exact component={NewsDetail3}>
                     </Route>
-                    <Route path="/">
-                        <Home />
-                    </Route>
+
                 </Switch>
             </>
         </Router>
