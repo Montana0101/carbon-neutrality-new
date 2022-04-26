@@ -3,8 +3,9 @@
     height: 100%;
     .banner_area {
         position: relative;
-        &>img{
+        img{
             height: 100%;
+            width: 100%;
         }
         .banner_explain {
             position       : absolute;

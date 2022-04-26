@@ -94,7 +94,7 @@ function App() {
             padding: "0 0.3rem", color: 'white', height: "0.8rem", alignItems: "center",
             borderLeft: CutLine, borderRight: CutLine
           }}>      快速链接
-            <IconFont type="icon-tuichu" style={{ color: "white", margin: "0 0.2rem 0 0.6rem", fontSize: "0.12rem" }} />
+            <IconFont type="icon-tuichu" style={{ color: "white", margin: "0 0.2rem 0 1.05rem", fontSize: "0.12rem" }} />
             <a href="#" style={{ fontSize: "0.12rem", textDecoration: "line", color: "white", fontWeight: "400" }}>上海新能源科技成果转化与产业促进中心</a>
           </h3>
         </div>

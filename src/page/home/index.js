@@ -36,6 +36,30 @@ const carbonData = [
   }
 ]
 
+const news = [
+  {
+    year:'2022',
+    month:'04',
+    day:"01",
+    title:" 聚焦绿色低碳在沪外企——上海市外商投资协会召开“碳中和博览会”线上推介会"
+  },{
+    year:'2021',
+    month:'12',
+    day:"17",
+    title:" 沪科〔2021〕497号关于同意成立上海碳中和技术创新联盟的批复"
+  },{
+    year:'2021',
+    month:'12',
+    day:"13",
+    title:" 上海碳中和技术创新联盟发起人会议在新能源中心召开"
+  },{
+    year:'2021',
+    month:'12',
+    day:"13",
+    title:" 中共中央 国务院关于完整准确全面贯彻新发展理念做好碳达峰碳中和工作的意见(2021年9月22日)"
+  }
+]
+
 var industry = ['化工', '能源', '钢铁', '智慧城市', '产业金融', '交通', '智能汽车', '环境检测', '科研', '碳交易']
 var timer
 
@@ -204,7 +228,7 @@ export default function Home(props) {
         }}>新闻动态</h3>
         <ul style={{ display: "flex" }}>
           {
-            new Array(4).fill('').map((item, index) => {
+            news.map((item, index) => {
               return (
                 <li style={{
                   flex: 1, height: "2.2rem", border: CutLine, padding: "0.2rem 0.3rem", display: "flex",
@@ -212,18 +236,25 @@ export default function Home(props) {
                   justifyContent: "space-between", borderRight: `${index == 3 ? CutLine : 'none'}`
                 }}>
                   <div style={{ color: 'rgba(0,0,0,0.6)', fontSize: "0.12rem", display: "flex" }}>
-                    <span>2022 年</span>
-                    <span>04 月</span>
-                    <span>01 日</span>
+                    <span>{item.year} 年</span>
+                    <span>{item.month} 月</span>
+                    <span>{item.day} 日</span>
                   </div>
                   <div style={{
                     color: ThemeColor, fontSize: "0.16rem", fontWeight: "bold", display: "flex",
-                    justifyContent: "flex-start", textAlign: "left"
+                    justifyContent: "flex-start", textAlign: "left",flex:1,
+                    padding:'0.12rem 0 0 0'
                   }}>
-                    聚焦绿色低碳在沪外企——上海市外商投资协会召开“碳中和博览会”线上推介会
+                   {item.title}
                   </div>
-                  <p style={{ width: "1.2rem", height: "0.4rem", alignSelf: "flex-end", marginTop: "0.05rem" }}>
-                    <NavigateButton content={"更多信息"} path={"/news"} color={ThemeColor} />
+                  <p style={{ width: "1.2rem", height: "0.4rem", alignSelf: "flex-end", marginTop: "0.05rem" }}
+                    onClick={()=>{
+                      if(index==0){
+                        window.open('https://mp.weixin.qq.com/s/02SNGgy2hPyIGckaF6oz3g')
+                      }
+                    
+                    }}>
+                    <NavigateButton content={"更多信息"} color={ThemeColor} path={`${index==1 && '/news'}`}/>
                   </p>
                 </li>
               )
@@ -255,7 +286,7 @@ export default function Home(props) {
                     background: `${(index == 2 || index == 1) ? '#9DD2E0' : ThemeColor}`
                   }}>
 
-                    <div style={{ color: 'white', fontSize: "0.14rem", display: "flex", fontWeight: "bold", }}>
+                    <div style={{ color: 'white', fontSize: "0.18rem", display: "flex", fontWeight: "bold", }}>
                       {item.title}
                     </div>
                     <div style={{
@@ -337,12 +368,12 @@ export default function Home(props) {
             style={{ width: "100%" }} />
         </div>
         <div style={{
-          flex: 4, borderBottom: CutLine, padding: "0.25rem 0", paddingRight: "0.5rem",
+          flex: 4, borderBottom: CutLine, padding: "0 0 0.25rem 0", paddingRight: "0.5rem",
           borderRight: CutLine
         }}>
           <h3 style={{
             display: "flex", justifyContent: "space-between", color: "#15499D", fontSize: "0.16rem",
-            fontWeight: "bold", padding: "0 0.8rem"
+            fontWeight: "bold", padding: "0 0.8rem",height:"0.5rem",alignItems:"center",marginTop:"0.1rem"
           }}>
             <span>平台资源雄厚</span>
             <span>合作伙伴强大</span>
