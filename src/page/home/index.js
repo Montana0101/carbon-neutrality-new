@@ -301,7 +301,7 @@ export default function Home(props) {
                 }}>
                   <div style={{
                     height: "50%", width: "84%", borderRadius: "0.1rem", position: "relative",
-                    background: "red", display: "flex", overflow: "hidden"
+                     display: "flex", overflow: "hidden"
                   }}>
                     <img src={AliOss + `/new_version/img/index_industry_${index + industryInx}.png`} alt=""
                       style={{ height: "100%", width: "100%" }} />

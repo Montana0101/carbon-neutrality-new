@@ -45,7 +45,7 @@ const titles=["首页",'科学研究','新闻中心','关于我们','加入我�
 
 function App() {
   const [inx, setInx] = useState(-1)
-
+  const [flag,setFlag] = useState(false)
   return (
     <div className="app">
       <header className="app-header">
@@ -67,14 +67,18 @@ function App() {
         <section className='header-right'>
           <div style={{
             height: "50%", display: "flex", justifyContent: 'flex-end',
-            alignItems: "center",padding:'0.07rem 0',boxSizing:"border-box"
+            alignItems: "center",padding:'0.07rem 0.3rem 0.07rem 0',boxSizing:"border-box"
           }}>
-            <Input placeholder="请输入企业名称" style={{width:"2rem",height:"100%"}} placeholder-style={{fontSize:"0.14rem"}}/>
-            <SearchOutlined style={{ color: "#51AA52" ,width:"0.5rem"}} />
-            <div style={{ color: "#51AA52", fontSize: "0.14rem",width:"0.5rem" }}>
+            <Input placeholder="请输入企业名称" style={{width:"2rem",padding:"border-box",display:`${
+              flag ? 'inline-block' :" none"
+            }`}}/>
+            <SearchOutlined style={{ color: "#51AA52" ,width:"0.5rem"}} onClick={()=>{
+              setFlag(!flag)
+            }}/>
+            <div style={{ color: "#51AA52", fontSize: "0.12rem",width:"0.5rem" }}>
               登录
             </div>
-            <div style={{ color: "#51AA52", fontSize: "0.14rem",width:"0.5rem" }}>
+            <div style={{ color: "#51AA52", fontSize: "0.12rem",width:"0.5rem" }}>
               注册
            </div>
           </div>
@@ -83,7 +87,7 @@ function App() {
             {titles.map((item)=>{
               return (
                 <li style={{color:"white",fontWeight:"bold",height:"100%",display:"flex",flex:1,
-                 alignItems:'center',justifyContent:"center",fontSize:"0.14rem"}}>
+                 alignItems:'center',justifyContent:"center",fontSize:"0.12rem"}}>
                   {item}
                 </li>
               )
