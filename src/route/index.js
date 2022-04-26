@@ -7,9 +7,7 @@ import {
 import { AliOss } from "../lib/const"
 
 import Home from "../page/home" // 首页 
-import NewsDetail1 from '../page/news/detail1' // 新闻详情页
-import NewsDetail2 from '../page/news/detail2' // 新闻详情页
-import NewsDetail3 from '../page/news/detail3' // 新闻详情页
+import News from '../page/news' // 新闻详情页
 
 const logo = AliOss + '/img/logo.png'
 // import logo from "../static/imgs/logo.png"
@@ -49,16 +47,13 @@ const Routers = (props) => {
             <>
 
                 <Switch>
-                    <Route path="/">
-                        <Home />
-                    </Route>
-                    <Route path="/news/1" exact component={NewsDetail1}>
-                    </Route>
-                    <Route path="/news/2" exact component={NewsDetail2}>
-                    </Route>
-                    <Route path="/news/3" exact component={NewsDetail3}>
+                  
+                    <Route path="/news" exact component={News}>
                     </Route>
 
+                    <Route path="/">
+                        <Home />
+                    </Route> 
                 </Switch>
             </>
         </Router>

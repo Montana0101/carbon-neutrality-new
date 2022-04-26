@@ -7,9 +7,6 @@ import { createFromIconfontCN } from '@ant-design/icons';
 import './index.scss'
 import 'echarts-gl';
 
-const IconFont = createFromIconfontCN({
-  scriptUrl: '//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js',
-});
 
 const contentStyle = {
   height: '5rem',
@@ -80,7 +77,7 @@ export default function Home(props) {
                   <p style={{ fontSize: "0.16rem" }}>英文缩写为STIACN</p>
                 </div>
                 <p style={{ width: "1rem", height: "0.33rem", alignSelf: "flex-end" }}>
-                  <NavigateButton content={"更多信息"} path={"/eng"} />
+                  <NavigateButton content={"更多信息"} path={"/"} />
                 </p>
               </section>
             </h3>
@@ -226,7 +223,7 @@ export default function Home(props) {
                     聚焦绿色低碳在沪外企——上海市外商投资协会召开“碳中和博览会”线上推介会
                   </div>
                   <p style={{ width: "1.2rem", height: "0.4rem", alignSelf: "flex-end", marginTop: "0.05rem" }}>
-                    <NavigateButton content={"更多信息"} path={"/eng"} color={ThemeColor} />
+                    <NavigateButton content={"更多信息"} path={"/news"} color={ThemeColor} />
                   </p>
                 </li>
               )
@@ -359,35 +356,7 @@ export default function Home(props) {
         </div>
       </div>
 
-      {/* 快速链接 */}
-      <div style={{ borderBottom: CutLine, padding: '0 0.5rem' ,borderTop:CutLine,background:ThemeColor,
-     }}>
-        <h3 style={{
-          fontSize: "0.22rem", fontWeight: "bold", display: "flex", margin: 0,
-          padding: "0 0.3rem", color: 'white', height: "0.8rem", alignItems:"center",
-          borderLeft: CutLine, borderRight: CutLine
-        }}>      快速链接
-            <IconFont type="icon-tuichu" style={{color:"white",margin:"0 0.2rem 0 0.6rem",fontSize:"0.12rem"}}/>
-            <a href="#" style={{fontSize:"0.12rem",textDecoration:"line",color:"white",fontWeight:"400"}}>上海新能源科技成果转化与产业促进中心</a>
-        </h3>
-      </div>
-
-      <div style={{ borderBottom: CutLine, padding: '0 0.5rem' ,borderTop:CutLine,
-     }}>
-        <div style={{
-          fontSize: "0.12rem", fontWeight: "400", display: "flex", margin: 0,
-          padding: "0 0.3rem", color: ThemeColor, height: "0.8rem", 
-          borderLeft: CutLine, borderRight: CutLine,alignItems:"center",
-          justifyContent:"space-between"
-        }}>      
-            <span style={{color:"rgba(0,0,0,0.6)"}}>© 2012-2022</span>
-            <span>首页</span>
-            <span>新闻中心</span>
-            <span>关于我们</span>
-            <span>加入我们</span>
-            <span>双碳资料</span>
-        </div>
-      </div>
+    
     </div>
   )
 }
