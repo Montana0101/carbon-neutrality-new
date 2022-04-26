@@ -1,10 +1,15 @@
 import { AliOss, ThemeColor, CutLine } from "../../lib/const"
 import { useEffect, useState } from "react"
-import * as echarts from 'echarts';
-import { Carousel } from 'antd';
+import { Carousel,Space } from 'antd';
 import { NavigateButton } from "../../component/button"
+import { createFromIconfontCN } from '@ant-design/icons';
+
 import './index.scss'
 import 'echarts-gl';
+
+const IconFont = createFromIconfontCN({
+  scriptUrl: '//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js',
+});
 
 const contentStyle = {
   height: '5rem',
@@ -34,6 +39,7 @@ const carbonData = [
   }
 ]
 
+var industry = ['化工', '能源', '钢铁', '智慧城市', '产业金融', '交通', '智能汽车', '环境检测', '科研', '碳交易']
 var timer
 
 // 首页首屏
@@ -279,7 +285,7 @@ export default function Home(props) {
         <h3 style={{
           fontSize: "0.22rem", fontWeight: "bold", display: "flex", margin: 0,
           color: ThemeColor, height: "1.6rem", lineHeight: "1.6rem", boxSizing: "border-box",
-          borderLeft: CutLine, borderRight: CutLine,borderBottom:CutLine,
+          borderLeft: CutLine, borderRight: CutLine, borderBottom: CutLine,
         }}>
           <span style={{
             width: "25%", display: "inline-flex", boxSizing: "border-box",
@@ -305,10 +311,9 @@ export default function Home(props) {
                       justifyContent: "center", alignItems: "center", color: "white",
                       fontSize: "0.12rem"
                     }}>
-                      交通
+                      {industry[index + industryInx - 1]}
                     </section>
                   </div>
-
                 </div>
               )
             })
@@ -327,17 +332,62 @@ export default function Home(props) {
         </h3>
       </div>
       {/* 聚焦行业 */}
-      <div style={{  padding: '0 0.5rem',display:"flex" }}>
-        <div style={{ flex:6,border:"1px solid green"
+      <div style={{ padding: '0 0.5rem', display: "flex" }}>
+        <div style={{
+          flex: 7, border: CutLine, padding: "0.1rem 0", borderTop: 'none', borderRight: "none"
         }}>
-          <img src={AliOss + `/new_version/img/logo.png`} alt=""
-                    style={{ height: "3rem", width: "100%" }} />
+          <img src={AliOss + `/new_version/img/index_companies.png`} alt=""
+            style={{ width: "100%" }} />
         </div>
-        <div style={{flex:4,border:"1px solid black"}}>
-          
+        <div style={{
+          flex: 4, borderBottom: CutLine, padding: "0.25rem 0", paddingRight: "0.5rem",
+          borderRight: CutLine
+        }}>
+          <h3 style={{
+            display: "flex", justifyContent: "space-between", color: "#15499D", fontSize: "0.16rem",
+            fontWeight: "bold", padding: "0 0.8rem"
+          }}>
+            <span>平台资源雄厚</span>
+            <span>合作伙伴强大</span>
+          </h3>
+          <section style={{
+            fontSize: "0.12rem", textAlign: "left", textIndent: "0.26rem", color: "rgba(0,0,0,0.6)",
+            borderTop: CutLine, borderBottom: CutLine, padding: "0.1rem 0"
+          }}>
+            联盟是由上海新能源科技成果转化与产业促进中心、上海社科院绿色数字化发展研究中心、上海市国资国企改革发展中心、上海市节能减排中心有限公司、上海航天技术研究院、中国科学院上海高等研究院、 中国科学院技术物理研究所、绿色技术银行、上海交通大学、同济大学、华东理工大学、华东师范大学、 上海大学、上海科技大学2060研究院、上海电力大学、宝武集团、申能集团、华能集团、华谊集团中央 研究院、上海电气集团、隧道股份、上海工业投资集团、长江三峡投资管理有限公司、上海北斗卫星导 航平台有限公司、北航天汇科技企业孵化器有限公司、上海市太阳能学会、国网上海电科院、上海电力 股份有限公司、深圳市创新投资集团有限公司等（排序不分先后）联合倡议发起，聚焦国家“碳达峰、 碳中和”目标，成立的非政府技术创新联合体。
+            </section>
         </div>
       </div>
 
+      {/* 快速链接 */}
+      <div style={{ borderBottom: CutLine, padding: '0 0.5rem' ,borderTop:CutLine,background:ThemeColor,
+     }}>
+        <h3 style={{
+          fontSize: "0.22rem", fontWeight: "bold", display: "flex", margin: 0,
+          padding: "0 0.3rem", color: 'white', height: "0.8rem", alignItems:"center",
+          borderLeft: CutLine, borderRight: CutLine
+        }}>      快速链接
+            <IconFont type="icon-tuichu" style={{color:"white",margin:"0 0.2rem 0 0.6rem",fontSize:"0.12rem"}}/>
+            <a href="#" style={{fontSize:"0.12rem",textDecoration:"line",color:"white",fontWeight:"400"}}>上海新能源科技成果转化与产业促进中心</a>
+        </h3>
+      </div>
+
+      <div style={{ borderBottom: CutLine, padding: '0 0.5rem' ,borderTop:CutLine,
+     }}>
+        <div style={{
+          fontSize: "0.12rem", fontWeight: "400", display: "flex", margin: 0,
+          padding: "0 0.3rem", color: ThemeColor, height: "0.8rem", 
+          borderLeft: CutLine, borderRight: CutLine,alignItems:"center",
+          justifyContent:"space-between"
+        }}>      
+            <span style={{color:"rgba(0,0,0,0.6)"}}>© 2012-2022</span>
+            <span>首页</span>
+            <span>新闻中心</span>
+            <span>关于我们</span>
+            <span>加入我们</span>
+            <span>双碳资料</span>
+        </div>
+      </div>
     </div>
   )
 }
