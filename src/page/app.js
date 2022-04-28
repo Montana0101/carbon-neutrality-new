@@ -42,7 +42,7 @@ function App() {
         <section className='header-right'>
           <div style={{
             height: "50%", display: "flex", justifyContent: 'flex-end',
-            alignItems: "center", padding: '0.07rem 0.35rem 0.07rem 0', boxSizing: "border-box"
+            alignItems: "center", padding: '0.07rem 0.3rem 0.07rem 0', boxSizing: "border-box"
           }}>
             <Input placeholder="请输入企业名称" style={{
               width: "2rem", padding: "border-box", display: `${flag ? 'inline-block' : " none"
@@ -59,13 +59,13 @@ function App() {
            </div>
           </div>
           <ul style={{
-            height: "50%", background: "#51AA52", width: "100%", display: "flex",
-            justifyContent: 'space-between',padding:'0 0.1rem'
+            height: "50%", width: "100%", display: "flex",
+            justifyContent: 'space-between',margin:'0 -0.1rem',zIndex:1
           }}>
             {titles.map((item) => {
               return (
                 <li style={{
-                  color: "white", fontWeight: "bold", height: "100%", display: "flex", flex: 1,
+                  color: "white", fontWeight: "bold", height: "100%", background: "#51AA52", display: "flex", flex: 1,
                   alignItems: 'center', justifyContent: "center", fontSize: "0.12rem",cursor:"pointer"
                 }} onClick={()=>{
                   if(item=='首页'){

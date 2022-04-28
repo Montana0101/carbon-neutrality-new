@@ -32,10 +32,16 @@
     display        : flex;
     flex-direction: column;
     box-sizing: border-box;
-    li:hover{
-      background-color:#51AA5250 ;
+   
+    ul {
+      li:hover{
+        background-color:#51AA5250 !important;
+        z-index: 9999;
+      }
     }
   }
+
+  
 
   .ant-input{
     &::placeholder {
