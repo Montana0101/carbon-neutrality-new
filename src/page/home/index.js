@@ -1,6 +1,6 @@
 import { AliOss, ThemeColor, CutLine } from "../../lib/const"
 import { useEffect, useState } from "react"
-import { Carousel,Space } from 'antd';
+import { Carousel, Space } from 'antd';
 import { NavigateButton } from "../../component/button"
 import { createFromIconfontCN } from '@ant-design/icons';
 
@@ -13,7 +13,7 @@ const contentStyle = {
   color: '#fff',
   lineHeight: '160px',
   textAlign: 'center',
-  background: '#364d79',
+  // background: '#364d79',
 };
 
 
@@ -38,25 +38,25 @@ const carbonData = [
 
 const news = [
   {
-    year:'2022',
-    month:'04',
-    day:"01",
-    title:" 聚焦绿色低碳在沪外企——上海市外商投资协会召开“碳中和博览会”线上推介会"
-  },{
-    year:'2021',
-    month:'12',
-    day:"17",
-    title:" 沪科〔2021〕497号关于同意成立上海碳中和技术创新联盟的批复"
-  },{
-    year:'2021',
-    month:'12',
-    day:"13",
-    title:" 上海碳中和技术创新联盟发起人会议在新能源中心召开"
-  },{
-    year:'2021',
-    month:'12',
-    day:"13",
-    title:" 中共中央 国务院关于完整准确全面贯彻新发展理念做好碳达峰碳中和工作的意见(2021年9月22日)"
+    year: '2022',
+    month: '04',
+    day: "01",
+    title: " 聚焦绿色低碳在沪外企——上海市外商投资协会召开“碳中和博览会”线上推介会"
+  }, {
+    year: '2021',
+    month: '12',
+    day: "17",
+    title: " 沪科〔2021〕497号关于同意成立上海碳中和技术创新联盟的批复"
+  }, {
+    year: '2021',
+    month: '12',
+    day: "13",
+    title: " 上海碳中和技术创新联盟发起人会议在新能源中心召开"
+  }, {
+    year: '2021',
+    month: '12',
+    day: "13",
+    title: " 中共中央 国务院关于完整准确全面贯彻新发展理念做好碳达峰碳中和工作的意见(2021年9月22日)"
   }
 ]
 
@@ -186,7 +186,7 @@ export default function Home(props) {
           {/* 第五个 */}
           <div className='banner_area'>
             <h3 style={contentStyle}>
-              <img src={AliOss + `/new_version/img/index_banner_4.png`} alt="" />
+              <img src={AliOss + `/new_version/img/index_banner_5.png`} alt="" />
               <section className='banner_explain'>
                 <p style={{ fontSize: "0.22rem", fontWeight: "bold", marginBottom: "0.1rem" }}>
                   联盟布局
@@ -242,19 +242,19 @@ export default function Home(props) {
                   </div>
                   <div style={{
                     color: ThemeColor, fontSize: "0.16rem", fontWeight: "bold", display: "flex",
-                    justifyContent: "flex-start", textAlign: "left",flex:1,
-                    padding:'0.12rem 0 0 0'
+                    justifyContent: "flex-start", textAlign: "left", flex: 1,
+                    padding: '0.12rem 0 0 0'
                   }}>
-                   {item.title}
+                    {item.title}
                   </div>
                   <p style={{ width: "1.2rem", height: "0.4rem", alignSelf: "flex-end", marginTop: "0.05rem" }}
-                    onClick={()=>{
-                      if(index==0){
+                    onClick={() => {
+                      if (index == 0) {
                         window.open('https://mp.weixin.qq.com/s/02SNGgy2hPyIGckaF6oz3g')
                       }
-                    
+
                     }}>
-                    <NavigateButton content={"更多信息"} color={ThemeColor} path={`${index==1 && '/news'}`}/>
+                    <NavigateButton content={"更多信息"} color={ThemeColor} path={`${index == 1 && '/news'}`} />
                   </p>
                 </li>
               )
@@ -314,24 +314,32 @@ export default function Home(props) {
           fontSize: "0.22rem", fontWeight: "bold", display: "flex", margin: 0,
           color: ThemeColor, height: "1.6rem", lineHeight: "1.6rem", boxSizing: "border-box",
           borderLeft: CutLine, borderRight: CutLine, borderBottom: CutLine,
+          position: "relative",overflow:"hidden"
         }}>
           <span style={{
             width: "25%", display: "inline-flex", boxSizing: "border-box",
             justifyContent: "flex-start", paddingLeft: "0.3rem",
+            zIndex:888,background:'white'
+
           }}>聚焦行业</span>
-          <section style={{ width: "75%", borderLeft: CutLine }}>
-            {new Array(5).fill('').map((item, index) => {
+          <section style={{
+            width: "150%", borderLeft: CutLine, position: "absolute",
+            left: "25%", top: 0,bottom:0,
+            display: "flex", flexWrap: "nowrap", 
+          }} className='animate'>
+            {industry.map((item, index) => {
               return (
                 <div style={{
                   display: "inline-flex", width: "20%", height: "100%",
                   justifyContent: "center", alignItems: "center",
-                  borderLeft: CutLine, borderRight: CutLine
+                  borderLeft: CutLine, borderRight: CutLine, zIndex: 999,
+
                 }}>
                   <div style={{
                     height: "50%", width: "84%", borderRadius: "0.1rem", position: "relative",
-                     display: "flex", overflow: "hidden"
+                    display: "flex", overflow: "hidden"
                   }}>
-                    <img src={AliOss + `/new_version/img/index_industry_${index + industryInx}.png`} alt=""
+                    <img src={AliOss + `/new_version/img/index_industry_${index + 1}.png`} alt=""
                       style={{ height: "100%", width: "100%" }} />
                     <section style={{
                       position: "absolute", bottom: 0, height: '0.25rem',
@@ -339,7 +347,7 @@ export default function Home(props) {
                       justifyContent: "center", alignItems: "center", color: "white",
                       fontSize: "0.12rem"
                     }}>
-                      {industry[index + industryInx - 1]}
+                      {item}
                     </section>
                   </div>
                 </div>
@@ -373,7 +381,7 @@ export default function Home(props) {
         }}>
           <h3 style={{
             display: "flex", justifyContent: "space-between", color: "#15499D", fontSize: "0.16rem",
-            fontWeight: "bold", padding: "0 0.8rem",height:"0.5rem",alignItems:"center",marginTop:"0.1rem"
+            fontWeight: "bold", padding: "0 0.8rem", height: "0.5rem", alignItems: "center", marginTop: "0.1rem"
           }}>
             <span>平台资源雄厚</span>
             <span>合作伙伴强大</span>
@@ -387,7 +395,7 @@ export default function Home(props) {
         </div>
       </div>
 
-    
+
     </div>
   )
 }

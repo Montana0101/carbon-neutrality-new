@@ -12,7 +12,7 @@
             position       : absolute;
             left           : 0.5rem;
             bottom         : 0;
-            width          : 4.2rem;
+            width          : 4.5rem;
             height         : 2.2rem;
             background     : #38BFB565;
             color          : white;
@@ -35,5 +35,20 @@
                 
             }
         }
+    }
+
+      // 跑马灯
+      .animate{
+        animation:move 7s linear infinite;
+
+    }
+}
+
+@keyframes move {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
     }
 }
