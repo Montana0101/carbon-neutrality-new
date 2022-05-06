@@ -118,15 +118,17 @@ function News(props) {
                     alignItems: "flex-start", justifyContent: "center",
                     borderLeft: CutLine, borderRight: CutLine,
                 }}>
-                    <div>
+                    <div onClick={()=>{ history.push("/news/2")}}>
                     <IconFont type="icon-tuichu" style={{ color:ThemeColor, margin: "0 0.1rem 0 0", fontSize: "0.12rem" }} />
                     <a href="#" style={{ fontSize: "0.12rem", textDecoration: "underline", color:ThemeColor, fontWeight: "400" }}>
                     上海碳中和技术创新联盟发起人会议在新能源中心召开</a>
                     </div>
-                    <div>
+                    <div onClick={()=>{history.push("/news/3")}}>
                     <IconFont type="icon-tuichu" style={{ color: ThemeColor, margin: "0 0.1rem 0 0", fontSize: "0.12rem" }} />
                     <a href="#" style={{ fontSize: "0.12rem", textDecoration: "underline", color: ThemeColor, fontWeight: "400" }}>
-                        上海新能源科技成果转化与产业促进中心</a>
+                    中共中央 国务院关于完整准确全面贯彻新发展理念做好碳达峰碳中和工作的意见 (2021年9月22日)
+
+</a>
                     </div>
                 </section>
             </div>

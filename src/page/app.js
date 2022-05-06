@@ -15,7 +15,7 @@ const IconFont = createFromIconfontCN({
 const logo = AliOss + '/img/logo.png'
 
 
-const titles = ["首页", '科学研究', '新闻中心', '关于我们', '加入我们', '双碳资料', '大事件']
+const titles = ["首页", '新闻中心','科学研究',  '双碳资料','关于我们', '加入我们']
 
 function App() {
   const [flag, setFlag] = useState(false)
@@ -66,7 +66,7 @@ function App() {
               return (
                 <li style={{
                   color: "white", fontWeight: "bold", height: "100%", background: "#51AA52", display: "flex", flex: 1,
-                  alignItems: 'center', justifyContent: "center", fontSize: "0.12rem",cursor:"pointer"
+                  alignItems: 'center', justifyContent: "center", fontSize: "0.14rem",cursor:"pointer"
                 }} onClick={()=>{
                   if(item=='首页'){
                       // history.push('/')
@@ -95,7 +95,7 @@ function App() {
             borderLeft: CutLine, borderRight: CutLine
           }}>      快速链接
             <IconFont type="icon-tuichu" style={{ color: "white", margin: "0 0.2rem 0 1.05rem", fontSize: "0.12rem" }} />
-            <a href="#" style={{ fontSize: "0.12rem", textDecoration: "line", color: "white", fontWeight: "400" }}>上海新能源科技成果转化与产业促进中心</a>
+            <a href="http://www.snec.sh.cn/" target="_blank" style={{ fontSize: "0.12rem", textDecoration: "line", color: "white", fontWeight: "400" }}>上海新能源科技成果转化与产业促进中心</a>
           </h3>
         </div>
 
