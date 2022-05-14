@@ -51,11 +51,11 @@ function NewsDetail3(props) {
                 <section style={{
                     fontSize: "0.12rem", fontWeight: "400", display: "flex", margin: 0,
                     padding: "0 0.3rem", height: "0.7rem", flexDirection: "column",
-                    alignItems: "flex-start", justifyContent: "center",
+                    alignItems: "center", justifyContent: "center",
                     borderLeft: CutLine, borderRight: CutLine
                 }}>
                     <div style={{
-                        fontSize: "0.18rem", fontWeight: "bold", color: ThemeColor
+                        fontSize: "0.18rem", fontWeight: "bold", color: '#2D2D2D'
                     }}>中共中央 国务院关于完整准确全面贯彻新发展理念做好碳达峰碳中和工作的意见
 
                     </div>

@@ -1,0 +1,62 @@
+.login {
+    input::-webkit-input-placeholder {
+        /* WebKit browsers 适配谷歌 */
+        color: #BDCADA;
+    }
+
+    input:-moz-placeholder {
+        /* Mozilla Firefox 4 to 18 适配火狐 */
+        color: #BDCADA;
+    }
+
+    input::-moz-placeholder {
+        /* Mozilla Firefox 19+ 适配火狐 */
+        color: #BDCADA;
+    }
+
+    input:-ms-input-placeholder {
+        /* Internet Explorer 10+  适配ie*/
+        color: #BDCADA;
+    }
+
+    border         : 1px solid red;
+    z-index        : 777;
+    width          :30%;
+    position       :absolute;
+    top            :24%;
+    color          :white;
+    height         :2.8rem;
+    display        :flex;
+    flex-direction :column;
+    justify-content:space-between;
+    align-items:center;
+    font-size: 0.12rem;
+
+    input,button,h3,h2,div {
+        height: 0.35rem
+    }
+
+    input {
+        background-color: white;
+        height          : 0.35rem;
+        width           : 100%;
+        font-size       : 0.12rem;
+        padding         : 0 0.1rem;
+        border-radius   : 0.05rem;
+    }
+
+    button {
+        background-color: #52AA53;
+        width           : 1.5rem;
+        border-radius   : 0.05rem;
+        font-size: 0.14rem;
+        box-shadow: 0 8px 8px 0 rgba(255,255,255,0.2), 
+    }
+
+    div {
+        a{
+            color:white;
+            text-decoration: underline;
+        }
+    }
+}

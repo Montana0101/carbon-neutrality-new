@@ -15,15 +15,21 @@ const IconFont = createFromIconfontCN({
 const logo = AliOss + '/img/logo.png'
 
 
-const titles = ["首页", '新闻中心','科学研究',  '双碳资料','关于我们', '加入我们']
+const titles = ["首页", '新闻中心','科学研究',  '双碳资讯','关于我们', '加入我们']
 
 function App() {
   const [flag, setFlag] = useState(false)
-  // const history = useHistory()
+  const [show,setShow] = useState(true)
+  
+  useEffect(()=>{
+    const href = window.location.href 
+    const flag = href.indexOf('login') != -1 || href.indexOf('register') != -1
+    setShow(!flag)
+  },[])
 
   return (
     <div className="app">
-      <header className="app-header">
+      <header className="app-header" style={{display:show?'flex':'none'}}>
         <section className='header-left'>
           <img src={logo} alt="" style={{ height: '80%', marginRight: "0.1rem" }} />
           <div style={{
@@ -51,7 +57,9 @@ function App() {
             <SearchOutlined style={{ color: "#51AA52", width: "0.5rem" }} onClick={() => {
               setFlag(!flag)
             }} />
-            <div style={{ color: "#51AA52", fontSize: "0.12rem", width: "0.5rem" }}>
+            <div style={{ color: "#51AA52", fontSize: "0.12rem", width: "0.5rem",cursor:"pointer"}} onClick={()=>{
+               window.location.href = '/login'
+            }}>
               登录
             </div>
             <div style={{ color: "#51AA52", fontSize: "0.12rem", width: "0.5rem" }}>
@@ -80,11 +88,11 @@ function App() {
           </ul>
         </section>
       </header>
-      <main>
+      <main style={{height:!show && '100%'}}>
         <Routers />
       </main>
 
-      <footer style={{margin:"0 0.3rem"}}>
+      <footer style={{margin:"0 0.3rem",display:show?'flex':'none'}}>
         {/* 快速链接 */}
         <div style={{
           borderBottom: CutLine, padding: '0 0.5rem', borderTop: CutLine, background: ThemeColor,
@@ -111,9 +119,10 @@ function App() {
             <span style={{ color: "rgba(0,0,0,0.6)" }}>© 2012-2022</span>
             <span>首页</span>
             <span>新闻中心</span>
+            <span>科学研究</span>
+            <span>双碳资讯</span>
             <span>关于我们</span>
             <span>加入我们</span>
-            <span>双碳资料</span>
           </div>
         </div>
       </footer>

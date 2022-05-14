@@ -46,11 +46,11 @@ function News(props) {
                 <section style={{
                     fontSize: "0.12rem", fontWeight: "400", display: "flex", margin: 0,
                     padding: "0 0.3rem", height: "0.7rem", flexDirection: "column",
-                    alignItems: "flex-start", justifyContent: "center",
+                    alignItems: "center", justifyContent: "center",
                     borderLeft: CutLine, borderRight: CutLine
                 }}>
                     <div style={{
-                        fontSize: "0.18rem", fontWeight: "bold", color: ThemeColor
+                        fontSize: "0.18rem", fontWeight: "bold", color: '#2D2D2D'
                     }}>沪科〔2021〕497号 关于同意成立上海碳中和技术创新联盟的批复</div>
                     <div style={{ color: "rgba(0,0,0,0.6)" }}>发布时间: 2021.12.17</div>
                 </section>

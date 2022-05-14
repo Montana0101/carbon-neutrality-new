@@ -18,7 +18,7 @@ const contentStyle = {
 
 
 
-// 双碳资料
+// 双碳资讯
 const carbonData = [
   {
     title: "什么是碳达峰和碳中和",
@@ -26,7 +26,7 @@ const carbonData = [
   },
   {
     title: "全球变暖的严重性",
-    content: '全球已识别出了9 个气候变化临界点',
+    content: '全球已识别出了9个气候变化临界点',
   }, {
     title: "各国相关政策",
     content: '为应对全球变暖问题，联合国多次召开气候变化大会',
@@ -264,12 +264,12 @@ export default function Home(props) {
       </div>
 
 
-      {/* 双碳资料 */}
+      {/* 双碳资讯 */}
       <div style={{ borderLeft: CutLine, borderRight: CutLine, height: "0.6rem", margin: '0 0.5rem' }}>
         <h3 style={{
           fontSize: "0.22rem", fontWeight: "bold", display: "flex", margin: 0,
           padding: "0 0.2rem", color: ThemeColor, height: "0.6rem", lineHeight: "0.6rem",
-        }}>双碳资料</h3>
+        }}>双碳资讯</h3>
       </div>
       <div style={{ borderTop: "1px solid rgba(0,0,0,0.1)", padding: '0 0.5rem' }} className='news_area'>
         <ul style={{ display: "flex", boxSizing: "border-box" }}>
@@ -390,7 +390,7 @@ export default function Home(props) {
             fontSize: "0.12rem", textAlign: "left", textIndent: "0.26rem", color: "rgba(0,0,0,0.6)",
             borderTop: CutLine, borderBottom: CutLine, padding: "0.1rem 0"
           }}>
-            联盟是由上海新能源科技成果转化与产业促进中心、上海社科院绿色数字化发展研究中心、上海市国资国企改革发展中心、上海市节能减排中心有限公司、上海航天技术研究院、中国科学院上海高等研究院、 中国科学院技术物理研究所、绿色技术银行、上海交通大学、同济大学、华东理工大学、华东师范大学、 上海大学、上海科技大学2060研究院、上海电力大学、宝武集团、申能集团、华能集团、华谊集团中央 研究院、上海电气集团、隧道股份、上海工业投资集团、长江三峡投资管理有限公司、上海北斗卫星导 航平台有限公司、北航天汇科技企业孵化器有限公司、上海市太阳能学会、国网上海电科院、上海电力 股份有限公司、深圳市创新投资集团有限公司等（排序不分先后）联合倡议发起，聚焦国家“碳达峰、 碳中和”目标，成立的非政府技术创新联合体。
+            联盟是由上海新能源科技成果转化与产业促进中心、上海社科院绿色数字化发展研究中心、上海市国资国企改革发展中心、上海市节能减排中心有限公司、上海航天技术研究院、中国科学院上海高等研究院、 中国科学院技术物理研究所、绿色技术银行、上海交通大学、同济大学、华东理工大学、华东师范大学、 上海大学、上海科技大学2060研究院、上海电力大学、宝武集团、申能集团、华能集团、华谊集团中央研究院、上海电气集团、隧道股份、上海工业投资集团、长江三峡投资管理有限公司、上海北斗卫星导航平台有限公司、北航天汇科技企业孵化器有限公司、上海市太阳能学会、国网上海电科院、上海电力股份有限公司、深圳市创新投资集团有限公司等（排序不分先后）联合倡议发起，聚焦国家“碳达峰、 碳中和”目标，成立的非政府技术创新联合体。
             </section>
         </div>
       </div>
