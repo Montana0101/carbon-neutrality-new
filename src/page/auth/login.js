@@ -9,8 +9,8 @@ const Login = () => {
         <div style={{ width: "100%", height: "100%", position: "relative",backgroundImage:`url(${bg})`,
         backgroundSize:"cover",backgroundRepeat:"no-repeat",display:"flex",justifyContent:"center"}}>
             <section className="login">
-                <h3 style={{color:"white",fontSize:"0.3rem",fontWeight:"bold",margin:0}}>STIACN</h3>
-                <h2 style={{color:"white",fontSize:"0.24rem",margin:0}}>上海碳中和技术创新联盟</h2>
+                <h3 style={{color:"white",fontSize:"0.34rem",fontWeight:"bold",margin:0}}>STIACN</h3>
+                <h2 style={{color:"white",fontSize:"0.22rem",margin:0}}>上海碳中和技术创新联盟</h2>
                 <input placeholder='请输入邮箱'
                     />
                 <input placeholder='6 - 16位密码，区分大小写'/>
