@@ -62,7 +62,9 @@ function App() {
             }}>
               登录
             </div>
-            <div style={{ color: "#51AA52", fontSize: "0.12rem", width: "0.5rem" }}>
+            <div style={{ color: "#51AA52", fontSize: "0.12rem", width: "0.5rem",cursor:"pointer" }}onClick={()=>{
+               window.location.href = '/register'
+            }}>
               注册
            </div>
           </div>

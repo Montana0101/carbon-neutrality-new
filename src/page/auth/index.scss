@@ -1,4 +1,4 @@
-.login {
+.login,.register {
     input::-webkit-input-placeholder {
         /* WebKit browsers 适配谷歌 */
         color: #BDCADA;
@@ -22,9 +22,8 @@
     z-index        : 777;
     width          :30%;
     position       :absolute;
-    top            :24%;
+    top            :22%;
     color          :white;
-    height         :3rem;
     display        :flex;
     flex-direction :column;
     justify-content:space-between;
@@ -59,4 +58,13 @@
             text-decoration: underline;
         }
     }
+}
+
+.login{
+    height: 3rem;
+}
+
+.register{
+    height         :4rem;
+
 }

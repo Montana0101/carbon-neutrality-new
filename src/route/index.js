@@ -8,7 +8,8 @@ import { AliOss } from "../lib/const"
 
 import Home from "../page/home" // 首页 
 import News from '../page/news' // 新闻详情页
-import Login from '../page/auth/login' // 注册和登录
+import Login from '../page/auth/login' 
+import Register from '../page/auth/register' 
 
 import NewsDetail2 from "../page/news/detail2"
 
@@ -31,18 +32,6 @@ const Routers = (props) => {
             case 0:
                 // window.location.reload();
                 return;
-            // case 1:
-            //     return "/eng";
-            // case 2:
-            //     return "/news";
-            // case 3:
-            //     return "/prod";
-            // case 4:
-            //     return "/sche";
-            // case 5:
-            //     return "/mem";
-            // case 6:
-            //     return "/about";
             default:
                 return "/";
         }
@@ -63,7 +52,7 @@ const Routers = (props) => {
                     </Route>
 
                     <Route path="/login" exact component={Login}></Route>
-
+                    <Route path="/register" exact component={Register}></Route>
                     <Route path="/">
                         <Home />
                     </Route> 
