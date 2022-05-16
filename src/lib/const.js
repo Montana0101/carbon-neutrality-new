@@ -9,3 +9,6 @@ export const ThemeColor = '#51AA52'
 
 // 分割线
 export const CutLine = '1px solid rgba(0,0,0,0.1)'
+
+// 域名
+export const ProxyUrl = 'http://58.33.170.250:8066'
