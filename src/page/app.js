@@ -1,5 +1,5 @@
 import './app.scss';
-import { Input } from 'antd'
+import { Input, Button } from 'antd'
 import Routers from "../route/index"
 import {
   SearchOutlined
@@ -21,15 +21,16 @@ function App() {
   const [flag, setFlag] = useState(false)
   const [show, setShow] = useState(true)
   const [logined, checkLogin] = useState(false)
+  const [dialog, setDialog] = useState(false)
 
   useEffect(() => {
     const href = window.location.href
-    console.log('截取下',href)
-    var flag 
-    if (href.indexOf('login') != -1 || href.indexOf('register') != -1){
-      flag = true 
-    }else{
-      flag = false 
+    console.log('截取下', href)
+    var flag
+    if (href.indexOf('login') != -1 || href.indexOf('register') != -1) {
+      flag = true
+    } else {
+      flag = false
     }
     // var flag = href.indexOf('login') != -1 || href.indexOf('register') != -1
     setShow(!flag)
@@ -76,7 +77,41 @@ function App() {
               window.location.href = '/login'
             }}>
               登录
-            </div> : <UserOutlined style={{ color: "#51AA52", fontSize: "0.14rem", width: "0.5rem", cursor: "pointer" }} />}
+            </div> : <div style={{
+                color: "#51AA52", fontSize: "0.14rem", width: "0.5rem", cursor: "pointer",
+                position: "relative"
+              }}
+                onMouseLeave={() => {
+                  setDialog(false)
+                }}
+                onMouseOver={() => {
+                  setDialog(true)
+                }}
+              >
+                <UserOutlined
+
+                />
+                {dialog && <section style={{
+                  position: "absolute",
+                  top: '0.2rem',
+                  left: '0.25rem',
+                  border: "1px solid rgba(0,0,0,0.2)",
+                  width: "0.9rem",
+                  zIndex: 777,
+                  background: "white",
+                  borderRadius: "0.02rem"
+                }} onMouseOver={() => {
+                  setDialog(true)
+                }}>
+                  <div style={{fontSize:"0.12rem",height:"0.24rem",display:"flex",color:"rgba(0,0,0,0.5)",
+                  justifyContent:"center",alignItems:"center"}}
+                    onClick={()=>{
+                      window.location.href='/admin'
+                    }}>管理员</div>
+                </section>}
+              </div>
+            }
+
             {!logined ? <div style={{ color: "#51AA52", fontSize: "0.12rem", width: "0.5rem", cursor: "pointer" }} onClick={() => {
               window.location.href = '/register'
             }}>

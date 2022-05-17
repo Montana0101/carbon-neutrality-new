@@ -10,6 +10,7 @@ import Home from "../page/home" // 首页
 import News from '../page/news' // 新闻详情页
 import Login from '../page/auth/login' 
 import Register from '../page/auth/register' 
+import Admin from '../page/user/admin'
 
 import NewsDetail2 from "../page/news/detail2"
 
@@ -53,6 +54,7 @@ const Routers = (props) => {
 
                     <Route path="/login" exact component={Login}></Route>
                     <Route path="/register" exact component={Register}></Route>
+                    <Route path="/admin" exact component={Admin}></Route>
                     <Route path="/">
                         <Home />
                     </Route> 
