@@ -23,9 +23,9 @@ const Login = () => {
                 // 登录成功
                 message.success(res.msg)
                 localStorage.setItem(
-                    'email', email
+                    'user', JSON.stringify(res.result)
                 )
-                history.push('/')
+                window.location.replace('/')
             } else {
                 message.error(res.msg)
                 return
@@ -48,7 +48,7 @@ const Login = () => {
                     onChange={e => setEmail(e.target.value)} />
                 <input placeholder='6 - 16位密码，区分大小写' type="password"
                     onChange={e => setPassword(e.target.value)} />
-                <button style={{ background: "#52AA53" }} onClick={submit}>登录</button>
+                <button style={{ background: "#52AA53",cursor:"pointer"}} onClick={submit}>登录</button>
                 <div>
                     <span>还没账户？</span>
                     <a onClick={() => {

@@ -6,7 +6,7 @@ import {
 } from '@ant-design/icons';
 import { AliOss, ThemeColor, CutLine } from "../lib/const"
 import { useEffect, useState } from "react"
-import { createFromIconfontCN } from '@ant-design/icons';
+import { createFromIconfontCN, UserOutlined } from '@ant-design/icons';
 // import {useHistory} from 'react-router-dom'
 const IconFont = createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js',
@@ -15,21 +15,36 @@ const IconFont = createFromIconfontCN({
 const logo = AliOss + '/img/logo.png'
 
 
-const titles = ["首页", '新闻中心','科学研究',  '双碳资讯','关于我们', '加入我们']
+const titles = ["首页", '新闻中心', '科学研究', '双碳资讯', '关于我们', '加入我们']
 
 function App() {
   const [flag, setFlag] = useState(false)
-  const [show,setShow] = useState(true)
-  
-  useEffect(()=>{
-    const href = window.location.href 
-    const flag = href.indexOf('login') != -1 || href.indexOf('register') != -1
+  const [show, setShow] = useState(true)
+  const [logined, checkLogin] = useState(false)
+
+  useEffect(() => {
+    const href = window.location.href
+    console.log('截取下',href)
+    var flag 
+    if (href.indexOf('login') != -1 || href.indexOf('register') != -1){
+      flag = true 
+    }else{
+      flag = false 
+    }
+    // var flag = href.indexOf('login') != -1 || href.indexOf('register') != -1
     setShow(!flag)
-  },[])
+
+    const check = localStorage.getItem('user')
+    if (check) {
+      checkLogin(true)
+    } else {
+      checkLogin(false)
+    }
+  }, [])
 
   return (
     <div className="app">
-      <header className="app-header" style={{display:show?'flex':'none'}}>
+      <header className="app-header" style={{ display: show ? 'flex' : 'none' }}>
         <section className='header-left'>
           <img src={logo} alt="" style={{ height: '80%', marginRight: "0.1rem" }} />
           <div style={{
@@ -57,30 +72,36 @@ function App() {
             <SearchOutlined style={{ color: "#51AA52", width: "0.5rem" }} onClick={() => {
               setFlag(!flag)
             }} />
-            <div style={{ color: "#51AA52", fontSize: "0.12rem", width: "0.5rem",cursor:"pointer"}} onClick={()=>{
-               window.location.href = '/login'
+            {!logined ? <div style={{ color: "#51AA52", fontSize: "0.12rem", width: "0.5rem", cursor: "pointer" }} onClick={() => {
+              window.location.href = '/login'
             }}>
               登录
-            </div>
-            <div style={{ color: "#51AA52", fontSize: "0.12rem", width: "0.5rem",cursor:"pointer" }}onClick={()=>{
-               window.location.href = '/register'
+            </div> : <UserOutlined style={{ color: "#51AA52", fontSize: "0.14rem", width: "0.5rem", cursor: "pointer" }} />}
+            {!logined ? <div style={{ color: "#51AA52", fontSize: "0.12rem", width: "0.5rem", cursor: "pointer" }} onClick={() => {
+              window.location.href = '/register'
             }}>
               注册
-           </div>
+           </div> : <div style={{ color: "#51AA52", fontSize: "0.12rem", width: "0.5rem", cursor: "pointer" }}
+                onClick={() => {
+                  localStorage.removeItem("user")
+                  checkLogin(false)
+                }}>
+                退出
+           </div>}
           </div>
           <ul style={{
             height: "50%", width: "100%", display: "flex",
-            justifyContent: 'space-between',margin:'0 -0.1rem',zIndex:1
+            justifyContent: 'space-between', margin: '0 -0.1rem', zIndex: 1
           }}>
             {titles.map((item) => {
               return (
                 <li style={{
                   color: "white", fontWeight: "bold", height: "100%", background: "#51AA52", display: "flex", flex: 1,
-                  alignItems: 'center', justifyContent: "center", fontSize: "0.14rem",cursor:"pointer"
-                }} onClick={()=>{
-                  if(item=='首页'){
-                      // history.push('/')
-                      window.location.href = '/'
+                  alignItems: 'center', justifyContent: "center", fontSize: "0.14rem", cursor: "pointer"
+                }} onClick={() => {
+                  if (item == '首页') {
+                    // history.push('/')
+                    window.location.href = '/'
                   }
                 }}>
                   {item}
@@ -90,11 +111,11 @@ function App() {
           </ul>
         </section>
       </header>
-      <main style={{height:!show && '100%'}}>
+      <main style={{ height: !show && '100%' }}>
         <Routers />
       </main>
 
-      <footer style={{margin:"0 0.3rem",display:show?'flex':'none'}}>
+      <footer style={{ margin: "0 0.3rem", display: show ? 'flex' : 'none' }}>
         {/* 快速链接 */}
         <div style={{
           borderBottom: CutLine, padding: '0 0.5rem', borderTop: CutLine, background: ThemeColor,
