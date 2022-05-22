@@ -8,6 +8,8 @@ import './index.scss'
 import 'echarts-gl';
 
 
+import stiacn_png from '../../static/imgs/stiacn.png'
+
 const contentStyle = {
   height: '5rem',
   color: '#fff',
@@ -70,7 +72,7 @@ export default function Home(props) {
   useEffect(() => {
     timer = setInterval(() => {
       var inx = industryInx + 1
-      if (inx > 6) {
+      if (inx > 4) {
         inx = 1
       }
       setInx(inx)
@@ -88,7 +90,7 @@ export default function Home(props) {
         <Carousel autoplay effect="fade">
           <div className='banner_area'>
             <h3 style={contentStyle}>
-              <img src={AliOss + `/new_version/img/index_banner_1.png`} alt="" />
+              <img src={AliOss + `/new_version_0518/index_banner_1.png`} alt="" />
               <section className='banner_explain'>
                 <p style={{ fontSize: "0.22rem", fontWeight: "bold" }}>
                   关于我们
@@ -110,7 +112,7 @@ export default function Home(props) {
           {/* 第二个 */}
           <div className='banner_area'>
             <h3 style={contentStyle}>
-              <img src={AliOss + `/new_version/img/index_banner_2.png`} alt="" />
+              <img src={AliOss + `/new_version_0518/index_banner_2.png`} alt="" />
               <section className='banner_explain'>
                 <p style={{ fontSize: "0.22rem", fontWeight: "bold" }}>
                   联盟宗旨
@@ -136,7 +138,7 @@ export default function Home(props) {
           {/* 第三个 */}
           <div className='banner_area'>
             <h3 style={contentStyle}>
-              <img src={AliOss + `/new_version/img/index_banner_3.png`} alt="" />
+              <img src={AliOss + `/new_version_0518/index_banner_3.png`} alt="" />
               <section className='banner_explain'>
                 <p style={{ fontSize: "0.22rem", fontWeight: "bold" }}>
                   联盟任务
@@ -158,81 +160,70 @@ export default function Home(props) {
               </section>
             </h3>
           </div>
-
-          {/* 第四个 */}
-          <div className='banner_area'>
-            <h3 style={contentStyle}>
-              <img src={AliOss + `/new_version/img/index_banner_4.png`} alt="" />
-              <section className='banner_explain'>
-                <p style={{ fontSize: "0.22rem", fontWeight: "bold" }}>
-                  联盟目标
-                  </p>
-                <div style={{ fontSize: "0.16rem" }}>
-                  <p style={{ display: "flex", justifyContent: "flex-start" }}>
-                    技术与产业融通、政策与资本汇集
-                  </p>
-                  <p style={{ display: "flex", justifyContent: "flex-start" }}>
-                    建成有中国特色的德国弗劳恩霍夫 (fraunhofer)组织
-                  </p>
-                  <p style={{ fontSize: "0.16rem" }}>联合产品市场推广</p>
-                </div>
-                <p style={{ width: "1rem", height: "0.33rem", alignSelf: "flex-end" }}>
-                  <NavigateButton content={"更多信息"} path={"/eng"} />
-                </p>
-              </section>
-            </h3>
-          </div>
-
-          {/* 第五个 */}
-          <div className='banner_area'>
-            <h3 style={contentStyle}>
-              <img src={AliOss + `/new_version/img/index_banner_5.png`} alt="" />
-              <section className='banner_explain'>
-                <p style={{ fontSize: "0.22rem", fontWeight: "bold", marginBottom: "0.1rem" }}>
-                  联盟布局
-                  </p>
-                <div style={{ fontSize: "0.16rem" }}>
-                  <p style={{ display: "flex", justifyContent: "flex-start", }}>
-                    以产业优化、技术创新、平台建设、宣传推广、项
-                  </p>
-                  <p style={{ display: "flex", justifyContent: "flex-start" }}>
-                    目示范为抓手，通过开展全方位、多领域、高质量
-                  </p>
-                  <p style={{ display: "flex", justifyContent: "flex-start" }}>
-                    的专业活动，形成顶级专家领衔、技术转化高效、
-                  </p>
-                  <p style={{ display: "flex", justifyContent: "flex-start" }}>
-                    空间布局合理、资本运作深入的综合性技术创新与
-                  </p>
-                  <p style={{ display: "flex", justifyContent: "flex-start" }}>
-                    产业孵化体。
-                  </p>
-                </div>
-                <p style={{ width: "1rem", height: "0.33rem", alignSelf: "flex-end", marginTop: "-0.05rem" }}>
-                  <NavigateButton content={"更多信息"} path={"/eng"} />
-                </p>
-              </section>
-            </h3>
-          </div>
         </Carousel>
       </section>
 
       {/* 分割区域 */}
       <div style={{ borderLeft: CutLine, borderRight: CutLine, height: "0.6rem", margin: '0 0.5rem' }}></div>
       {/* 新闻动态 */}
-      <div style={{ borderTop: "1px solid rgba(0,0,0,0.1)", padding: '0 0.5rem' }} className='news_area'>
+      <div style={{ borderTop: CutLine, padding: '0 0.5rem' }} className='news_area'>
         <h3 style={{
           fontSize: "0.22rem", fontWeight: "bold", display: "flex", margin: 0,
-          padding: "0 0.2rem", color: ThemeColor, height: "0.6rem", lineHeight: "0.6rem",
+          padding: "0 0.3rem", color: ThemeColor, height: "0.6rem", lineHeight: "0.6rem",
           borderLeft: CutLine, borderRight: CutLine
-        }}>新闻动态</h3>
+        }}>关于联盟</h3>
+        <section style={{ border: CutLine, display: "flex", padding: '0.3rem' }}>
+          <div style={{
+            width: "60%", display: "flex", flexDirection: "column",
+            justifyContent: "space-between",
+            fontSize: "0.12rem", paddingRight: "0.3rem", color: "rgba(0,0,0,0.77)"
+          }}>
+
+            <div style={{ textAlign: "left" }}>联盟全称为上海碳中和技术创新联盟（以下称“联盟”），
+
+            英文名称为Shanghai Technology Innovation Alliance for Carbon Neutrality，
+
+            英文缩写为STIACN。
+          </div>
+            <div style={{ textAlign: "left" }}>
+              上海碳中和技术创新联盟是以习近平新时代中国特色社会主义思想为指导，在上海市科技党委和上海市科学技术委员会的领导下，全面贯彻落实国家和上海地方“碳达峰、碳中和”战略部署，在上海市科技党委和上海市科学技术委员会的领导下，携手48家在沪中央企业、科研院（所）、高校、企事业单位、社会团体共同发起成立，通过开展全方位、多领域、高质量的专业活动，搭建产学研用金等紧密结合、创新要素集聚的技术创新平台...
+          </div>
+            <p style={{ width: "1.2rem", height: "0.4rem", alignSelf: "flex-start", marginTop: "0.05rem" }}
+              onClick={() => {
+
+              }}>
+              <NavigateButton content={"更多信息"} color={ThemeColor} path={``} />
+            </p>
+
+
+          </div>
+          <div style={{
+            flex: 1
+          }}>
+            <img src={stiacn_png} style={{ width: "100%" }} />
+          </div>
+        </section>
+      </div>
+
+
+      {/* 分割区域 */}
+      <div style={{ borderLeft: CutLine, borderBottom: "none", borderRight: CutLine, height: "0.6rem", margin: '0 0.5rem' }}>
+        <h3 style={{
+          fontSize: "0.22rem", fontWeight: "bold", display: "flex", margin: 0,
+          padding: "0 0.3rem", color: ThemeColor, height: "0.6rem", lineHeight: "0.6rem",
+          borderBottom: "none"
+        }}>联盟动态</h3>
+      </div>
+      {/* 新闻动态 */}
+      <div style={{ borderTop: CutLine, padding: '0 0.5rem' }} className='news_area'>
+
         <ul style={{ display: "flex" }}>
           {
             news.map((item, index) => {
               return (
                 <li style={{
-                  flex: 1, height: "2.2rem", border: CutLine, padding: "0.2rem 0.3rem", display: "flex",
-                  flexDirection: 'column', boxSizing: "border-box",
+                  flex: 1, height: "2.2rem", border: CutLine, borderTop: "none", padding: "0.3rem 0.3rem", display: "flex",
+                  flexDirection: 'column', boxSizing: "border-box",borderBottom:"none",
                   justifyContent: "space-between", borderRight: `${index == 3 ? CutLine : 'none'}`
                 }}>
                   <div style={{ color: 'rgba(0,0,0,0.6)', fontSize: "0.12rem", display: "flex" }}>
@@ -264,68 +255,25 @@ export default function Home(props) {
       </div>
 
 
-      {/* 双碳资讯 */}
-      <div style={{ borderLeft: CutLine, borderRight: CutLine, height: "0.6rem", margin: '0 0.5rem' }}>
-        <h3 style={{
-          fontSize: "0.22rem", fontWeight: "bold", display: "flex", margin: 0,
-          padding: "0 0.2rem", color: ThemeColor, height: "0.6rem", lineHeight: "0.6rem",
-        }}>双碳资讯</h3>
-      </div>
-      <div style={{ borderTop: "1px solid rgba(0,0,0,0.1)", padding: '0 0.5rem' }} className='news_area'>
-        <ul style={{ display: "flex", boxSizing: "border-box" }}>
-          {
-            carbonData.map((item, index) => {
-              return (
-                <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
-                  <img src={AliOss + `/new_version/img/index_doc_${index + 1}.png`} alt=""
-                    style={{ height: "3rem", width: "100%" }} />
-                  <li style={{
-                    flex: 1, height: "2rem", padding: "0.2rem 0.3rem", display: "flex",
-                    flexDirection: 'column', boxSizing: "border-box", borderTop: "none",
-                    justifyContent: "space-between", borderRight: `${index != 3 ? '1px solid white' : 'none'}`,
-                    background: `${(index == 2 || index == 1) ? '#9DD2E0' : ThemeColor}`
-                  }}>
-
-                    <div style={{ color: 'white', fontSize: "0.18rem", display: "flex", fontWeight: "bold", }}>
-                      {item.title}
-                    </div>
-                    <div style={{
-                      color: 'white', fontSize: "0.12rem", display: "flex",
-                      justifyContent: "flex-start", textAlign: "left", height: "1rem", margin: "0.1rem 0"
-                    }}>
-                      {item.content}
-                    </div>
-                    <p style={{ width: "1.2rem", height: "0.4rem", alignSelf: "flex-start" }}>
-                      <NavigateButton content={"更多信息"} path={"/eng"} color={'white'} />
-                    </p>
-                  </li>
-                </div>
-              )
-            })
-          }
-        </ul>
-      </div>
-
       {/* 分割区域 */}
-      <div style={{ borderLeft: CutLine, borderRight: CutLine, height: "0.6rem", margin: '0 0.5rem' }}></div>
+
       {/* 聚焦行业 */}
       <div style={{ borderTop: CutLine, padding: '0 0.5rem' }} className='news_area'>
         <h3 style={{
           fontSize: "0.22rem", fontWeight: "bold", display: "flex", margin: 0,
+          padding: "0 0.3rem", color: ThemeColor, height: "0.6rem", lineHeight: "0.6rem",
+          border: CutLine, borderTop: "none"
+        }}>业务范围</h3>
+        <h3 style={{
+          fontSize: "0.22rem", fontWeight: "bold", display: "flex", margin: 0,
           color: ThemeColor, height: "1.6rem", lineHeight: "1.6rem", boxSizing: "border-box",
           borderLeft: CutLine, borderRight: CutLine, borderBottom: CutLine,
-          position: "relative",overflow:"hidden"
+          position: "relative", overflow: "hidden"
         }}>
-          <span style={{
-            width: "25%", display: "inline-flex", boxSizing: "border-box",
-            justifyContent: "flex-start", paddingLeft: "0.3rem",
-            zIndex:888,background:'white'
-
-          }}>聚焦行业</span>
           <section style={{
             width: "150%", borderLeft: CutLine, position: "absolute",
-            left: "25%", top: 0,bottom:0,
-            display: "flex", flexWrap: "nowrap", 
+            left: "0%", top: 0, bottom: 0,
+            display: "flex", flexWrap: "nowrap",
           }} className='animate'>
             {industry.map((item, index) => {
               return (
@@ -357,45 +305,6 @@ export default function Home(props) {
           </section>
         </h3>
       </div>
-
-      {/* 碳中和技术创新联盟 */}
-      <div style={{ borderBottom: CutLine, padding: '0 0.5rem' }}>
-        <h3 style={{
-          fontSize: "0.22rem", fontWeight: "bold", display: "flex", margin: 0,
-          padding: "0 0.3rem", color: ThemeColor, height: "0.6rem", lineHeight: "0.6rem",
-          borderLeft: CutLine, borderRight: CutLine
-        }}>      碳中和技术创新联盟
-        </h3>
-      </div>
-      {/* 聚焦行业 */}
-      <div style={{ padding: '0 0.5rem', display: "flex" }}>
-        <div style={{
-          flex: 7, border: CutLine, padding: "0.1rem 0", borderTop: 'none', borderRight: "none"
-        }}>
-          <img src={AliOss + `/new_version/img/index_companies.png`} alt=""
-            style={{ width: "100%" }} />
-        </div>
-        <div style={{
-          flex: 4, borderBottom: CutLine, padding: "0 0 0.25rem 0", paddingRight: "0.5rem",
-          borderRight: CutLine
-        }}>
-          <h3 style={{
-            display: "flex", justifyContent: "space-between", color: "#15499D", fontSize: "0.16rem",
-            fontWeight: "bold", padding: "0 0.8rem", height: "0.5rem", alignItems: "center", marginTop: "0.1rem"
-          }}>
-            <span>平台资源雄厚</span>
-            <span>合作伙伴强大</span>
-          </h3>
-          <section style={{
-            fontSize: "0.12rem", textAlign: "left", textIndent: "0.26rem", color: "rgba(0,0,0,0.6)",
-            borderTop: CutLine, borderBottom: CutLine, padding: "0.1rem 0"
-          }}>
-            联盟是由上海新能源科技成果转化与产业促进中心、上海社科院绿色数字化发展研究中心、上海市国资国企改革发展中心、上海市节能减排中心有限公司、上海航天技术研究院、中国科学院上海高等研究院、 中国科学院技术物理研究所、绿色技术银行、上海交通大学、同济大学、华东理工大学、华东师范大学、 上海大学、上海科技大学2060研究院、上海电力大学、宝武集团、申能集团、华能集团、华谊集团中央研究院、上海电气集团、隧道股份、上海工业投资集团、长江三峡投资管理有限公司、上海北斗卫星导航平台有限公司、北航天汇科技企业孵化器有限公司、上海市太阳能学会、国网上海电科院、上海电力股份有限公司、深圳市创新投资集团有限公司等（排序不分先后）联合倡议发起，聚焦国家“碳达峰、 碳中和”目标，成立的非政府技术创新联合体。
-            </section>
-        </div>
-      </div>
-
-
     </div>
   )
 }
