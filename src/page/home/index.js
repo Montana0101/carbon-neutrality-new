@@ -19,7 +19,8 @@ const contentStyle = {
   // background: '#364d79',
 };
 
-
+const barFontSize = '0.24rem' // 标题字体大小
+const paddingSize = '0.3rem' // 内边距大小
 
 // 双碳资讯
 const tastArr = [
@@ -51,6 +52,8 @@ const news = [
 ]
 
 var industry = ['化工', '能源', '钢铁', '智慧城市', '产业金融', '交通', '智能汽车', '环境检测', '科研', '碳交易']
+const bannerArr1 = ['打造碳中和万亿新市场', '建设碳中和行业新生态', '树立碳中和企业新标杆', '构筑碳中和商业新范式', '开创碳中和产业新未来']
+const bannerArr2 = ['工业节能', '建筑节能', '交通节能']
 var timer
 
 // 首页首屏
@@ -58,16 +61,16 @@ export default function Home(props) {
   const [industryInx, setInx] = useState(1)
 
   useEffect(() => {
-    timer = setInterval(() => {
-      var inx = industryInx + 1
-      if (inx > 4) {
-        inx = 1
-      }
-      setInx(inx)
-    }, 1000)
-    return (() => {
-      clearInterval(timer)
-    })
+    // timer = setInterval(() => {
+    //   var inx = industryInx + 1
+    //   if (inx > 4) {
+    //     inx = 1
+    //   }
+    //   setInx(inx)
+    // }, 1000)
+    // return (() => {
+    //   clearInterval(timer)
+    // })
   }, [industryInx])
 
 
@@ -75,25 +78,52 @@ export default function Home(props) {
   return (
     <div style={{ position: "relative", width: "100%", height: "100%" }} className='home_page_1'>
       <section >
-        <Carousel autoplay effect="fade">
+        <Carousel autoplay={true} effect="fade" autoplaySpeed={4000}>
           <div className='banner_area'>
             <h3 style={contentStyle}>
               <img src={AliOss + `/new_version_0518/index_banner_1.png`} alt="" />
-              <section className='banner_explain'>
-                <p style={{ fontSize: "0.22rem", fontWeight: "bold" }}>
-                  关于我们
-                  </p>
-                <div style={{ fontSize: "0.16rem" }}>
-                  <p>联盟全称为上海碳中和技术创新联盟</p>
-                  <p style={{ fontSize: "0.12rem" }}>
-                    Shanghai Technology Innovation Alliance for Carbon Neutrality
-                    </p>
-                  <p style={{ fontSize: "0.16rem" }}>英文缩写为STIACN</p>
+              <section style={{
+                position: "absolute", left: 0, right: 0, bottom: 0, top: 0,
+                display: "flex", flexDirection: "column",
+                justifyContent: "space-between", padding: "1rem", color: 'white',
+
+              }}>
+                <div style={{ height: "0.8rem" }}>
+                  <div style={{
+                    height: "0.5rem", fontSize: "0.3rem", fontWeight: "bold",
+                    color: "white"
+                  }}>助力上海市高质量实现“碳达峰、碳中和”的目标</div>
+                  <div style={{
+                    height: "0.3rem", fontSize: "0.22rem", fontWeight: "bold",
+                    color: "white"
+                  }}>建成有中国特色的德国弗劳恩霍夫组织</div>
                 </div>
-                <p style={{ width: "1rem", height: "0.33rem", alignSelf: "flex-end" }}>
-                  <NavigateButton content={"更多信息"} path={"/"} />
-                </p>
+
+                <ul style={{
+                  height: "1.1rem", display: "flex",
+                  justifyContent: "space-around",
+                }}>
+                  {bannerArr1.map((item, index) => {
+                    return (
+                      <li style={{
+                        display: "flex", flexDirection: 'column', alignItems: "center", height: "100%",
+                        justifyContent: 'center', position: "relative", width: "2rem",
+                        boxSizing: "border-box"
+                      }}>
+                        <img src={AliOss + `/new_version_0518/index_banner_1_icon_${index + 1}.png`} alt=""
+                          style={{ width: "0.4rem", height: "0.4rem" }} />
+                        <section style={{
+                          fontSize: "0.12rem", fontWeight: "bold",
+                          width: "100%", height: "0.4rem", display: "flex", justifyContent: 'center', alignItems: "center"
+                        }}>
+                          {item}
+                        </section>
+                      </li>
+                    )
+                  })}
+                </ul>
               </section>
+
             </h3>
           </div>
 
@@ -101,24 +131,46 @@ export default function Home(props) {
           <div className='banner_area'>
             <h3 style={contentStyle}>
               <img src={AliOss + `/new_version_0518/index_banner_2.png`} alt="" />
-              <section className='banner_explain'>
-                <p style={{ fontSize: "0.22rem", fontWeight: "bold" }}>
-                  联盟宗旨
-                  </p>
-                <div style={{ fontSize: "0.16rem" }}>
-                  <p style={{ display: "flex", justifyContent: "space-between" }}>
-                    <span>打造碳中和万亿新市场</span>
-                    <span>建设碳中和行业新生态</span>
-                  </p>
-                  <p style={{ display: "flex", justifyContent: "space-between" }}>
-                    <span>树立碳中和企业新标杆</span>
-                    <span>构筑碳中和商业新范式</span>
-                  </p>
-                  <p style={{ fontSize: "0.16rem" }}>开创碳中和产业新未来</p>
+              <section style={{
+                position: "absolute", left: 0, right: 0, bottom: 0, top: 0,
+                display: "flex", flexDirection: "column",
+                justifyContent: "space-between", padding: "1rem", color: 'white',
+
+              }}>
+                <div style={{ height: "0.8rem" }}>
+                  <div style={{
+                    height: "0.5rem", fontSize: "0.3rem", fontWeight: "bold",
+                    color: "white"
+                  }}>实现碳中和的方式</div>
+                  <div style={{
+                    height: "0.3rem", fontSize: "0.22rem", fontWeight: "bold",
+                    color: "white"
+                  }}>节能减排是可持续发展的必然道路</div>
                 </div>
-                <p style={{ width: "1rem", height: "0.33rem", alignSelf: "flex-end" }}>
-                  <NavigateButton content={"更多信息"} path={"/eng"} />
-                </p>
+
+                <ul style={{
+                  height: "1.1rem", display: "flex",
+                  justifyContent: "space-around",
+                }}>
+                  {bannerArr2.map((item, index) => {
+                    return (
+                      <li style={{
+                        display: "flex", flexDirection: 'column', alignItems: "center", height: "100%",
+                        justifyContent: 'center', position: "relative", width: "2rem",
+                        boxSizing: "border-box"
+                      }}>
+                        <img src={AliOss + `/new_version_0518/index_banner_2_icon_${index + 1}.png`} alt=""
+                          style={{ width: "0.4rem", height: "0.4rem" }} />
+                        <section style={{
+                          fontSize: "0.12rem", fontWeight: "bold",
+                          width: "100%", height: "0.4rem", display: "flex", justifyContent: 'center', alignItems: "center"
+                        }}>
+                          {item}
+                        </section>
+                      </li>
+                    )
+                  })}
+                </ul>
               </section>
             </h3>
           </div>
@@ -127,25 +179,25 @@ export default function Home(props) {
           <div className='banner_area'>
             <h3 style={contentStyle}>
               <img src={AliOss + `/new_version_0518/index_banner_3.png`} alt="" />
-              <section className='banner_explain'>
-                <p style={{ fontSize: "0.22rem", fontWeight: "bold" }}>
-                  联盟任务
-                  </p>
-                <div style={{ fontSize: "0.16rem" }}>
-                  <p style={{ display: "flex", justifyContent: "flex-start" }}>
-                    <span style={{ marginRight: "0.5rem" }}>孵化技术创新产品</span>
-                    <span>研究商业创新模式</span>
-                  </p>
-                  <p style={{ display: "flex", justifyContent: "flex-start" }}>
-                    <span style={{ marginRight: "0.5rem" }}>推动行业标准制订</span>
-                    <span>搭建资本合作平台</span>
-                  </p>
-                  <p style={{ fontSize: "0.16rem" }}>联合产品市场推广</p>
+              <section style={{
+                position: "absolute", left: 0, right: 0, bottom: 0, top: 0,
+                display: "flex", flexDirection: "column",
+                justifyContent: "space-between", padding: "1rem", color: 'white',
+
+              }}>
+                <div style={{ height: "0.8rem" }}>
+                  <div style={{
+                    height: "0.5rem", fontSize: "0.3rem", fontWeight: "bold",
+                    color: "white"
+                  }}>广泛的业务范围</div>
+                  <div style={{
+                    height: "0.3rem", fontSize: "0.22rem", fontWeight: "bold",
+                    color: "white"
+                  }}>技术合作、技术转化、技术服务、金融服务、人才培训</div>
                 </div>
-                <p style={{ width: "1rem", height: "0.33rem", alignSelf: "flex-end" }}>
-                  <NavigateButton content={"更多信息"} path={"/eng"} />
-                </p>
-              </section>
+
+                </section>
+          
             </h3>
           </div>
         </Carousel>
@@ -156,7 +208,7 @@ export default function Home(props) {
       {/* 新闻动态 */}
       <div style={{ borderTop: CutLine, padding: '0 0.5rem' }} className='news_area'>
         <h3 style={{
-          fontSize: "0.22rem", fontWeight: "bold", display: "flex", margin: 0,
+          fontSize: barFontSize, fontWeight: "bold", display: "flex", margin: 0,
           padding: "0 0.3rem", color: ThemeColor, height: "0.6rem", lineHeight: "0.6rem",
           borderLeft: CutLine, borderRight: CutLine
         }}>关于联盟</h3>
@@ -201,17 +253,19 @@ export default function Home(props) {
               justifyContent: "space-between", padding: "0.4rem 1rem", color: 'white'
             }}>
               <p style={{
-                height: "0.6rem",  fontSize: "0.22rem", fontWeight: "bold",
+                height: "0.6rem", fontSize: barFontSize, fontWeight: "bold",
                 color: "white"
               }}>联盟任务</p>
               <ul style={{
-                height:"1.1rem", display: "flex",
+                height: "1.1rem", display: "flex",
                 justifyContent: "space-around"
               }}>
                 {tastArr.map((item, index) => {
                   return (
-                    <li style={{ display: "flex", flexDirection: 'column', alignItems: "center",
-                      justifyContent:'space-between' }}>
+                    <li style={{
+                      display: "flex", flexDirection: 'column', alignItems: "center",
+                      justifyContent: 'space-between'
+                    }}>
                       <img src={AliOss + `/new_version_0518/index_mission_icon_${index + 1}.png`} alt=""
                         style={{ width: "0.5rem" }} />
                       <span style={{ fontSize: "0.12rem", fontWeight: "bold" }}>{item}</span>
@@ -229,7 +283,7 @@ export default function Home(props) {
       {/* 分割区域 */}
       <div style={{ borderLeft: CutLine, borderBottom: "none", borderRight: CutLine, height: "0.6rem", margin: '0 0.5rem' }}>
         <h3 style={{
-          fontSize: "0.22rem", fontWeight: "bold", display: "flex", margin: 0,
+          fontSize: barFontSize, fontWeight: "bold", display: "flex", margin: 0,
           padding: "0 0.3rem", color: ThemeColor, height: "0.6rem", lineHeight: "0.6rem",
           borderBottom: "none"
         }}>联盟动态</h3>
@@ -280,20 +334,29 @@ export default function Home(props) {
       {/* 聚焦行业 */}
       <div style={{ borderTop: CutLine, padding: '0 0.5rem' }} className='news_area'>
         <h3 style={{
-          fontSize: "0.22rem", fontWeight: "bold", display: "flex", margin: 0,
+          fontSize: barFontSize, fontWeight: "bold", display: "flex", margin: 0,
           padding: "0 0.3rem", color: ThemeColor, height: "0.6rem", lineHeight: "0.6rem",
           border: CutLine, borderTop: "none"
         }}>业务范围</h3>
         <h3 style={{
-          fontSize: "0.22rem", fontWeight: "bold", display: "flex", margin: 0,
+          fontSize: barFontSize, fontWeight: "bold", display: "flex", margin: 0,
           color: ThemeColor, height: "1.6rem", lineHeight: "1.6rem", boxSizing: "border-box",
           borderLeft: CutLine, borderRight: CutLine, borderBottom: CutLine,
-          position: "relative", overflow: "hidden"
+          position: "relative", overflow: "hidden",
         }}>
+          <div style={{
+            position: "absolute", background: "white", zIndex: 77777, right: "0", width: '0.3rem',
+            top: 0, bottom: 0
+          }}>
+          </div>
+          <div style={{
+            position: "absolute", background: "white", zIndex: 77777, left: "0", width: '0.3rem',
+            top: 0, bottom: 0
+          }}></div>
           <section style={{
             width: "150%", borderLeft: CutLine, position: "absolute",
-            left: "0%", top: 0, bottom: 0,
-            display: "flex", flexWrap: "nowrap",
+            left: "0.3rem", top: 0, bottom: 0,
+            display: "flex", flexWrap: "nowrap", overflow: "hidden",
           }} className='animate'>
             {industry.map((item, index) => {
               return (
@@ -323,6 +386,8 @@ export default function Home(props) {
             })
             }
           </section>
+
+
         </h3>
       </div>
     </div>
