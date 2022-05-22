@@ -9,6 +9,7 @@ import 'echarts-gl';
 
 
 import stiacn_png from '../../static/imgs/stiacn.png'
+import task_png from "../../static/imgs/taskBg.png"
 
 const contentStyle = {
   height: '5rem',
@@ -21,21 +22,8 @@ const contentStyle = {
 
 
 // 双碳资讯
-const carbonData = [
-  {
-    title: "什么是碳达峰和碳中和",
-    content: '指排放不再增长，达到峰位后逐步由碳中和是指企业、团体或个人测算在一定时间内直接或间接产生的温室气...',
-  },
-  {
-    title: "全球变暖的严重性",
-    content: '全球已识别出了9个气候变化临界点',
-  }, {
-    title: "各国相关政策",
-    content: '为应对全球变暖问题，联合国多次召开气候变化大会',
-  }, {
-    title: "实现碳中和的方式",
-    content: "预防大于治理 电力供给端：从发电源头实现传统能源替代，提升清洁能源占比",
-  }
+const tastArr = [
+  '孵化技术创新平台', '研究商业创新模式', '推动行业标准制定', '搭建资本合作平台', '联合产品市场推广'
 ]
 
 const news = [
@@ -172,35 +160,67 @@ export default function Home(props) {
           padding: "0 0.3rem", color: ThemeColor, height: "0.6rem", lineHeight: "0.6rem",
           borderLeft: CutLine, borderRight: CutLine
         }}>关于联盟</h3>
-        <section style={{ border: CutLine, display: "flex", padding: '0.3rem' }}>
-          <div style={{
-            width: "60%", display: "flex", flexDirection: "column",
-            justifyContent: "space-between",
-            fontSize: "0.12rem", paddingRight: "0.3rem", color: "rgba(0,0,0,0.77)"
-          }}>
+        <section style={{ border: CutLine, padding: '0.3rem' }}>
+          <div style={{ display: "flex" }}>
+            <div style={{
+              width: "60%", display: "flex", flexDirection: "column",
+              justifyContent: "space-between",
+              fontSize: "0.12rem", paddingRight: "0.3rem", color: "rgba(0,0,0,0.77)"
+            }}>
 
-            <div style={{ textAlign: "left" }}>联盟全称为上海碳中和技术创新联盟（以下称“联盟”），
+              <div style={{ textAlign: "left" }}>联盟全称为上海碳中和技术创新联盟（以下称“联盟”），
 
-            英文名称为Shanghai Technology Innovation Alliance for Carbon Neutrality，
+              英文名称为Shanghai Technology Innovation Alliance for Carbon Neutrality，
 
-            英文缩写为STIACN。
+              英文缩写为STIACN。
           </div>
-            <div style={{ textAlign: "left" }}>
-              上海碳中和技术创新联盟是以习近平新时代中国特色社会主义思想为指导，在上海市科技党委和上海市科学技术委员会的领导下，全面贯彻落实国家和上海地方“碳达峰、碳中和”战略部署，在上海市科技党委和上海市科学技术委员会的领导下，携手48家在沪中央企业、科研院（所）、高校、企事业单位、社会团体共同发起成立，通过开展全方位、多领域、高质量的专业活动，搭建产学研用金等紧密结合、创新要素集聚的技术创新平台...
+              <div style={{ textAlign: "left" }}>
+                上海碳中和技术创新联盟是以习近平新时代中国特色社会主义思想为指导，在上海市科技党委和上海市科学技术委员会的领导下，全面贯彻落实国家和上海地方“碳达峰、碳中和”战略部署，在上海市科技党委和上海市科学技术委员会的领导下，携手48家在沪中央企业、科研院（所）、高校、企事业单位、社会团体共同发起成立，通过开展全方位、多领域、高质量的专业活动，搭建产学研用金等紧密结合、创新要素集聚的技术创新平台...
           </div>
-            <p style={{ width: "1.2rem", height: "0.4rem", alignSelf: "flex-start", marginTop: "0.05rem" }}
-              onClick={() => {
+              <p style={{ width: "1.2rem", height: "0.4rem", alignSelf: "flex-start", marginTop: "0.05rem" }}
+                onClick={() => {
 
+                }}>
+                <NavigateButton content={"更多信息"} color={ThemeColor} path={``} />
+              </p>
+
+
+            </div>
+            <div style={{
+              flex: 1
+            }}>
+              <img src={stiacn_png} style={{ width: "100%" }} />
+            </div>
+          </div>
+
+          <div style={{ marginTop: "0.45rem", position: "relative" }}>
+            <img src={task_png} style={{ width: "100%" }} />
+            <section style={{
+              position: "absolute", left: 0, right: 0, bottom: 0, top: 0,
+              display: "flex", flexDirection: "column",
+              justifyContent: "space-between", padding: "0.4rem 1rem", color: 'white'
+            }}>
+              <p style={{
+                height: "0.6rem",  fontSize: "0.22rem", fontWeight: "bold",
+                color: "white"
+              }}>联盟任务</p>
+              <ul style={{
+                height:"1.1rem", display: "flex",
+                justifyContent: "space-around"
               }}>
-              <NavigateButton content={"更多信息"} color={ThemeColor} path={``} />
-            </p>
+                {tastArr.map((item, index) => {
+                  return (
+                    <li style={{ display: "flex", flexDirection: 'column', alignItems: "center",
+                      justifyContent:'space-between' }}>
+                      <img src={AliOss + `/new_version_0518/index_mission_icon_${index + 1}.png`} alt=""
+                        style={{ width: "0.5rem" }} />
+                      <span style={{ fontSize: "0.12rem", fontWeight: "bold" }}>{item}</span>
+                    </li>
+                  )
+                })}
+              </ul>
+            </section>
 
-
-          </div>
-          <div style={{
-            flex: 1
-          }}>
-            <img src={stiacn_png} style={{ width: "100%" }} />
           </div>
         </section>
       </div>
@@ -223,7 +243,7 @@ export default function Home(props) {
               return (
                 <li style={{
                   flex: 1, height: "2.2rem", border: CutLine, borderTop: "none", padding: "0.3rem 0.3rem", display: "flex",
-                  flexDirection: 'column', boxSizing: "border-box",borderBottom:"none",
+                  flexDirection: 'column', boxSizing: "border-box", borderBottom: "none",
                   justifyContent: "space-between", borderRight: `${index == 3 ? CutLine : 'none'}`
                 }}>
                   <div style={{ color: 'rgba(0,0,0,0.6)', fontSize: "0.12rem", display: "flex" }}>
