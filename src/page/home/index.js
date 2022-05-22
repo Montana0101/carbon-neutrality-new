@@ -2,7 +2,7 @@ import { AliOss, ThemeColor, CutLine } from "../../lib/const"
 import { useEffect, useState } from "react"
 import { Carousel, Space } from 'antd';
 import { NavigateButton } from "../../component/button"
-import { createFromIconfontCN } from '@ant-design/icons';
+import { FormOutlined } from '@ant-design/icons';
 
 import './index.scss'
 import 'echarts-gl';
@@ -77,6 +77,12 @@ export default function Home(props) {
 
   return (
     <div style={{ position: "relative", width: "100%", height: "100%" }} className='home_page_1'>
+      {/* 客服框 */}
+      <section className="consult">
+        <FormOutlined style={{fontSize:"0.3rem"}}/>
+        <span>业务咨询</span>
+      </section>
+
       <section >
         <Carousel autoplay={true} effect="fade" autoplaySpeed={4000}>
           <div className='banner_area'>
