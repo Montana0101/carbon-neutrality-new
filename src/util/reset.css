@@ -1,6 +1,6 @@
 body {
-  margin: 0;
-  font-family: "思源宋体";
+  margin                 : 0;
+  font-family            : "思源宋体";
   -webkit-font-smoothing : antialiased;
   -moz-osx-font-smoothing: grayscale;
   height                 : 100%;
@@ -12,8 +12,8 @@ code {
 }
 
 html {
-  height    : 100%;
-  font-size : 100px;
+  height       : 100%;
+  font-size    : 100px;
   /* overflow-y: hidden; */
 }
 
@@ -64,6 +64,17 @@ section {
   list-style-type: none;
   border         : none;
   outline        : none;
+}
+
+/* 去掉箭头 */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+}
+
+input[type="number"] {
+
+  -moz-appearance: textfield !important;
 }
 
 a {
@@ -147,8 +158,9 @@ address {
 }
 
 ul {
-  margin: 0 !important; 
+  margin: 0 !important;
 }
-p{
-  margin:0 !important;
+
+p {
+  margin: 0 !important;
 }

@@ -1,6 +1,6 @@
 import { AliOss, ThemeColor, CutLine } from "../../lib/const"
 import { useEffect, useState } from "react"
-import { Carousel, Space } from 'antd';
+import { Carousel, Modal, Form, Input, InputNumber, Button, Col, Row } from 'antd';
 import { NavigateButton } from "../../component/button"
 import { FormOutlined } from '@ant-design/icons';
 
@@ -59,6 +59,10 @@ var timer
 // 首页首屏
 export default function Home(props) {
   const [industryInx, setInx] = useState(1)
+  const [isModalVisible, setModalVisible] = useState(true)
+  const [name, setName] = useState('')
+  const [phone, setPhone] = useState('')
+  const [content, setContent] = useState("")
 
   useEffect(() => {
     // timer = setInterval(() => {
@@ -73,15 +77,76 @@ export default function Home(props) {
     // })
   }, [industryInx])
 
+  const layout = {
+    // labelCol: { span: 8 },
+    // wrapperCol: { span: 14 },
+  };
+  const onFinish = (values) => {
+    console.log(values);
+  };
 
+  const onSubmit = () => {
+    setModalVisible(true)
+  }
+
+  const onCancel = () => {
+    setModalVisible(false)
+  }
+
+  useEffect(() => {
+    if (!isModalVisible) {
+      setName('')
+      setPhone('')
+      setContent("")
+    }
+  }, [isModalVisible])
 
   return (
     <div style={{ position: "relative", width: "100%", height: "100%" }} className='home_page_1'>
       {/* 客服框 */}
-      <section className="consult">
-        <FormOutlined style={{fontSize:"0.3rem"}}/>
+      <section className="consult" onClick={onSubmit}>
+        <FormOutlined style={{ fontSize: "0.3rem" }} />
         <span>业务咨询</span>
       </section>
+
+
+      <Modal title="编辑信息" visible={isModalVisible} onOk={onSubmit}
+        onCancel={onCancel} okText='确认' cancelText='取消'>
+        <Form {...layout} name="nest-messages" onFinish={onFinish}>
+          <Row>
+            <Col span={11}>
+              <Form.Item label="企业名称">
+                <Input onChange={e => setName(e.target.value)} />
+              </Form.Item>
+            </Col>
+            <Col span={2}></Col>
+            <Col span={11}>
+              <Form.Item label="联系方式">
+                <Input type='number' onChange={e => setPhone(e.target.value)} />
+              </Form.Item>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col span={24}>
+              <Form.Item label="咨询内容" span={24}>
+                <Input.TextArea style={{ width: "100%" }} onChange={
+                  e => setContent(e.target.value)
+                } />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row style={{ color: 'rgba(0,0,0,0.5)', fontSize: "0.14rem" }}>
+            您也可以选择以下方式直接进行咨询：
+          </Row>
+          <Row style={{ color: 'rgba(0,0,0,0.5)', fontSize: "0.14rem" }}>
+            电话：021-66858866   邮箱：hr@stiacn.com
+           </Row>
+        </Form>
+      </Modal>
+
+
+
 
       <section >
         <Carousel autoplay={true} effect="fade" autoplaySpeed={4000}>
@@ -202,8 +267,8 @@ export default function Home(props) {
                   }}>技术合作、技术转化、技术服务、金融服务、人才培训</div>
                 </div>
 
-                </section>
-          
+              </section>
+
             </h3>
           </div>
         </Carousel>
