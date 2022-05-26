@@ -25,6 +25,7 @@ function App() {
   const [show, setShow] = useState(true)
   const [logined, checkLogin] = useState(false)
   const [dialog, setDialog] = useState(false)
+  const [userInfo,setUserInfo] = useState({})
 
   useEffect(() => {
     const href = window.location.href
@@ -41,6 +42,8 @@ function App() {
     const check = localStorage.getItem('user')
     if (check) {
       checkLogin(true)
+      setUserInfo(JSON.parse(check))
+      console.log("打印刷",JSON.parse(check))
     } else {
       checkLogin(false)
     }
@@ -67,7 +70,7 @@ function App() {
         <section className='header-right'>
           <div style={{
             height: "50%", display: "flex", justifyContent: 'flex-end',
-            alignItems: "center", padding: '0.04rem 0.3rem 0.04rem 0', boxSizing: "border-box"
+            alignItems: "center", padding: '0.04rem 0.19rem 0.04rem 0'
           }}>
             <Input placeholder="请输入企业名称" style={{
               width: "2rem", padding: "border-box", display: `${flag ? 'inline-block' : " none"
@@ -88,14 +91,15 @@ function App() {
             }} />
             {!logined ? <div style={{
               color: "#7B7B7B", fontSize: "0.12rem", fontWeight: "bold",
-              width: "0.5rem", cursor: "pointer"
+              width: "0.5rem", cursor: "pointer",
             }} onClick={() => {
               window.location.href = '/login'
             }}>
               登录
             </div> : <div style={{
                 color: "#7B7B7B", fontSize: "0.14rem", width: "0.5rem", cursor: "pointer",
-                position: "relative"
+                position: "relative",clear:"both",height:"100%",display:"flex",
+                alignItems:"center",justifyContent:'center'
               }}
                 onMouseLeave={() => {
                   setDialog(false)
@@ -105,7 +109,6 @@ function App() {
                 }}
               >
                 <UserOutlined
-
                 />
                 {dialog && <section style={{
                   position: "absolute",
@@ -115,17 +118,21 @@ function App() {
                   width: "0.9rem",
                   zIndex: 777,
                   background: "white",
-                  borderRadius: "0.02rem"
-                }} onMouseOver={() => {
-                  setDialog(true)
+                  borderRadius: "0.02rem",
+                  height:"0.3rem",
                 }}>
                   <div style={{
-                    fontSize: "0.12rem", height: "0.24rem", display: "flex", color: "rgba(0,0,0,0.5)",
+                    fontSize: "0.12rem", height: "0.3rem", display: "flex", color: "rgba(0,0,0,0.5)",
                     justifyContent: "center", alignItems: "center"
                   }}
                     onClick={() => {
-                      window.location.href = '/admin'
-                    }}>管理员</div>
+                      if(userInfo){
+                        if (userInfo.role==1){
+                          window.location.href = '/admin'
+                        }
+                      }
+                     
+                    }}>{userInfo && userInfo.role == 0 ? '普通用户' : '管理员'}</div>
                 </section>}
               </div>
             }

@@ -19,8 +19,9 @@ export const login = (params) => {
     return fetchGadget(url, 'GET')
 }
 
-// 首页 >> 播放全部视频
-export const playAllVideo = (terminalId) => {
-    const url = `/api/vedio/playAllVedio?terminalId=${terminalId}`
-    return fetchGadget(url, 'GET')
+
+// 问题反馈
+export const consult = (params) => {
+    const url = `/stiacn/consult/save`
+    return fetchGadget(url, 'POST', params)
 }

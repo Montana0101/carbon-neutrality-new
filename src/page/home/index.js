@@ -1,8 +1,9 @@
 import { AliOss, ThemeColor, CutLine } from "../../lib/const"
-import { useEffect, useState } from "react"
-import { Carousel, Modal, Form, Input, InputNumber, Button, Col, Row } from 'antd';
+import React, { useEffect, useState, useRef } from "react"
+import { Carousel, Modal, Form, Input, Popconfirm, Button, Col, Row, message } from 'antd';
 import { NavigateButton } from "../../component/button"
 import { FormOutlined } from '@ant-design/icons';
+import { consult } from '../../apis/index'
 
 import './index.scss'
 import 'echarts-gl';
@@ -58,11 +59,13 @@ var timer
 
 // 首页首屏
 export default function Home(props) {
-  const [industryInx, setInx] = useState(1)
-  const [isModalVisible, setModalVisible] = useState(true)
+  const [industryInx, setInx] = useState(3)
+  const [isModalVisible, setModalVisible] = useState(false)
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [content, setContent] = useState("")
+
+  var formRef = useRef()
 
   useEffect(() => {
     // timer = setInterval(() => {
@@ -85,12 +88,33 @@ export default function Home(props) {
     console.log(values);
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     setModalVisible(true)
+    if (name && phone && content) {
+      const params = {
+        'consultCompany': name,
+        'phone': phone,
+        'consultContent': content
+      }
+      const res = await consult(params)
+      if (res.success) {
+        message.success('感谢您的咨询，请耐心等待我们的回复。')
+        setModalVisible(false)
+      } else {
+        message.error(res.msg)
+      }
+    } else {
+      message.warn("请填写完整后再提交")
+    }
   }
 
   const onCancel = () => {
     setModalVisible(false)
+    formRef.current.setFieldsValue({
+      name: '',
+      phone: '',
+      content: ''
+    })
   }
 
   useEffect(() => {
@@ -104,24 +128,34 @@ export default function Home(props) {
   return (
     <div style={{ position: "relative", width: "100%", height: "100%" }} className='home_page_1'>
       {/* 客服框 */}
-      <section className="consult" onClick={onSubmit}>
+      <section className="consult" onClick={() => { setModalVisible(true) }}>
         <FormOutlined style={{ fontSize: "0.3rem" }} />
         <span>业务咨询</span>
       </section>
 
 
-      <Modal title="编辑信息" visible={isModalVisible} onOk={onSubmit}
-        onCancel={onCancel} okText='确认' cancelText='取消'>
-        <Form {...layout} name="nest-messages" onFinish={onFinish}>
+      <Modal title="编辑信息" visible={isModalVisible} 
+        onCancel={onCancel} okText={
+          <Popconfirm
+          title="确认提交您的咨询内容吗？"
+          onConfirm={()=>{onSubmit()}}
+          onCancel={()=>{  onCancel()}}
+          okText="确定"
+          cancelText="取消"
+        >
+          <a href="#">确认</a>
+        </Popconfirm>
+        } cancelText='取消'>
+        <Form {...layout} name="nest-messages" onFinish={onFinish} ref={formRef}>
           <Row>
             <Col span={11}>
-              <Form.Item label="企业名称">
+              <Form.Item label="企业名称" name='name'>
                 <Input onChange={e => setName(e.target.value)} />
               </Form.Item>
             </Col>
             <Col span={2}></Col>
             <Col span={11}>
-              <Form.Item label="联系方式">
+              <Form.Item label="联系方式" name='phone'>
                 <Input type='number' onChange={e => setPhone(e.target.value)} />
               </Form.Item>
             </Col>
@@ -129,10 +163,10 @@ export default function Home(props) {
 
           <Row>
             <Col span={24}>
-              <Form.Item label="咨询内容" span={24}>
-                <Input.TextArea style={{ width: "100%" }} onChange={
+              <Form.Item label="咨询内容" span={24} name='content'>
+                <Input.TextArea placeholder='请输入咨询内容，最多300个字' style={{ width: "100%" }} onChange={
                   e => setContent(e.target.value)
-                } />
+                } maxLength={300}/>
               </Form.Item>
             </Col>
           </Row>
@@ -145,11 +179,8 @@ export default function Home(props) {
         </Form>
       </Modal>
 
-
-
-
       <section >
-        <Carousel autoplay={true} effect="fade" autoplaySpeed={4000}>
+        <Carousel autoplay={false} effect="fade" autoplaySpeed={4000}>
           <div className='banner_area'>
             <h3 style={contentStyle}>
               <img src={AliOss + `/new_version_0518/index_banner_1.png`} alt="" />
@@ -256,16 +287,33 @@ export default function Home(props) {
                 justifyContent: "space-between", padding: "1rem", color: 'white',
 
               }}>
-                <div style={{ height: "0.8rem" }}>
+                <div style={{
+                  fontSize: "0.3rem", fontWeight: "bold",
+                  width: "100%", position: "absolute", bottom: '1.9rem', left: 0, right: 0,
+                  color: "white",
+                }}>广泛的业务范围</div>
+                <div style={{
+                  fontSize: "0.22rem", fontWeight: "bold", position: "absolute",
+                  width: "100%", bottom: '1.4rem', left: 0, right: 0,
+                  color: "white"
+                }}>技术合作、技术转化、技术服务、金融服务、人才培训</div>
+                {/* <div style={{
+                   width: "100%", background: "red",
+                  display: "flex",
+                  flexDirection: "column", justifyContent: "space-between",
+                 alignItems: "center", flexWrap: "no-wrap", position: "relative"
+                }}>
                   <div style={{
-                    height: "0.5rem", fontSize: "0.3rem", fontWeight: "bold",
+                    fontSize: "0.3rem", fontWeight: "bold", margin: "0 auto",
+                    width: "100%",
                     color: "white"
                   }}>广泛的业务范围</div>
                   <div style={{
-                    height: "0.3rem", fontSize: "0.22rem", fontWeight: "bold",
+                    fontSize: "0.22rem", fontWeight: "bold",
+                    width: "100%",
                     color: "white"
                   }}>技术合作、技术转化、技术服务、金融服务、人才培训</div>
-                </div>
+                </div> */}
 
               </section>
 
@@ -291,13 +339,13 @@ export default function Home(props) {
               fontSize: "0.12rem", paddingRight: "0.3rem", color: "rgba(0,0,0,0.77)"
             }}>
 
-              <div style={{ textAlign: "left" }}>联盟全称为上海碳中和技术创新联盟（以下称“联盟”），
+              <div style={{ textAlign: "left",lineHeight:"0.25rem"}}>联盟全称为上海碳中和技术创新联盟（以下称“联盟”），
 
               英文名称为Shanghai Technology Innovation Alliance for Carbon Neutrality，
 
               英文缩写为STIACN。
           </div>
-              <div style={{ textAlign: "left" }}>
+              <div style={{ textAlign: "left" ,lineHeight:"0.25rem" }}>
                 上海碳中和技术创新联盟是以习近平新时代中国特色社会主义思想为指导，在上海市科技党委和上海市科学技术委员会的领导下，全面贯彻落实国家和上海地方“碳达峰、碳中和”战略部署，在上海市科技党委和上海市科学技术委员会的领导下，携手48家在沪中央企业、科研院（所）、高校、企事业单位、社会团体共同发起成立，通过开展全方位、多领域、高质量的专业活动，搭建产学研用金等紧密结合、创新要素集聚的技术创新平台...
           </div>
               <p style={{ width: "1.2rem", height: "0.4rem", alignSelf: "flex-start", marginTop: "0.05rem" }}
@@ -369,6 +417,7 @@ export default function Home(props) {
                 <li style={{
                   flex: 1, height: "2.2rem", border: CutLine, borderTop: "none", padding: "0.3rem 0.3rem", display: "flex",
                   flexDirection: 'column', boxSizing: "border-box", borderBottom: "none",
+                  position: "relative",
                   justifyContent: "space-between", borderRight: `${index == 3 ? CutLine : 'none'}`
                 }}>
                   <div style={{ color: 'rgba(0,0,0,0.6)', fontSize: "0.12rem", display: "flex" }}>
@@ -383,7 +432,10 @@ export default function Home(props) {
                   }}>
                     {item.title}
                   </div>
-                  <p style={{ width: "1.2rem", height: "0.4rem", alignSelf: "flex-end", marginTop: "0.05rem" }}
+                  <p style={{
+                    width: "1.2rem", height: "0.4rem", alignSelf: "flex-end",
+                    marginTop: "0.05rem", position: "absolute", right: '0.3rem', bottom: '0.2rem'
+                  }}
                     onClick={() => {
                       if (index == 0) {
                         window.open('https://mp.weixin.qq.com/s/02SNGgy2hPyIGckaF6oz3g')
@@ -416,12 +468,12 @@ export default function Home(props) {
           position: "relative", overflow: "hidden",
         }}>
           <div style={{
-            position: "absolute", background: "white", zIndex: 77777, right: "0", width: '0.3rem',
+            position: "absolute", background: "white", zIndex: 7777, right: "0", width: '0.3rem',
             top: 0, bottom: 0
           }}>
           </div>
           <div style={{
-            position: "absolute", background: "white", zIndex: 77777, left: "0", width: '0.3rem',
+            position: "absolute", background: "white", zIndex: 7777, left: "0", width: '0.3rem',
             top: 0, bottom: 0
           }}></div>
           <section style={{
