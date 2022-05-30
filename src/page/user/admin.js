@@ -1,16 +1,63 @@
 
 import { useState, useEffect, useRef } from "react"
 import { withRouter, useHistory } from 'react-router-dom';
+import ReactDOM from 'react-dom';
 import {
     LeftOutlined
 } from '@ant-design/icons'
 // import img1 from './imgs/1.png'
 import { AliOss, ThemeColor, CutLine } from "../../lib/const"
 import { createFromIconfontCN } from '@ant-design/icons';
+import { Tabs } from 'antd';
+import { Line } from '@ant-design/plots';
+import './admin.scss'
+
+const { TabPane } = Tabs;
 
 const IconFont = createFromIconfontCN({
     scriptUrl: '//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js',
 });
+
+const DemoLine = () => {
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        asyncFetch();
+    }, []);
+
+    const asyncFetch = () => {
+        fetch('https://gw.alipayobjects.com/os/bmw-prod/e00d52f4-2fa6-47ee-a0d7-105dd95bde20.json')
+            .then((response) => response.json())
+            .then((json) => setData(json))
+            .catch((error) => {
+                console.log('fetch data failed', error);
+            });
+    };
+    const config = {
+        data,
+        xField: 'year',
+        yField: 'gdp',
+        seriesField: 'name',
+        yAxis: {
+            label: {
+                formatter: (v) => `${(v / 10e8).toFixed(1)} B`,
+            },
+        },
+        legend: {
+            position: 'top',
+        },
+        smooth: true,
+        // @TODO 后续会换一种动画方式
+        animation: {
+            appear: {
+                animation: 'path-in',
+                duration: 5000,
+            },
+        },
+    };
+
+    return <Line {...config} style={{ width: "100%", height: "100%" }} />;
+};
 
 
 function Admin(props) {
@@ -20,8 +67,13 @@ function Admin(props) {
     }, [])
     const history = useHistory()
 
+    const onChange = (key: string) => {
+        console.log(key);
+    };
+
+
     return (
-        <div className="screen_1" style={{
+        <div className="admin_page" style={{
             height: "auto",
             width: "100%",
             background: 'white',
@@ -76,19 +128,40 @@ function Admin(props) {
                             <span>上海北斗卫星导航平台有限公司</span>
                         </div>
                         <div style={{
-                            border: "2px solid yellow",
-                            flex:3,
-                            margin: "0 0.2rem"
+                            flex: 3,
+                            margin: "0 0.2rem",
+                            background: "white",
+                            padding: '0.1rem'
                         }}>
-                            折线图
+                            <DemoLine />
                         </div>
                         <div style={{
                             display: "flex",
                             flexDirection: 'column',
-                            flex:1,
+                            flex: 1,
                         }}>
-                            <section style={{ background: "white", marginBottom: "0.05rem", flex: 1 }}>上下</section>
-                            <section style={{ background: "white", marginTop: "0.05rem", flex: 1 }}>上下</section>
+                            <section style={{
+                                background: "white", marginBottom: "0.05rem", flex: 1,
+                                padding: "0.1rem", boxSizing: "border-box", display: "flex",
+                                flexDirection: "column", justifyContent: "space-between", alignItems: "flex-start"
+                            }}>
+                                <div style={{ color: "rgba(0,0,0,0.5)", fontSize: "0.12rem" }}>今日待审核的注册人数</div>
+                                <div style={{ alignSelf: "flex-end", display: "flex", alignItems: "center", marginBottom: "0.07rem" }}>
+                                    <span style={{ fontSize: "0.2rem" }}>7</span>
+                                    <span style={{ fontSize: "0.12rem", marginTop: "0.03rem" }}>人</span>
+                                </div>
+                            </section>
+                            <section style={{
+                                background: "white", marginBottom: "0.05rem", flex: 1,
+                                padding: "0.1rem", boxSizing: "border-box", display: "flex",
+                                flexDirection: "column", justifyContent: "space-between", alignItems: "flex-start"
+                            }}>
+                                <div style={{ color: "rgba(0,0,0,0.5)", fontSize: "0.12rem" }}>累计审核的注册人数</div>
+                                <div style={{ alignSelf: "flex-end", display: "flex", alignItems: "center", marginBottom: "0.07rem" }}>
+                                    <span style={{ fontSize: "0.2rem" }}>7</span>
+                                    <span style={{ fontSize: "0.12rem", marginTop: "0.03rem" }}>人</span>
+                                </div>
+                            </section>
                         </div>
                     </div>
                 </section>
@@ -101,49 +174,16 @@ function Admin(props) {
                 border: CutLine,
                 borderTop: 'none',
                 borderBottom: 'none',
-                margin: '0 0.5rem 0 0.5rem'
+                margin: '0 0.5rem 0 0.5rem',
             }}>
-                <p style={{
-                    fontSize: "0.18rem",
-                    fontWeight: "bold",
-                    display: "flex",
-                    justifyContent: 'space-between'
-                }}>
-                    <span style={{
-                        cursor: "pointer"
-                    }} onClick={() => {
-                        window.history.back()
-                    }}>
-                        <LeftOutlined />
-                        返回
-                    </span>
-                    <span>
-                        沪科〔2021〕497号 关于同意成立上海碳中和技术创新联盟的批复
-                    </span>
-                    <span />
-                </p>
-
-                <p style={{
-                    fontSize: "0.14rem"
-                }}>发布时间：2021.12.17</p>
-
-                <article style={{
-                    margin: "0 0"
-                }}>
-                    {/* <img src={img1} /> */}
-                </article>
-
-                <div style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    fontSize: "0.14rem",
-                    cursor: "pointer"
-                }} onClick={() => {
-                    history.push("/news/2")
-                }}>
-                    <span />
-                    <span>下一篇&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; 上海碳中和技术创新联盟发起人会议在新能源中心召开</span>
-                </div>
+                <Tabs defaultActiveKey="1" onChange={onChange}>
+                    <TabPane tab="Tab 1" key="1">
+                        Content of Tab Pane 1
+                     </TabPane>
+                    <TabPane tab="Tab 2" key="2">
+                        Content of Tab Pane 2
+                  </TabPane>
+                </Tabs>
             </div>
 
             <div style={{

@@ -93,7 +93,8 @@ function App() {
               color: "#7B7B7B", fontSize: "0.12rem", fontWeight: "bold",
               width: "0.5rem", cursor: "pointer",
             }} onClick={() => {
-              window.location.href = '/login'
+              // window.location.href = '/login'
+              message.warn("功能未开放")
             }}>
               登录
             </div> : <div style={{
@@ -114,7 +115,7 @@ function App() {
                   position: "absolute",
                   top: '0.2rem',
                   left: '0.25rem',
-                  border: "1px solid rgba(0,0,0,0.2)",
+                  border: "1px solid #51AA52",
                   width: "0.9rem",
                   zIndex: 777,
                   background: "white",
@@ -123,22 +124,25 @@ function App() {
                 }}>
                   <div style={{
                     fontSize: "0.12rem", height: "0.3rem", display: "flex", color: "rgba(0,0,0,0.5)",
-                    justifyContent: "center", alignItems: "center"
+                    justifyContent: "center", alignItems: "center",color:"#51AA52"
                   }}
                     onClick={() => {
                       if(userInfo){
                         if (userInfo.role==1){
                           window.location.href = '/admin'
+                        }else{
+                          window.location.href = '/admin'
                         }
                       }
                      
-                    }}>{userInfo && userInfo.role == 0 ? '普通用户' : '管理员'}</div>
+                    }}>{userInfo && userInfo.name}</div>
                 </section>}
               </div>
             }
 
             {!logined ? <div style={{ color: "#7B7B7B", fontWeight: "bold", fontSize: "0.12rem", width: "0.5rem", cursor: "pointer" }} onClick={() => {
-              window.location.href = '/register'
+              // window.location.href = '/register'
+              message.warn("功能未开放")
             }}>
               注册
            </div> : <div style={{ color: "#7B7B7B", fontWeight: "bold", fontSize: "0.12rem", width: "0.5rem", cursor: "pointer" }}

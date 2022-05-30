@@ -192,13 +192,13 @@ export default function Home(props) {
               }}>
                 <div style={{ height: "0.8rem" }}>
                   <div style={{
-                    height: "0.5rem", fontSize: "0.3rem", fontWeight: "bold",
+                    height: "0.22rem", fontSize: "0.3rem", fontWeight: "bold",
+                    color: "white"
+                  }}></div>
+                  <div style={{
+                    height: "0.5rem", fontSize: "0.3rem",  fontWeight: "bold",
                     color: "white"
                   }}>助力上海市高质量实现“碳达峰、碳中和”的目标</div>
-                  <div style={{
-                    height: "0.3rem", fontSize: "0.22rem", fontWeight: "bold",
-                    color: "white"
-                  }}>建成有中国特色的德国弗劳恩霍夫组织</div>
                 </div>
 
                 <ul style={{
