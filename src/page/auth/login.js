@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect} from 'react'
 import { withRouter, useHistory } from 'react-router-dom'
 import { AliOss, ThemeColor, CutLine } from "../../lib/const"
 import { login } from '../../apis/index'
@@ -11,6 +11,14 @@ const Login = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState('')
     const history = useHistory()
+
+    useEffect(()=>{
+        const dom = document.getElementsByClassName("app-header")[0]
+        dom.style.display='none'
+
+        const main = document.getElementById('main_container')
+        main.style.height='100%'
+    },[])
 
     const submit = async () => {
         if (email && password) {

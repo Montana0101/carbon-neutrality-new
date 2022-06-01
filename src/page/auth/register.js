@@ -16,6 +16,14 @@ const Register = () => {
 
     const history = useHistory()
 
+    useEffect(()=>{
+        const dom = document.getElementsByClassName("app-header")[0]
+        dom.style.display='none'
+
+        const main = document.getElementById('main_container')
+        main.style.height='100%'
+    },[])
+
     const verify = () => {
         if (email && company && name && password1 && password2) {
             const reg = /^[a-zA-Z0-9_-]+@([a-zA-Z0-9]+\.)+(com|cn|net|org)$/;

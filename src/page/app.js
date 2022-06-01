@@ -30,14 +30,14 @@ function App() {
   useEffect(() => {
     const href = window.location.href
     console.log('截取下', href)
-    var flag
-    if (href.indexOf('login') != -1 || href.indexOf('register') != -1) {
-      flag = true
-    } else {
-      flag = false
-    }
-    // var flag = href.indexOf('login') != -1 || href.indexOf('register') != -1
-    setShow(!flag)
+    // var flag
+    // if (href.indexOf('login') != -1 || href.indexOf('register') != -1) {
+    //   flag = true
+    // } else {
+    //   flag = false
+    // }
+    // // var flag = href.indexOf('login') != -1 || href.indexOf('register') != -1
+    // setShow(!flag)
 
     const check = localStorage.getItem('user')
     if (check) {
@@ -51,9 +51,9 @@ function App() {
 
   return (
     <div className="app">
-      <header className="app-header" style={{ display: show ? 'flex' : 'none' }}>
+      <header className="app-header">
         <section className='header-left'>
-          <img src={logo} alt="" style={{ height: '86%', marginRight: "0.1rem" }} />
+          <img src={logo} alt="" style={{ height: '0.82rem', marginRight: "0.1rem",width:"0.82rem" }} />
           <div style={{
             height: "70%", display: "flex", flexDirection: "column", justifyContent: 'space-between',
             alignItems: 'flex-start', boxSizing: "border-box",
@@ -93,8 +93,8 @@ function App() {
               color: "#7B7B7B", fontSize: "0.12rem", fontWeight: "bold",
               width: "0.5rem", cursor: "pointer",
             }} onClick={() => {
-              // window.location.href = '/login'
-              message.warn("功能未开放")
+              window.location.href = '/login'
+              // message.warn("功能未开放")
             }}>
               登录
             </div> : <div style={{
@@ -141,8 +141,8 @@ function App() {
             }
 
             {!logined ? <div style={{ color: "#7B7B7B", fontWeight: "bold", fontSize: "0.12rem", width: "0.5rem", cursor: "pointer" }} onClick={() => {
-              // window.location.href = '/register'
-              message.warn("功能未开放")
+              window.location.href = '/register'
+              // message.warn("功能未开放")
             }}>
               注册
            </div> : <div style={{ color: "#7B7B7B", fontWeight: "bold", fontSize: "0.12rem", width: "0.5rem", cursor: "pointer" }}
@@ -176,7 +176,7 @@ function App() {
           </ul>
         </section>
       </header>
-      <main style={{ height: !show && '100%' }}>
+      <main style={{ position:"relative",height:"50px"}} id='main_container'>
         <Routers />
       </main>
     </div>
