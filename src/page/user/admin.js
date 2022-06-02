@@ -8,7 +8,7 @@ import {
 // import img1 from './imgs/1.png'
 import { AliOss, ThemeColor, CutLine } from "../../lib/const"
 import { createFromIconfontCN } from '@ant-design/icons';
-import { Tabs } from 'antd';
+import { Tabs, Radio, Col, Row, Form, DatePicker } from 'antd';
 import { Line } from '@ant-design/plots';
 import './admin.scss'
 
@@ -175,12 +175,39 @@ function Admin(props) {
                 borderTop: 'none',
                 borderBottom: 'none',
                 margin: '0 0.5rem 0 0.5rem',
+
             }}>
-                <Tabs defaultActiveKey="1" onChange={onChange}>
-                    <TabPane tab="Tab 1" key="1">
-                        Content of Tab Pane 1
-                     </TabPane>
-                    <TabPane tab="Tab 2" key="2">
+                <Tabs defaultActiveKey="1" onChange={onChange} style={{}}>
+                    <TabPane tab="用户管理" key="1">
+                        <section style={{ padding: "0.3rem" }}>
+                            <Row>
+                                <Form.Item label="用户状态">
+                                    <Radio.Group defaultValue="a" buttonStyle="solid">
+                                        <Radio.Button value="a">全部</Radio.Button>
+                                        <Radio.Button value="b">审核通过</Radio.Button>
+                                        <Radio.Button value="c">审核驳回</Radio.Button>
+                                        <Radio.Button value="d">待审核</Radio.Button>
+                                        <Radio.Button value="d">已禁用</Radio.Button>
+                                    </Radio.Group>
+                                </Form.Item>
+                            </Row>
+                            <Row>
+                                <Col span={10}>
+                                    <Form.Item label="审核日期">
+                                        <DatePicker />
+                                    </Form.Item>
+                                </Col>
+                                <Col span={2} />
+
+                                <Col span={10}>
+                                    <Form.Item label="申请日期">
+                                        <DatePicker />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                        </section>
+                    </TabPane>
+                    <TabPane tab="业务咨询" key="2">
                         Content of Tab Pane 2
                   </TabPane>
                 </Tabs>
