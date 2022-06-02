@@ -17,15 +17,15 @@ const IconFont = createFromIconfontCN({
 const logo = AliOss + '/img/logo.png'
 
 
-const titles = ["首页", '关于联盟','联盟动态',
-'业务范围', '专业委员会', '双碳资讯', '联系我们']
+const titles = ["首页", '关于联盟', '联盟动态',
+  '业务范围', '专业委员会', '双碳资讯', '联系我们']
 
 function App() {
   const [flag, setFlag] = useState(false)
   const [show, setShow] = useState(true)
   const [logined, checkLogin] = useState(false)
   const [dialog, setDialog] = useState(false)
-  const [userInfo,setUserInfo] = useState({})
+  const [userInfo, setUserInfo] = useState({})
 
   useEffect(() => {
     const href = window.location.href
@@ -43,7 +43,7 @@ function App() {
     if (check) {
       checkLogin(true)
       setUserInfo(JSON.parse(check))
-      console.log("打印刷",JSON.parse(check))
+      console.log("打印刷", JSON.parse(check))
     } else {
       checkLogin(false)
     }
@@ -53,7 +53,7 @@ function App() {
     <div className="app">
       <header className="app-header">
         <section className='header-left'>
-          <img src={logo} alt="" style={{ height: '0.82rem', marginRight: "0.1rem",width:"0.82rem" }} />
+          <img src={logo} alt="" style={{ height: '0.82rem', marginRight: "0.1rem", width: "0.82rem" }} />
           <div style={{
             height: "70%", display: "flex", flexDirection: "column", justifyContent: 'space-between',
             alignItems: 'flex-start', boxSizing: "border-box",
@@ -62,7 +62,7 @@ function App() {
               fontSize: "0.2rem",
               fontWeight: "bold",
               color: "black",
-              marginTop:"0.05rem"
+              marginTop: "0.05rem"
             }}>STIACN</span>
             <span style={{ color: "rgba(0,0,0,0.6)", fontSize: "0.14rem" }}>上海碳中和技术创新联盟</span>
           </div>
@@ -79,13 +79,13 @@ function App() {
             {/* <SearchOutlined style={{fontWeight:"bold", color: "#7B7B7B", width: "0.5rem" }} onClick={() => {
               setFlag(!flag)
             }} /> */}
-            <img src={IconSearch} style={{ width: "0.15rem",margin:"0 0.15rem 0 0.3rem"}} onClick={() => {
-              if(logined){
+            <img src={IconSearch} style={{ width: "0.15rem", margin: "0 0.15rem 0 0.3rem" }} onClick={() => {
+              if (logined) {
                 setFlag(!flag)
-              }else{
+              } else {
                 message.warn({
-                  content:"请登录",
-                  style:{zIndex:88888888888}
+                  content: "请登录",
+                  style: { zIndex: 88888888888 }
                 })
               }
             }} />
@@ -93,14 +93,14 @@ function App() {
               color: "#7B7B7B", fontSize: "0.12rem", fontWeight: "bold",
               width: "0.5rem", cursor: "pointer",
             }} onClick={() => {
-              window.location.href = '/login'
-              // message.warn("功能未开放")
+              // window.location.href = '/login'
+              message.warn("功能未开放")
             }}>
               登录
             </div> : <div style={{
                 color: "#7B7B7B", fontSize: "0.14rem", width: "0.5rem", cursor: "pointer",
-                position: "relative",clear:"both",height:"100%",display:"flex",
-                alignItems:"center",justifyContent:'center'
+                position: "relative", clear: "both", height: "100%", display: "flex",
+                alignItems: "center", justifyContent: 'center'
               }}
                 onMouseLeave={() => {
                   setDialog(false)
@@ -117,32 +117,32 @@ function App() {
                   left: '0.25rem',
                   border: "1px solid #51AA52",
                   width: "0.9rem",
-                  zIndex: 777,
+                  zIndex: 77777777,
                   background: "white",
                   borderRadius: "0.02rem",
-                  height:"0.3rem",
+                  height: "0.3rem",
                 }}>
                   <div style={{
                     fontSize: "0.12rem", height: "0.3rem", display: "flex", color: "rgba(0,0,0,0.5)",
-                    justifyContent: "center", alignItems: "center",color:"#51AA52"
+                    justifyContent: "center", alignItems: "center", color: "#51AA52"
                   }}
                     onClick={() => {
-                      if(userInfo){
-                        if (userInfo.role==1){
+                      if (userInfo) {
+                        if (userInfo.role == 1) {
                           window.location.href = '/admin'
-                        }else{
+                        } else {
                           window.location.href = '/admin'
                         }
                       }
-                     
+
                     }}>{userInfo && userInfo.name}</div>
                 </section>}
               </div>
             }
 
             {!logined ? <div style={{ color: "#7B7B7B", fontWeight: "bold", fontSize: "0.12rem", width: "0.5rem", cursor: "pointer" }} onClick={() => {
-              window.location.href = '/register'
-              // message.warn("功能未开放")
+              // window.location.href = '/register'
+              message.warn("功能未开放")
             }}>
               注册
            </div> : <div style={{ color: "#7B7B7B", fontWeight: "bold", fontSize: "0.12rem", width: "0.5rem", cursor: "pointer" }}
@@ -155,7 +155,7 @@ function App() {
           </div>
           <ul style={{
             height: "50%", width: "100%", display: "flex",
-            alignItems:"center",
+            alignItems: "center",
             justifyContent: 'space-between', margin: '0 -0.1rem', zIndex: 0
           }}>
             {titles.map((item) => {
@@ -176,7 +176,7 @@ function App() {
           </ul>
         </section>
       </header>
-      <main style={{ position:"relative",height:"50px"}} id='main_container'>
+      <main style={{ position: "relative", height: "50px" }} id='main_container'>
         <Routers />
       </main>
     </div>

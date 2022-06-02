@@ -1,39 +1,70 @@
-.admin_page{
+.admin_page {
 
     // tab样式
-    .ant-tabs-tab{
+    .ant-tabs-tab {
         // border:2px solid red !important;
-        padding:0.1rem 0;
+        padding  : 0.1rem 0;
         font-size: 0.14rem !important;
-        
+
     }
 
     // tab底部线条
-    .ant-tabs-nav{
+    .ant-tabs-nav {
         padding-left: 0.3rem !important;
     }
 
     // 按钮间隔
-    .ant-radio-button-wrapper{
-        margin:0 0.03rem !important;
-        border: none !important;
+    .ant-radio-button-wrapper {
+        margin   : 0 0.03rem 0 0 !important;
+        border   : none !important;
         font-size: 0.14rem !important;
         // margin: 0 !important;
     }
 
-    .ant-radio-button-wrapper::before{
+    .ant-radio-button-wrapper::before {
         width: 0px !important;
-        
+
     }
 
-    .ant-radio-button{
+    .ant-radio-button {
         border: none !important;
-      
+
     }
 
-    .ant-form-item-label{
-       label{
+    .ant-form-item-label {
+        label {
+            font-size: 0.14rem !important;
+        }
+    }
+
+    // placeholder样式
+    input::-webkit-input-placeholder {
+
         font-size: 0.14rem !important;
-       }
+
+    }
+
+    input::-moz-placeholder {
+
+        font-size: 0.14rem !important;
+
+    }
+
+    input:-ms-input-placeholder {
+
+        font-size: 0.14rem !important;
+
+    }
+
+    input::-webkit-input-placeholder {
+
+        font-size: 0.14rem !important;
+
+    }
+
+    input::placeholder {
+
+        font-size: 0.14rem !important;
+
     }
 }

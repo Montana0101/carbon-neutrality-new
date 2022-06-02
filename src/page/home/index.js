@@ -134,7 +134,7 @@ export default function Home(props) {
       </section>
 
 
-      <Modal title="编辑信息" visible={isModalVisible} 
+      <Modal title="编辑信息" visible={isModalVisible} centered
         onCancel={onCancel} okText={
           <Popconfirm
           title="确认提交您的咨询内容吗？"
@@ -468,12 +468,12 @@ export default function Home(props) {
           position: "relative", overflow: "hidden",
         }}>
           <div style={{
-            position: "absolute", background: "white", zIndex: 7777, right: "0", width: '0.3rem',
+            position: "absolute", background: "white", zIndex: 77, right: "0", width: '0.3rem',
             top: 0, bottom: 0
           }}>
           </div>
           <div style={{
-            position: "absolute", background: "white", zIndex: 7777, left: "0", width: '0.3rem',
+            position: "absolute", background: "white", zIndex: 77, left: "0", width: '0.3rem',
             top: 0, bottom: 0
           }}></div>
           <section style={{

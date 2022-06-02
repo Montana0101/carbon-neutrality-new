@@ -8,7 +8,7 @@ import {
 // import img1 from './imgs/1.png'
 import { AliOss, ThemeColor, CutLine } from "../../lib/const"
 import { createFromIconfontCN } from '@ant-design/icons';
-import { Tabs, Radio, Col, Row, Form, DatePicker } from 'antd';
+import { Tabs, Radio, Col, Row, Form, DatePicker, Input } from 'antd';
 import { Line } from '@ant-design/plots';
 import './admin.scss'
 
@@ -67,10 +67,14 @@ function Admin(props) {
     }, [])
     const history = useHistory()
 
-    const onChange = (key: string) => {
+    const onChange = (key) => {
         console.log(key);
     };
 
+    const formItemLayout = {
+        labelCol: { span: 4 },
+        wrapperCol: { span: 14 },
+    }
 
     return (
         <div className="admin_page" style={{
@@ -179,32 +183,49 @@ function Admin(props) {
             }}>
                 <Tabs defaultActiveKey="1" onChange={onChange} style={{}}>
                     <TabPane tab="用户管理" key="1">
-                        <section style={{ padding: "0.3rem" }}>
-                            <Row>
-                                <Form.Item label="用户状态">
-                                    <Radio.Group defaultValue="a" buttonStyle="solid">
-                                        <Radio.Button value="a">全部</Radio.Button>
-                                        <Radio.Button value="b">审核通过</Radio.Button>
-                                        <Radio.Button value="c">审核驳回</Radio.Button>
-                                        <Radio.Button value="d">待审核</Radio.Button>
-                                        <Radio.Button value="d">已禁用</Radio.Button>
-                                    </Radio.Group>
-                                </Form.Item>
-                            </Row>
-                            <Row>
-                                <Col span={10}>
-                                    <Form.Item label="审核日期">
-                                        <DatePicker />
+                        <section style={{ padding: "0.1rem 0.3rem" }}>
+                            <Form>
+                                <Row>
+                                    <Form.Item label="用户状态">
+                                        <Radio.Group defaultValue="a" buttonStyle="solid">
+                                            <Radio.Button value="a">全部</Radio.Button>
+                                            <Radio.Button value="b">审核通过</Radio.Button>
+                                            <Radio.Button value="c">审核驳回</Radio.Button>
+                                            <Radio.Button value="d">待审核</Radio.Button>
+                                            <Radio.Button value="d">已禁用</Radio.Button>
+                                        </Radio.Group>
                                     </Form.Item>
-                                </Col>
-                                <Col span={2} />
+                                </Row>
+                                <Row>
+                                    <Col span={10}>
+                                        <Form.Item label="审核日期">
+                                            <DatePicker style={{ width: "100%" }} placeholder='请选择审核的日期' />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col span={2} />
 
-                                <Col span={10}>
-                                    <Form.Item label="申请日期">
-                                        <DatePicker />
-                                    </Form.Item>
-                                </Col>
-                            </Row>
+                                    <Col span={10}>
+                                        <Form.Item label="申请日期">
+                                            <DatePicker style={{ width: "100%" }} placeholder='请选择申请的日期' />
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+
+                                <Row>
+                                    <Col span={10}>
+                                        <Form.Item label="申请邮箱">
+                                            <Input placeholder="请输入申请的邮箱" />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col span={2} />
+
+                                    <Col span={10}>
+                                        <Form.Item label="申请公司">
+                                            <Input placeholder="请输入申请的公司" />
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+                            </Form>
                         </section>
                     </TabPane>
                     <TabPane tab="业务咨询" key="2">
@@ -214,27 +235,16 @@ function Admin(props) {
             </div>
 
             <div style={{
-                border: CutLine, padding: '0 0.5rem', borderRight: "none", borderLeft: "none",
+                border: 'none', padding: '0 0.5rem', borderRight: "none", borderLeft: "none",
                 // borderTop: "none"
             }}>
                 <section style={{
                     fontSize: "0.12rem", fontWeight: "400", display: "flex", margin: 0,
                     padding: "0 0.3rem", height: "0.9rem", flexDirection: "column",
                     alignItems: "flex-start", justifyContent: "center",
-                    borderLeft: CutLine, borderRight: CutLine,
+                    border:CutLine,
                 }}>
-                    <div onClick={() => { history.push("/news/2") }}>
-                        <IconFont type="icon-tuichu" style={{ color: ThemeColor, margin: "0 0.1rem 0 0", fontSize: "0.12rem" }} />
-                        <a href="#" style={{ fontSize: "0.12rem", textDecoration: "underline", color: ThemeColor, fontWeight: "400" }}>
-                            上海碳中和技术创新联盟发起人会议在新能源中心召开</a>
-                    </div>
-                    <div onClick={() => { history.push("/news/3") }}>
-                        <IconFont type="icon-tuichu" style={{ color: ThemeColor, margin: "0 0.1rem 0 0", fontSize: "0.12rem" }} />
-                        <a href="#" style={{ fontSize: "0.12rem", textDecoration: "underline", color: ThemeColor, fontWeight: "400" }}>
-                            中共中央 国务院关于完整准确全面贯彻新发展理念做好碳达峰碳中和工作的意见 (2021年9月22日)
-
-</a>
-                    </div>
+                    <span>dsa</span>
                 </section>
             </div>
         </div>
