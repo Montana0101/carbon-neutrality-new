@@ -57,6 +57,18 @@ const DemoLine = () => {
     return <Line {...config} style={{ width: "100%", height: "100%" }} />;
 };
 
+const ButtonCmt = (bg,color,text) => {
+    return (
+        <button style={{
+            background: bg,
+            color: color,
+            fontSize: "0.12rem",
+            padding: "0.03rem 0.1rem",
+            width:'0.8rem',
+            borderRadius:"0.03rem"
+        }}>{text}</button>
+    )
+}
 
 function Admin(props) {
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
@@ -127,7 +139,7 @@ function Admin(props) {
         },
         {
           title: '序号',
-          dataIndex: 'age',
+          dataIndex: 'address',
         },
         {
           title: '审核状态',
@@ -153,6 +165,17 @@ function Admin(props) {
           },{
             title: '操作',
             dataIndex: 'address',
+            render:(text)=>{
+                return (
+                    <div style={{display:"flex",flexDirection:"column"}}>
+                            <div style={{marginBottom:"0.05rem"}}>
+                            {ButtonCmt(ThemeColor,'white','审核通过')}
+                            </div>
+                            {ButtonCmt("#FD867F",'white','审核驳回')}
+                    </div>
+                    
+                )
+            }
           },
       ];
       const data = [];
@@ -340,19 +363,12 @@ function Admin(props) {
                         fontWeight: "bold"
                     }}>为您找到65条相关结果</span>
                     <div style={{ display: "flex", }}>
-                        <button style={{
-                            background: ThemeColor,
-                            color: "white",
-                            fontSize: "0.12rem",
-                            padding: "0.05rem 0.1rem",
-                            marginRight: "0.2rem"
-                        }}>批量通过</button>
-                        <button style={{
-                            background: "#FD867F",
-                            color: "white",
-                            fontSize: "0.12rem",
-                            padding: "0.05rem 0.1rem"
-                        }}>批量驳回</button>
+                       
+                        <div style={{marginRight:"0.15rem"}}>
+                        {ButtonCmt(ThemeColor,'white','批量通过')}
+                        </div>
+                        {ButtonCmt("#FD867F",'white','批量驳回')}
+                      
                     </div>
                 </section>
             </div>
@@ -378,7 +394,7 @@ function Admin(props) {
 
                <Table rowSelection={rowSelection} columns={columns} dataSource={data} style={{
                    width:"100%",marginTop:"0.3rem"
-               }}/>
+               }} bordered/>
             </section>
         </div>
     )
