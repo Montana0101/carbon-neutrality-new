@@ -2,13 +2,11 @@
 import { useState, useEffect, useRef } from "react"
 import { withRouter, useHistory } from 'react-router-dom';
 import ReactDOM from 'react-dom';
-import {
-    LeftOutlined
-} from '@ant-design/icons'
+
 // import img1 from './imgs/1.png'
 import { AliOss, ThemeColor, CutLine } from "../../lib/const"
-import { createFromIconfontCN } from '@ant-design/icons';
-import { Tabs, Radio, Col, Row, Form, DatePicker, Input } from 'antd';
+import { createFromIconfontCN, ExclamationCircleFilled } from '@ant-design/icons';
+import { Tabs, Radio, Col, Row, Form, DatePicker, Input, Table } from 'antd';
 import { Line } from '@ant-design/plots';
 import './admin.scss'
 
@@ -61,6 +59,53 @@ const DemoLine = () => {
 
 
 function Admin(props) {
+    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+
+    const onSelectChange = (newSelectedRowKeys) => {
+      console.log('selectedRowKeys changed: ', selectedRowKeys);
+      setSelectedRowKeys(newSelectedRowKeys);
+    };
+  
+    const rowSelection = {
+      selectedRowKeys,
+      onChange: onSelectChange,
+      selections: [
+        Table.SELECTION_ALL,
+        Table.SELECTION_INVERT,
+        Table.SELECTION_NONE,
+        {
+          key: 'odd',
+          text: 'Select Odd Row',
+          onSelect: (changableRowKeys) => {
+            let newSelectedRowKeys = [];
+            newSelectedRowKeys = changableRowKeys.filter((_, index) => {
+              if (index % 2 !== 0) {
+                return false;
+              }
+  
+              return true;
+            });
+            setSelectedRowKeys(newSelectedRowKeys);
+          },
+        },
+        {
+          key: 'even',
+          text: 'Select Even Row',
+          onSelect: (changableRowKeys) => {
+            let newSelectedRowKeys = [];
+            newSelectedRowKeys = changableRowKeys.filter((_, index) => {
+              if (index % 2 !== 0) {
+                return true;
+              }
+  
+              return false;
+            });
+            setSelectedRowKeys(newSelectedRowKeys);
+          },
+        },
+      ],
+    };
+
     useEffect(() => {
         document.getElementsByTagName("html")[0].style.overflowX = "hidden"
         document.getElementsByTagName("html")[0].style.overflowY = "scroll"
@@ -75,7 +120,52 @@ function Admin(props) {
         labelCol: { span: 4 },
         wrapperCol: { span: 14 },
     }
-
+    const columns = [
+        {
+          title: '选择',
+          dataIndex: 'name',
+        },
+        {
+          title: '序号',
+          dataIndex: 'age',
+        },
+        {
+          title: '审核状态',
+          dataIndex: 'address',
+        },  {
+            title: '申请公司',
+            dataIndex: 'address',
+          },  {
+            title: '申请邮箱',
+            dataIndex: 'address',
+          },  {
+            title: '申请人员',
+            dataIndex: 'address',
+          },{
+            title: '申请时间',
+            dataIndex: 'address',
+          },{
+            title: '审核人',
+            dataIndex: 'address',
+          },{
+            title: '最后操作时间',
+            dataIndex: 'address',
+          },{
+            title: '操作',
+            dataIndex: 'address',
+          },
+      ];
+      const data = [];
+      
+      for (let i = 0; i < 46; i++) {
+        data.push({
+          key: i,
+          name: `Edward King ${i}`,
+          age: 32,
+          address: `London, Park Lane no. ${i}`,
+        });
+      }
+      
     return (
         <div className="admin_page" style={{
             height: "auto",
@@ -240,32 +330,56 @@ function Admin(props) {
             }}>
                 <section style={{
                     fontSize: "0.12rem", fontWeight: "400", display: "flex", margin: 0,
-                    padding: "0 0.3rem", height: "0.7rem", 
+                    padding: "0 0.3rem", height: "0.7rem",
                     alignItems: "center", justifyContent: "space-between",
-                    border:CutLine,
+                    border: CutLine,
                 }}>
                     <span style={{
-                        color:ThemeColor,
-                        fontSize:"0.12rem",
-                        fontWeight:"bold"
+                        color: ThemeColor,
+                        fontSize: "0.12rem",
+                        fontWeight: "bold"
                     }}>为您找到65条相关结果</span>
-                    <div style={{display:"flex",}}>
+                    <div style={{ display: "flex", }}>
                         <button style={{
-                            background:ThemeColor,
-                            color:"white",
-                            fontSize:"0.12rem",
-                            padding:"0.05rem 0.1rem",
-                            marginRight:"0.2rem"
+                            background: ThemeColor,
+                            color: "white",
+                            fontSize: "0.12rem",
+                            padding: "0.05rem 0.1rem",
+                            marginRight: "0.2rem"
                         }}>批量通过</button>
                         <button style={{
-                            background:"#FD867F",
-                            color:"white",
-                            fontSize:"0.12rem",
-                            padding:"0.05rem 0.1rem"
+                            background: "#FD867F",
+                            color: "white",
+                            fontSize: "0.12rem",
+                            padding: "0.05rem 0.1rem"
                         }}>批量驳回</button>
                     </div>
                 </section>
             </div>
+
+            {/* 表格数据区域 */}
+            <section style={{
+                fontSize: "0.12rem", fontWeight: "400", display: "flex", margin: '0 0.5rem',
+                padding: "0.3rem",
+                alignItems: "center", justifyContent: "flex-start",flexDirection:"column",
+                border: CutLine, borderTop: "none", 
+            }}>
+
+                <div style={{
+                    display: "flex", background: '#E6F7FF', width: "100%",
+                    height: "0.4rem", alignItems: "center", paddingLeft: '0.2rem', fontSize: "0.12rem"
+                }}>
+                    <ExclamationCircleFilled style={{ marginRight: "0.1rem", color: "#337FFF", fontSize: "0.14rem" }} />
+                    <span>已选择</span>
+                    <span style={{ margin: '0 0.1rem', color: "#337FFF" }}>3</span>
+                    <span>项</span>
+                    <a style={{ marginLeft: "0.15rem", textDecoration: "underline" }}>清空</a>
+                </div>
+
+               <Table rowSelection={rowSelection} columns={columns} dataSource={data} style={{
+                   width:"100%",marginTop:"0.3rem"
+               }}/>
+            </section>
         </div>
     )
 }
