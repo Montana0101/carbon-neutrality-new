@@ -197,14 +197,14 @@ function Admin(props) {
                                     </Form.Item>
                                 </Row>
                                 <Row>
-                                    <Col span={10}>
+                                    <Col span={11}>
                                         <Form.Item label="审核日期">
                                             <DatePicker style={{ width: "100%" }} placeholder='请选择审核的日期' />
                                         </Form.Item>
                                     </Col>
                                     <Col span={2} />
 
-                                    <Col span={10}>
+                                    <Col span={11}>
                                         <Form.Item label="申请日期">
                                             <DatePicker style={{ width: "100%" }} placeholder='请选择申请的日期' />
                                         </Form.Item>
@@ -212,14 +212,14 @@ function Admin(props) {
                                 </Row>
 
                                 <Row>
-                                    <Col span={10}>
+                                    <Col span={11}>
                                         <Form.Item label="申请邮箱">
                                             <Input placeholder="请输入申请的邮箱" />
                                         </Form.Item>
                                     </Col>
                                     <Col span={2} />
 
-                                    <Col span={10}>
+                                    <Col span={11}>
                                         <Form.Item label="申请公司">
                                             <Input placeholder="请输入申请的公司" />
                                         </Form.Item>
@@ -240,11 +240,30 @@ function Admin(props) {
             }}>
                 <section style={{
                     fontSize: "0.12rem", fontWeight: "400", display: "flex", margin: 0,
-                    padding: "0 0.3rem", height: "0.9rem", flexDirection: "column",
-                    alignItems: "flex-start", justifyContent: "center",
+                    padding: "0 0.3rem", height: "0.7rem", 
+                    alignItems: "center", justifyContent: "space-between",
                     border:CutLine,
                 }}>
-                    <span>dsa</span>
+                    <span style={{
+                        color:ThemeColor,
+                        fontSize:"0.12rem",
+                        fontWeight:"bold"
+                    }}>为您找到65条相关结果</span>
+                    <div style={{display:"flex",}}>
+                        <button style={{
+                            background:ThemeColor,
+                            color:"white",
+                            fontSize:"0.12rem",
+                            padding:"0.05rem 0.1rem",
+                            marginRight:"0.2rem"
+                        }}>批量通过</button>
+                        <button style={{
+                            background:"#FD867F",
+                            color:"white",
+                            fontSize:"0.12rem",
+                            padding:"0.05rem 0.1rem"
+                        }}>批量驳回</button>
+                    </div>
                 </section>
             </div>
         </div>

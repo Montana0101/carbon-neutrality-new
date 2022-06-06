@@ -17,6 +17,7 @@ const IconFont = createFromIconfontCN({
 const logo = AliOss + '/img/logo.png'
 
 
+
 const titles = ["首页", '关于联盟', '联盟动态',
   '业务范围', '专业委员会', '双碳资讯', '联系我们']
 
@@ -93,8 +94,8 @@ function App() {
               color: "#7B7B7B", fontSize: "0.12rem", fontWeight: "bold",
               width: "0.5rem", cursor: "pointer",
             }} onClick={() => {
-              // window.location.href = '/login'
-              message.warn("功能未开放")
+              window.location.href = '/login'
+              // message.warn("功能未开放")
             }}>
               登录
             </div> : <div style={{
@@ -141,8 +142,8 @@ function App() {
             }
 
             {!logined ? <div style={{ color: "#7B7B7B", fontWeight: "bold", fontSize: "0.12rem", width: "0.5rem", cursor: "pointer" }} onClick={() => {
-              // window.location.href = '/register'
-              message.warn("功能未开放")
+              window.location.href = '/register'
+              // message.warn("功能未开放")
             }}>
               注册
            </div> : <div style={{ color: "#7B7B7B", fontWeight: "bold", fontSize: "0.12rem", width: "0.5rem", cursor: "pointer" }}
