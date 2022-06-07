@@ -4,6 +4,7 @@ import { Carousel, Modal, Form, Input, Popconfirm, Button, Col, Row, message } f
 import { NavigateButton } from "../../component/button"
 import { FormOutlined } from '@ant-design/icons';
 import { consult } from '../../apis/index'
+import store from '../../store/index'
 
 import './index.scss'
 import 'echarts-gl';
@@ -17,11 +18,9 @@ const contentStyle = {
   color: '#fff',
   lineHeight: '160px',
   textAlign: 'center',
-  // background: '#364d79',
 };
 
 const barFontSize = '0.24rem' // 标题字体大小
-const paddingSize = '0.3rem' // 内边距大小
 
 // 双碳资讯
 const tastArr = [
@@ -55,38 +54,15 @@ const news = [
 var industry = ['化工', '能源', '钢铁', '智慧城市', '产业金融', '交通', '智能汽车', '环境检测', '科研', '碳交易']
 const bannerArr1 = ['打造碳中和万亿新市场', '建设碳中和行业新生态', '树立碳中和企业新标杆', '构筑碳中和商业新范式', '开创碳中和产业新未来']
 const bannerArr2 = ['工业节能', '建筑节能', '交通节能']
-var timer
 
 // 首页首屏
 export default function Home(props) {
-  const [industryInx, setInx] = useState(3)
   const [isModalVisible, setModalVisible] = useState(false)
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [content, setContent] = useState("")
 
   var formRef = useRef()
-
-  useEffect(() => {
-    // timer = setInterval(() => {
-    //   var inx = industryInx + 1
-    //   if (inx > 4) {
-    //     inx = 1
-    //   }
-    //   setInx(inx)
-    // }, 1000)
-    // return (() => {
-    //   clearInterval(timer)
-    // })
-  }, [industryInx])
-
-  const layout = {
-    // labelCol: { span: 8 },
-    // wrapperCol: { span: 14 },
-  };
-  const onFinish = (values) => {
-    console.log(values);
-  };
 
   const onSubmit = async () => {
     setModalVisible(true)
@@ -137,16 +113,16 @@ export default function Home(props) {
       <Modal title="编辑信息" visible={isModalVisible} centered
         onCancel={onCancel} okText={
           <Popconfirm
-          title="确认提交您的咨询内容吗？"
-          onConfirm={()=>{onSubmit()}}
-          onCancel={()=>{  onCancel()}}
-          okText="确定"
-          cancelText="取消"
-        >
-          <a href="#">确认</a>
-        </Popconfirm>
+            title="确认提交您的咨询内容吗？"
+            onConfirm={() => { onSubmit() }}
+            onCancel={() => { onCancel() }}
+            okText="确定"
+            cancelText="取消"
+          >
+            <a href="#">确认</a>
+          </Popconfirm>
         } cancelText='取消'>
-        <Form {...layout} name="nest-messages" onFinish={onFinish} ref={formRef}>
+        <Form name="nest-messages" ref={formRef}>
           <Row>
             <Col span={11}>
               <Form.Item label="企业名称" name='name'>
@@ -166,7 +142,7 @@ export default function Home(props) {
               <Form.Item label="咨询内容" span={24} name='content'>
                 <Input.TextArea placeholder='请输入咨询内容，最多300个字' style={{ width: "100%" }} onChange={
                   e => setContent(e.target.value)
-                } maxLength={300}/>
+                } maxLength={300} />
               </Form.Item>
             </Col>
           </Row>
@@ -180,7 +156,7 @@ export default function Home(props) {
       </Modal>
 
       <section >
-        <Carousel autoplay={false} effect="fade" autoplaySpeed={4000}>
+        <Carousel autoplay={true} effect="fade" autoplaySpeed={4000}>
           <div className='banner_area'>
             <h3 style={contentStyle}>
               <img src={AliOss + `/new_version_0518/index_banner_1.png`} alt="" />
@@ -196,7 +172,7 @@ export default function Home(props) {
                     color: "white"
                   }}></div>
                   <div style={{
-                    height: "0.5rem", fontSize: "0.3rem",  fontWeight: "bold",
+                    height: "0.5rem", fontSize: "0.3rem", fontWeight: "bold",
                     color: "white"
                   }}>助力上海市高质量实现“碳达峰、碳中和”的目标</div>
                 </div>
@@ -339,13 +315,13 @@ export default function Home(props) {
               fontSize: "0.12rem", paddingRight: "0.3rem", color: "rgba(0,0,0,0.77)"
             }}>
 
-              <div style={{ textAlign: "left",lineHeight:"0.25rem"}}>联盟全称为上海碳中和技术创新联盟（以下称“联盟”），
+              <div style={{ textAlign: "left", lineHeight: "0.25rem" }}>联盟全称为上海碳中和技术创新联盟（以下称“联盟”），
 
               英文名称为Shanghai Technology Innovation Alliance for Carbon Neutrality，
 
               英文缩写为STIACN。
           </div>
-              <div style={{ textAlign: "left" ,lineHeight:"0.25rem" }}>
+              <div style={{ textAlign: "left", lineHeight: "0.25rem" }}>
                 上海碳中和技术创新联盟是以习近平新时代中国特色社会主义思想为指导，在上海市科技党委和上海市科学技术委员会的领导下，全面贯彻落实国家和上海地方“碳达峰、碳中和”战略部署，在上海市科技党委和上海市科学技术委员会的领导下，携手48家在沪中央企业、科研院（所）、高校、企事业单位、社会团体共同发起成立，通过开展全方位、多领域、高质量的专业活动，搭建产学研用金等紧密结合、创新要素集聚的技术创新平台...
           </div>
               <p style={{ width: "1.2rem", height: "0.4rem", alignSelf: "flex-start", marginTop: "0.05rem" }}
