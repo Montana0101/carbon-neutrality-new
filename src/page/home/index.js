@@ -7,7 +7,6 @@ import { consult } from '../../apis/index'
 import store from '../../store/index'
 
 import './index.less'
-import 'echarts-gl';
 
 
 import stiacn_png from '../../static/imgs/stiacn.png'

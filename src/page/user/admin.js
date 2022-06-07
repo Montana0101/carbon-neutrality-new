@@ -1,10 +1,10 @@
 
 import { useState, useEffect, useRef } from "react"
 import { withRouter, useHistory } from 'react-router-dom';
-import {todayPending,totalRegister} from '../../apis/index'
+import { todayPending, totalRegister, statusEnum, adminManageList } from '../../apis/index'
 import { AliOss, ThemeColor, CutLine } from "../../lib/const"
 import { createFromIconfontCN, ExclamationCircleFilled } from '@ant-design/icons';
-import { Tabs, Radio, Col, Row, Form, DatePicker, Input, Table,message } from 'antd';
+import { Tabs, Radio, Col, Row, Form, DatePicker, Input, Table, message } from 'antd';
 import { Line } from '@ant-design/plots';
 import DefaultLogo from '../../static/imgs/default.png' // 默认企业logo
 
@@ -69,8 +69,11 @@ const ButtonCmt = (bg, color, text) => {
 function Admin(props) {
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const [info, setInfo] = useState({})
-    const [pendings,setPendings] = useState(0) // 今日待审核
-    const [totalRegisters,setTotalRegisters] = useState(0) // 
+    const [pendings, setPendings] = useState(0) // 今日待审核
+    const [totalRegisters, setTotalRegisters] = useState(0) //总计审核
+    const [enums, setEnum] = useState([]) //状态枚举类
+    const [list, setList] = useState([]) //返回数据集合
+    const [total, setTotal] = useState(0)
 
     const onSelectChange = (newSelectedRowKeys) => {
         console.log('selectedRowKeys changed: ', selectedRowKeys);
@@ -128,47 +131,57 @@ function Admin(props) {
     }, [])
 
     // 调用接口
-    useEffect(()=>{
+    useEffect(() => {
         _todayPendings()
         _totalRegister()
-    },[])
+        _statusEnum()
+        _adminManageList()
+    }, [])
 
-    // useEffect(()=>{
-    //     if(obj.totalRegister){
-    //         console.log("的NASA手机卡",obj)
-    //     }
-    //     if(obj.pendings){
-    //         console.log("22222222",obj)
-    //     }
-    // },[])
 
+    // 状态枚举类
+    const _statusEnum = async () => {
+        const res = await statusEnum()
+        if (res.code === 2000) {
+            setEnum(res.result)
+        }
+    }
     // 今天待审核人数
-    const _todayPendings = async() => {
+    const _todayPendings = async () => {
         const res = await todayPending()
-        if(res.code===2000){
-            // let _obj = JSON.parse(JSON.stringify(obj))
-        //    let _obj = Object.assign(obj,{
-        //         'pendings':res.result
-        //     })
-            // setObj(_obj)
+        if (res.code === 2000) {
             setPendings(res.result)
         }
     }
 
     // 累计注册人数
-    const _totalRegister = async()=>{
+    const _totalRegister = async () => {
         const res = await totalRegister()
-        if(res.code===2000){
-            // let _obj = JSON.parse(JSON.stringify(obj))
-            // let _obj = Object.assign(obj,{
-            //     'totalRegister':res.result
-            // })
-            // setObj(_obj)
+        if (res.code === 2000) {
             setTotalRegisters(res.result)
         }
     }
 
-   
+    // 列表数据
+    const _adminManageList = async () => {
+        let params = {
+            page: 1,
+            limit: 10,
+            email: "",
+            companyName: "",
+            status: "",
+            approvalTimeBegin: "",
+            approvalTimeEnd: "",
+            applyTimeBegin: "",
+            applyTimeEnd: ""
+        }
+        const res = await adminManageList(params)
+        if (res.code === 2000) {
+            console.log("你的健康三剑客的撒", res.result)
+            setList(res.result.data)
+            setTotal(res.result.totalRecord)
+        }
+    }
 
     const history = useHistory()
 
@@ -176,9 +189,29 @@ function Admin(props) {
         console.log(key);
     };
 
-    const formItemLayout = {
-        labelCol: { span: 4 },
-        wrapperCol: { span: 14 },
+    const statusValue = (num) => {
+        let val = { name: "", color: 'black' }
+
+        switch (num) {
+            case 2:
+                val.name = '待审核'
+                val.color = '#EFA71C'
+                return val
+            case 3:
+                val.name = '审核驳回'
+                val.color = '#F7372B'
+                return val
+            case 4:
+                val.name = '审核通过'
+                val.color = '#51AA52'
+                return val
+            case 5:
+                val.name = '已禁用'
+                val.color = '#757575'
+                return val
+            default:
+                return val
+        }
     }
     const columns = [
         {
@@ -187,32 +220,37 @@ function Admin(props) {
         },
         {
             title: '序号',
-            dataIndex: 'address',
+            render: (text, record, index) => `${index + 1}`
         },
         {
             title: '审核状态',
-            dataIndex: 'address',
+            dataIndex: 'status',
+            width:80,
+            render:(text,record,index)=>{
+                return (
+                    <span style={{color:statusValue(text).color}}>{statusValue(text).name}</span>
+                )
+            }
         }, {
             title: '申请公司',
-            dataIndex: 'address',
+            dataIndex: 'companyName',
         }, {
             title: '申请邮箱',
-            dataIndex: 'address',
+            dataIndex: 'email',
         }, {
             title: '申请人员',
-            dataIndex: 'address',
+            dataIndex: 'name',
         }, {
             title: '申请时间',
-            dataIndex: 'address',
+            dataIndex: 'registerTime',
         }, {
             title: '审核人',
-            dataIndex: 'address',
+            dataIndex: 'approver',
         }, {
             title: '最后操作时间',
-            dataIndex: 'address',
+            dataIndex: 'lastUpdateTime',
         }, {
             title: '操作',
-            dataIndex: 'address',
             render: (text) => {
                 return (
                     <div style={{ display: "flex", flexDirection: "column" }}>
@@ -350,13 +388,19 @@ function Admin(props) {
                             <Form>
                                 <Row>
                                     <Form.Item label="用户状态">
-                                        <Radio.Group defaultValue="a" buttonStyle="solid">
-                                            <Radio.Button value="a">全部</Radio.Button>
-                                            <Radio.Button value="b">审核通过</Radio.Button>
-                                            <Radio.Button value="c">审核驳回</Radio.Button>
-                                            <Radio.Button value="d">待审核</Radio.Button>
-                                            <Radio.Button value="d">已禁用</Radio.Button>
+                                        <Radio.Group defaultValue="" buttonStyle="solid">
+                                            <Radio.Button value={''}
+                                                key={0}>全部</Radio.Button>
+                                            <Radio.Button value={2}
+                                                key={2}>待审核</Radio.Button>
+                                            <Radio.Button value={3}
+                                                key={3}>审核驳回</Radio.Button>
+                                            <Radio.Button value={4}
+                                                key={4}>审核通过</Radio.Button>
+                                            <Radio.Button value={5}
+                                                key={5}>已禁用</Radio.Button>
                                         </Radio.Group>
+
                                     </Form.Item>
                                 </Row>
                                 <Row>
@@ -411,7 +455,7 @@ function Admin(props) {
                         color: ThemeColor,
                         fontSize: "0.12rem",
                         fontWeight: "bold"
-                    }}>为您找到65条相关结果</span>
+                    }}>为您找<span style={{ margin: '0 0.02rem' }}>{total}</span>条相关结果</span>
                     <div style={{ display: "flex", }}>
 
                         <div style={{ marginRight: "0.15rem" }}>
@@ -442,9 +486,12 @@ function Admin(props) {
                     <a style={{ marginLeft: "0.15rem", textDecoration: "underline" }}>清空</a>
                 </div>
 
-                <Table rowSelection={rowSelection} columns={columns} dataSource={data} style={{
+                <Table rowSelection={rowSelection} columns={columns} dataSource={list} style={{
                     width: "100%", marginTop: "0.3rem"
-                }} bordered />
+                }} bordered  pagination={{
+                    total:total,
+                    onChange: ()=>{},
+                  }}/>
             </section>
         </div>
     )
