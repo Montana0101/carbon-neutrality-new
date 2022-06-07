@@ -9,10 +9,7 @@ import { useEffect, useState } from "react"
 import { createFromIconfontCN, UserOutlined } from '@ant-design/icons';
 // import {useHistory} from 'react-router-dom'
 import IconSearch from "../static/imgs/search.svg"
-
-const IconFont = createFromIconfontCN({
-  scriptUrl: '//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js',
-});
+import store from '../store'
 
 const logo = AliOss + '/img/logo.png'
 
@@ -23,31 +20,22 @@ const titles = ["首页", '关于联盟', '联盟动态',
 
 function App() {
   const [flag, setFlag] = useState(false)
-  const [show, setShow] = useState(true)
   const [logined, checkLogin] = useState(false)
   const [dialog, setDialog] = useState(false)
   const [userInfo, setUserInfo] = useState({})
 
   useEffect(() => {
-    const href = window.location.href
-    console.log('截取下', href)
-    // var flag
-    // if (href.indexOf('login') != -1 || href.indexOf('register') != -1) {
-    //   flag = true
-    // } else {
-    //   flag = false
-    // }
-    // // var flag = href.indexOf('login') != -1 || href.indexOf('register') != -1
-    // setShow(!flag)
-
-    const check = localStorage.getItem('user')
-    if (check) {
+    // const check = localStorage.getItem('user')
+   
+    const info = store.getState().baseInfo
+    if (info) {
       checkLogin(true)
-      setUserInfo(JSON.parse(check))
-      console.log("打印刷", JSON.parse(check))
+      setUserInfo(info)
     } else {
       checkLogin(false)
     }
+    console.log(store.getState())
+  
   }, [])
 
   return (
