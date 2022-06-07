@@ -1,7 +1,10 @@
 import {ProxyUrl} from '../lib/const'
 var myHeaders = new Headers()
 myHeaders.append('Content-Type', 'application/json')
-myHeaders.append('token',JSON.parse(localStorage.getItem('user')).token)
+if(JSON.parse(localStorage.getItem('user'))){
+    myHeaders.append('token',JSON.parse(localStorage.getItem('user')).token)
+
+}
 // fetch封装
 export const fetchGadget = (url, method, params) => {
     let _url = `${ProxyUrl}${url}`
