@@ -1,10 +1,10 @@
 
 import { useState, useEffect, useRef } from "react"
 import { withRouter, useHistory } from 'react-router-dom';
-import {todayPending} from '../../apis/index'
+import {todayPending,totalRegister} from '../../apis/index'
 import { AliOss, ThemeColor, CutLine } from "../../lib/const"
 import { createFromIconfontCN, ExclamationCircleFilled } from '@ant-design/icons';
-import { Tabs, Radio, Col, Row, Form, DatePicker, Input, Table } from 'antd';
+import { Tabs, Radio, Col, Row, Form, DatePicker, Input, Table,message } from 'antd';
 import { Line } from '@ant-design/plots';
 import DefaultLogo from '../../static/imgs/default.png' // 默认企业logo
 
@@ -69,6 +69,8 @@ const ButtonCmt = (bg, color, text) => {
 function Admin(props) {
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const [info, setInfo] = useState({})
+    const [pendings,setPendings] = useState(0) // 今日待审核
+    const [totalRegisters,setTotalRegisters] = useState(0) // 
 
     const onSelectChange = (newSelectedRowKeys) => {
         console.log('selectedRowKeys changed: ', selectedRowKeys);
@@ -127,14 +129,46 @@ function Admin(props) {
 
     // 调用接口
     useEffect(()=>{
-        todayPendings()
+        _todayPendings()
+        _totalRegister()
     },[])
 
+    // useEffect(()=>{
+    //     if(obj.totalRegister){
+    //         console.log("的NASA手机卡",obj)
+    //     }
+    //     if(obj.pendings){
+    //         console.log("22222222",obj)
+    //     }
+    // },[])
+
     // 今天待审核人数
-    const todayPendings = async() => {
+    const _todayPendings = async() => {
         const res = await todayPending()
-        console.log("今日待审核人数",res)
+        if(res.code===2000){
+            // let _obj = JSON.parse(JSON.stringify(obj))
+        //    let _obj = Object.assign(obj,{
+        //         'pendings':res.result
+        //     })
+            // setObj(_obj)
+            setPendings(res.result)
+        }
     }
+
+    // 累计注册人数
+    const _totalRegister = async()=>{
+        const res = await totalRegister()
+        if(res.code===2000){
+            // let _obj = JSON.parse(JSON.stringify(obj))
+            // let _obj = Object.assign(obj,{
+            //     'totalRegister':res.result
+            // })
+            // setObj(_obj)
+            setTotalRegisters(res.result)
+        }
+    }
+
+   
 
     const history = useHistory()
 
@@ -280,7 +314,7 @@ function Admin(props) {
                             }}>
                                 <div style={{ color: "rgba(0,0,0,0.5)", fontSize: "0.12rem" }}>今日待审核的注册人数</div>
                                 <div style={{ alignSelf: "flex-end", display: "flex", alignItems: "center", marginBottom: "0.07rem" }}>
-                                    <span style={{ fontSize: "0.2rem" }}>7</span>
+                                    <span style={{ fontSize: "0.2rem" }}>{pendings}</span>
                                     <span style={{ fontSize: "0.12rem", marginTop: "0.03rem" }}>人</span>
                                 </div>
                             </section>
@@ -291,7 +325,7 @@ function Admin(props) {
                             }}>
                                 <div style={{ color: "rgba(0,0,0,0.5)", fontSize: "0.12rem" }}>累计审核的注册人数</div>
                                 <div style={{ alignSelf: "flex-end", display: "flex", alignItems: "center", marginBottom: "0.07rem" }}>
-                                    <span style={{ fontSize: "0.2rem" }}>7</span>
+                                    <span style={{ fontSize: "0.2rem" }}>{totalRegisters}</span>
                                     <span style={{ fontSize: "0.12rem", marginTop: "0.03rem" }}>人</span>
                                 </div>
                             </section>

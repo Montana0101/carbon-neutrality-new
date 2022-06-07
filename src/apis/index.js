@@ -26,8 +26,16 @@ export const consult = (params) => {
     return fetchGadget(url, 'POST', params)
 }
 
-// 管理员 今日待审核注册人数
+// 管理员
+
+// 今日待审核注册人数
 export const todayPending = () => {
     const url = `/stiacn/user/pending`
+    return fetchGadget(url, 'GET')
+}
+
+// 累计注册人数
+export const totalRegister = () => {
+    const url = `/stiacn/user/total`
     return fetchGadget(url, 'GET')
 }
