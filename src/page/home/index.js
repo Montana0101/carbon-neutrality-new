@@ -6,7 +6,7 @@ import { FormOutlined } from '@ant-design/icons';
 import { consult } from '../../apis/index'
 import store from '../../store/index'
 
-import './index.scss'
+import './index.less'
 import 'echarts-gl';
 
 

@@ -1,4 +1,4 @@
-import './app.scss';
+import './app.less';
 import { Input, Button, message } from 'antd'
 import Routers from "../route/index"
 import {
@@ -26,7 +26,7 @@ function App() {
 
   useEffect(() => {
     const check = localStorage.getItem('user')
-   
+
     // const info = store.getState().baseInfo
     if (JSON.parse(check)) {
       checkLogin(true)
@@ -34,7 +34,7 @@ function App() {
     } else {
       checkLogin(false)
     }
-  
+
   }, [])
 
   return (
@@ -67,7 +67,7 @@ function App() {
             {/* <SearchOutlined style={{fontWeight:"bold", color: "#7B7B7B", width: "0.5rem" }} onClick={() => {
               setFlag(!flag)
             }} /> */}
-            <img src={IconSearch} style={{ width: "0.15rem", margin: "0 0.15rem 0 0.3rem" }} onClick={() => {
+            <img alt="" src={IconSearch} style={{ width: "0.15rem", margin: "0 0.15rem 0 0.3rem" }} onClick={() => {
               if (logined) {
                 setFlag(!flag)
               } else {

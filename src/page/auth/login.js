@@ -5,7 +5,7 @@ import { login } from '../../apis/index'
 
 import bg from './bg.png'
 import { message } from 'antd'
-import './index.scss'
+import './index.less'
 
 const Login = () => {
     const [email, setEmail] = useState("")

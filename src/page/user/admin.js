@@ -8,7 +8,7 @@ import { Tabs, Radio, Col, Row, Form, DatePicker, Input, Table,message } from 'a
 import { Line } from '@ant-design/plots';
 import DefaultLogo from '../../static/imgs/default.png' // 默认企业logo
 
-import './admin.scss'
+import './admin.less'
 
 const { TabPane } = Tabs;
 
