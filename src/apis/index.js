@@ -54,3 +54,9 @@ export const adminManageList = (parmas) => {
         `approvalTimeEnd=${approvalTimeEnd}&applyTimeBegin=${applyTimeBegin}&applyTimeEnd=${applyTimeEnd}`
     return fetchGadget(url, 'GET')
 }
+
+// 年数据
+export const yearStatistics = () => {
+    const url = `/stiacn/user/statistics`
+    return fetchGadget(url, 'GET')
+}

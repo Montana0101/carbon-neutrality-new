@@ -1,32 +1,28 @@
 
 import { useState, useEffect, useRef } from "react"
 import { withRouter, useHistory } from 'react-router-dom';
-import { todayPending, totalRegister, statusEnum, adminManageList } from '../../apis/index'
+import { todayPending, totalRegister, statusEnum, adminManageList,yearStatistics} from '../../apis/index'
 import { AliOss, ThemeColor, CutLine } from "../../lib/const"
 import { createFromIconfontCN, ExclamationCircleFilled } from '@ant-design/icons';
-import { Tabs, Radio, Col, Row, Form, DatePicker, Input, Table, message } from 'antd';
+import { Tabs, Radio, Col, Row, Form, DatePicker, Input, Table, message, ConfigProvider } from 'antd';
 import { Line } from '@ant-design/plots';
 import DefaultLogo from '../../static/imgs/default.png' // 默认企业logo
+
+import zh_CN from 'antd/lib/locale-provider/zh_CN';
 
 import './admin.less'
 
 const { TabPane } = Tabs;
 
-const DemoLine = () => {
+const DemoLine = (props) => {
     const [data, setData] = useState([]);
     useEffect(() => {
-        asyncFetch();
-
+        // asyncFetch();
+        console.log("获得的数据",props.data)
+        // setData(props.data)
     }, []);
 
-    const asyncFetch = () => {
-        fetch('https://gw.alipayobjects.com/os/bmw-prod/e00d52f4-2fa6-47ee-a0d7-105dd95bde20.json')
-            .then((response) => response.json())
-            .then((json) => setData(json))
-            .catch((error) => {
-                console.log('fetch data failed', error);
-            });
-    };
+   
     const config = {
         data,
         xField: 'year',
@@ -74,6 +70,8 @@ function Admin(props) {
     const [enums, setEnum] = useState([]) //状态枚举类
     const [list, setList] = useState([]) //返回数据集合
     const [total, setTotal] = useState(0)
+    const [page, setPage] = useState(1) // 页码
+    const [yearData,setYearData] = useState({}) //年统计数据  
 
     const onSelectChange = (newSelectedRowKeys) => {
         console.log('selectedRowKeys changed: ', selectedRowKeys);
@@ -134,18 +132,24 @@ function Admin(props) {
     useEffect(() => {
         _todayPendings()
         _totalRegister()
-        _statusEnum()
-        _adminManageList()
+        _yearStatistics()
     }, [])
+
+    // 调用列表
+    useEffect(() => {
+        _adminManageList()
+    }, [page])
 
 
     // 状态枚举类
-    const _statusEnum = async () => {
-        const res = await statusEnum()
-        if (res.code === 2000) {
-            setEnum(res.result)
+    const _yearStatistics = async () => {
+        const res = await yearStatistics()
+        if(res.code === 2000){
+            setYearData(res.result)
+            console.log("大撒把哈多久啊是",res.result)
         }
     }
+
     // 今天待审核人数
     const _todayPendings = async () => {
         const res = await todayPending()
@@ -165,7 +169,7 @@ function Admin(props) {
     // 列表数据
     const _adminManageList = async () => {
         let params = {
-            page: 1,
+            page: page,
             limit: 10,
             email: "",
             companyName: "",
@@ -197,11 +201,11 @@ function Admin(props) {
                 val.name = '待审核'
                 val.color = '#EFA71C'
                 return val
-            case 3:
+            case 4:
                 val.name = '审核驳回'
                 val.color = '#F7372B'
                 return val
-            case 4:
+            case 3:
                 val.name = '审核通过'
                 val.color = '#51AA52'
                 return val
@@ -220,15 +224,21 @@ function Admin(props) {
         },
         {
             title: '序号',
-            render: (text, record, index) => `${index + 1}`
+            render: (text, record, index) => {
+                return (
+                    <span>
+                        {(page - 1) * 10 + index + 1}
+                    </span>
+                )
+            }
         },
         {
             title: '审核状态',
             dataIndex: 'status',
-            width:80,
-            render:(text,record,index)=>{
+            width: 80,
+            render: (text, record, index) => {
                 return (
-                    <span style={{color:statusValue(text).color}}>{statusValue(text).name}</span>
+                    <span style={{ color: statusValue(text).color }}>{statusValue(text).name}</span>
                 )
             }
         }, {
@@ -338,7 +348,7 @@ function Admin(props) {
                             background: "white",
                             padding: '0.1rem'
                         }}>
-                            <DemoLine />
+                            <DemoLine data={yearData}/>
                         </div>
                         <div style={{
                             display: "flex",
@@ -393,9 +403,9 @@ function Admin(props) {
                                                 key={0}>全部</Radio.Button>
                                             <Radio.Button value={2}
                                                 key={2}>待审核</Radio.Button>
-                                            <Radio.Button value={3}
-                                                key={3}>审核驳回</Radio.Button>
                                             <Radio.Button value={4}
+                                                key={3}>审核驳回</Radio.Button>
+                                            <Radio.Button value={3}
                                                 key={4}>审核通过</Radio.Button>
                                             <Radio.Button value={5}
                                                 key={5}>已禁用</Radio.Button>
@@ -406,15 +416,18 @@ function Admin(props) {
                                 <Row>
                                     <Col span={11}>
                                         <Form.Item label="审核日期">
-                                            <DatePicker style={{ width: "100%" }} placeholder='请选择审核的日期' />
+                                            <ConfigProvider locale={zh_CN} style={{ width: "100%" }}>
+                                                <DatePicker locale={zh_CN} style={{ width: "100%" }} placeholder='请选择审核的日期' />
+                                            </ConfigProvider >
                                         </Form.Item>
                                     </Col>
                                     <Col span={2} />
 
                                     <Col span={11}>
                                         <Form.Item label="申请日期">
-                                            <DatePicker style={{ width: "100%" }} placeholder='请选择申请的日期' />
-                                        </Form.Item>
+                                            <ConfigProvider locale={zh_CN} style={{ width: "100%" }}>
+                                                <DatePicker style={{ width: "100%" }} placeholder='请选择申请的日期' />
+                                            </ConfigProvider >                                        </Form.Item>
                                     </Col>
                                 </Row>
 
@@ -488,10 +501,10 @@ function Admin(props) {
 
                 <Table rowSelection={rowSelection} columns={columns} dataSource={list} style={{
                     width: "100%", marginTop: "0.3rem"
-                }} bordered  pagination={{
-                    total:total,
-                    onChange: ()=>{},
-                  }}/>
+                }} bordered pagination={{
+                    total: total,
+                    onChange: (e) => { setPage(e) },
+                }} />
             </section>
         </div>
     )
