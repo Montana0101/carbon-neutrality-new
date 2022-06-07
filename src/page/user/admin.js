@@ -1,26 +1,22 @@
 
 import { useState, useEffect, useRef } from "react"
 import { withRouter, useHistory } from 'react-router-dom';
-import ReactDOM from 'react-dom';
-
-// import img1 from './imgs/1.png'
+import {todayPending} from '../../apis/index'
 import { AliOss, ThemeColor, CutLine } from "../../lib/const"
 import { createFromIconfontCN, ExclamationCircleFilled } from '@ant-design/icons';
 import { Tabs, Radio, Col, Row, Form, DatePicker, Input, Table } from 'antd';
 import { Line } from '@ant-design/plots';
+import DefaultLogo from '../../static/imgs/default.png' // 默认企业logo
+
 import './admin.scss'
 
 const { TabPane } = Tabs;
 
-const IconFont = createFromIconfontCN({
-    scriptUrl: '//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js',
-});
-
 const DemoLine = () => {
     const [data, setData] = useState([]);
-
     useEffect(() => {
         asyncFetch();
+
     }, []);
 
     const asyncFetch = () => {
@@ -57,71 +53,89 @@ const DemoLine = () => {
     return <Line {...config} style={{ width: "100%", height: "100%" }} />;
 };
 
-const ButtonCmt = (bg,color,text) => {
+const ButtonCmt = (bg, color, text) => {
     return (
         <button style={{
             background: bg,
             color: color,
             fontSize: "0.12rem",
             padding: "0.03rem 0.1rem",
-            width:'0.8rem',
-            borderRadius:"0.03rem"
+            width: '0.8rem',
+            borderRadius: "0.03rem"
         }}>{text}</button>
     )
 }
 
 function Admin(props) {
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    const [info, setInfo] = useState({})
 
     const onSelectChange = (newSelectedRowKeys) => {
-      console.log('selectedRowKeys changed: ', selectedRowKeys);
-      setSelectedRowKeys(newSelectedRowKeys);
+        console.log('selectedRowKeys changed: ', selectedRowKeys);
+        setSelectedRowKeys(newSelectedRowKeys);
     };
-  
+
     const rowSelection = {
-      selectedRowKeys,
-      onChange: onSelectChange,
-      selections: [
-        Table.SELECTION_ALL,
-        Table.SELECTION_INVERT,
-        Table.SELECTION_NONE,
-        {
-          key: 'odd',
-          text: 'Select Odd Row',
-          onSelect: (changableRowKeys) => {
-            let newSelectedRowKeys = [];
-            newSelectedRowKeys = changableRowKeys.filter((_, index) => {
-              if (index % 2 !== 0) {
-                return false;
-              }
-  
-              return true;
-            });
-            setSelectedRowKeys(newSelectedRowKeys);
-          },
-        },
-        {
-          key: 'even',
-          text: 'Select Even Row',
-          onSelect: (changableRowKeys) => {
-            let newSelectedRowKeys = [];
-            newSelectedRowKeys = changableRowKeys.filter((_, index) => {
-              if (index % 2 !== 0) {
-                return true;
-              }
-  
-              return false;
-            });
-            setSelectedRowKeys(newSelectedRowKeys);
-          },
-        },
-      ],
+        selectedRowKeys,
+        onChange: onSelectChange,
+        selections: [
+            Table.SELECTION_ALL,
+            Table.SELECTION_INVERT,
+            Table.SELECTION_NONE,
+            {
+                key: 'odd',
+                text: 'Select Odd Row',
+                onSelect: (changableRowKeys) => {
+                    let newSelectedRowKeys = [];
+                    newSelectedRowKeys = changableRowKeys.filter((_, index) => {
+                        if (index % 2 !== 0) {
+                            return false;
+                        }
+
+                        return true;
+                    });
+                    setSelectedRowKeys(newSelectedRowKeys);
+                },
+            },
+            {
+                key: 'even',
+                text: 'Select Even Row',
+                onSelect: (changableRowKeys) => {
+                    let newSelectedRowKeys = [];
+                    newSelectedRowKeys = changableRowKeys.filter((_, index) => {
+                        if (index % 2 !== 0) {
+                            return true;
+                        }
+
+                        return false;
+                    });
+                    setSelectedRowKeys(newSelectedRowKeys);
+                },
+            },
+        ],
     };
 
     useEffect(() => {
         document.getElementsByTagName("html")[0].style.overflowX = "hidden"
         document.getElementsByTagName("html")[0].style.overflowY = "scroll"
+
+        const user = localStorage.getItem('user')
+        if (JSON.parse(user)) {
+            setInfo(JSON.parse(user))
+        }
     }, [])
+
+    // 调用接口
+    useEffect(()=>{
+        todayPendings()
+    },[])
+
+    // 今天待审核人数
+    const todayPendings = async() => {
+        const res = await todayPending()
+        console.log("今日待审核人数",res)
+    }
+
     const history = useHistory()
 
     const onChange = (key) => {
@@ -134,61 +148,61 @@ function Admin(props) {
     }
     const columns = [
         {
-          title: '选择',
-          dataIndex: 'name',
+            title: '选择',
+            dataIndex: 'name',
         },
         {
-          title: '序号',
-          dataIndex: 'address',
+            title: '序号',
+            dataIndex: 'address',
         },
         {
-          title: '审核状态',
-          dataIndex: 'address',
-        },  {
+            title: '审核状态',
+            dataIndex: 'address',
+        }, {
             title: '申请公司',
             dataIndex: 'address',
-          },  {
+        }, {
             title: '申请邮箱',
             dataIndex: 'address',
-          },  {
+        }, {
             title: '申请人员',
             dataIndex: 'address',
-          },{
+        }, {
             title: '申请时间',
             dataIndex: 'address',
-          },{
+        }, {
             title: '审核人',
             dataIndex: 'address',
-          },{
+        }, {
             title: '最后操作时间',
             dataIndex: 'address',
-          },{
+        }, {
             title: '操作',
             dataIndex: 'address',
-            render:(text)=>{
+            render: (text) => {
                 return (
-                    <div style={{display:"flex",flexDirection:"column"}}>
-                            <div style={{marginBottom:"0.05rem"}}>
-                            {ButtonCmt(ThemeColor,'white','审核通过')}
-                            </div>
-                            {ButtonCmt("#FD867F",'white','审核驳回')}
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                        <div style={{ marginBottom: "0.05rem" }}>
+                            {ButtonCmt(ThemeColor, 'white', '审核通过')}
+                        </div>
+                        {ButtonCmt("#FD867F", 'white', '审核驳回')}
                     </div>
-                    
+
                 )
             }
-          },
-      ];
-      const data = [];
-      
-      for (let i = 0; i < 46; i++) {
+        },
+    ];
+    const data = [];
+
+    for (let i = 0; i < 46; i++) {
         data.push({
-          key: i,
-          name: `Edward King ${i}`,
-          age: 32,
-          address: `London, Park Lane no. ${i}`,
+            key: i,
+            name: `Edward King ${i}`,
+            age: 32,
+            address: `London, Park Lane no. ${i}`,
         });
-      }
-      
+    }
+
     return (
         <div className="admin_page" style={{
             height: "auto",
@@ -235,14 +249,16 @@ function Admin(props) {
                             fontSize: "0.12rem",
                             color: "rgba(0,0,0,0.6)"
                         }}>
-                            <img style={{ height: "0.8rem" }}
-                                src="https://axure-file.lanhuapp.com/31b63b61-b591-4fa5-badd-980d384a1046__4687b4d118d33d65d4888f8ef69fc693.png" />
+                            {info.logoUrl ? <img style={{ height: "0.8rem" }}
+                                src={info.logoUrl} alt="" />
+                                : <img style={{ height: "0.8rem" }}
+                                    src={DefaultLogo} alt="" />}
                             <span style={{
                                 fontSize: "0.16rem", fontWeight: "bold", color: "black"
                                 , marginTop: "0.05rem"
-                            }}>admin</span>
-                            <span>shichen@shbeidou.com</span>
-                            <span>上海北斗卫星导航平台有限公司</span>
+                            }}>{info.name}</span>
+                            <span>{info.email}</span>
+                            <span>{info.companyName}</span>
                         </div>
                         <div style={{
                             flex: 3,
@@ -363,12 +379,12 @@ function Admin(props) {
                         fontWeight: "bold"
                     }}>为您找到65条相关结果</span>
                     <div style={{ display: "flex", }}>
-                       
-                        <div style={{marginRight:"0.15rem"}}>
-                        {ButtonCmt(ThemeColor,'white','批量通过')}
+
+                        <div style={{ marginRight: "0.15rem" }}>
+                            {ButtonCmt(ThemeColor, 'white', '批量通过')}
                         </div>
-                        {ButtonCmt("#FD867F",'white','批量驳回')}
-                      
+                        {ButtonCmt("#FD867F", 'white', '批量驳回')}
+
                     </div>
                 </section>
             </div>
@@ -377,8 +393,8 @@ function Admin(props) {
             <section style={{
                 fontSize: "0.12rem", fontWeight: "400", display: "flex", margin: '0 0.5rem',
                 padding: "0.3rem",
-                alignItems: "center", justifyContent: "flex-start",flexDirection:"column",
-                border: CutLine, borderTop: "none", 
+                alignItems: "center", justifyContent: "flex-start", flexDirection: "column",
+                border: CutLine, borderTop: "none",
             }}>
 
                 <div style={{
@@ -392,9 +408,9 @@ function Admin(props) {
                     <a style={{ marginLeft: "0.15rem", textDecoration: "underline" }}>清空</a>
                 </div>
 
-               <Table rowSelection={rowSelection} columns={columns} dataSource={data} style={{
-                   width:"100%",marginTop:"0.3rem"
-               }} bordered/>
+                <Table rowSelection={rowSelection} columns={columns} dataSource={data} style={{
+                    width: "100%", marginTop: "0.3rem"
+                }} bordered />
             </section>
         </div>
     )

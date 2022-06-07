@@ -101,16 +101,6 @@ export default function Home(props) {
     }
   }, [isModalVisible])
 
-  useEffect(()=>{
-      // 存入redux
-      if (localStorage.getItem("user")) {
-        store.dispatch({
-          type: 'Save_Base_Info',
-          value: JSON.parse(localStorage.getItem("user"))
-        })
-      }
-  },[])
-
   return (
     <div style={{ position: "relative", width: "100%", height: "100%" }} className='home_page_1'>
       {/* 客服框 */}

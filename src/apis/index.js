@@ -25,3 +25,9 @@ export const consult = (params) => {
     const url = `/stiacn/consult/save`
     return fetchGadget(url, 'POST', params)
 }
+
+// 管理员 今日待审核注册人数
+export const todayPending = () => {
+    const url = `/stiacn/user/pending`
+    return fetchGadget(url, 'GET')
+}

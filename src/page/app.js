@@ -25,16 +25,15 @@ function App() {
   const [userInfo, setUserInfo] = useState({})
 
   useEffect(() => {
-    // const check = localStorage.getItem('user')
+    const check = localStorage.getItem('user')
    
-    const info = store.getState().baseInfo
-    if (info) {
+    // const info = store.getState().baseInfo
+    if (JSON.parse(check)) {
       checkLogin(true)
-      setUserInfo(info)
+      setUserInfo(JSON.parse(check))
     } else {
       checkLogin(false)
     }
-    console.log(store.getState())
   
   }, [])
 
