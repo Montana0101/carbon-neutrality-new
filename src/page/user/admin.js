@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from "react"
 import { withRouter, useHistory } from 'react-router-dom';
 import {
-    todayPending, totalRegister, statusEnum, adminManageList, yearStatistics,
+    todayPending, totalRegister, consultList, adminManageList, yearStatistics,
     passUser, rejectUser, restartUser, disableUser
 } from '../../apis/index'
 import { AliOss, ThemeColor, CutLine } from "../../lib/const"
@@ -64,13 +64,15 @@ const ButtonCmt = (bg, color, text) => {
             padding: "0.03rem 0.1rem",
             width: '0.8rem',
             borderRadius: "0.03rem",
-            cursor:"pointer"
+            cursor: "pointer"
         }}>{text}</button>
     )
 }
 
 function Admin(props) {
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    const [tabInx, setTabInx] = useState(1) // tab切换索引
+
     const [info, setInfo] = useState({})
     const [pendings, setPendings] = useState(0) // 今日待审核
     const [totalRegisters, setTotalRegisters] = useState(0) //总计审核
@@ -83,6 +85,13 @@ function Admin(props) {
     const [email, setEmail] = useState("")
     const [companyName, setCompanyName] = useState("")
     const [status, setStatus] = useState("")
+
+    // 业务咨询
+    const [company, setCompany] = useState("")
+    const [phone, setPhone] = useState("")
+    const [consultArr, setConsult] = useState([]) // 咨询时间
+    const [content, setContent] = useState("") // 咨询内容
+    const [cList, setConsultList] = useState([]) // 返回数据集合
 
     const onSelectChange = (newSelectedRowKeys) => {
         console.log('selectedRowKeys changed: ', selectedRowKeys);
@@ -113,6 +122,23 @@ function Admin(props) {
         }
     }, [])
 
+    // tab切换
+    useEffect(() => {
+        // 清除共用变量
+        setTotal(0)
+        setStatus("")
+        setPage(0)
+        setSelectedRowKeys([])
+
+        if (tabInx == 1) {
+            // alert(11)
+            _adminManageList()
+        } else if (tabInx == 2) {
+            // alert(222)
+            _consultManageList()
+        }
+    }, [tabInx])
+
     // 调用接口
     useEffect(() => {
         _todayPendings()
@@ -120,10 +146,9 @@ function Admin(props) {
         _yearStatistics()
     }, [])
 
-    // 调用列表
+    // 用户管理调用列表
     useEffect(() => {
         _adminManageList()
-        // console.log("审核日期变化",approvalArr)
     }, [page, approvalArr, applyArr, email, companyName, status])
 
 
@@ -151,7 +176,7 @@ function Admin(props) {
         }
     }
 
-    // 列表数据
+    // 用户管理列表数据
     const _adminManageList = async () => {
         let params = {
             page: page,
@@ -172,7 +197,29 @@ function Admin(props) {
                 arr[index].key = item.id
             })
             setList(arr)
-            console.log("你的健康三剑客的撒", arr)
+            setTotal(res.result.totalRecord)
+        }
+    }
+
+    // 咨询管理列表数据
+    const _consultManageList = async () => {
+        const params = {
+            limit: 10,
+            page,
+            phone,
+            status,
+            consultCompany: company,
+            consultContent: content,
+            consultTimeBegin: consultArr[0] ? consultArr[0] : "",
+            consultTimeEnd: consultArr[1] ? consultArr[1] : "",
+        }
+        const res = await consultList(params)
+        if (res.code === 2000) {
+            let arr = res.result.data
+            arr && arr.map((item, index) => {
+                arr[index].key = item.id
+            })
+            setConsultList(res.result.data)
             setTotal(res.result.totalRecord)
         }
     }
@@ -184,7 +231,7 @@ function Admin(props) {
         if (res.code === 2000) {
             message.success("操作成功")
             _adminManageList()
-        }else{
+        } else {
             message.error("操作失败")
         }
     }
@@ -195,29 +242,29 @@ function Admin(props) {
         if (res.code === 2000) {
             message.success("操作成功")
             _adminManageList()
-        }else{
+        } else {
             message.error("操作失败")
         }
     }
 
     // 通过
-    const _passUser = async (id) => {
-        const res = await passUser(id)
-         if (res.code === 2000) {
+    const _passUser = async (arr) => {
+        const res = await passUser(arr)
+        if (res.code === 2000) {
             message.success("操作成功")
             _adminManageList()
-        }else{
+        } else {
             message.error("操作失败")
         }
     }
 
     // 驳回
-    const _rejectUser = async (id) => {
-        const res = await rejectUser(id)
-         if (res.code === 2000) {
+    const _rejectUser = async (arr) => {
+        const res = await rejectUser(arr)
+        if (res.code === 2000) {
             message.success("操作成功")
             _adminManageList()
-        }else{
+        } else {
             message.error("操作失败")
         }
     }
@@ -301,16 +348,16 @@ function Admin(props) {
                     <div style={{ display: "flex", flexDirection: "column" }}>
                         {/* 待审核 */}
                         {  record.status === 2 && <div style={{ marginBottom: "0.05rem" }}
-                            onClick={()=>_passUser(record.id)}>
+                            onClick={() => _passUser([record.id])}>
                             {ButtonCmt(ThemeColor, 'white', '通过')}
                         </div>}
-                        { record.status === 2 && <div onClick={()=>_rejectUser(record.id)}>{ButtonCmt("#FD867F", 'white', '驳回')}</div>}
+                        { record.status === 2 && <div onClick={() => _rejectUser([record.id])}>{ButtonCmt("#FD867F", 'white', '驳回')}</div>}
 
                         {/* 已通过 */}
-                        { record.status === 3 && <div onClick={()=>_disableUser(record.id)}>{ButtonCmt("#EFA71C", 'white', '禁用')}</div>}
+                        { record.status === 3 && <div onClick={() => _disableUser(record.id)}>{ButtonCmt("#EFA71C", 'white', '禁用')}</div>}
 
                         {/* 已禁用 */}
-                        { record.status === 5 && <div onClick={()=>_restartUser(record.id)}>{ButtonCmt("#418DF5", 'white', '启用')}</div>}
+                        { record.status === 5 && <div onClick={() => _restartUser(record.id)}>{ButtonCmt("#418DF5", 'white', '启用')}</div>}
                     </div>
 
                 )
@@ -435,7 +482,11 @@ function Admin(props) {
                 margin: '0 0.5rem 0 0.5rem',
 
             }}>
-                <Tabs defaultActiveKey="1" onChange={onChange} style={{}}>
+                <Tabs defaultActiveKey="1" onChange={(e) => {
+                    // 清除缓存
+
+                    setTabInx(e)
+                }} style={{}}>
                     <TabPane tab="用户管理" key="1">
                         <section style={{ padding: "0.1rem 0.3rem" }}>
                             <Form>
@@ -492,8 +543,55 @@ function Admin(props) {
                         </section>
                     </TabPane>
                     <TabPane tab="业务咨询" key="2">
-                        Content of Tab Pane 2
-                  </TabPane>
+                        <section style={{ padding: "0.1rem 0.3rem" }}>
+                            <Form>
+                                <Row>
+                                    <Form.Item label="咨询状态">
+                                        <Radio.Group defaultValue="" buttonStyle="solid" onChange={e => setStatus(e.target.value)}>
+                                            <Radio.Button value={''}
+                                                key={0}>全部</Radio.Button>
+                                            <Radio.Button value={1}
+                                                key={2}>已读</Radio.Button>
+                                            <Radio.Button value={0}
+                                                key={3}>未读</Radio.Button>
+                                        </Radio.Group>
+
+                                    </Form.Item>
+                                </Row>
+                                <Row>
+                                    <Col span={11}>
+                                        <Form.Item label="咨询日期">
+                                            <DatePicker.RangePicker style={{ width: "100%" }} onChange={
+                                                (moment, str) => setConsult(str)
+                                            } locale={locale} />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col span={2} />
+
+                                    <Col span={11}>
+                                        <Form.Item label="咨询内容">
+                                            <Input placeholder="请输入咨询内容" onChange={e => { setContent(e.target.value) }} />
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+
+                                <Row>
+                                    <Col span={11}>
+                                        <Form.Item label="联系方式">
+                                            <Input placeholder="请输入联系方式" onChange={e => { setPhone(e.target.value) }} />
+                                        </Form.Item>
+                                    </Col>
+                                    <Col span={2} />
+
+                                    <Col span={11}>
+                                        <Form.Item label="公司名称">
+                                            <Input placeholder="请输入公司名称" onChange={e => { setCompany(e.target.value) }} />
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+                            </Form>
+                        </section>
+                    </TabPane>
                 </Tabs>
             </div>
 
@@ -514,11 +612,16 @@ function Admin(props) {
                     }}>为您找<span style={{ margin: '0 0.02rem' }}>{total}</span>条相关结果</span>
                     <div style={{ display: "flex", }}>
 
-                        <div style={{ marginRight: "0.15rem" }}>
+                        {tabInx * 1 === 1 && <div style={{ marginRight: "0.15rem" }}>
                             {ButtonCmt(ThemeColor, 'white', '批量通过')}
-                        </div>
-                        {ButtonCmt("#FD867F", 'white', '批量驳回')}
+                        </div>}
+                        {tabInx * 1 === 1 && <div>
+                            {ButtonCmt("#FD867F", 'white', '批量驳回')}
+                        </div>}
 
+                        {tabInx * 1 === 2 && <div>
+                            {ButtonCmt(ThemeColor, 'white', '批量已读')}
+                        </div>}
                     </div>
                 </section>
             </div>
@@ -544,7 +647,7 @@ function Admin(props) {
                     }} >清空</a>
                 </div>
 
-                <Table rowSelection={{
+                {tabInx * 1 === 1 ? <Table style={{}} rowSelection={{
                     type: "checkbox",
                     ...rowSelection
                 }} columns={columns} dataSource={list} style={{
@@ -552,7 +655,15 @@ function Admin(props) {
                 }} bordered pagination={{
                     total: total,
                     onChange: (e) => { setPage(e) },
-                }} />
+                }} /> : <Table key={456} rowSelection={{
+                    type: "checkbox",
+                    ...rowSelection
+                }} columns={columns} dataSource={cList} style={{
+                    width: "100%", marginTop: "0.3rem"
+                }} bordered pagination={{
+                    total: total,
+                    onChange: (e) => { setPage(e) },
+                }} />}
 
             </section>
         </div>

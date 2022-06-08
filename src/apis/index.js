@@ -46,8 +46,8 @@ export const totalRegister = () => {
 }
 
 // 管理员 - 用户管理分页数据
-export const adminManageList = (parmas) => {
-    const { page, limit, email, companyName, status, approvalTimeBegin, approvalTimeEnd, applyTimeBegin, applyTimeEnd } = parmas
+export const adminManageList = (params) => {
+    const { page, limit, email, companyName, status, approvalTimeBegin, approvalTimeEnd, applyTimeBegin, applyTimeEnd } = params
     const url = `/stiacn/user/list?page=${page}&limit=${limit}&email=${email}&` +
         `companyName=${companyName}&status=${status}&approvalTimeBegin=${approvalTimeBegin}&` +
         `approvalTimeEnd=${approvalTimeEnd}&applyTimeBegin=${applyTimeBegin}&applyTimeEnd=${applyTimeEnd}`
@@ -82,4 +82,13 @@ export const passUser = (id) => {
 export const rejectUser = (id) => {
     const url = `/stiacn/user/reject?id=${id}`
     return fetchGadget(url, 'PUT')
+}
+
+// 管理员 - 咨询列表
+export const consultList = (params) => {
+    const { page, limit, consultCompany, status, phone, consultContent, consultTimeBegin, consultTimeEnd } = params
+    const url = `/stiacn/consult/list?page=${page}&limit=${limit}&` +
+        `consultCompany=${consultCompany}&status=${status}&phone=${phone}&consultContent=${consultContent}&` +
+        `consultTimeBegin=${consultTimeBegin}&consultTimeEnd=${consultTimeEnd}`
+    return fetchGadget(url, 'GET')
 }
