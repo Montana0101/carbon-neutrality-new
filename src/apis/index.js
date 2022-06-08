@@ -32,21 +32,20 @@ export const statusEnum = () => {
     return fetchGadget(url, 'GET')
 }
 
-// 管理员
 
-// 今日待审核注册人数
+// 管理员 - 今日待审核注册人数
 export const todayPending = () => {
     const url = `/stiacn/user/pending`
     return fetchGadget(url, 'GET')
 }
 
-// 累计注册人数
+// 管理员 - 累计注册人数
 export const totalRegister = () => {
     const url = `/stiacn/user/total`
     return fetchGadget(url, 'GET')
 }
 
-// 用户管理分页数据
+// 管理员 - 用户管理分页数据
 export const adminManageList = (parmas) => {
     const { page, limit, email, companyName, status, approvalTimeBegin, approvalTimeEnd, applyTimeBegin, applyTimeEnd } = parmas
     const url = `/stiacn/user/list?page=${page}&limit=${limit}&email=${email}&` +
@@ -55,8 +54,32 @@ export const adminManageList = (parmas) => {
     return fetchGadget(url, 'GET')
 }
 
-// 年数据
+// 管理员 - 年数据
 export const yearStatistics = () => {
     const url = `/stiacn/user/statistics`
     return fetchGadget(url, 'GET')
+}
+
+// 管理员 - 禁用
+export const disableUser = (id) => {
+    const url = `/stiacn/user/disable?id=${id}`
+    return fetchGadget(url, 'PUT')
+}
+
+// 管理员 - 启用
+export const restartUser = (id) => {
+    const url = `/stiacn/user/restart?id=${id}`
+    return fetchGadget(url, 'PUT')
+}
+
+// 管理员 - 通过
+export const passUser = (id) => {
+    const url = `/stiacn/user/pass?id=${id}`
+    return fetchGadget(url, 'PUT')
+}
+
+// 管理员 - 驳回
+export const rejectUser = (id) => {
+    const url = `/stiacn/user/reject?id=${id}`
+    return fetchGadget(url, 'PUT')
 }

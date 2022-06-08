@@ -1,7 +1,10 @@
 
 import { useState, useEffect, useRef } from "react"
 import { withRouter, useHistory } from 'react-router-dom';
-import { todayPending, totalRegister, statusEnum, adminManageList, yearStatistics } from '../../apis/index'
+import {
+    todayPending, totalRegister, statusEnum, adminManageList, yearStatistics,
+    passUser, rejectUser, restartUser, disableUser
+} from '../../apis/index'
 import { AliOss, ThemeColor, CutLine } from "../../lib/const"
 import { createFromIconfontCN, ExclamationCircleFilled } from '@ant-design/icons';
 import { Tabs, Radio, Col, Row, Form, DatePicker, Input, Table, message, ConfigProvider } from 'antd';
@@ -60,7 +63,8 @@ const ButtonCmt = (bg, color, text) => {
             fontSize: "0.12rem",
             padding: "0.03rem 0.1rem",
             width: '0.8rem',
-            borderRadius: "0.03rem"
+            borderRadius: "0.03rem",
+            cursor:"pointer"
         }}>{text}</button>
     )
 }
@@ -76,9 +80,9 @@ function Admin(props) {
     const [yearData, setYearData] = useState({}) //年统计数据  
     const [approvalArr, setApproval] = useState([]) // 审核时间
     const [applyArr, setApply] = useState([]) // 申请时间
-    const [email,setEmail] = useState("")
-    const [companyName,setCompanyName] = useState("")
-    const [status,setStatus] = useState("")
+    const [email, setEmail] = useState("")
+    const [companyName, setCompanyName] = useState("")
+    const [status, setStatus] = useState("")
 
     const onSelectChange = (newSelectedRowKeys) => {
         console.log('selectedRowKeys changed: ', selectedRowKeys);
@@ -88,16 +92,16 @@ function Admin(props) {
     const rowSelection = {
         selectedRowKeys,
         onChange: (selectedRowKeys, selectedRows) => {
-          console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-          setSelectedRowKeys(selectedRowKeys)
+            console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+            setSelectedRowKeys(selectedRowKeys)
         },
         getCheckboxProps: (record) => ({
-          disabled: record.name === 'Disabled User',
-          // Column configuration not to be checked
-          name: record.name,
+            disabled: record.name === 'Disabled User',
+            // Column configuration not to be checked
+            name: record.name,
         }),
-      };
-      
+    };
+
 
     useEffect(() => {
         document.getElementsByTagName("html")[0].style.overflowX = "hidden"
@@ -120,7 +124,7 @@ function Admin(props) {
     useEffect(() => {
         _adminManageList()
         // console.log("审核日期变化",approvalArr)
-    }, [page, approvalArr, applyArr,email,companyName,status])
+    }, [page, approvalArr, applyArr, email, companyName, status])
 
 
     // 状态枚举类
@@ -156,20 +160,65 @@ function Admin(props) {
             companyName,
             status,
             approvalTimeBegin: approvalArr[0] ? approvalArr[0] : "",
-            approvalTimeEnd: approvalArr[1] ? approvalArr[1] :"",
+            approvalTimeEnd: approvalArr[1] ? approvalArr[1] : "",
             applyTimeBegin: applyArr[0] ? applyArr[0] : "",
             applyTimeEnd: applyArr[1] ? applyArr[1] : ""
         }
         const res = await adminManageList(params)
         if (res.code === 2000) {
-        
+
             let arr = res.result.data
-            arr && arr.map((item,index)=>{
-                arr[index].key=item.id
+            arr && arr.map((item, index) => {
+                arr[index].key = item.id
             })
             setList(arr)
             console.log("你的健康三剑客的撒", arr)
             setTotal(res.result.totalRecord)
+        }
+    }
+
+    // 启用用户
+    const _restartUser = async (id) => {
+        const res = await restartUser(id)
+        // alert(id) 
+        if (res.code === 2000) {
+            message.success("操作成功")
+            _adminManageList()
+        }else{
+            message.error("操作失败")
+        }
+    }
+
+    // 禁用用户
+    const _disableUser = async (id) => {
+        const res = await disableUser(id)
+        if (res.code === 2000) {
+            message.success("操作成功")
+            _adminManageList()
+        }else{
+            message.error("操作失败")
+        }
+    }
+
+    // 通过
+    const _passUser = async (id) => {
+        const res = await passUser(id)
+         if (res.code === 2000) {
+            message.success("操作成功")
+            _adminManageList()
+        }else{
+            message.error("操作失败")
+        }
+    }
+
+    // 驳回
+    const _rejectUser = async (id) => {
+        const res = await rejectUser(id)
+         if (res.code === 2000) {
+            message.success("操作成功")
+            _adminManageList()
+        }else{
+            message.error("操作失败")
         }
     }
 
@@ -247,20 +296,21 @@ function Admin(props) {
             dataIndex: 'lastUpdateTime',
         }, {
             title: '操作',
-            render: (text,record) => {
+            render: (text, record) => {
                 return (
                     <div style={{ display: "flex", flexDirection: "column" }}>
                         {/* 待审核 */}
-                     {  record.status == 2 &&  <div style={{ marginBottom: "0.05rem" }}>
+                        {  record.status === 2 && <div style={{ marginBottom: "0.05rem" }}
+                            onClick={()=>_passUser(record.id)}>
                             {ButtonCmt(ThemeColor, 'white', '通过')}
                         </div>}
-                        { record.status == 2 && ButtonCmt("#FD867F", 'white', '驳回')}
+                        { record.status === 2 && <div onClick={()=>_rejectUser(record.id)}>{ButtonCmt("#FD867F", 'white', '驳回')}</div>}
 
                         {/* 已通过 */}
-                        { record.status == 3 && ButtonCmt("#EFA71C", 'white', '禁用')}
+                        { record.status === 3 && <div onClick={()=>_disableUser(record.id)}>{ButtonCmt("#EFA71C", 'white', '禁用')}</div>}
 
-                          {/* 已禁用 */}
-                          { record.status == 5 && ButtonCmt("#418DF5", 'white', '启用')}
+                        {/* 已禁用 */}
+                        { record.status === 5 && <div onClick={()=>_restartUser(record.id)}>{ButtonCmt("#418DF5", 'white', '启用')}</div>}
                     </div>
 
                 )
@@ -391,7 +441,7 @@ function Admin(props) {
                             <Form>
                                 <Row>
                                     <Form.Item label="用户状态">
-                                        <Radio.Group defaultValue="" buttonStyle="solid" onChange={e=>setStatus(e.target.value)}>
+                                        <Radio.Group defaultValue="" buttonStyle="solid" onChange={e => setStatus(e.target.value)}>
                                             <Radio.Button value={''}
                                                 key={0}>全部</Radio.Button>
                                             <Radio.Button value={2}
@@ -427,14 +477,14 @@ function Admin(props) {
                                 <Row>
                                     <Col span={11}>
                                         <Form.Item label="申请邮箱">
-                                            <Input placeholder="请输入申请的邮箱" onChange={e=>{setEmail(e.target.value)}}/>
+                                            <Input placeholder="请输入申请的邮箱" onChange={e => { setEmail(e.target.value) }} />
                                         </Form.Item>
                                     </Col>
                                     <Col span={2} />
 
                                     <Col span={11}>
                                         <Form.Item label="申请公司">
-                                            <Input placeholder="请输入申请的公司" onChange={e=>{setCompanyName(e.target.value)}}/>
+                                            <Input placeholder="请输入申请的公司" onChange={e => { setCompanyName(e.target.value) }} />
                                         </Form.Item>
                                     </Col>
                                 </Row>
@@ -489,13 +539,13 @@ function Admin(props) {
                     <span>已选择</span>
                     <span style={{ margin: '0 0.1rem', color: "#337FFF" }}>{selectedRowKeys.length}</span>
                     <span>项</span>
-                    <a style={{ marginLeft: "0.15rem", textDecoration: "underline" }} onClick={()=>{
+                    <a style={{ marginLeft: "0.15rem", textDecoration: "underline" }} onClick={() => {
                         setSelectedRowKeys([])
                     }} >清空</a>
                 </div>
 
                 <Table rowSelection={{
-                    type:"checkbox",
+                    type: "checkbox",
                     ...rowSelection
                 }} columns={columns} dataSource={list} style={{
                     width: "100%", marginTop: "0.3rem"
@@ -503,7 +553,7 @@ function Admin(props) {
                     total: total,
                     onChange: (e) => { setPage(e) },
                 }} />
-                
+
             </section>
         </div>
     )
