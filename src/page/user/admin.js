@@ -1,14 +1,17 @@
 
 import { useState, useEffect, useRef } from "react"
 import { withRouter, useHistory } from 'react-router-dom';
-import { todayPending, totalRegister, statusEnum, adminManageList,yearStatistics} from '../../apis/index'
+import { todayPending, totalRegister, statusEnum, adminManageList, yearStatistics } from '../../apis/index'
 import { AliOss, ThemeColor, CutLine } from "../../lib/const"
 import { createFromIconfontCN, ExclamationCircleFilled } from '@ant-design/icons';
 import { Tabs, Radio, Col, Row, Form, DatePicker, Input, Table, message, ConfigProvider } from 'antd';
 import { Line } from '@ant-design/plots';
+import 'moment/locale/zh-cn';
+import locale from 'antd/es/date-picker/locale/zh_CN';
+
 import DefaultLogo from '../../static/imgs/default.png' // 默认企业logo
 
-import zh_CN from 'antd/lib/locale-provider/zh_CN';
+import zhCN from 'antd/lib/locale-provider/zh_CN';
 
 import './admin.less'
 
@@ -18,11 +21,11 @@ const DemoLine = (props) => {
     const [data, setData] = useState([]);
     useEffect(() => {
         // asyncFetch();
-        console.log("获得的数据",props.data)
+        console.log("获得的数据", props.data)
         // setData(props.data)
     }, []);
 
-   
+
     const config = {
         data,
         xField: 'year',
@@ -67,11 +70,15 @@ function Admin(props) {
     const [info, setInfo] = useState({})
     const [pendings, setPendings] = useState(0) // 今日待审核
     const [totalRegisters, setTotalRegisters] = useState(0) //总计审核
-    const [enums, setEnum] = useState([]) //状态枚举类
     const [list, setList] = useState([]) //返回数据集合
     const [total, setTotal] = useState(0)
     const [page, setPage] = useState(1) // 页码
-    const [yearData,setYearData] = useState({}) //年统计数据  
+    const [yearData, setYearData] = useState({}) //年统计数据  
+    const [approvalArr, setApproval] = useState([]) // 审核时间
+    const [applyArr, setApply] = useState([]) // 申请时间
+    const [email,setEmail] = useState("")
+    const [companyName,setCompanyName] = useState("")
+    const [status,setStatus] = useState("")
 
     const onSelectChange = (newSelectedRowKeys) => {
         console.log('selectedRowKeys changed: ', selectedRowKeys);
@@ -80,43 +87,17 @@ function Admin(props) {
 
     const rowSelection = {
         selectedRowKeys,
-        onChange: onSelectChange,
-        selections: [
-            Table.SELECTION_ALL,
-            Table.SELECTION_INVERT,
-            Table.SELECTION_NONE,
-            {
-                key: 'odd',
-                text: 'Select Odd Row',
-                onSelect: (changableRowKeys) => {
-                    let newSelectedRowKeys = [];
-                    newSelectedRowKeys = changableRowKeys.filter((_, index) => {
-                        if (index % 2 !== 0) {
-                            return false;
-                        }
-
-                        return true;
-                    });
-                    setSelectedRowKeys(newSelectedRowKeys);
-                },
-            },
-            {
-                key: 'even',
-                text: 'Select Even Row',
-                onSelect: (changableRowKeys) => {
-                    let newSelectedRowKeys = [];
-                    newSelectedRowKeys = changableRowKeys.filter((_, index) => {
-                        if (index % 2 !== 0) {
-                            return true;
-                        }
-
-                        return false;
-                    });
-                    setSelectedRowKeys(newSelectedRowKeys);
-                },
-            },
-        ],
-    };
+        onChange: (selectedRowKeys, selectedRows) => {
+          console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+          setSelectedRowKeys(selectedRowKeys)
+        },
+        getCheckboxProps: (record) => ({
+          disabled: record.name === 'Disabled User',
+          // Column configuration not to be checked
+          name: record.name,
+        }),
+      };
+      
 
     useEffect(() => {
         document.getElementsByTagName("html")[0].style.overflowX = "hidden"
@@ -138,15 +119,15 @@ function Admin(props) {
     // 调用列表
     useEffect(() => {
         _adminManageList()
-    }, [page])
+        // console.log("审核日期变化",approvalArr)
+    }, [page, approvalArr, applyArr,email,companyName,status])
 
 
     // 状态枚举类
     const _yearStatistics = async () => {
         const res = await yearStatistics()
-        if(res.code === 2000){
+        if (res.code === 2000) {
             setYearData(res.result)
-            console.log("大撒把哈多久啊是",res.result)
         }
     }
 
@@ -171,18 +152,23 @@ function Admin(props) {
         let params = {
             page: page,
             limit: 10,
-            email: "",
-            companyName: "",
-            status: "",
-            approvalTimeBegin: "",
-            approvalTimeEnd: "",
-            applyTimeBegin: "",
-            applyTimeEnd: ""
+            email,
+            companyName,
+            status,
+            approvalTimeBegin: approvalArr[0] ? approvalArr[0] : "",
+            approvalTimeEnd: approvalArr[1] ? approvalArr[1] :"",
+            applyTimeBegin: applyArr[0] ? applyArr[0] : "",
+            applyTimeEnd: applyArr[1] ? applyArr[1] : ""
         }
         const res = await adminManageList(params)
         if (res.code === 2000) {
-            console.log("你的健康三剑客的撒", res.result)
-            setList(res.result.data)
+        
+            let arr = res.result.data
+            arr && arr.map((item,index)=>{
+                arr[index].key=item.id
+            })
+            setList(arr)
+            console.log("你的健康三剑客的撒", arr)
             setTotal(res.result.totalRecord)
         }
     }
@@ -202,11 +188,11 @@ function Admin(props) {
                 val.color = '#EFA71C'
                 return val
             case 4:
-                val.name = '审核驳回'
+                val.name = '已驳回'
                 val.color = '#F7372B'
                 return val
             case 3:
-                val.name = '审核通过'
+                val.name = '已通过'
                 val.color = '#51AA52'
                 return val
             case 5:
@@ -227,7 +213,7 @@ function Admin(props) {
             render: (text, record, index) => {
                 return (
                     <span>
-                        {(page - 1) * 10 + index + 1}
+                        {record.id}
                     </span>
                 )
             }
@@ -261,13 +247,20 @@ function Admin(props) {
             dataIndex: 'lastUpdateTime',
         }, {
             title: '操作',
-            render: (text) => {
+            render: (text,record) => {
                 return (
                     <div style={{ display: "flex", flexDirection: "column" }}>
-                        <div style={{ marginBottom: "0.05rem" }}>
-                            {ButtonCmt(ThemeColor, 'white', '审核通过')}
-                        </div>
-                        {ButtonCmt("#FD867F", 'white', '审核驳回')}
+                        {/* 待审核 */}
+                     {  record.status == 2 &&  <div style={{ marginBottom: "0.05rem" }}>
+                            {ButtonCmt(ThemeColor, 'white', '通过')}
+                        </div>}
+                        { record.status == 2 && ButtonCmt("#FD867F", 'white', '驳回')}
+
+                        {/* 已通过 */}
+                        { record.status == 3 && ButtonCmt("#EFA71C", 'white', '禁用')}
+
+                          {/* 已禁用 */}
+                          { record.status == 5 && ButtonCmt("#418DF5", 'white', '启用')}
                     </div>
 
                 )
@@ -348,7 +341,7 @@ function Admin(props) {
                             background: "white",
                             padding: '0.1rem'
                         }}>
-                            <DemoLine data={yearData}/>
+                            <DemoLine data={yearData} />
                         </div>
                         <div style={{
                             display: "flex",
@@ -398,15 +391,15 @@ function Admin(props) {
                             <Form>
                                 <Row>
                                     <Form.Item label="用户状态">
-                                        <Radio.Group defaultValue="" buttonStyle="solid">
+                                        <Radio.Group defaultValue="" buttonStyle="solid" onChange={e=>setStatus(e.target.value)}>
                                             <Radio.Button value={''}
                                                 key={0}>全部</Radio.Button>
                                             <Radio.Button value={2}
                                                 key={2}>待审核</Radio.Button>
                                             <Radio.Button value={4}
-                                                key={3}>审核驳回</Radio.Button>
+                                                key={3}>已驳回</Radio.Button>
                                             <Radio.Button value={3}
-                                                key={4}>审核通过</Radio.Button>
+                                                key={4}>已通过</Radio.Button>
                                             <Radio.Button value={5}
                                                 key={5}>已禁用</Radio.Button>
                                         </Radio.Group>
@@ -416,32 +409,32 @@ function Admin(props) {
                                 <Row>
                                     <Col span={11}>
                                         <Form.Item label="审核日期">
-                                            <ConfigProvider locale={zh_CN} style={{ width: "100%" }}>
-                                                <DatePicker locale={zh_CN} style={{ width: "100%" }} placeholder='请选择审核的日期' />
-                                            </ConfigProvider >
+                                            <DatePicker.RangePicker style={{ width: "100%" }} onChange={
+                                                (moment, str) => setApproval(str)
+                                            } locale={locale} />
                                         </Form.Item>
                                     </Col>
                                     <Col span={2} />
 
                                     <Col span={11}>
                                         <Form.Item label="申请日期">
-                                            <ConfigProvider locale={zh_CN} style={{ width: "100%" }}>
-                                                <DatePicker style={{ width: "100%" }} placeholder='请选择申请的日期' />
-                                            </ConfigProvider >                                        </Form.Item>
+                                            <DatePicker.RangePicker style={{ width: "100%" }} onChange={
+                                                (moment, str) => setApply(str)
+                                            } locale={locale} />                                    </Form.Item>
                                     </Col>
                                 </Row>
 
                                 <Row>
                                     <Col span={11}>
                                         <Form.Item label="申请邮箱">
-                                            <Input placeholder="请输入申请的邮箱" />
+                                            <Input placeholder="请输入申请的邮箱" onChange={e=>{setEmail(e.target.value)}}/>
                                         </Form.Item>
                                     </Col>
                                     <Col span={2} />
 
                                     <Col span={11}>
                                         <Form.Item label="申请公司">
-                                            <Input placeholder="请输入申请的公司" />
+                                            <Input placeholder="请输入申请的公司" onChange={e=>{setCompanyName(e.target.value)}}/>
                                         </Form.Item>
                                     </Col>
                                 </Row>
@@ -494,17 +487,23 @@ function Admin(props) {
                 }}>
                     <ExclamationCircleFilled style={{ marginRight: "0.1rem", color: "#337FFF", fontSize: "0.14rem" }} />
                     <span>已选择</span>
-                    <span style={{ margin: '0 0.1rem', color: "#337FFF" }}>3</span>
+                    <span style={{ margin: '0 0.1rem', color: "#337FFF" }}>{selectedRowKeys.length}</span>
                     <span>项</span>
-                    <a style={{ marginLeft: "0.15rem", textDecoration: "underline" }}>清空</a>
+                    <a style={{ marginLeft: "0.15rem", textDecoration: "underline" }} onClick={()=>{
+                        setSelectedRowKeys([])
+                    }} >清空</a>
                 </div>
 
-                <Table rowSelection={rowSelection} columns={columns} dataSource={list} style={{
+                <Table rowSelection={{
+                    type:"checkbox",
+                    ...rowSelection
+                }} columns={columns} dataSource={list} style={{
                     width: "100%", marginTop: "0.3rem"
                 }} bordered pagination={{
                     total: total,
                     onChange: (e) => { setPage(e) },
                 }} />
+                
             </section>
         </div>
     )
