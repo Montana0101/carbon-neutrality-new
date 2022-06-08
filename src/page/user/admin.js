@@ -30,8 +30,9 @@ const openNotification = () => {
     notification.open(args);
 };
 
-const DemoLine = (props) => {
+const DemoLine = () => {
     const [data, setData] = useState([]);
+    const [obj,setObj] = useState({})
 
     useEffect(() => {
         // asyncFetch();
@@ -46,27 +47,14 @@ const DemoLine = (props) => {
         if (res.code === 2000) {
             // setData(res.result)
             let arr = []
-            // 注册人数
-
-            for (var i in res.result.registerSumEntity) {
-                console.log('iiii', i, '-------', res.result.registerSumEntity[i])
-                arr.push({
-                    type: '注册人数',
-                    month: i,
-                    value: res.result.registerSumEntity[i]
-                })
+       
+            for (var i in res.result.data) {
+                arr.push(i)
             }
-
-            for (var i in res.result.approvSumEntity) {
-                console.log('iiii', i, '-------', res.result.approvSumEntity[i])
-                arr.push({
-                    type: '申报公司数',
-                    month: i,
-                    value: res.result.approvSumEntity[i]
-                })
-            }
-            setData(arr)
-            console.log("打印下折线图数据", arr)
+            setData(res.result.data)
+            setObj(res.result)
+            // approveSum
+            // registerSum
         }
     }
 
@@ -88,10 +76,15 @@ const DemoLine = (props) => {
                 // position:'end'
             },
         },
+        xAxis:{
+            label: {
+                formatter: (v) => `${v}月`,
+            },
+        },
         legend: {
             position: 'top-right',
         },
-        smooth: true,
+        // smooth: true,
         // @TODO 后续会换一种动画方式
         animation: {
             appear: {
@@ -101,7 +94,14 @@ const DemoLine = (props) => {
         },
     };
 
-    return <Line {...config} style={{ width: "100%", height: "100%" }} />;
+    return <div style={{ width: "100%", height: "100%" }}>
+        <Line {...config} style={{ width: "100%", height: "85%" }} />
+        <div style={{fontSize:"0.12rem",fontWeight:"bold",width:"100%",margin:"0.1rem 0",padding:"0 15%",
+        display:"flex",justifyContent:"space-between",alignItems:"center",color:"rgba(0,0,0,0.5)"}}>
+            <span>当前已注册总人数: {obj && obj.registerSum}人</span>
+            <span>当前已申报公司总数量：{obj && obj.approveSum} 个</span>
+        </div>
+    </div>;
 };
 
 const ButtonCmt = (bg, color, text) => {
