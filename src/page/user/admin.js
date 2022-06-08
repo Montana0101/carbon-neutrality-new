@@ -32,25 +32,64 @@ const openNotification = () => {
 
 const DemoLine = (props) => {
     const [data, setData] = useState([]);
+
     useEffect(() => {
         // asyncFetch();
-        console.log("获得的数据", props.data)
+        // console.log("获得的数据", props.data)
         // setData(props.data)
+        _yearStatistics()
     }, []);
+
+    // 折线图数据
+    const _yearStatistics = async () => {
+        const res = await yearStatistics()
+        if (res.code === 2000) {
+            // setData(res.result)
+            let arr = []
+            // 注册人数
+
+            for (var i in res.result.registerSumEntity) {
+                console.log('iiii', i, '-------', res.result.registerSumEntity[i])
+                arr.push({
+                    type: '注册人数',
+                    month: i,
+                    value: res.result.registerSumEntity[i]
+                })
+            }
+
+            for (var i in res.result.approvSumEntity) {
+                console.log('iiii', i, '-------', res.result.approvSumEntity[i])
+                arr.push({
+                    type: '申报公司数',
+                    month: i,
+                    value: res.result.approvSumEntity[i]
+                })
+            }
+            setData(arr)
+            console.log("打印下折线图数据", arr)
+        }
+    }
 
 
     const config = {
         data,
-        xField: 'year',
-        yField: 'gdp',
-        seriesField: 'name',
+        xField: 'month',
+        yField: 'value',
+        seriesField: 'type',
         yAxis: {
             label: {
-                formatter: (v) => `${(v / 10e8).toFixed(1)} B`,
+                formatter: (v) => `${v}`,
+            },
+            title: {
+                text: '',
+                // style: {
+                //     fontSize: 12,
+                // },
+                // position:'end'
             },
         },
         legend: {
-            position: 'top',
+            position: 'top-right',
         },
         smooth: true,
         // @TODO 后续会换一种动画方式
@@ -91,9 +130,9 @@ function Admin(props) {
     const [totalRegisters, setTotalRegisters] = useState(0) //总计审核
     const [list, setList] = useState([]) //返回数据集合
     const [total, setTotal] = useState(0)
-    
+
     const [page, setPage] = useState(1) // 页码
-    const [yearData, setYearData] = useState({}) //年统计数据  
+
     const [approvalArr, setApproval] = useState([]) // 审核时间
     const [applyArr, setApply] = useState([]) // 申请时间
     const [email, setEmail] = useState("")
@@ -153,7 +192,6 @@ function Admin(props) {
     useEffect(() => {
         _todayPendings()
         _totalRegister()
-        _yearStatistics()
     }, [])
 
     // 用户管理调用列表
@@ -162,18 +200,10 @@ function Admin(props) {
     }, [page, approvalArr, applyArr, email, companyName, status])
 
     // 咨询列表
-    useEffect(()=>{
+    useEffect(() => {
         _consultManageList()
-    },[status,page,company,phone,content,consultArr])
+    }, [status, page, company, phone, content, consultArr])
 
-
-    // 状态枚举类
-    const _yearStatistics = async () => {
-        const res = await yearStatistics()
-        if (res.code === 2000) {
-            setYearData(res.result)
-        }
-    }
 
     // 今天待审核人数
     const _todayPendings = async () => {
@@ -521,7 +551,7 @@ function Admin(props) {
                             background: "white",
                             padding: '0.1rem'
                         }}>
-                            <DemoLine data={yearData} />
+                            <DemoLine />
                         </div>
                         <div style={{
                             display: "flex",
