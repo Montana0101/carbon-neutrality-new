@@ -73,14 +73,32 @@ export const restartUser = (id) => {
 }
 
 // 管理员 - 通过
-export const passUser = (id) => {
-    const url = `/stiacn/user/pass?id=${id}`
+export const passUser = (ids) => {
+    const arr = JSON.parse(JSON.stringify(ids))
+    var str = ''
+    arr && arr.map((item, index) => {
+        if (index != arr.length - 1) {
+            str += String(item) + ','
+        } else {
+            str += String(item)
+        }
+    })
+    const url = `/stiacn/user/pass?ids=${str}`
     return fetchGadget(url, 'PUT')
 }
 
 // 管理员 - 驳回
-export const rejectUser = (id) => {
-    const url = `/stiacn/user/reject?id=${id}`
+export const rejectUser = (ids) => {
+    const arr = JSON.parse(JSON.stringify(ids))
+    var str = ''
+    arr && arr.map((item, index) => {
+        if (index != arr.length - 1) {
+            str += String(item) + ','
+        } else {
+            str += String(item)
+        }
+    })
+    const url = `/stiacn/user/reject?ids=${str}`
     return fetchGadget(url, 'PUT')
 }
 
@@ -91,4 +109,19 @@ export const consultList = (params) => {
         `consultCompany=${consultCompany}&status=${status}&phone=${phone}&consultContent=${consultContent}&` +
         `consultTimeBegin=${consultTimeBegin}&consultTimeEnd=${consultTimeEnd}`
     return fetchGadget(url, 'GET')
+}
+
+// 管理员 - 咨询 - 已读
+export const readConsult = (ids) => {
+    const arr = JSON.parse(JSON.stringify(ids))
+    var str = ''
+    arr && arr.map((item, index) => {
+        if (index != arr.length - 1) {
+            str += String(item) + ','
+        } else {
+            str += String(item)
+        }
+    })
+    const url = `/stiacn/consult/read?ids=${str}`
+    return fetchGadget(url, 'PUT')
 }

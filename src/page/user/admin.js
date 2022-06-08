@@ -7,7 +7,7 @@ import {
 } from '../../apis/index'
 import { AliOss, ThemeColor, CutLine } from "../../lib/const"
 import { createFromIconfontCN, ExclamationCircleFilled } from '@ant-design/icons';
-import { Tabs, Radio, Col, Row, Form, DatePicker, Input, Table, message, ConfigProvider } from 'antd';
+import { Tabs, Radio, Col, Row, Form, DatePicker, Input, Table, message, ConfigProvider, notification } from 'antd';
 import { Line } from '@ant-design/plots';
 import 'moment/locale/zh-cn';
 import locale from 'antd/es/date-picker/locale/zh_CN';
@@ -19,6 +19,16 @@ import zhCN from 'antd/lib/locale-provider/zh_CN';
 import './admin.less'
 
 const { TabPane } = Tabs;
+
+const openNotification = () => {
+    const args = {
+        //   message: '已提交，请稍后',
+        description:
+            '请求已发送，请稍后查看',
+        duration: 0,
+    };
+    notification.open(args);
+};
 
 const DemoLine = (props) => {
     const [data, setData] = useState([]);
@@ -57,7 +67,9 @@ const DemoLine = (props) => {
 
 const ButtonCmt = (bg, color, text) => {
     return (
-        <button style={{
+        <button onClick={() => {
+            openNotification()
+        }} style={{
             background: bg,
             color: color,
             fontSize: "0.12rem",
@@ -71,6 +83,7 @@ const ButtonCmt = (bg, color, text) => {
 
 function Admin(props) {
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    const [selectedRows, setSelectedRows] = useState([])
     const [tabInx, setTabInx] = useState(1) // tab切换索引
 
     const [info, setInfo] = useState({})
@@ -93,16 +106,14 @@ function Admin(props) {
     const [content, setContent] = useState("") // 咨询内容
     const [cList, setConsultList] = useState([]) // 返回数据集合
 
-    const onSelectChange = (newSelectedRowKeys) => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys);
-        setSelectedRowKeys(newSelectedRowKeys);
-    };
+
 
     const rowSelection = {
         selectedRowKeys,
         onChange: (selectedRowKeys, selectedRows) => {
             console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
             setSelectedRowKeys(selectedRowKeys)
+            setSelectedRows(selectedRows)
         },
         getCheckboxProps: (record) => ({
             disabled: record.name === 'Disabled User',
@@ -300,10 +311,7 @@ function Admin(props) {
         }
     }
     const columns = [
-        {
-            title: '选择',
-            dataIndex: 'name',
-        },
+
         {
             title: '序号',
             render: (text, record, index) => {
@@ -358,6 +366,66 @@ function Admin(props) {
 
                         {/* 已禁用 */}
                         { record.status === 5 && <div onClick={() => _restartUser(record.id)}>{ButtonCmt("#418DF5", 'white', '启用')}</div>}
+                    </div>
+
+                )
+            }
+        },
+    ];
+
+    const cColumns = [
+
+        {
+            title: '序号',
+            render: (text, record, index) => {
+                return (
+                    <span>
+                        {record.id}
+                    </span>
+                )
+            }
+        },
+        {
+            title: '咨询状态',
+            dataIndex: 'status',
+            width: 80,
+            render: (text, record, index) => {
+                return (
+                    <span style={{ color: record.status == 0 ? '#D79727' : ThemeColor }}>
+                        {record.status == 0 ? '未读' : '已读'}
+                    </span>
+                )
+            }
+        }, {
+            title: '公司名称',
+            dataIndex: 'consultCompany',
+        }, {
+            title: '联系方式',
+            dataIndex: 'phone',
+        }, {
+            title: '咨询内容',
+            dataIndex: 'consultContent',
+        }, {
+            title: '咨询时间',
+            dataIndex: 'consultTime',
+        }, {
+            title: '操作人',
+            dataIndex: 'operater',
+            width:80
+        }, {
+            title: '最后操作时间',
+            dataIndex: 'updateTime',
+            width:120
+        }, {
+            title: '操作',
+            render: (text, record) => {
+                return (
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                        {/* 待审核 */}
+                        {  record.status === 0 && <div
+                            onClick={() => _passUser([record.id])}>
+                            {ButtonCmt(ThemeColor, 'white', '已读')}
+                        </div>}
                     </div>
 
                 )
@@ -612,10 +680,26 @@ function Admin(props) {
                     }}>为您找<span style={{ margin: '0 0.02rem' }}>{total}</span>条相关结果</span>
                     <div style={{ display: "flex", }}>
 
-                        {tabInx * 1 === 1 && <div style={{ marginRight: "0.15rem" }}>
+                        {tabInx * 1 === 1 && <div style={{ marginRight: "0.15rem" }} onClick={() => {
+                            let arr = []
+                            selectedRows && selectedRows.map((item) => {
+                                if (item.status === 2) {
+                                    arr.push(item.id)
+                                }
+                            })
+                            _passUser(arr)
+                        }}>
                             {ButtonCmt(ThemeColor, 'white', '批量通过')}
                         </div>}
-                        {tabInx * 1 === 1 && <div>
+                        {tabInx * 1 === 1 && <div onClick={() => {
+                            let arr = []
+                            selectedRows && selectedRows.map((item) => {
+                                if (item.status === 2) {
+                                    arr.push(item.id)
+                                }
+                            })
+                            _rejectUser(arr)
+                        }}>
                             {ButtonCmt("#FD867F", 'white', '批量驳回')}
                         </div>}
 
@@ -658,7 +742,7 @@ function Admin(props) {
                 }} /> : <Table key={456} rowSelection={{
                     type: "checkbox",
                     ...rowSelection
-                }} columns={columns} dataSource={cList} style={{
+                }} columns={cColumns} dataSource={cList} style={{
                     width: "100%", marginTop: "0.3rem"
                 }} bordered pagination={{
                     total: total,
