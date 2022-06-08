@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react"
 import { withRouter, useHistory } from 'react-router-dom';
 import {
     todayPending, totalRegister, consultList, adminManageList, yearStatistics,
-    passUser, rejectUser, restartUser, disableUser
+    passUser, rejectUser, restartUser, disableUser, readConsult
 } from '../../apis/index'
 import { AliOss, ThemeColor, CutLine } from "../../lib/const"
 import { createFromIconfontCN, ExclamationCircleFilled } from '@ant-design/icons';
@@ -91,6 +91,7 @@ function Admin(props) {
     const [totalRegisters, setTotalRegisters] = useState(0) //总计审核
     const [list, setList] = useState([]) //返回数据集合
     const [total, setTotal] = useState(0)
+    
     const [page, setPage] = useState(1) // 页码
     const [yearData, setYearData] = useState({}) //年统计数据  
     const [approvalArr, setApproval] = useState([]) // 审核时间
@@ -105,7 +106,7 @@ function Admin(props) {
     const [consultArr, setConsult] = useState([]) // 咨询时间
     const [content, setContent] = useState("") // 咨询内容
     const [cList, setConsultList] = useState([]) // 返回数据集合
-
+    const [cTotal, setCtotal] = useState(0)
 
 
     const rowSelection = {
@@ -136,16 +137,14 @@ function Admin(props) {
     // tab切换
     useEffect(() => {
         // 清除共用变量
-        setTotal(0)
+        // setTotal(0)
         setStatus("")
         setPage(0)
         setSelectedRowKeys([])
 
         if (tabInx == 1) {
-            // alert(11)
             _adminManageList()
         } else if (tabInx == 2) {
-            // alert(222)
             _consultManageList()
         }
     }, [tabInx])
@@ -161,6 +160,11 @@ function Admin(props) {
     useEffect(() => {
         _adminManageList()
     }, [page, approvalArr, applyArr, email, companyName, status])
+
+    // 咨询列表
+    useEffect(()=>{
+        _consultManageList()
+    },[status,page,company,phone,content,consultArr])
 
 
     // 状态枚举类
@@ -231,7 +235,7 @@ function Admin(props) {
                 arr[index].key = item.id
             })
             setConsultList(res.result.data)
-            setTotal(res.result.totalRecord)
+            setCtotal(res.result.totalRecord)
         }
     }
 
@@ -275,6 +279,17 @@ function Admin(props) {
         if (res.code === 2000) {
             message.success("操作成功")
             _adminManageList()
+        } else {
+            message.error("操作失败")
+        }
+    }
+
+    // 已读
+    const _readConsult = async (arr) => {
+        const res = await readConsult(arr)
+        if (res.code === 2000) {
+            message.success("操作成功")
+            _consultManageList()
         } else {
             message.error("操作失败")
         }
@@ -411,11 +426,11 @@ function Admin(props) {
         }, {
             title: '操作人',
             dataIndex: 'operater',
-            width:80
+            width: 80
         }, {
             title: '最后操作时间',
             dataIndex: 'updateTime',
-            width:120
+            width: 120
         }, {
             title: '操作',
             render: (text, record) => {
@@ -423,7 +438,7 @@ function Admin(props) {
                     <div style={{ display: "flex", flexDirection: "column" }}>
                         {/* 待审核 */}
                         {  record.status === 0 && <div
-                            onClick={() => _passUser([record.id])}>
+                            onClick={() => _readConsult([record.id])}>
                             {ButtonCmt(ThemeColor, 'white', '已读')}
                         </div>}
                     </div>
@@ -703,7 +718,15 @@ function Admin(props) {
                             {ButtonCmt("#FD867F", 'white', '批量驳回')}
                         </div>}
 
-                        {tabInx * 1 === 2 && <div>
+                        {tabInx * 1 === 2 && <div onClick={() => {
+                            let arr = []
+                            selectedRows && selectedRows.map((item) => {
+                                if (item.status === 0) {
+                                    arr.push(item.id)
+                                }
+                            })
+                            _readConsult(arr)
+                        }}>
                             {ButtonCmt(ThemeColor, 'white', '批量已读')}
                         </div>}
                     </div>
@@ -745,7 +768,7 @@ function Admin(props) {
                 }} columns={cColumns} dataSource={cList} style={{
                     width: "100%", marginTop: "0.3rem"
                 }} bordered pagination={{
-                    total: total,
+                    total: cTotal,
                     onChange: (e) => { setPage(e) },
                 }} />}
 
