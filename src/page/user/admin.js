@@ -35,9 +35,7 @@ const DemoLine = () => {
     const [obj,setObj] = useState({})
 
     useEffect(() => {
-        // asyncFetch();
-        // console.log("获得的数据", props.data)
-        // setData(props.data)
+
         _yearStatistics()
     }, []);
 
@@ -53,6 +51,7 @@ const DemoLine = () => {
             }
             setData(res.result.data)
             setObj(res.result)
+            console.log("但啊啊尽快那就开始",res.result)
             // approveSum
             // registerSum
         }
@@ -89,7 +88,7 @@ const DemoLine = () => {
         animation: {
             appear: {
                 animation: 'path-in',
-                duration: 5000,
+                duration: 2000,
             },
         },
     };
