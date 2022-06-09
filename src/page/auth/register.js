@@ -62,7 +62,7 @@ const Register = () => {
                 email,companyName:company,name,password:password2
             }
             const res = await register(params)
-            if(res.result){
+            if(res.code===2000){
                 message.success(res.msg)
                 history.push("/login")
             }else{
