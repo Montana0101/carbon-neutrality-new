@@ -150,6 +150,6 @@ export const cancelAttention = (ids) => {
             str += String(item)
         }
     })
-    const url = `/stiacn/user/reject?ids=${str}`
+    const url = `/stiacn/attention/cancel?ids=${str}`
     return fetchGadget(url, 'PUT')
 }

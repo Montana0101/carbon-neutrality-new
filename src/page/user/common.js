@@ -32,70 +32,68 @@ const openNotification = () => {
 
 const DemoPie = () => {
     const data = [
-      {
-        type: '分类一',
-        value: 27,
-      },
-      {
-        type: '分类二',
-        value: 25,
-      },
-      {
-        type: '分类三',
-        value: 18,
-      },
-      {
-        type: '分类四',
-        value: 15,
-      },
-      {
-        type: '分类五',
-        value: 10,
-      },
-      {
-        type: '其他',
-        value: 5,
-      },
+        {
+            type: '科学研究和技术服务业',
+            value: 27,
+        },
+        {
+            type: '房地产业',
+            value: 25,
+        },
+        {
+            type: '租赁和商务服务业',
+            value: 18,
+        },
+        {
+            type: '信息传输、软件和信息技术服务业',
+            value: 15,
+        },
     ];
     const config = {
-      appendPadding: 10,
-      data,
-      angleField: 'value',
-      colorField: 'type',
-      radius: 1,
-      innerRadius: 0.6,
-      label: {
-        type: 'inner',
-        offset: '-50%',
-        content: '{value}',
-        style: {
-          textAlign: 'center',
-          fontSize: 14,
+        appendPadding: 10,
+        data,
+        angleField: 'value',
+        colorField: 'type',
+        radius: 1,
+        innerRadius: 0.6,
+        position:"left",
+        label: {
+            // type: 'inner',
+            offset: '-50%',
+            content: '{value}',
+            style: {
+                textAlign: 'left',
+                fontSize: 12,
+                opacity: 0
+            },
         },
-      },
-      interactions: [
-        {
-          type: 'element-selected',
+        legend: {
+            position: 'right',
         },
-        {
-          type: 'element-active',
-        },
-      ],
-      statistic: {
-        title: false,
-        content: {
-          style: {
-            whiteSpace: 'pre-wrap',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-          },
-          content: `<div style="font-size:0.12rem;font-weight:normal;padding-bottom:0.25rem;">
+        interactions: [
+            {
+                type: 'element-selected',
+            },
+            {
+                type: 'element-active',
+            },
+        ],
+        statistic: {
+            title: false,
+            content: {
+                style: {
+                    whiteSpace: 'pre-wrap',
+                    // overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                },
+                content: `<div style="font-size:0.12rem;font-weight:normal;padding-bottom:0.25rem;">
             <div style="font-size:0.2rem;margin-bottom:0.05rem;font-weight:bold;">16</div><div style="font-size:0.12rem">我的关注</div></div>`,
+            },
         },
-      },
     };
-    return <Pie {...config} style={{height:"100%",width:"100%"}}/>;
-  };
+    return <div style={{ width: "90%", height: "100%", padding: "0 0.2rem" }}>
+        <Pie {...config} style={{ height: "100%", width: "100%" }} /></div>;
+};
 
 const ButtonCmt = (bg, color, text, w = '0.8rem') => {
     return (
@@ -198,9 +196,9 @@ function CommonUser(props) {
     // 取下关注
     const _cancelAttention = async (arr) => {
         const res = await cancelAttention(arr)
-        if (res.code === 2000 ){
+        if (res.code === 2000) {
             message.success("操作成功")
-        }else{
+        } else {
             message.error("操作失败")
         }
     }
@@ -232,7 +230,7 @@ function CommonUser(props) {
                         >
                             {ButtonCmt('white', ThemeColor, '查看详情')}
                         </div>
-                        <div onClick={() => {_cancelAttention([record.id])}}>{ButtonCmt("#FD867F", 'white', '取消关注')}</div>
+                        <div onClick={() => { _cancelAttention([record.id]) }}>{ButtonCmt("#FD867F", 'white', '取消关注')}</div>
                     </div>
 
                 )
@@ -428,7 +426,7 @@ function CommonUser(props) {
                             selectedRows && selectedRows.map((item) => {
                                 arr.push(item.id)
                             })
-                            console.log("对你撒娇看",selectedRows)
+                            console.log("对你撒娇看", selectedRows)
                             _cancelAttention(arr)
                         }}>
                             {ButtonCmt("#FD867F", 'white', '批量取消关注', '1.1rem')}

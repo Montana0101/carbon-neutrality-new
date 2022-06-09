@@ -1,19 +1,12 @@
 import './app.less';
 import { Input, Button, message } from 'antd'
 import Routers from "../route/index"
-import {
-  SearchOutlined
-} from '@ant-design/icons';
 import { AliOss, ThemeColor, CutLine } from "../lib/const"
 import { useEffect, useState } from "react"
-import { createFromIconfontCN, UserOutlined } from '@ant-design/icons';
-// import {useHistory} from 'react-router-dom'
+import { UserOutlined } from '@ant-design/icons';
 import IconSearch from "../static/imgs/search.svg"
-import store from '../store'
 
 const logo = AliOss + '/img/logo.png'
-
-
 
 const titles = ["首页", '关于联盟', '联盟动态',
   '业务范围', '专业委员会', '双碳资讯', '联系我们']
@@ -26,15 +19,12 @@ function App() {
 
   useEffect(() => {
     const check = localStorage.getItem('user')
-
-    // const info = store.getState().baseInfo
     if (JSON.parse(check)) {
       checkLogin(true)
       setUserInfo(JSON.parse(check))
     } else {
       checkLogin(false)
     }
-
   }, [])
 
   return (
@@ -116,7 +106,7 @@ function App() {
                   }}
                     onClick={() => {
                       if (userInfo) {
-                        if (userInfo.role*1 === 1) {
+                        if (userInfo.role * 1 === 1) {
                           window.location.href = '/admin'
                         } else {
                           window.location.href = '/common'
