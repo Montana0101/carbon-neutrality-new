@@ -510,7 +510,9 @@ function Admin(props) {
                     padding: "0 0.3rem", height: "0.7rem", lineHeight: "0.7rem",
                     borderLeft: CutLine, borderRight: CutLine
                 }}>
-                    <span style={{ color: "rgba(0,0,0,0.6)" }}>首页</span>
+                    <span style={{ color: "rgba(0,0,0,0.6)",cursor:"pointer" }} onClick={()=>{
+                        window.location.href="/"
+                    }}>首页</span>
                     <span style={{ margin: "0 0.1rem" }}>/</span><span>个人中心</span>
                 </h3>
             </div>
