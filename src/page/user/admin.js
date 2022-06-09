@@ -1,5 +1,5 @@
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, memo } from "react"
 import { withRouter, useHistory } from 'react-router-dom';
 import {
     todayPending, totalRegister, consultList, adminManageList, yearStatistics,
@@ -30,7 +30,7 @@ const openNotification = () => {
     notification.open(args);
 };
 
-const DemoLine = () => {
+const DemoLine = memo(() => {
     const [data, setData] = useState([]);
     const [obj,setObj] = useState({})
 
@@ -51,7 +51,7 @@ const DemoLine = () => {
             }
             setData(res.result.data)
             setObj(res.result)
-            console.log("但啊啊尽快那就开始",res.result)
+            console.log("但啊啊尽快那就开始",res.result.data)
             // approveSum
             // registerSum
         }
@@ -101,12 +101,12 @@ const DemoLine = () => {
             <span>当前已申报公司总数量：{obj && obj.approveSum} 个</span>
         </div>
     </div>;
-};
+})
 
 const ButtonCmt = (bg, color, text) => {
     return (
         <button onClick={() => {
-            openNotification()
+            // openNotification()
         }} style={{
             background: bg,
             color: color,

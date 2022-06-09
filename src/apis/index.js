@@ -153,3 +153,9 @@ export const cancelAttention = (ids) => {
     const url = `/stiacn/attention/cancel?ids=${str}`
     return fetchGadget(url, 'PUT')
 }
+
+// 普通用户 关注统计
+export const myAttention = () => {
+    const url = `/stiacn/attention/myAttention`
+    return fetchGadget(url, 'GET')
+}

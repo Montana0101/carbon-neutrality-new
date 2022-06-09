@@ -127,6 +127,7 @@ function App() {
                 onClick={() => {
                   localStorage.removeItem("user")
                   checkLogin(false)
+                  window.location.href="/"
                 }}>
                 退出
            </div>}

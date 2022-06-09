@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef, useMemo, memo } from "react"
 import { withRouter, useHistory } from 'react-router-dom';
 import {
-    cancelAttention, yearStatistics,
+    cancelAttention, myAttention,
     attentionList, attentionInfo
 } from '../../apis/index'
 import { AliOss, ThemeColor, CutLine } from "../../lib/const"
@@ -56,7 +56,7 @@ const DemoPie = () => {
         colorField: 'type',
         radius: 1,
         innerRadius: 0.6,
-        position:"left",
+        position: "left",
         label: {
             // type: 'inner',
             offset: '-50%',
@@ -98,7 +98,7 @@ const DemoPie = () => {
 const ButtonCmt = (bg, color, text, w = '0.8rem') => {
     return (
         <button onClick={() => {
-            openNotification()
+            // openNotification()
         }} style={{
             background: bg,
             color: color,
@@ -126,6 +126,7 @@ function CommonUser(props) {
     const [page, setPage] = useState(1) // 页码
     const [companyName, setCompanyName] = useState("")
     const [status, setStatus] = useState("")
+    const [data, setData] = useState([]) // 饼图数据
 
     // 业务咨询
 
@@ -159,6 +160,7 @@ function CommonUser(props) {
     // 调用接口
     useEffect(() => {
         _attentionInfo()
+        _myAttention()
     }, [])
 
     // 用户管理调用列表
@@ -181,6 +183,14 @@ function CommonUser(props) {
             })
             setList(arr)
             setTotal(res.result.totalRecord)
+        }
+    }
+
+    // 饼图数据
+    const _myAttention = async () => {
+        const res = await myAttention()
+        if (res.code === 2000) {
+            res.result && setData(res.result.analyList)
         }
     }
 
@@ -237,16 +247,6 @@ function CommonUser(props) {
             }
         },
     ];
-    const data = [];
-
-    for (let i = 0; i < 46; i++) {
-        data.push({
-            key: i,
-            name: `Edward King ${i}`,
-            age: 32,
-            address: `London, Park Lane no. ${i}`,
-        });
-    }
 
     return (
         <div className="admin_page" style={{
