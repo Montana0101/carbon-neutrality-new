@@ -1,59 +1,44 @@
 
-import { useState, useEffect, useRef, useMemo, memo } from "react"
-import { withRouter, useHistory } from 'react-router-dom';
+import { useState, useEffect, memo } from "react"
+import { withRouter } from 'react-router-dom';
 import {
     cancelAttention, myAttention,
     attentionList, attentionInfo
 } from '../../apis/index'
-import { AliOss, ThemeColor, CutLine } from "../../lib/const"
-import { createFromIconfontCN, ExclamationCircleFilled } from '@ant-design/icons';
-import { Tabs, Radio, Col, Row, Form, DatePicker, Input, Table, message, ConfigProvider, notification } from 'antd';
+import { ThemeColor, CutLine } from "../../lib/const"
+import { ExclamationCircleFilled } from '@ant-design/icons';
+import { Tabs, Radio, Col, Row, Form, Input, Table, message } from 'antd';
 import { Pie } from '@ant-design/plots';
 import 'moment/locale/zh-cn';
-import locale from 'antd/es/date-picker/locale/zh_CN';
-
-import DefaultLogo from '../../static/imgs/default.png' // 默认企业logo
-
-import zhCN from 'antd/lib/locale-provider/zh_CN';
-
+import DefaultLogo from '../../static/imgs/common.jpeg' // 默认企业logo
 import './admin.less'
 
 const { TabPane } = Tabs;
 
-const openNotification = () => {
-    const args = {
-        //   message: '已提交，请稍后',
-        description:
-            '请求已发送，请稍后查看',
-        duration: 0,
-    };
-    notification.open(args);
-};
+const DemoPie = memo(() => {
+    const [data, setData] = useState([])
+    const [total,setTotal] = useState(0)
 
-const DemoPie = () => {
-    const data = [
-        {
-            type: '科学研究和技术服务业',
-            value: 27,
-        },
-        {
-            type: '房地产业',
-            value: 25,
-        },
-        {
-            type: '租赁和商务服务业',
-            value: 18,
-        },
-        {
-            type: '信息传输、软件和信息技术服务业',
-            value: 15,
-        },
-    ];
+    useEffect(() => {
+        _myAttention()
+    }, [])
+
+    // 饼图数据
+    const _myAttention = async () => {
+        const res = await myAttention()
+        if (res.code === 2000) {
+            if(res.result){
+                setData(res.result.analyList)
+                setTotal(res.result.total)
+            }
+        }
+    }
+
     const config = {
         appendPadding: 10,
         data,
-        angleField: 'value',
-        colorField: 'type',
+        angleField: 'count',
+        colorField: 'industry',
         radius: 1,
         innerRadius: 0.6,
         position: "left",
@@ -83,23 +68,21 @@ const DemoPie = () => {
             content: {
                 style: {
                     whiteSpace: 'pre-wrap',
-                    // overflow: 'hidden',
+                    overflow: 'hidden',
                     textOverflow: 'ellipsis',
                 },
                 content: `<div style="font-size:0.12rem;font-weight:normal;padding-bottom:0.25rem;">
-            <div style="font-size:0.2rem;margin-bottom:0.05rem;font-weight:bold;">16</div><div style="font-size:0.12rem">我的关注</div></div>`,
+            <div style="font-size:0.2rem;margin-bottom:0.05rem;font-weight:bold;">${total}</div><div style="font-size:0.12rem">我的关注</div></div>`,
             },
         },
     };
     return <div style={{ width: "90%", height: "100%", padding: "0 0.2rem" }}>
         <Pie {...config} style={{ height: "100%", width: "100%" }} /></div>;
-};
+})
 
 const ButtonCmt = (bg, color, text, w = '0.8rem') => {
     return (
-        <button onClick={() => {
-            // openNotification()
-        }} style={{
+        <button style={{
             background: bg,
             color: color,
             fontSize: "0.12rem",
@@ -126,7 +109,7 @@ function CommonUser(props) {
     const [page, setPage] = useState(1) // 页码
     const [companyName, setCompanyName] = useState("")
     const [status, setStatus] = useState("")
-    const [data, setData] = useState([]) // 饼图数据
+    // const [data, setData] = useState([]) // 饼图数据
 
     // 业务咨询
 
@@ -141,7 +124,6 @@ function CommonUser(props) {
         },
         getCheckboxProps: (record) => ({
             disabled: record.name === 'Disabled User',
-            // Column configuration not to be checked
             name: record.name,
         }),
     };
@@ -160,7 +142,7 @@ function CommonUser(props) {
     // 调用接口
     useEffect(() => {
         _attentionInfo()
-        _myAttention()
+        // _myAttention()
     }, [])
 
     // 用户管理调用列表
@@ -186,13 +168,6 @@ function CommonUser(props) {
         }
     }
 
-    // 饼图数据
-    const _myAttention = async () => {
-        const res = await myAttention()
-        if (res.code === 2000) {
-            res.result && setData(res.result.analyList)
-        }
-    }
 
     // 关注的信息
     const _attentionInfo = async () => {

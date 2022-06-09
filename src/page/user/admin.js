@@ -32,7 +32,7 @@ const openNotification = () => {
 
 const DemoLine = memo(() => {
     const [data, setData] = useState([]);
-    const [obj,setObj] = useState({})
+    const [obj, setObj] = useState({})
 
     useEffect(() => {
 
@@ -45,15 +45,25 @@ const DemoLine = memo(() => {
         if (res.code === 2000) {
             // setData(res.result)
             let arr = []
-       
-            for (var i in res.result.data) {
-                arr.push(i)
-            }
-            setData(res.result.data)
+            res.result.data && res.result.data.map((item, index) => {
+                if (item.type == '注册人数') {
+                    let obj
+                    obj = Object.assign(item, { name: 'abc',month:`${item.month}月` })
+                    arr.push(item)
+                }
+            })
+            res.result.data && res.result.data.map((item, index) => {
+                if (item.type == '申报公司数') {
+                    let obj
+                    obj = Object.assign(item, { name: 'efg',month:`${item.month}月` })
+                    arr.push(item)
+                }
+            })
+
+            setData(arr)
             setObj(res.result)
-            console.log("但啊啊尽快那就开始",res.result.data)
-            // approveSum
-            // registerSum
+            console.log("但啊啊尽快那就开始", arr)
+
         }
     }
 
@@ -63,21 +73,18 @@ const DemoLine = memo(() => {
         xField: 'month',
         yField: 'value',
         seriesField: 'type',
+        smooth: true,
         yAxis: {
             label: {
                 formatter: (v) => `${v}`,
             },
             title: {
                 text: '',
-                // style: {
-                //     fontSize: 12,
-                // },
-                // position:'end'
             },
         },
-        xAxis:{
+        xAxis: {
             label: {
-                formatter: (v) => `${v}月`,
+                formatter: (v) => `${v}`,
             },
         },
         legend: {
@@ -88,15 +95,17 @@ const DemoLine = memo(() => {
         animation: {
             appear: {
                 animation: 'path-in',
-                duration: 2000,
+                duration: 3000,
             },
         },
     };
 
     return <div style={{ width: "100%", height: "100%" }}>
         <Line {...config} style={{ width: "100%", height: "85%" }} />
-        <div style={{fontSize:"0.12rem",fontWeight:"bold",width:"100%",margin:"0.1rem 0",padding:"0 15%",
-        display:"flex",justifyContent:"space-between",alignItems:"center",color:"rgba(0,0,0,0.5)"}}>
+        <div style={{
+            fontSize: "0.12rem", fontWeight: "bold", width: "100%", margin: "0.1rem 0", padding: "0 15%",
+            display: "flex", justifyContent: "space-between", alignItems: "center", color: "rgba(0,0,0,0.5)"
+        }}>
             <span>当前已注册总人数: {obj && obj.registerSum}人</span>
             <span>当前已申报公司总数量：{obj && obj.approveSum} 个</span>
         </div>
