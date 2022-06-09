@@ -116,10 +116,10 @@ function App() {
                   }}
                     onClick={() => {
                       if (userInfo) {
-                        if (userInfo.role == 1) {
+                        if (userInfo.role*1 === 1) {
                           window.location.href = '/admin'
                         } else {
-                          window.location.href = '/admin'
+                          window.location.href = '/common'
                         }
                       }
 

@@ -125,3 +125,16 @@ export const readConsult = (ids) => {
     const url = `/stiacn/consult/read?ids=${str}`
     return fetchGadget(url, 'PUT')
 }
+
+// 普通用户 关注数量
+export const attentionInfo = () => {
+    const url = `/stiacn/attention/statistics`
+    return fetchGadget(url, 'GET')
+}
+
+// 普通用户 关注列表
+export const attentionList = (params) => {
+    const { companyName, industry, page, limit } = params
+    const url = `/stiacn/attention/list?page=${page}&limit=${limit}&industry=${industry}&companyName=${companyName}`
+    return fetchGadget(url, 'GET')
+}

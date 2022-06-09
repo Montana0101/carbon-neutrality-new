@@ -778,7 +778,7 @@ function Admin(props) {
                     <span>已选择</span>
                     <span style={{ margin: '0 0.1rem', color: "#337FFF" }}>{selectedRowKeys.length}</span>
                     <span>项</span>
-                    <a style={{ marginLeft: "0.15rem", textDecoration: "underline" }} onClick={() => {
+                    <a style={{ marginLeft: "0.15rem", textDecoration: "underline", color: "#337FFF" }} onClick={() => {
                         setSelectedRowKeys([])
                     }} >清空</a>
                 </div>
