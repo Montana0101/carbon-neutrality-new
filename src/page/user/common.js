@@ -2,13 +2,13 @@
 import { useState, useEffect, useRef, useMemo, memo } from "react"
 import { withRouter, useHistory } from 'react-router-dom';
 import {
-    todayPending, totalRegister, consultList, adminManageList, yearStatistics,
-    attentionList,attentionInfo
+    cancelAttention, yearStatistics,
+    attentionList, attentionInfo
 } from '../../apis/index'
 import { AliOss, ThemeColor, CutLine } from "../../lib/const"
 import { createFromIconfontCN, ExclamationCircleFilled } from '@ant-design/icons';
 import { Tabs, Radio, Col, Row, Form, DatePicker, Input, Table, message, ConfigProvider, notification } from 'antd';
-import { Line } from '@ant-design/plots';
+import { Pie } from '@ant-design/plots';
 import 'moment/locale/zh-cn';
 import locale from 'antd/es/date-picker/locale/zh_CN';
 
@@ -30,80 +30,72 @@ const openNotification = () => {
     notification.open(args);
 };
 
-const DemoLine = memo(() => {
-    const [data, setData] = useState([]);
-    const [obj, setObj] = useState({})
-
-    useEffect(() => {
-
-        _yearStatistics()
-    }, []);
-
-    // 折线图数据
-    const _yearStatistics = async () => {
-        const res = await yearStatistics()
-        if (res.code === 2000) {
-            // setData(res.result)
-            let arr = []
-
-            for (var i in res.result.data) {
-                arr.push(i)
-            }
-            setData(res.result.data)
-            setObj(res.result)
-            console.log("但啊啊尽快那就开始", res.result)
-            // approveSum
-            // registerSum
-        }
-    }
-
-
+const DemoPie = () => {
+    const data = [
+      {
+        type: '分类一',
+        value: 27,
+      },
+      {
+        type: '分类二',
+        value: 25,
+      },
+      {
+        type: '分类三',
+        value: 18,
+      },
+      {
+        type: '分类四',
+        value: 15,
+      },
+      {
+        type: '分类五',
+        value: 10,
+      },
+      {
+        type: '其他',
+        value: 5,
+      },
+    ];
     const config = {
-        data,
-        xField: 'month',
-        yField: 'value',
-        seriesField: 'type',
-        yAxis: {
-            label: {
-                formatter: (v) => `${v}`,
-            },
-            title: {
-                text: '',
-                // style: {
-                //     fontSize: 12,
-                // },
-                // position:'end'
-            },
+      appendPadding: 10,
+      data,
+      angleField: 'value',
+      colorField: 'type',
+      radius: 1,
+      innerRadius: 0.6,
+      label: {
+        type: 'inner',
+        offset: '-50%',
+        content: '{value}',
+        style: {
+          textAlign: 'center',
+          fontSize: 14,
         },
-        xAxis: {
-            label: {
-                formatter: (v) => `${v}月`,
-            },
+      },
+      interactions: [
+        {
+          type: 'element-selected',
         },
-        legend: {
-            position: 'top-right',
+        {
+          type: 'element-active',
         },
-        // smooth: true,
-        // @TODO 后续会换一种动画方式
-        animation: {
-            appear: {
-                animation: 'path-in',
-                duration: 2000,
-            },
+      ],
+      statistic: {
+        title: false,
+        content: {
+          style: {
+            whiteSpace: 'pre-wrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+          },
+          content: `<div style="font-size:0.12rem;font-weight:normal;padding-bottom:0.25rem;">
+            <div style="font-size:0.2rem;margin-bottom:0.05rem;font-weight:bold;">16</div><div style="font-size:0.12rem">我的关注</div></div>`,
         },
+      },
     };
-
-    return <div style={{ width: "100%", height: "100%" }}>
-        <Line {...config} style={{ width: "100%", height: "85%" }} />
-        <div style={{
-            fontSize: "0.12rem", fontWeight: "bold", width: "100%", margin: "0.1rem 0", padding: "0 15%",
-            display: "flex", justifyContent: "space-between", alignItems: "center", color: "rgba(0,0,0,0.5)"
-        }}>
-            <span>当前已注册总人数: {obj && obj.registerSum}人</span>
-            <span>当前已申报公司总数量：{obj && obj.approveSum} 个</span>
-        </div>
-    </div>;
-})
+    return <Pie {...config} style={{height:"100%",width:"100%"}}/>;
+  };
 
 const ButtonCmt = (bg, color, text, w = '0.8rem') => {
     return (
@@ -129,7 +121,7 @@ function CommonUser(props) {
 
     const [info, setInfo] = useState({})
     const [list, setList] = useState([]) //返回数据集合
-    const [attention,setAttention] = useState({})
+    const [attention, setAttention] = useState({})
 
     const [total, setTotal] = useState(0)
 
@@ -138,7 +130,7 @@ function CommonUser(props) {
     const [status, setStatus] = useState("")
 
     // 业务咨询
-  
+
 
 
     const rowSelection = {
@@ -166,21 +158,6 @@ function CommonUser(props) {
         }
     }, [])
 
-    // tab切换
-    // useEffect(() => {
-    //     // 清除共用变量
-    //     // setTotal(0)
-    //     setStatus("")
-    //     setPage(0)
-    //     setSelectedRowKeys([])
-
-    //     if (tabInx == 1) {
-    //         _adminManageList()
-    //     } else if (tabInx == 2) {
-    //         _consultManageList()
-    //     }
-    // }, [tabInx])
-
     // 调用接口
     useEffect(() => {
         _attentionInfo()
@@ -200,7 +177,11 @@ function CommonUser(props) {
         }
         const res = await attentionList(params)
         if (res.code === 2000) {
-            setList(res.result.data)
+            let arr = res.result.data
+            arr && arr.map((item, index) => {
+                arr[index].key = item.id
+            })
+            setList(arr)
             setTotal(res.result.totalRecord)
         }
     }
@@ -210,9 +191,20 @@ function CommonUser(props) {
         const res = await attentionInfo()
         if (res.code === 2000) {
             setAttention(res.result)
+            _attentionList()
         }
     }
-    
+
+    // 取下关注
+    const _cancelAttention = async (arr) => {
+        const res = await cancelAttention(arr)
+        if (res.code === 2000 ){
+            message.success("操作成功")
+        }else{
+            message.error("操作失败")
+        }
+    }
+
     const columns = [
 
         {
@@ -232,15 +224,15 @@ function CommonUser(props) {
             dataIndex: 'attentionTime',
         }, {
             title: '操作',
-            width:200,
+            width: 200,
             render: (text, record) => {
                 return (
-                    <div style={{ display: "flex",justifyContent:"space-around" }}>
+                    <div style={{ display: "flex", justifyContent: "space-around" }}>
                         <div style={{ marginBottom: "0.05rem" }}
-                            >
+                        >
                             {ButtonCmt('white', ThemeColor, '查看详情')}
                         </div>
-                        <div onClick={() => { }}>{ButtonCmt("#FD867F", 'white', '取消关注')}</div>
+                        <div onClick={() => {_cancelAttention([record.id])}}>{ButtonCmt("#FD867F", 'white', '取消关注')}</div>
                     </div>
 
                 )
@@ -321,7 +313,7 @@ function CommonUser(props) {
                             background: "white",
                             padding: '0.1rem'
                         }}>
-                            <DemoLine />
+                            <DemoPie />
                         </div>
                         <div style={{
                             display: "flex",
@@ -434,11 +426,10 @@ function CommonUser(props) {
                         {tabInx * 1 === 1 && <div onClick={() => {
                             let arr = []
                             selectedRows && selectedRows.map((item) => {
-                                if (item.status === 2) {
-                                    arr.push(item.id)
-                                }
+                                arr.push(item.id)
                             })
-                            // _rejectUser(arr)
+                            console.log("对你撒娇看",selectedRows)
+                            _cancelAttention(arr)
                         }}>
                             {ButtonCmt("#FD867F", 'white', '批量取消关注', '1.1rem')}
                         </div>}

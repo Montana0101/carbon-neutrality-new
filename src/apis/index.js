@@ -138,3 +138,18 @@ export const attentionList = (params) => {
     const url = `/stiacn/attention/list?page=${page}&limit=${limit}&industry=${industry}&companyName=${companyName}`
     return fetchGadget(url, 'GET')
 }
+
+// 普通用户 取消关注
+export const cancelAttention = (ids) => {
+    const arr = JSON.parse(JSON.stringify(ids))
+    var str = ''
+    arr && arr.map((item, index) => {
+        if (index != arr.length - 1) {
+            str += String(item) + ','
+        } else {
+            str += String(item)
+        }
+    })
+    const url = `/stiacn/user/reject?ids=${str}`
+    return fetchGadget(url, 'PUT')
+}
