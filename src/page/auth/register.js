@@ -62,7 +62,6 @@ const Register = () => {
         (
             async function fn(){
                 if (flag) {
-                    alert(3)
                     let params = {
                         email, companyName: company, name, password: password2
                     }
