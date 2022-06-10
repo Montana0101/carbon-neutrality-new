@@ -52,10 +52,10 @@ const Login = () => {
             <section className="login">
                 <h3 style={{ color: "white", fontSize: "0.34rem", fontWeight: "bold", margin: 0 }}>STIACN</h3>
                 <h2 style={{ color: "white", fontSize: "0.22rem", margin: 0 }}>上海碳中和技术创新联盟</h2>
-                <input placeholder='请输入邮箱'
+                <input placeholder='请输入邮箱'  maxlength="40"
                     onChange={e => setEmail(e.target.value)} />
                 <input placeholder='6 - 16位密码，区分大小写' type="password"
-                    onChange={e => setPassword(e.target.value)} />
+                    onChange={e => setPassword(e.target.value)}  maxlength="16"/>
                 <button style={{ background: "#52AA53",cursor:"pointer"}} onClick={submit}>登录</button>
                 <div>
                     <span>还没账户？</span>

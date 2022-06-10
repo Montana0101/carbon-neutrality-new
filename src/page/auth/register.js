@@ -16,13 +16,13 @@ const Register = () => {
 
     const history = useHistory()
 
-    useEffect(()=>{
+    useEffect(() => {
         const dom = document.getElementsByClassName("app-header")[0]
-        dom.style.display='none'
+        dom.style.display = 'none'
 
         const main = document.getElementById('main_container')
-        main.style.height='100%'
-    },[])
+        main.style.height = '100%'
+    }, [])
 
     const verify = () => {
         if (email && company && name && password1 && password2) {
@@ -38,14 +38,14 @@ const Register = () => {
                 if (password1 != password2) {
                     setFlag(false)
                     message.error("密码输入不一致")
-                    return 
+                    return
                 } else {
                     setFlag(true)
                 }
             } else {
                 message.error('请核对密码')
                 setFlag(false)
-                return 
+                return
             }
 
         } else {
@@ -57,21 +57,21 @@ const Register = () => {
 
     const submit = async () => {
         verify()
-        if (flag){
+        if (flag) {
             let params = {
-                email,companyName:company,name,password:password2
+                email, companyName: company, name, password: password2
             }
             const res = await register(params)
-            if(res.code===2000){
+            if (res.code === 2000) {
                 message.success(res.msg)
                 history.push("/login")
-            }else{
+            } else {
                 message.error(res.msg)
             }
         }
     }
 
-    
+
     return (
         <div style={{
             width: "100%", height: "100%", position: "relative", backgroundImage: `url(${bg})`,
@@ -80,19 +80,18 @@ const Register = () => {
             <section className="register">
                 <h3 style={{ color: "white", fontSize: "0.34rem", fontWeight: "bold", margin: 0 }}>STIACN</h3>
                 <h2 style={{ color: "white", fontSize: "0.22rem", margin: 0 }}>上海碳中和技术创新联盟</h2>
-                <input placeholder='请输入邮箱'
+                <input placeholder='请输入邮箱' maxlength="40"
                     onChange={(e) => {
-                        console.log("大叔控加拿大", e.target.value)
                         setEmail(e.target.value)
                     }} value={email} />
-                <input placeholder='请输入公司名称'
+                <input placeholder='请输入公司名称' maxlength="40"
                     onChange={(e) => { setCompany(e.target.value) }} />
-                <input placeholder='请输入姓名' 
+                <input placeholder='请输入姓名' maxlength="10"
                     onChange={(e) => { setName(e.target.value) }} />
                 <input placeholder='6 - 16位密码，区分大小写' type="password"
-                    onChange={(e) => { setPassword1(e.target.value) }} />
+                    onChange={(e) => { setPassword1(e.target.value)}} maxlength="16"/>
                 <input placeholder='请确认密码' type="password"
-                    onChange={(e) => { setPassword2(e.target.value) }} />
+                    onChange={(e) => { setPassword2(e.target.value)}} maxlength="16"/>
 
                 <button style={{ background: "#52AA53" }}
                     onClick={submit}>注册</button>
