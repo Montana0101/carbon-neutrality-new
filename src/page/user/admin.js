@@ -48,14 +48,14 @@ const DemoLine = memo(() => {
             res.result.data && res.result.data.map((item, index) => {
                 if (item.type == '注册人数') {
                     let obj
-                    obj = Object.assign(item, { name: 'abc',month:`${item.month}月` })
+                    obj = Object.assign(item, { name: 'abc', month: `${item.month}月` })
                     arr.push(item)
                 }
             })
             res.result.data && res.result.data.map((item, index) => {
                 if (item.type == '申报公司数') {
                     let obj
-                    obj = Object.assign(item, { name: 'efg',month:`${item.month}月` })
+                    obj = Object.assign(item, { name: 'efg', month: `${item.month}月` })
                     arr.push(item)
                 }
             })
@@ -205,7 +205,12 @@ function Admin(props) {
     // 用户管理调用列表
     useEffect(() => {
         _adminManageList()
-    }, [page, approvalArr, applyArr, email, companyName, status])
+        // alert(page)
+    }, [page, approvalArr, applyArr, email, companyName])
+
+    useEffect(() => {
+        _adminManageList()
+    }, [status])
 
     // 咨询列表
     useEffect(() => {
@@ -231,6 +236,7 @@ function Admin(props) {
 
     // 用户管理列表数据
     const _adminManageList = async () => {
+
         let params = {
             page: page,
             limit: 10,
@@ -510,8 +516,8 @@ function Admin(props) {
                     padding: "0 0.3rem", height: "0.7rem", lineHeight: "0.7rem",
                     borderLeft: CutLine, borderRight: CutLine
                 }}>
-                    <span style={{ color: "rgba(0,0,0,0.6)",cursor:"pointer" }} onClick={()=>{
-                        window.location.href="/"
+                    <span style={{ color: "rgba(0,0,0,0.6)", cursor: "pointer" }} onClick={() => {
+                        window.location.href = "/"
                     }}>首页</span>
                     <span style={{ margin: "0 0.1rem" }}>/</span><span>个人中心</span>
                 </h3>
@@ -615,7 +621,10 @@ function Admin(props) {
                             <Form>
                                 <Row>
                                     <Form.Item label="用户状态">
-                                        <Radio.Group defaultValue="" buttonStyle="solid" onChange={e => setStatus(e.target.value)}>
+                                        <Radio.Group defaultValue="" buttonStyle="solid" onChange={e => {
+                                            setPage(1)
+                                            setStatus(e.target.value)
+                                        }}>
                                             <Radio.Button value={''}
                                                 key={0}>全部</Radio.Button>
                                             <Radio.Button value={2}
@@ -802,6 +811,7 @@ function Admin(props) {
                 }} bordered pagination={{
                     total: total,
                     onChange: (e) => { setPage(e) },
+                    current:page
                 }} /> : <Table key={456} rowSelection={{
                     type: "checkbox",
                     ...rowSelection
@@ -810,7 +820,8 @@ function Admin(props) {
                 }} bordered pagination={{
                     total: cTotal,
                     onChange: (e) => { setPage(e) },
-                }} />}
+                    current:page
+                }}/>}
 
             </section>
         </div>

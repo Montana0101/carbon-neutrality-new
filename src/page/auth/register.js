@@ -55,20 +55,31 @@ const Register = () => {
     }
 
     const submit = async () => {
-        verify()
-        if (flag) {
-            let params = {
-                email, companyName: company, name, password: password2
-            }
-            const res = await register(params)
-            if (res.code === 2000) {
-                message.success(res.msg)
-                history.push("/login")
-            } else {
-                message.error(res.msg)
-            }
-        }
+        await verify()
     }
+
+    useEffect( ()=>{
+        (
+            async function fn(){
+                if (flag) {
+                    alert(3)
+                    let params = {
+                        email, companyName: company, name, password: password2
+                    }
+                    const res = await register(params)
+                    if (res.code === 2000) {
+                        message.success("操作成功，我们会将审核结果发送至你的邮箱")
+                        history.push("/")
+                        const dom = document.getElementsByClassName("app-header")[0]
+                       dom.style.display = 'flex'
+                    } else {
+                        message.error(res.msg)
+                    }
+                }
+            }
+        )()
+    
+    },[flag])
 
 
     return (
