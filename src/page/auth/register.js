@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { withRouter, useHistory } from 'react-router-dom'
-import { AliOss, ThemeColor, CutLine } from "../../lib/const"
 import { register } from '../../apis/index'
 import { message } from 'antd'
 import bg from './bg.png'
