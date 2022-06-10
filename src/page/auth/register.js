@@ -58,9 +58,9 @@ const Register = () => {
         await verify()
     }
 
-    useEffect( ()=>{
+    useEffect(() => {
         (
-            async function fn(){
+            async function fn() {
                 if (flag) {
                     let params = {
                         email, companyName: company, name, password: password2
@@ -70,15 +70,15 @@ const Register = () => {
                         message.success("操作成功，我们会将审核结果发送至你的邮箱")
                         history.push("/")
                         const dom = document.getElementsByClassName("app-header")[0]
-                       dom.style.display = 'flex'
+                        dom.style.display = 'flex'
                     } else {
                         message.error(res.msg)
                     }
                 }
             }
         )()
-    
-    },[flag])
+
+    }, [flag])
 
 
     return (
@@ -98,16 +98,14 @@ const Register = () => {
                 <input placeholder='请输入姓名' maxlength="10"
                     onChange={(e) => { setName(e.target.value) }} />
                 <input placeholder='6 - 16位密码，区分大小写' type="password"
-                    onChange={(e) => { setPassword1(e.target.value)}} maxlength="16"/>
+                    onChange={(e) => { setPassword1(e.target.value) }} maxlength="16" />
                 <input placeholder='请确认密码' type="password"
-                    onChange={(e) => { setPassword2(e.target.value)}} maxlength="16"/>
+                    onChange={(e) => { setPassword2(e.target.value) }} maxlength="16" />
 
                 <button style={{ background: "#52AA53" }}
                     onClick={submit}>注册</button>
                 <div>
-                    <a onClick={() => {
-                        history.push('/login')
-                    }} alt='#'>使用已有账户登录</a>
+                    <a href='/login'>使用已有账户登录</a>
                 </div>
             </section>
         </div>

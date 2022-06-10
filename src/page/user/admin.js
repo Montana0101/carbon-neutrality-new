@@ -376,7 +376,7 @@ function Admin(props) {
             render: (text, record, index) => {
                 return (
                     <span>
-                        {record.id}
+                        {record.index}
                     </span>
                 )
             }
@@ -439,7 +439,7 @@ function Admin(props) {
             render: (text, record, index) => {
                 return (
                     <span>
-                        {record.id}
+                        {record.index}
                     </span>
                 )
             }
