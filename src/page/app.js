@@ -51,13 +51,13 @@ function App() {
             alignItems: "center", padding: '0.04rem 0.19rem 0.04rem 0'
           }}>
             <Input placeholder="请输入企业名称" style={{
-              width: "2rem", padding: "border-box", display: `${flag ? 'inline-block' : " none"
-                }`
+              width: "2rem", padding: "border-box", display: "none"
+                
             }} />
             {/* <SearchOutlined style={{fontWeight:"bold", color: "#7B7B7B", width: "0.5rem" }} onClick={() => {
               setFlag(!flag)
             }} /> */}
-            <img alt="" src={IconSearch} style={{ width: "0.15rem", margin: "0 0.15rem 0 0.3rem" }} onClick={() => {
+            {/* <img alt="" src={IconSearch} style={{ width: "0.15rem", margin: "0 0.15rem 0 0.3rem" }} onClick={() => {
               if (logined) {
                 setFlag(!flag)
               } else {
@@ -66,7 +66,7 @@ function App() {
                   style: { zIndex: 88888888888 }
                 })
               }
-            }} />
+            }} /> */}
             {!logined ? <div style={{
               color: "#7B7B7B", fontSize: "0.12rem", fontWeight: "bold",
               width: "0.5rem", cursor: "pointer",

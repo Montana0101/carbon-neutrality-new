@@ -462,6 +462,7 @@ function Admin(props) {
         }, {
             title: '公司名称',
             dataIndex: 'consultCompany',
+            width:150,
         }, {
             title: '联系方式',
             dataIndex: 'phone',
@@ -485,10 +486,11 @@ function Admin(props) {
                 return (
                     <div style={{ display: "flex", flexDirection: "column" }}>
                         {/* 待审核 */}
-                        {  record.status === 0 && <div
-                            onClick={() => _readConsult([record.id])}>
+                        {  record.status === 0 && <Popconfirm title="确认已读吗？"
+                            okText="确定" cancelText="取消"
+                            onConfirm={() => _readConsult([record.id])}>
                             {ButtonCmt(ThemeColor, 'white', '已读')}
-                        </div>}
+                        </Popconfirm>}
                     </div>
 
                 )
@@ -748,40 +750,58 @@ function Admin(props) {
                     }}>为您找<span style={{ margin: '0 0.02rem' }}>{total}</span>条相关结果</span>
                     <div style={{ display: "flex", }}>
 
-                        {tabInx * 1 === 1 && <div style={{ marginRight: "0.15rem" }} onClick={() => {
-                            let arr = []
-                            selectedRows && selectedRows.map((item) => {
-                                if (item.status === 2) {
-                                    arr.push(item.id)
+                        {tabInx * 1 === 1 && <div style={{marginRight:"0.1rem"}}><Popconfirm style={{ marginRight: "0.15rem" }}
+                            okText="确定" cancelText="取消"
+                            title="确认批量通过吗？"
+                            onConfirm={() => {
+                                let arr = []
+                                selectedRows && selectedRows.map((item) => {
+                                    if (item.status === 2) {
+                                        arr.push(item.id)
+                                    }
+                                })
+                                if(arr.length>0){
+                                    _passUser(arr)
+                                }else{
+                                    message.warn("未选定操作项")
                                 }
-                            })
-                            _passUser(arr)
-                        }}>
+                            }}>
                             {ButtonCmt(ThemeColor, 'white', '批量通过')}
-                        </div>}
-                        {tabInx * 1 === 1 && <div onClick={() => {
-                            let arr = []
-                            selectedRows && selectedRows.map((item) => {
-                                if (item.status === 2) {
-                                    arr.push(item.id)
+                        </Popconfirm></div>}
+                        {tabInx * 1 === 1 && <Popconfirm okText="确定" cancelText="取消"
+                            title="确认批量驳回吗？"
+                            onConfirm={() => {
+                                let arr = []
+                                selectedRows && selectedRows.map((item) => {
+                                    if (item.status === 2) {
+                                        arr.push(item.id)
+                                    }
+                                })
+                                if(arr.length>0){
+                                    _rejectUser(arr)
+                                }else{
+                                    message.warn("未选定操作项")
                                 }
-                            })
-                            _rejectUser(arr)
-                        }}>
+                            }}>
                             {ButtonCmt("#FD867F", 'white', '批量驳回')}
-                        </div>}
+                        </Popconfirm>}
 
-                        {tabInx * 1 === 2 && <div onClick={() => {
+                        {tabInx * 1 === 2 && <Popconfirm okText="确定" cancelText="取消"
+                            title="确认批量已读吗？" onConfirm={() => {
                             let arr = []
                             selectedRows && selectedRows.map((item) => {
                                 if (item.status === 0) {
                                     arr.push(item.id)
                                 }
                             })
-                            _readConsult(arr)
+                            if(arr.length>0){
+                                _readConsult(arr)
+                            }else{
+                                message.warn("未选中目标项")
+                            }
                         }}>
                             {ButtonCmt(ThemeColor, 'white', '批量已读')}
-                        </div>}
+                        </Popconfirm>}
                     </div>
                 </section>
             </div>
