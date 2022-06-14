@@ -7,7 +7,7 @@ import {
 } from '../../apis/index'
 import { AliOss, ThemeColor, CutLine } from "../../lib/const"
 import { createFromIconfontCN, ExclamationCircleFilled } from '@ant-design/icons';
-import { Tabs, Radio, Col, Row, Form, DatePicker, Input, Table, message, ConfigProvider, notification } from 'antd';
+import { Tabs, Radio, Col, Row, Form, DatePicker, Input, Table, message, Popconfirm, notification } from 'antd';
 import { Line } from '@ant-design/plots';
 import 'moment/locale/zh-cn';
 import locale from 'antd/es/date-picker/locale/zh_CN';
@@ -414,17 +414,21 @@ function Admin(props) {
                 return (
                     <div style={{ display: "flex", flexDirection: "column" }}>
                         {/* 待审核 */}
-                        {  record.status === 2 && <div style={{ marginBottom: "0.05rem" }}
-                            onClick={() => _passUser([record.id])}>
+                        {  record.status === 2 && <div style={{ marginBottom: "0.05rem" }}><Popconfirm title="确认通过申请吗？"
+                            onConfirm={() => _passUser([record.id])}
+                            okText="确定" cancelText="取消">
                             {ButtonCmt(ThemeColor, 'white', '通过')}
-                        </div>}
-                        { record.status === 2 && <div onClick={() => _rejectUser([record.id])}>{ButtonCmt("#FD867F", 'white', '驳回')}</div>}
+                        </Popconfirm></div>}
+                        { record.status === 2 && <Popconfirm title="确认驳回申请吗？" okText="确定"
+                            cancelText="取消" onConfirm={() => _rejectUser([record.id])}>{ButtonCmt("#FD867F", 'white', '驳回')}</Popconfirm>}
 
                         {/* 已通过 */}
-                        { record.status === 3 && <div onClick={() => _disableUser(record.id)}>{ButtonCmt("#EFA71C", 'white', '禁用')}</div>}
+                        { record.status === 3 && <Popconfirm title="确认禁用账户吗？" okText="确定"
+                            cancelText="取消" onConfirm={() => _disableUser(record.id)}>{ButtonCmt("#EFA71C", 'white', '禁用')}</Popconfirm>}
 
                         {/* 已禁用 */}
-                        { record.status === 5 && <div onClick={() => _restartUser(record.id)}>{ButtonCmt("#418DF5", 'white', '启用')}</div>}
+                        { record.status === 5 && <Popconfirm title="确认重新启用吗？" okText="确定"
+                            cancelText="取消" onConfirm={() => _restartUser(record.id)}>{ButtonCmt("#418DF5", 'white', '启用')}</Popconfirm>}
                     </div>
 
                 )
@@ -811,7 +815,7 @@ function Admin(props) {
                 }} bordered pagination={{
                     total: total,
                     onChange: (e) => { setPage(e) },
-                    current:page
+                    current: page
                 }} /> : <Table key={456} rowSelection={{
                     type: "checkbox",
                     ...rowSelection
@@ -820,8 +824,8 @@ function Admin(props) {
                 }} bordered pagination={{
                     total: cTotal,
                     onChange: (e) => { setPage(e) },
-                    current:page
-                }}/>}
+                    current: page
+                }} />}
 
             </section>
         </div>
