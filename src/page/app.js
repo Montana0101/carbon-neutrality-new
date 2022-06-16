@@ -87,8 +87,15 @@ function App() {
                   setDialog(true)
                 }}
               >
-                <UserOutlined
+                <div style={{border:"1px solid grey",width:"0.2rem",height:"0.2rem",
+                  position:"relative",
+                display:"flex",justifyContent:"center",alignItems:"center",borderRadius:'0.1rem'}}>
+                <UserOutlined style={{fontSize:"0.14rem"}}
                 />
+                  <span style={{position:"absolute",height:'0.08rem',width:"0.08rem",background:"red",
+                  borderRadius:"50%",
+                  right:"-0.05rem",top:0}}></span>
+                  </div>
                 {dialog && <section style={{
                   position: "absolute",
                   top: '0.2rem',
