@@ -195,7 +195,7 @@ function CommonUser(props) {
             render: (text, record, index) => {
                 return (
                     <span>
-                        {record.id}
+                        {record.index}
                     </span>
                 )
             }

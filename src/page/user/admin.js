@@ -128,6 +128,7 @@ const ButtonCmt = (bg, color, text) => {
     )
 }
 
+var xx = [{"id":23,"consultTime":"2022-06-10 11:13:56","phone":"1563949380","status":0,"consultContent":"咨询","consultCompany":"大公司呀","operater":null,"updateTime":null,"index":1,"key":23},{"id":24,"consultTime":"2022-06-10 11:14:14","phone":"1563949380","status":0,"consultContent":"咨询一下","consultCompany":"大头公司","operater":null,"updateTime":null,"index":2,"key":24},{"id":25,"consultTime":"2022-06-10 11:14:30","phone":"1563949380","status":0,"consultContent":"咨询一下出发","consultCompany":"天黑了","operater":null,"updateTime":null,"index":3,"key":25},{"id":26,"consultTime":"2022-06-10 11:16:17","phone":"1563949380","status":0,"consultContent":"联盟科技","consultCompany":"联盟科技","operater":null,"updateTime":null,"index":4,"key":26},{"id":28,"consultTime":"2022-06-10 14:29:40","phone":"15629797423","status":0,"consultContent":"感兴趣，请回复","consultCompany":"大白公司","operater":null,"updateTime":null,"index":5,"key":28}]
 function Admin(props) {
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const [selectedRows, setSelectedRows] = useState([])
@@ -188,12 +189,12 @@ function Admin(props) {
         // 清除共用变量
         // setTotal(0)
         setStatus("")
-        setPage(0)
+        setCstatus("")
+        setPage(1)
         setSelectedRowKeys([])
-
-        if (tabInx == 1) {
+        if (tabInx * 1 === 1) {
             _adminManageList()
-        } else if (tabInx == 2) {
+        } else if (tabInx * 1 === 2) {
             _consultManageList()
         }
     }, [tabInx])
@@ -259,11 +260,12 @@ function Admin(props) {
             })
             setList(arr)
             setTotal(res.result.totalRecord)
+            console.log("page is ",page)
         }
     }
 
     useEffect(() => {
-        console.log("百度NSA技能等级撒", cList)
+        // console.log("百度NSA技能等级撒", JSON.stringify(cList))
     }, [cList])
 
     // 咨询管理列表数据
@@ -286,8 +288,7 @@ function Admin(props) {
             })
             setConsultList(arr)
             setCtotal(res.result.totalRecord)
-            console.log('》》》》》》》》》》》', tabInx)
-            console.log("你懂撒可能打撒撒旦艰苦", arr)
+            console.log('》》》》》》》》》》》', arr)
 
         }
     }
@@ -382,6 +383,7 @@ function Admin(props) {
 
         {
             title: '序号',
+            width:50,
             render: (text, record, index) => {
                 return (
                     <span>
@@ -405,15 +407,19 @@ function Admin(props) {
         }, {
             title: '申请邮箱',
             dataIndex: 'email',
+            width:150,
+            ellipsis: true,
         }, {
             title: '申请人员',
             dataIndex: 'name',
+            width:80,
         }, {
             title: '申请时间',
             dataIndex: 'registerTime',
         }, {
             title: '审核人',
             dataIndex: 'approver',
+            width:80,
         }, {
             title: '最后操作时间',
             dataIndex: 'lastUpdateTime',
@@ -450,6 +456,7 @@ function Admin(props) {
 
         {
             title: '序号',
+            width:50,
             render: (text, record, index) => {
                 return (
                     <span>
@@ -464,8 +471,8 @@ function Admin(props) {
             width: 80,
             render: (text, record, index) => {
                 return (
-                    <span style={{ color: record.status == 0 ? '#D79727' : ThemeColor }}>
-                        {record.status == 0 ? '未读' : '已读'}
+                    <span style={{ color: record.status == 1 ? '#D79727' : ThemeColor }}>
+                        {record.status == 1 ? '未读' : '已读'}
                     </span>
                 )
             }
@@ -476,9 +483,13 @@ function Admin(props) {
         }, {
             title: '联系方式',
             dataIndex: 'phone',
+            width:100,
         }, {
             title: '咨询内容',
             dataIndex: 'consultContent',
+            ellipsis: true,
+            width:150,
+
         }, {
             title: '咨询时间',
             dataIndex: 'consultTime',
@@ -496,7 +507,7 @@ function Admin(props) {
                 return (
                     <div style={{ display: "flex", flexDirection: "column" }}>
                         {/* 待审核 */}
-                        {  record.status === 0 && <Popconfirm title="确认已读吗？"
+                        {  record.status === 1 && <Popconfirm title="确认已读吗？"
                             okText="确定" cancelText="取消"
                             onConfirm={() => _readConsult([record.id])}>
                             {ButtonCmt(ThemeColor, 'white', '已读')}
@@ -507,7 +518,7 @@ function Admin(props) {
             }
         },
     ];
-  
+
     return (
         <div className="admin_page" style={{
             height: "auto",
@@ -688,9 +699,9 @@ function Admin(props) {
                                         <Radio.Group defaultValue={""} buttonStyle="solid" onChange={e => setCstatus(e.target.value)}>
                                             <Radio.Button value={''}
                                                 key={0}>全部</Radio.Button>
-                                            <Radio.Button value={1}
+                                            <Radio.Button value={2}
                                                 key={2}>已读</Radio.Button>
-                                            <Radio.Button value={0}
+                                            <Radio.Button value={1}
                                                 key={3}>未读</Radio.Button>
                                         </Radio.Group>
 
@@ -790,7 +801,7 @@ function Admin(props) {
                             title="确认批量已读吗？" onConfirm={() => {
                                 let arr = []
                                 selectedRows && selectedRows.map((item) => {
-                                    if (item.status === 0) {
+                                    if (item.status === 1) {
                                         arr.push(item.id)
                                     }
                                 })
@@ -838,7 +849,7 @@ function Admin(props) {
                     current: page
                 }} />}
 
-                {tabInx * 1 === 2 && <Table key={567} rowSelection={{
+                {tabInx * 1 === 2 && <Table key={"567"} rowSelection={{
                     type: "checkbox",
                     ...rowSelection
                 }} columns={cColumns} dataSource={cList} style={{
