@@ -153,7 +153,9 @@ function Admin(props) {
     const [consultArr, setConsult] = useState([]) // 咨询时间
     const [content, setContent] = useState("") // 咨询内容
     const [cList, setConsultList] = useState([]) // 返回数据集合
+
     const [cTotal, setCtotal] = useState(0)
+    const [cStatus, setCstatus] = useState("")
 
 
     const rowSelection = {
@@ -215,7 +217,7 @@ function Admin(props) {
     // 咨询列表
     useEffect(() => {
         _consultManageList()
-    }, [status, page, company, phone, content, consultArr])
+    }, [cStatus, page, company, phone, content, consultArr])
 
 
     // 今天待审核人数
@@ -260,13 +262,17 @@ function Admin(props) {
         }
     }
 
+    useEffect(() => {
+        console.log("百度NSA技能等级撒", cList)
+    }, [cList])
+
     // 咨询管理列表数据
     const _consultManageList = async () => {
         const params = {
             limit: 10,
             page,
             phone,
-            status,
+            status: cStatus,
             consultCompany: company,
             consultContent: content,
             consultTimeBegin: consultArr[0] ? consultArr[0] : "",
@@ -278,8 +284,11 @@ function Admin(props) {
             arr && arr.map((item, index) => {
                 arr[index].key = item.id
             })
-            setConsultList(res.result.data)
+            setConsultList(arr)
             setCtotal(res.result.totalRecord)
+            console.log('》》》》》》》》》》》', tabInx)
+            console.log("你懂撒可能打撒撒旦艰苦", arr)
+
         }
     }
 
@@ -410,9 +419,10 @@ function Admin(props) {
             dataIndex: 'lastUpdateTime',
         }, {
             title: '操作',
+            width: 100,
             render: (text, record) => {
                 return (
-                    <div style={{ display: "flex", flexDirection: "column" }}>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                         {/* 待审核 */}
                         {  record.status === 2 && <div style={{ marginBottom: "0.05rem" }}><Popconfirm title="确认通过申请吗？"
                             onConfirm={() => _passUser([record.id])}
@@ -462,7 +472,7 @@ function Admin(props) {
         }, {
             title: '公司名称',
             dataIndex: 'consultCompany',
-            width:150,
+            width: 150,
         }, {
             title: '联系方式',
             dataIndex: 'phone',
@@ -497,17 +507,7 @@ function Admin(props) {
             }
         },
     ];
-    const data = [];
-
-    for (let i = 0; i < 46; i++) {
-        data.push({
-            key: i,
-            name: `Edward King ${i}`,
-            age: 32,
-            address: `London, Park Lane no. ${i}`,
-        });
-    }
-
+  
     return (
         <div className="admin_page" style={{
             height: "auto",
@@ -685,7 +685,7 @@ function Admin(props) {
                             <Form>
                                 <Row>
                                     <Form.Item label="咨询状态">
-                                        <Radio.Group defaultValue="" buttonStyle="solid" onChange={e => setStatus(e.target.value)}>
+                                        <Radio.Group defaultValue={""} buttonStyle="solid" onChange={e => setCstatus(e.target.value)}>
                                             <Radio.Button value={''}
                                                 key={0}>全部</Radio.Button>
                                             <Radio.Button value={1}
@@ -747,10 +747,10 @@ function Admin(props) {
                         color: ThemeColor,
                         fontSize: "0.12rem",
                         fontWeight: "bold"
-                    }}>为您找<span style={{ margin: '0 0.02rem' }}>{total}</span>条相关结果</span>
+                    }}>为您找到<span style={{ margin: '0 0.02rem' }}>{tabInx == 1 ? total : cTotal}</span>条相关结果</span>
                     <div style={{ display: "flex", }}>
 
-                        {tabInx * 1 === 1 && <div style={{marginRight:"0.1rem"}}><Popconfirm style={{ marginRight: "0.15rem" }}
+                        {tabInx * 1 === 1 && <div style={{ marginRight: "0.1rem" }}><Popconfirm style={{ marginRight: "0.15rem" }}
                             okText="确定" cancelText="取消"
                             title="确认批量通过吗？"
                             onConfirm={() => {
@@ -760,9 +760,9 @@ function Admin(props) {
                                         arr.push(item.id)
                                     }
                                 })
-                                if(arr.length>0){
+                                if (arr.length > 0) {
                                     _passUser(arr)
-                                }else{
+                                } else {
                                     message.warn("未选定操作项")
                                 }
                             }}>
@@ -777,9 +777,9 @@ function Admin(props) {
                                         arr.push(item.id)
                                     }
                                 })
-                                if(arr.length>0){
+                                if (arr.length > 0) {
                                     _rejectUser(arr)
-                                }else{
+                                } else {
                                     message.warn("未选定操作项")
                                 }
                             }}>
@@ -788,18 +788,18 @@ function Admin(props) {
 
                         {tabInx * 1 === 2 && <Popconfirm okText="确定" cancelText="取消"
                             title="确认批量已读吗？" onConfirm={() => {
-                            let arr = []
-                            selectedRows && selectedRows.map((item) => {
-                                if (item.status === 0) {
-                                    arr.push(item.id)
+                                let arr = []
+                                selectedRows && selectedRows.map((item) => {
+                                    if (item.status === 0) {
+                                        arr.push(item.id)
+                                    }
+                                })
+                                if (arr.length > 0) {
+                                    _readConsult(arr)
+                                } else {
+                                    message.warn("未选中目标项")
                                 }
-                            })
-                            if(arr.length>0){
-                                _readConsult(arr)
-                            }else{
-                                message.warn("未选中目标项")
-                            }
-                        }}>
+                            }}>
                             {ButtonCmt(ThemeColor, 'white', '批量已读')}
                         </Popconfirm>}
                     </div>
@@ -827,7 +827,7 @@ function Admin(props) {
                     }} >清空</a>
                 </div>
 
-                {tabInx * 1 === 1 ? <Table style={{}} rowSelection={{
+                {tabInx * 1 === 1 && <Table style={{}} rowSelection={{
                     type: "checkbox",
                     ...rowSelection
                 }} columns={columns} dataSource={list} style={{
@@ -836,7 +836,9 @@ function Admin(props) {
                     total: total,
                     onChange: (e) => { setPage(e) },
                     current: page
-                }} /> : <Table key={456} rowSelection={{
+                }} />}
+
+                {tabInx * 1 === 2 && <Table key={567} rowSelection={{
                     type: "checkbox",
                     ...rowSelection
                 }} columns={cColumns} dataSource={cList} style={{
@@ -846,7 +848,6 @@ function Admin(props) {
                     onChange: (e) => { setPage(e) },
                     current: page
                 }} />}
-
             </section>
         </div>
     )

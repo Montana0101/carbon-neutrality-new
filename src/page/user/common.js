@@ -394,7 +394,7 @@ function CommonUser(props) {
                         color: ThemeColor,
                         fontSize: "0.12rem",
                         fontWeight: "bold"
-                    }}>为您找<span style={{ margin: '0 0.02rem' }}>{total}</span>条相关结果</span>
+                    }}>为您找到<span style={{ margin: '0 0.02rem' }}>{total}</span>条相关结果</span>
                     <div style={{ display: "flex", }}>
 
 
