@@ -154,7 +154,7 @@ function Admin(props) {
     const [consultArr, setConsult] = useState([]) // 咨询时间
     const [content, setContent] = useState("") // 咨询内容
     const [cList, setConsultList] = useState([]) // 返回数据集合
-
+    const [cPage,setCpage] = useState(1)
     const [cTotal, setCtotal] = useState(0)
     const [cStatus, setCstatus] = useState("")
 
@@ -208,17 +208,22 @@ function Admin(props) {
     // 用户管理调用列表
     useEffect(() => {
         _adminManageList()
-        // alert(page)
-    }, [page, approvalArr, applyArr, email, companyName])
+    }, [page])
 
-    useEffect(() => {
+    useEffect(()=>{
+        setPage(1)
         _adminManageList()
-    }, [status])
+    },[status,approvalArr, applyArr, email, companyName])
+
+    useEffect(()=>{
+        _consultManageList()
+    },[cPage])
 
     // 咨询列表
     useEffect(() => {
+        setCpage(1)
         _consultManageList()
-    }, [cStatus, page, company, phone, content, consultArr])
+    }, [cStatus, company, phone, content, consultArr])
 
 
     // 今天待审核人数
@@ -264,15 +269,12 @@ function Admin(props) {
         }
     }
 
-    useEffect(() => {
-        // console.log("百度NSA技能等级撒", JSON.stringify(cList))
-    }, [cList])
 
     // 咨询管理列表数据
     const _consultManageList = async () => {
         const params = {
             limit: 10,
-            page,
+            page:cPage,
             phone,
             status: cStatus,
             consultCompany: company,
@@ -503,9 +505,10 @@ function Admin(props) {
             width: 120
         }, {
             title: '操作',
+            width: 100,
             render: (text, record) => {
                 return (
-                    <div style={{ display: "flex", flexDirection: "column" }}>
+                    <div style={{ display: "flex", flexDirection: "column",alignItems:"center" }}>
                         {/* 待审核 */}
                         {  record.status === 1 && <Popconfirm title="确认已读吗？"
                             okText="确定" cancelText="取消"
@@ -856,8 +859,8 @@ function Admin(props) {
                     width: "100%", marginTop: "0.3rem"
                 }} bordered pagination={{
                     total: cTotal,
-                    onChange: (e) => { setPage(e) },
-                    current: page
+                    onChange: (e) => { setCpage(e) },
+                    current: cPage
                 }} />}
             </section>
         </div>
