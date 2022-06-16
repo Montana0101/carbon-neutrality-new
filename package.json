@@ -89,7 +89,7 @@
     "build": "rm -rf build.zip && node scripts/build.js && zip -r build.zip build",
     "transfer":"./transfer.sh",
     "test": "node scripts/test.js",
-    "git":"./save.sh"
+    "git":"./git.sh"
   },
   "eslintConfig": {
     "extends": [
