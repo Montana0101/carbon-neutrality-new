@@ -212,8 +212,11 @@ function Admin(props) {
     }, [page])
 
     useEffect(()=>{
-        setPage(1)
-        _adminManageList()
+        if(page==1){
+            _adminManageList()
+        }else{
+            setPage(1)
+        }
     },[status,approvalArr, applyArr, email, companyName])
 
     useEffect(()=>{
@@ -222,8 +225,11 @@ function Admin(props) {
 
     // 咨询列表
     useEffect(() => {
-        setCpage(1)
-        _consultManageList()
+        if(cPage==1){
+            _consultManageList()
+        }else{
+            setCpage(1)
+        }
     }, [cStatus, company, phone, content, consultArr])
 
 

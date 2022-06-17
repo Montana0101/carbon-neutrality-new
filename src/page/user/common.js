@@ -142,14 +142,22 @@ function CommonUser(props) {
     // 调用接口
     useEffect(() => {
         _attentionInfo()
-        _readMessage()
+        // _readMessage()
         // _myAttention()
     }, [])
 
     // 用户管理调用列表
     useEffect(() => {
+       if(page==1){
         _attentionList()
-    }, [page, companyName, status])
+       }else{
+            setPage(1)
+       }
+    }, [ companyName, status])
+
+    useEffect(()=>{
+        _attentionList()
+    },[page])
 
      // 读取信息
      const _readMessage = async () => {
