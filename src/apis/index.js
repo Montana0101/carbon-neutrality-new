@@ -1,12 +1,6 @@
 import { fetchGadget } from './fetch'
 
 // 注册
-export const shutVideos = (terminalId, channel) => {
-    const url = `/api/vedio/stopAllVedio?terminalId=${terminalId}&channels=${channel}`
-    return fetchGadget(url, 'PUT')
-}
-
-// 注册
 export const register = (params) => {
     const url = `/stiacn/user/register`
     return fetchGadget(url, 'POST', params)
@@ -19,6 +13,18 @@ export const login = (params) => {
     return fetchGadget(url, 'GET')
 }
 
+
+// 未读消息
+export const messageTips = () => {
+    const url = `/stiacn/message/tips`
+    return fetchGadget(url, 'GET')
+}
+
+// 消息读取
+export const readMessage = () =>{
+    const url = `/stiacn/message/enter`
+    return fetchGadget(url, 'PUT')
+}
 
 // 问题反馈
 export const consult = (params) => {

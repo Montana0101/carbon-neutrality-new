@@ -5,6 +5,7 @@ import { AliOss, ThemeColor, CutLine } from "../lib/const"
 import { useEffect, useState } from "react"
 import { UserOutlined } from '@ant-design/icons';
 import IconSearch from "../static/imgs/search.svg"
+import {messageTips,readMessage} from '../apis/index'
 
 const logo = AliOss + '/img/logo.png'
 
@@ -16,16 +17,25 @@ function App() {
   const [logined, checkLogin] = useState(false)
   const [dialog, setDialog] = useState(false)
   const [userInfo, setUserInfo] = useState({})
+  const [tips,setTips] = useState(0)
 
   useEffect(() => {
     const check = localStorage.getItem('user')
     if (JSON.parse(check)) {
       checkLogin(true)
       setUserInfo(JSON.parse(check))
+    _messageTips()
     } else {
       checkLogin(false)
     }
   }, [])
+
+  const _messageTips = async () => {
+    const res = await messageTips()
+    if(res.code === 2000){
+       setTips(res.result)
+    }
+  }
 
   return (
     <div className="app">
@@ -52,7 +62,7 @@ function App() {
           }}>
             <Input placeholder="请输入企业名称" style={{
               width: "2rem", padding: "border-box", display: "none"
-                
+
             }} />
             {/* <SearchOutlined style={{fontWeight:"bold", color: "#7B7B7B", width: "0.5rem" }} onClick={() => {
               setFlag(!flag)
@@ -87,15 +97,19 @@ function App() {
                   setDialog(true)
                 }}
               >
-                <div style={{border:"1px solid grey",width:"0.2rem",height:"0.2rem",
-                  position:"relative",
-                display:"flex",justifyContent:"center",alignItems:"center",borderRadius:'0.1rem'}}>
-                <UserOutlined style={{fontSize:"0.14rem"}}
-                />
-                  <span style={{position:"absolute",height:'0.08rem',width:"0.08rem",background:"red",
-                  borderRadius:"50%",
-                  right:"-0.05rem",top:0}}></span>
-                  </div>
+                <div style={{
+                  border: "1px solid grey", width: "0.2rem", height: "0.2rem",
+                  position: "relative",
+                  display: "flex", justifyContent: "center", alignItems: "center", borderRadius: '0.1rem'
+                }}>
+                  <UserOutlined style={{ fontSize: "0.14rem" }}
+                  />
+                  {tips>0 && <span style={{
+                    position: "absolute", height: '0.08rem', width: "0.08rem", background: "red",
+                    borderRadius: "50%",
+                    right: "-0.05rem", top: 0
+                  }}></span>}
+                </div>
                 {dialog && <section style={{
                   position: "absolute",
                   top: '0.2rem',
@@ -134,7 +148,7 @@ function App() {
                 onClick={() => {
                   localStorage.removeItem("user")
                   checkLogin(false)
-                  window.location.href="/"
+                  window.location.href = "/"
                 }}>
                 退出
            </div>}

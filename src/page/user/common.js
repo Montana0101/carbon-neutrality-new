@@ -2,7 +2,7 @@
 import { useState, useEffect, memo } from "react"
 import { withRouter } from 'react-router-dom';
 import {
-    cancelAttention, myAttention,
+    cancelAttention, myAttention,readMessage,
     attentionList, attentionInfo
 } from '../../apis/index'
 import { ThemeColor, CutLine } from "../../lib/const"
@@ -142,6 +142,7 @@ function CommonUser(props) {
     // 调用接口
     useEffect(() => {
         _attentionInfo()
+        _readMessage()
         // _myAttention()
     }, [])
 
@@ -149,6 +150,14 @@ function CommonUser(props) {
     useEffect(() => {
         _attentionList()
     }, [page, companyName, status])
+
+     // 读取信息
+     const _readMessage = async () => {
+        const res = await readMessage()
+        if(res.code!==2000){
+            console.warn("readMessage 接口功能异常")
+        }
+    }
 
     const _attentionList = async () => {
         const params = {

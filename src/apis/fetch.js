@@ -26,7 +26,7 @@ export const fetchGadget = (url, method, params) => {
         return res
     }).catch(e=>{
        setTimeout(()=>{
-        window.location.href='/'
+        // window.location.href='/'
        },500)
     })
 }

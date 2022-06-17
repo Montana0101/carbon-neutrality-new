@@ -3,7 +3,7 @@ import { useState, useEffect, memo } from "react"
 import { withRouter, useHistory } from 'react-router-dom';
 import {
     todayPending, totalRegister, consultList, adminManageList, yearStatistics,
-    passUser, rejectUser, restartUser, disableUser, readConsult
+    passUser, rejectUser, restartUser, disableUser, readConsult,readMessage
 } from '../../apis/index'
 import { AliOss, ThemeColor, CutLine } from "../../lib/const"
 import { createFromIconfontCN, ExclamationCircleFilled } from '@ant-design/icons';
@@ -203,6 +203,7 @@ function Admin(props) {
     useEffect(() => {
         _todayPendings()
         _totalRegister()
+        _readMessage() // 信息已读
     }, [])
 
     // 用户管理调用列表
@@ -225,6 +226,14 @@ function Admin(props) {
         _consultManageList()
     }, [cStatus, company, phone, content, consultArr])
 
+
+    // 读取信息
+    const _readMessage = async () => {
+        const res = await readMessage()
+        if(res.code!==2000){
+            console.warn("readMessage 接口功能异常")
+        }
+    }
 
     // 今天待审核人数
     const _todayPendings = async () => {
