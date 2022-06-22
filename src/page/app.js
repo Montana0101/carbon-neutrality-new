@@ -167,6 +167,8 @@ function App() {
                   if (item == '首页') {
                     // history.push('/')
                     window.location.href = '/'
+                  }else if(item == '联系我们'){
+                    window.location.href = '/contact'
                   }
                 }}>
                   {item}
