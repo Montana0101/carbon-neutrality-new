@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
-import { AliOss, ThemeColor, CutLine } from "../../lib/const"
+import { AliOss, ThemeColor, CutLine, barFontSize } from "../../lib/const"
 // import {Map, Marker, NavigationControl, InfoWindow} from 'react-bmapgl';
 import { EnvironmentFilled, PhoneFilled, MailFilled } from '@ant-design/icons';
 import pos from '../../static/imgs/position.png'
+
 
 const AboutLeague = () => {
     useEffect(() => {
@@ -15,10 +16,17 @@ const AboutLeague = () => {
     }, [])
 
     return <div style={{
-        height: "100%", width: "100%", position: "relative", 
+        height: "100%", width: "100%", position: "relative", padding: "0 0.3rem"
 
     }}>
-        <div style={{
+        <div style={{ borderTop: CutLine, padding: '0 0.5rem' }} className='news_area'>
+            <h3 style={{
+                fontSize: barFontSize, fontWeight: "bold", display: "flex", margin: 0,
+                padding: "0 0.3rem", color: ThemeColor, height: "0.6rem", lineHeight: "0.6rem",
+                borderBottom:CutLine
+            }}>联盟介绍</h3>
+        </div>
+        {/* <div style={{
             position: "absolute",
             left: "0.5rem", right: '0.5rem', bottom: 0, top: 0,
             display: "flex",
@@ -79,7 +87,7 @@ const AboutLeague = () => {
                     </section>
                 </div>
             </section>
-        </div>
+        </div> */}
     </div>
 }
 

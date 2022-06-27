@@ -7,6 +7,10 @@ export const AliOss = "https://shbd.oss-cn-beijing.aliyuncs.com/%E7%A2%B3%E4%B8%
 // 主题色
 export const ThemeColor = '#51AA52'
 
+export const barFontSize = '0.22rem' // 标题字体大小
+
+export const barHeight = '0.7rem'
+
 // 分割线
 export const CutLine = '1px solid rgba(0,0,0,0.1)'
 

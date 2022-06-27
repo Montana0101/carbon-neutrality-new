@@ -1,4 +1,4 @@
-import { AliOss, ThemeColor, CutLine } from "../../lib/const"
+import { AliOss, ThemeColor, CutLine,barFontSize,barHeight} from "../../lib/const"
 import React, { useEffect, useState, useRef } from "react"
 import { Carousel, Modal, Form, Input, Popconfirm, Button, Col, Row, message } from 'antd';
 import { NavigateButton } from "../../component/button"
@@ -19,7 +19,6 @@ const contentStyle = {
   textAlign: 'center',
 };
 
-const barFontSize = '0.24rem' // 标题字体大小
 
 // 双碳资讯
 const tastArr = [
@@ -298,12 +297,12 @@ export default function Home(props) {
       </section>
 
       {/* 分割区域 */}
-      <div style={{ borderLeft: CutLine, borderRight: CutLine, height: "0.6rem", margin: '0 0.5rem' }}></div>
+      <div style={{ borderLeft: CutLine, borderRight: CutLine, height: barHeight, margin: '0 0.5rem' }}></div>
       {/* 新闻动态 */}
       <div style={{ borderTop: CutLine, padding: '0 0.5rem' }} className='news_area'>
         <h3 style={{
           fontSize: barFontSize, fontWeight: "bold", display: "flex", margin: 0,
-          padding: "0 0.3rem", color: ThemeColor, height: "0.6rem", lineHeight: "0.6rem",
+          padding: "0 0.3rem", color: ThemeColor, height: barHeight, lineHeight: barHeight,
           borderLeft: CutLine, borderRight: CutLine
         }}>关于联盟</h3>
         <section style={{ border: CutLine, padding: '0.3rem' }}>
@@ -347,7 +346,7 @@ export default function Home(props) {
               justifyContent: "space-between", padding: "0.4rem 1rem", color: 'white'
             }}>
               <p style={{
-                height: "0.6rem", fontSize: barFontSize, fontWeight: "bold",
+                height: barHeight, fontSize: barFontSize, fontWeight: "bold",
                 color: "white"
               }}>联盟任务</p>
               <ul style={{
@@ -375,10 +374,10 @@ export default function Home(props) {
 
 
       {/* 分割区域 */}
-      <div style={{ borderLeft: CutLine, borderBottom: "none", borderRight: CutLine, height: "0.6rem", margin: '0 0.5rem' }}>
+      <div style={{ borderLeft: CutLine, borderBottom: "none", borderRight: CutLine, height: barHeight, margin: '0 0.5rem' }}>
         <h3 style={{
           fontSize: barFontSize, fontWeight: "bold", display: "flex", margin: 0,
-          padding: "0 0.3rem", color: ThemeColor, height: "0.6rem", lineHeight: "0.6rem",
+          padding: "0 0.3rem", color: ThemeColor, height: barHeight, lineHeight: barHeight,
           borderBottom: "none"
         }}>联盟动态</h3>
       </div>
@@ -433,7 +432,7 @@ export default function Home(props) {
       <div style={{ borderTop: CutLine, padding: '0 0.5rem' }} className='news_area'>
         <h3 style={{
           fontSize: barFontSize, fontWeight: "bold", display: "flex", margin: 0,
-          padding: "0 0.3rem", color: ThemeColor, height: "0.6rem", lineHeight: "0.6rem",
+          padding: "0 0.3rem", color: ThemeColor, height: barHeight, lineHeight: barHeight,
           border: CutLine, borderTop: "none"
         }}>业务范围</h3>
         <h3 style={{
