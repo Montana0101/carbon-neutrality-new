@@ -1,4 +1,4 @@
-import "./button.scss"
+import "./button.less"
 import { useHistory } from 'react-router-dom'
 
 export const NavigateButton = (props) => {

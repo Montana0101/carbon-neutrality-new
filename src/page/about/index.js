@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
-import { AliOss, ThemeColor, CutLine, barFontSize } from "../../lib/const"
+import { AliOss, ThemeColor, CutLine, barFontSize, barHeight } from "../../lib/const"
 // import {Map, Marker, NavigationControl, InfoWindow} from 'react-bmapgl';
 import { EnvironmentFilled, PhoneFilled, MailFilled } from '@ant-design/icons';
 import pos from '../../static/imgs/position.png'
-
+import './index.less'
 
 const AboutLeague = () => {
     useEffect(() => {
@@ -15,16 +15,36 @@ const AboutLeague = () => {
 
     }, [])
 
-    return <div style={{
-        height: "100%", width: "100%", position: "relative", padding: "0 0.3rem"
-
-    }}>
-        <div style={{ borderTop: CutLine, padding: '0 0.5rem' }} className='news_area'>
+    return <div className='about_page'>
+        <div style={{ borderTop: CutLine, padding: '0 0.5rem' }}>
             <h3 style={{
                 fontSize: barFontSize, fontWeight: "bold", display: "flex", margin: 0,
-                padding: "0 0.3rem", color: ThemeColor, height: "0.6rem", lineHeight: "0.6rem",
-                borderBottom:CutLine
+                padding: "0 0.3rem", color: ThemeColor, height: barHeight, lineHeight: "0.6rem",
+                borderBottom: CutLine
             }}>联盟介绍</h3>
+        </div>
+        <div style={{ padding: '0.2rem 0.5rem' }}>
+            <section style={{
+                border: "1px solid red", padding: "0 0.3rem", textAlign: "left",
+                lineHeight: "0.4rem", fontSize: "0.14rem", color: "rgba(0,0,0,0.7)"
+            }}>
+                以“双碳”领域技术创新需求和成果转化需求为导向，加快推进核心技术的突破与产业化，助推绿色低碳科研成果高效转化为现实生产力，推动相关产业爆发式增长，从而打造国内一流、国际领先的碳中和科技创新平台，助力上海市高质量实现
+                <span style={{ fontWeight: "bold", color: ThemeColor }}>“碳达峰、碳中和”</span>
+                的目标，更好服务国家碳达峰、碳中和战略全局，围绕落实上海市碳中和目标及崇明区世界生态岛建设，计划打造
+                <span style={{ fontWeight: "bold", color: ThemeColor }}>“一平台，一研究院，一基地，一基金”</span>
+                ，即形成顶级专家领衔、技术转化高效、空间布局合理、资本运作深入的综合性技术创新与产业孵化体。
+          </section>
+            <section className="introduce_card">
+
+            </section>
+        </div>
+
+        <div style={{ borderLeft: CutLine, borderBottom: CutLine, borderRight: CutLine, height: barHeight, margin: '0 0.5rem' }}>
+            <h3 style={{
+                fontSize: barFontSize, fontWeight: "bold", display: "flex", margin: 0,
+                padding: "0 0.3rem", color: ThemeColor, height: barHeight, lineHeight: barHeight,
+                borderBottom: "none"
+            }}>联盟任务</h3>
         </div>
         {/* <div style={{
             position: "absolute",
