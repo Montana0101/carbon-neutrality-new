@@ -5,7 +5,7 @@ import { AliOss, ThemeColor, CutLine } from "../lib/const"
 import { useEffect, useState } from "react"
 import { UserOutlined } from '@ant-design/icons';
 import IconSearch from "../static/imgs/search.svg"
-import {messageTips,readMessage} from '../apis/index'
+import { messageTips, readMessage } from '../apis/index'
 
 const logo = AliOss + '/img/logo.png'
 
@@ -17,14 +17,14 @@ function App() {
   const [logined, checkLogin] = useState(false)
   const [dialog, setDialog] = useState(false)
   const [userInfo, setUserInfo] = useState({})
-  const [tips,setTips] = useState(0)
+  const [tips, setTips] = useState(0)
 
   useEffect(() => {
     const check = localStorage.getItem('user')
     if (JSON.parse(check)) {
       checkLogin(true)
       setUserInfo(JSON.parse(check))
-    _messageTips()
+      _messageTips()
     } else {
       checkLogin(false)
     }
@@ -32,8 +32,8 @@ function App() {
 
   const _messageTips = async () => {
     const res = await messageTips()
-    if(res.code === 2000){
-       setTips(res.result)
+    if (res.code === 2000) {
+      setTips(res.result)
     }
   }
 
@@ -104,7 +104,7 @@ function App() {
                 }}>
                   <UserOutlined style={{ fontSize: "0.14rem" }}
                   />
-                  {tips>0 && <span style={{
+                  {tips > 0 && <span style={{
                     position: "absolute", height: '0.08rem', width: "0.08rem", background: "red",
                     borderRadius: "50%",
                     right: "-0.05rem", top: 0
@@ -167,8 +167,10 @@ function App() {
                   if (item == '首页') {
                     // history.push('/')
                     window.location.href = '/'
-                  }else if(item == '联系我们'){
+                  } else if (item == '联系我们') {
                     window.location.href = '/contact'
+                  } else if (item == "关于联盟") {
+                    window.location.href = '/about'
                   }
                 }}>
                   {item}

@@ -4,7 +4,7 @@ import { AliOss, ThemeColor, CutLine } from "../../lib/const"
 import { EnvironmentFilled, PhoneFilled, MailFilled } from '@ant-design/icons';
 import pos from '../../static/imgs/position.png'
 
-const ContactUs = () => {
+const AboutLeague = () => {
     useEffect(() => {
         // const dom = document.getElementsByClassName("app-header")[0]
         // dom.style.display='none'
@@ -80,9 +80,7 @@ const ContactUs = () => {
                 </div>
             </section>
         </div>
-
-
     </div>
 }
 
-export default ContactUs
+export default AboutLeague

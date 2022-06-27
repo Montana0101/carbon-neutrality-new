@@ -13,6 +13,7 @@ import Register from '../page/auth/register'
 import Admin from '../page/user/admin'
 import CommonUser from '../page/user/common'
 import ContactUs from '../page/contact/index'
+import AboutLeague from "../page/about/index" // 关于联盟
 
 import NewsDetail2 from "../page/news/detail2"
 
@@ -59,6 +60,7 @@ const Routers = (props) => {
                     <Route path="/admin" exact component={Admin}></Route>
                     <Route path="/common" exact component={CommonUser}></Route>
                     <Route path="/contact" exact component={ContactUs}></Route>
+                    <Route path="/about" exact component={AboutLeague}></Route>
                     <Route path="/">
                         <Home />
                     </Route>
