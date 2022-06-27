@@ -168,9 +168,9 @@ function App() {
                     // history.push('/')
                     window.location.href = '/'
                   } else if (item == '联系我们') {
-                    // window.location.href = '/contact'
+                    window.location.href = '/contact'
                   } else if (item == "关于联盟") {
-                    window.location.href = '/about'
+                    // window.location.href = '/about'
                   }
                 }}>
                   {item}
