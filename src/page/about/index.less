@@ -5,9 +5,71 @@
     padding : 0 0.3rem;
 
     // 联盟介绍
-    .introduce_card{
-        width:100%;
-        border:1px solid green;
-        height:1rem;
+    .introduce_card {
+        width  : 100%;
+        border : 1px solid green;
+        height : 1.8rem;
+        margin : 0.2rem 0;
+        display: flex;
+
+        &>.col_active {
+            flex    : 1;
+            position: relative;
+            
+            &>img {
+                position: absolute;
+                width   : 100%;
+                height  : 100%;
+            }
+
+            &>.content {
+                width : 100%;
+                height: 100%;
+                // background-color: red;
+                z-index: 8;
+                display: flex;
+                padding:0.15rem 0.2rem;
+                justify-content: space-around;
+                align-items: center;
+                box-sizing: border-box;
+                span{
+                    // display: inline-block;
+                    // flex:1;
+                    font-size  : 0.18rem;
+                    font-weight: bold;
+                    color      : white;
+                    // border:1px solid red;
+                }
+                article{
+                    background-color: rgba(0,0,0,0.7);
+                    color:white;
+                    width:77%;
+                    // flex:4;
+                    padding: 0.2rem 0.2rem;
+                    font-size: 0.12rem;
+                    height: 90%;
+                    text-align: left;
+                    line-height: 0.25rem;
+                }
+            }
+        }
+
+        &>.col {
+            width           : 0.8rem;
+            height          : 100%;
+            border          : 1px solid red;
+            display         : flex;
+            justify-content : center;
+            align-items     : center;
+            background-color: goldenrod;
+            transition:all 2s;
+
+            &>div {
+                width      : 0.2rem;
+                font-size  : 0.18rem;
+                font-weight: bold;
+                color      : white;
+            }
+        }
     }
 }

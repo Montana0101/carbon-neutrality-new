@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { AliOss, ThemeColor, CutLine, barFontSize, barHeight } from "../../lib/const"
 // import {Map, Marker, NavigationControl, InfoWindow} from 'react-bmapgl';
 import { EnvironmentFilled, PhoneFilled, MailFilled } from '@ant-design/icons';
@@ -6,6 +6,8 @@ import pos from '../../static/imgs/position.png'
 import './index.less'
 
 const AboutLeague = () => {
+    const [inx, setInx] = useState(0)
+
     useEffect(() => {
         // const dom = document.getElementsByClassName("app-header")[0]
         // dom.style.display='none'
@@ -35,11 +37,66 @@ const AboutLeague = () => {
                 ，即形成顶级专家领衔、技术转化高效、空间布局合理、资本运作深入的综合性技术创新与产业孵化体。
           </section>
             <section className="introduce_card">
-
+                <div className={`col ${inx == 0 && "col_active"}`} onClick={() => setInx(0)}>
+                    {inx == 0 ? <>
+                        <section className='content'>
+                            <span>联盟</span>
+                            <article>
+                                上海碳中和技术创新联盟（简称“联盟”）由上海新能源科技成果转化与产业促进中心牵头，本市相关高校、科研院所、企业共同发起成立，形成顶级专家领衔、技术转化高效、空间布局合理、资本运作深入的综合性创新平台，构建上下贯通、左右衔接的低碳产业技术创新生态圈。
+                    </article>
+                        </section>
+                        <img src={AliOss + `/new_version_0518/about_us_banner_${inx + 1}.png`} />
+                    </> :
+                        <div>联盟</div>}
+                </div>
+                <div className={`col ${inx == 1 && "col_active"}`} onClick={() => setInx(1)}>
+                    {inx == 1 ? <>
+                        <section className='content'>
+                            <span>研究院</span>
+                            <article>
+                                上海碳中和技术创新联盟（简称“联盟”）由上海新能源科技成果转化与产业促进中心牵头，本市相关高校、科研院所、企业共同发起成立，形成顶级专家领衔、技术转化高效、空间布局合理、资本运作深入的综合性创新平台，构建上下贯通、左右衔接的低碳产业技术创新生态圈。
+                    </article>
+                        </section>
+                        <img src={AliOss + `/new_version_0518/about_us_banner_${inx + 1}.png`} />
+                    </> : <div>研究院</div>}
+                </div>
+                <div className={`col ${inx == 2 && "col_active"}`} onClick={() => setInx(2)}>
+                    {inx == 2 ? <>
+                        <section className='content'>
+                            <span>平台公园</span>
+                            <article>
+                                上海碳中和技术创新联盟（简称“联盟”）由上海新能源科技成果转化与产业促进中心牵头，本市相关高校、科研院所、企业共同发起成立，形成顶级专家领衔、技术转化高效、空间布局合理、资本运作深入的综合性创新平台，构建上下贯通、左右衔接的低碳产业技术创新生态圈。
+                    </article>
+                        </section>
+                        <img src={AliOss + `/new_version_0518/about_us_banner_${inx + 1}.png`} />
+                    </> : <div>平台公园</div>}
+                </div>
+                <div className={`col ${inx == 3 && "col_active"}`} onClick={() => setInx(3)}>
+                    {inx == 3 ? <>
+                        <section className='content'>
+                            <span>产业园</span>
+                            <article>
+                                上海碳中和技术创新联盟（简称“联盟”）由上海新能源科技成果转化与产业促进中心牵头，本市相关高校、科研院所、企业共同发起成立，形成顶级专家领衔、技术转化高效、空间布局合理、资本运作深入的综合性创新平台，构建上下贯通、左右衔接的低碳产业技术创新生态圈。
+                    </article>
+                        </section>
+                        <img src={AliOss + `/new_version_0518/about_us_banner_${inx + 1}.png`} />
+                    </> : <div>产业园</div>}
+                </div>
+                <div className={`col ${inx == 4 && "col_active"}`} onClick={() => setInx(4)}>
+                    {inx == 4 ? <>
+                        <section className='content'>
+                            <span>基因</span>
+                            <article>
+                                上海碳中和技术创新联盟（简称“联盟”）由上海新能源科技成果转化与产业促进中心牵头，本市相关高校、科研院所、企业共同发起成立，形成顶级专家领衔、技术转化高效、空间布局合理、资本运作深入的综合性创新平台，构建上下贯通、左右衔接的低碳产业技术创新生态圈。
+                    </article>
+                        </section>
+                        <img src={AliOss + `/new_version_0518/about_us_banner_${inx + 1}.png`} />
+                    </> : <div>基因</div>}
+                </div>
             </section>
         </div>
 
-        <div style={{ borderLeft: CutLine, borderBottom: CutLine, borderRight: CutLine, height: barHeight, margin: '0 0.5rem' }}>
+        <div style={{ borderTop: CutLine, borderBottom: CutLine, height: barHeight, margin: '0 0.5rem' }}>
             <h3 style={{
                 fontSize: barFontSize, fontWeight: "bold", display: "flex", margin: 0,
                 padding: "0 0.3rem", color: ThemeColor, height: barHeight, lineHeight: barHeight,
