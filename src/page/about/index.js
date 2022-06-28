@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { AliOss, ThemeColor, CutLine, barFontSize, barHeight } from "../../lib/const"
 // import {Map, Marker, NavigationControl, InfoWindow} from 'react-bmapgl';
 import { EnvironmentFilled, PhoneFilled, MailFilled } from '@ant-design/icons';
-import pos from '../../static/imgs/position.png'
+import OrgChart from 'react-orgchart';
+import 'react-orgchart/index.css';
 import './index.less'
 
 import jiegouPg from '../../static/imgs/jiagou.png'
@@ -10,6 +11,81 @@ import jiegouPg from '../../static/imgs/jiagou.png'
 const data = [
     "孵化技术创新平台", "研究商业创新模式", "推动行业标准制订", "搭建资本合作平台", "联合产品市场推广"
 ]
+
+const initechOrg = {
+    name: "理事会",
+    actor: "Gary Cole",
+    children: [
+    //   {
+    //     name: "Peter Gibbons",
+    //     actor: "Ron Livingston",
+    //     children: [
+    //       {
+    //         name: "And More!!",
+    //         actor: "This is just to show how to build a complex tree with multiple levels of children. Enjoy!"
+    //       }
+    //     ]
+    //   },
+      {
+        name: "理事长",
+        actor: "Stephen Root",
+        key:'1-1',
+        children:[
+            {
+                name:"秘书处",
+                id:"1-1-1",
+                children:[
+                    {
+                        name:"秘书处",
+                        id:"1-1-1-1",
+                    },
+                    {
+                        name:"执行秘书长",
+                    },
+                    {
+                        name:"副秘书长",
+                    }
+                ]
+            },
+            {
+                name:"专家咨询委员会",
+                children:[
+                    {
+                        name:"院士",
+                    },
+                    {
+                        name:"高级专家",
+                    },
+                ]
+            },
+            {
+                name:"专家技术委员会",
+                children:[
+                    {
+                        name:"新能源技术委员会",
+                    },
+                    {
+                        name:"设计与制造委员会 碳中和装备优化",
+                    },
+                    {
+                        name:"零碳工业流程再造技术委员会"
+                    },
+                    {
+                        name:"电力行业碳中和 技术委员会"
+                    },
+                    {name:"..."}
+                ]
+            }
+        ]
+      },
+    ]
+  };
+
+  const MyNodeComponent = ({node}) => {
+    return (
+      <div className="initechNode" onClick={() => alert("Hi my real name is: " + node.actor)}>{ node.name }</div>
+    );
+  };
 
 const AboutLeague = () => {
     const [inx, setInx] = useState(0)
@@ -19,6 +95,16 @@ const AboutLeague = () => {
         // dom.style.display='none'
         const main = document.getElementById('main_container')
         main.style.height = '100%'
+
+        // 结构节点添加span
+        // const doms =  document.querySelector(".reactOrgChart")
+        const rot = document.getElementsByClassName("reactOrgChart")[0]
+        const doms = rot.getElementsByClassName("orgNodeChildGroup")
+        // console.log("打印下节点",doms)
+        doms && doms.map((item)=>{
+            // let d = item.querySelector("td[colspan='0']")
+            console.log("便利每个节点",item)
+        })
     }, [])
 
     return <div className='about_page'>
@@ -188,8 +274,16 @@ const AboutLeague = () => {
 
         {/* 联盟架构 */}
         <div style={{ borderTop: CutLine, height: "6rem", padding: '0 0.5rem', }}>
-            <div style={{ borderLeft: CutLine, borderRight: CutLine, height: "100%" }}>
-                <img src={jiegouPg} style={{ height: "90%" }} />
+            <div style={{ borderLeft: CutLine, borderRight: CutLine, height: "100%",
+            display:"flex",alignItems:"center"}}>
+                {/* <img src={jiegouPg} style={{ height: "90%" }} /> */}
+                <OrgChart tree={initechOrg} NodeComponent={MyNodeComponent} />
+                {/* <section style={{
+                    border:"1px solid pink",
+                    width:"70%",
+                    height:"90%",
+                    margin:"auto"
+                }}></section> */}
             </div>
         </div>
 

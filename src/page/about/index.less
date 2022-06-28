@@ -6,6 +6,66 @@
     position: relative;
     padding : 0 0.3rem;
 
+    // 架构样式
+    .initechNode {
+        border: solid 1px @primary-color;
+        border-radius: 0.1rem;
+        padding: 5px 0.2rem;
+        // width: 1rem;
+        display: inline-block;
+    }
+     
+    #initechOrgChart .orgNodeChildGroup .nodeGroupLineVerticalMiddle {
+        border-right: solid 3px @primary-color;
+    }
+     
+    #initechOrgChart .nodeLineBorderTop {
+        border-top: solid 3px @primary-color;
+    }
+
+    .reactOrgChart{
+        width: 100%;
+        border:1px solid yellowgreen;
+        height: 100%;
+    }
+
+    .reactOrgChart .orgNodeChildGroup .nodeGroupLineVerticalMiddle{
+        border-right:dashed 1px @primary-color;
+        
+    }
+    .reactOrgChart .nodeLineBorderTop {
+        border-top:dashed 1px @primary-color;
+    }
+
+    .orgNodeChildGroup  {
+        [colspan="4"]{
+            .initechNode{
+                background-color:pink;
+            }
+        }
+
+        [colspan="10"]{
+            .initechNode{
+                background-color:pink;
+            }
+        }
+
+        [colspan="0"]{
+            background-color: aqua;
+            position: relative;
+            .initechNode{
+                background-color: red;
+                transform-origin: 0 0 ;
+                position: absolute;
+                left:-0.5rem !important;
+                top:0;
+                width: 2rem;
+                height:0.5rem;
+                transform: rotate(90deg) translateY(-0.75rem);
+            }
+        }
+    }
+  
     // 联盟介绍
     .introduce_card {
         // width  : 100%;
@@ -13,6 +73,7 @@
         height : 1.8rem;
         margin : 0.3rem;
         display: flex;
+        overflow: hidden;
 
         .col_active {
             flex    : 1;
