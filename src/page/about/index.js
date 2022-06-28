@@ -5,6 +5,10 @@ import { EnvironmentFilled, PhoneFilled, MailFilled } from '@ant-design/icons';
 import pos from '../../static/imgs/position.png'
 import './index.less'
 
+const data = [
+    "孵化技术创新平台", "研究商业创新模式", "推动行业标准制订", "搭建资本合作平台", "联合产品市场推广"
+]
+
 const AboutLeague = () => {
     const [inx, setInx] = useState(0)
 
@@ -13,8 +17,6 @@ const AboutLeague = () => {
         // dom.style.display='none'
         const main = document.getElementById('main_container')
         main.style.height = '100%'
-
-
     }, [])
 
     return <div className='about_page'>
@@ -99,13 +101,49 @@ const AboutLeague = () => {
             </div>
         </div>
 
-        <div style={{ borderTop: CutLine, borderBottom: CutLine, height: barHeight, margin: '0 0.5rem' }}>
+        <div style={{ height: barHeight, margin: '0 0.5rem' }}>
             <h3 style={{
                 fontSize: barFontSize, fontWeight: "bold", display: "flex", margin: 0,
                 padding: "0 0.3rem", color: ThemeColor, height: barHeight, lineHeight: barHeight,
-                borderBottom: "none"
+                borderBottom: "none", borderLeft: CutLine, borderRight: CutLine
             }}>联盟任务</h3>
         </div>
+
+        <div style={{ borderTop: CutLine, padding: '0 0.5rem', borderBottom: CutLine }}>
+            {/* <h3 style={{
+                fontSize: barFontSize, fontWeight: "bold", display: "flex", margin: 0,
+                padding: "0 0.3rem", color: ThemeColor, height: barHeight, lineHeight: "0.6rem",
+                border: CutLine, borderTop: "none"
+            }}>联盟介绍</h3> */}
+            <ul style={{ display: "flex",borderLeft:CutLine,borderRight:CutLine }}>
+                {data.map((item, index) => {
+                    return (
+                        <li key={index} style={{ flex: 1, height: '1.4rem', 
+                        display:"flex",
+                        flexDirection:"column",alignItems:'center',
+                        justifyContent:"space-evenly" }}>
+                            <div style={{
+                                height: "0.4rem",
+                                width: "0.4rem",
+                                borderRadius: "0.2rem",
+                                overflow: "hidden",
+                                background: ThemeColor,
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: "center"
+                            }}>
+                                <img src={AliOss + `/new_version_0518/index_mission_icon_${index + 1}.png`} alt="" style={{
+                                    width: "0.24rem", height: "0.24rem"
+                                }} />
+                            </div>
+
+                            <span style={{fontWeight:"bold",fontSize:"0.12rem",color:'rgba(0,0,0,0.5)'}}>{item}</span>
+                        </li>
+                    )
+                })}
+            </ul>
+        </div>
+        <p style={{ height: "0.5rem", background: "red" }}></p>
         {/* <div style={{
             position: "absolute",
             left: "0.5rem", right: '0.5rem', bottom: 0, top: 0,
