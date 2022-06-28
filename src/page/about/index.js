@@ -16,76 +16,76 @@ const initechOrg = {
     name: "理事会",
     actor: "Gary Cole",
     children: [
-    //   {
-    //     name: "Peter Gibbons",
-    //     actor: "Ron Livingston",
-    //     children: [
-    //       {
-    //         name: "And More!!",
-    //         actor: "This is just to show how to build a complex tree with multiple levels of children. Enjoy!"
-    //       }
-    //     ]
-    //   },
-      {
-        name: "理事长",
-        actor: "Stephen Root",
-        key:'1-1',
-        children:[
-            {
-                name:"秘书处",
-                id:"1-1-1",
-                children:[
-                    {
-                        name:"秘书处",
-                        id:"1-1-1-1",
-                    },
-                    {
-                        name:"执行秘书长",
-                    },
-                    {
-                        name:"副秘书长",
-                    }
-                ]
-            },
-            {
-                name:"专家咨询委员会",
-                children:[
-                    {
-                        name:"院士",
-                    },
-                    {
-                        name:"高级专家",
-                    },
-                ]
-            },
-            {
-                name:"专家技术委员会",
-                children:[
-                    {
-                        name:"新能源技术委员会",
-                    },
-                    {
-                        name:"设计与制造委员会 碳中和装备优化",
-                    },
-                    {
-                        name:"零碳工业流程再造技术委员会"
-                    },
-                    {
-                        name:"电力行业碳中和 技术委员会"
-                    },
-                    {name:"..."}
-                ]
-            }
-        ]
-      },
+        //   {
+        //     name: "Peter Gibbons",
+        //     actor: "Ron Livingston",
+        //     children: [
+        //       {
+        //         name: "And More!!",
+        //         actor: "This is just to show how to build a complex tree with multiple levels of children. Enjoy!"
+        //       }
+        //     ]
+        //   },
+        {
+            name: "理事长",
+            actor: "Stephen Root",
+            key: '1-1',
+            children: [
+                {
+                    name: "秘书处",
+                    id: "1-1-1",
+                    children: [
+                        {
+                            name: "秘书处",
+                            id: "1-1-1-1",
+                        },
+                        {
+                            name: "执行秘书长",
+                        },
+                        {
+                            name: "副秘书长",
+                        }
+                    ]
+                },
+                {
+                    name: "专家咨询委员会",
+                    children: [
+                        {
+                            name: "院士",
+                        },
+                        {
+                            name: "高级专家",
+                        },
+                    ]
+                },
+                {
+                    name: "专家技术委员会",
+                    children: [
+                        {
+                            name: "新能源技术委员会",
+                        },
+                        {
+                            name: "设计与制造委员会 碳中和装备优化",
+                        },
+                        {
+                            name: "零碳工业流程再造技术委员会"
+                        },
+                        {
+                            name: "电力行业碳中和 技术委员会"
+                        },
+                        { name: "..." }
+                    ]
+                }
+            ]
+        },
     ]
-  };
+};
 
-  const MyNodeComponent = ({node}) => {
+const MyNodeComponent = ({ node }) => {
     return (
-      <div className="initechNode" onClick={() => alert("Hi my real name is: " + node.actor)}>{ node.name }</div>
+        <div className="initechNode" onClick={() => alert("Hi my real name is: " + node.actor)}>{node.name}</div>
     );
-  };
+};
 
 const AboutLeague = () => {
     const [inx, setInx] = useState(0)
@@ -101,9 +101,28 @@ const AboutLeague = () => {
         const rot = document.getElementsByClassName("reactOrgChart")[0]
         const doms = rot.getElementsByClassName("orgNodeChildGroup")
         // console.log("打印下节点",doms)
-        doms && doms.map((item)=>{
-            // let d = item.querySelector("td[colspan='0']")
-            console.log("便利每个节点",item)
+        const arr = Array.from(doms)
+        arr && arr.map((item) => {
+            let d = item.querySelector("td[colspan='0']")
+            let sonDom = d.getElementsByClassName("initechNode")
+            const arr2 = Array.from(sonDom)
+            // arr2 && arr2.map((item2,index) => {
+            //     var sp = document.createElement("span");
+            //     sp.innerHTML = item2.innerText;
+            //     arr2[index].appendChild(sp)
+            //     // break;
+            //     console.log("```````````````````````", item2)
+            // })
+
+            for (var i = 0; i < arr2.length; i++) {
+                var sp = document.createElement("span");
+                sp.innerHTML = arr2[i].innerText;
+                arr2[i].appendChild(sp)
+                arr2[i].removeChild(arr2[i].innerText)
+                 break;
+                // console.log("`
+            }
+            // console.log("便利每个节点",d)
         })
     }, [])
 
@@ -274,8 +293,10 @@ const AboutLeague = () => {
 
         {/* 联盟架构 */}
         <div style={{ borderTop: CutLine, height: "6rem", padding: '0 0.5rem', }}>
-            <div style={{ borderLeft: CutLine, borderRight: CutLine, height: "100%",
-            display:"flex",alignItems:"center"}}>
+            <div style={{
+                borderLeft: CutLine, borderRight: CutLine, height: "100%",
+                display: "flex", alignItems: "center"
+            }}>
                 {/* <img src={jiegouPg} style={{ height: "90%" }} /> */}
                 <OrgChart tree={initechOrg} NodeComponent={MyNodeComponent} />
                 {/* <section style={{
@@ -293,8 +314,8 @@ const AboutLeague = () => {
             <h3 style={{
                 fontSize: barFontSize, fontWeight: "bold", display: "flex", margin: 0,
                 padding: "0 0.3rem", color: ThemeColor, height: barHeight, lineHeight: barHeight,
-                borderBottom: "none",  zIndex: 777,
-                position:'absolute'
+                borderBottom: "none", zIndex: 777,
+                position: 'absolute'
             }}>联盟发起单位</h3>
             <section style={{
                 position: "absolute", height: '5.5rem',
@@ -302,8 +323,8 @@ const AboutLeague = () => {
                 borderLeft: CutLine, borderRight: CutLine,
             }}>
                 <img src={AliOss + '/new_version_0518/about_us_companies.png'} style={{
-                    height:"100%"
-                }} alt=""/>
+                    height: "100%"
+                }} alt="" />
             </section>
         </div>
 
