@@ -110,11 +110,6 @@ const AboutLeague = () => {
         </div>
 
         <div style={{ borderTop: CutLine, padding: '0 0.5rem', borderBottom: CutLine }}>
-            {/* <h3 style={{
-                fontSize: barFontSize, fontWeight: "bold", display: "flex", margin: 0,
-                padding: "0 0.3rem", color: ThemeColor, height: barHeight, lineHeight: "0.6rem",
-                border: CutLine, borderTop: "none"
-            }}>联盟介绍</h3> */}
             <ul style={{ display: "flex",borderLeft:CutLine,borderRight:CutLine }}>
                 {data.map((item, index) => {
                     return (
@@ -143,69 +138,58 @@ const AboutLeague = () => {
                 })}
             </ul>
         </div>
-        <p style={{ height: "0.5rem", background: "red" }}></p>
-        {/* <div style={{
-            position: "absolute",
-            left: "0.5rem", right: '0.5rem', bottom: 0, top: 0,
-            display: "flex",
-            alignItems: 'center'
-        }}>
-            <img src={AliOss + `/new_version_0518/contact_us.png`}
-                style={{ width: "100%", height: "100%" }} alt="" />
-            <section style={{
-                height: "70%", background: "rgba(0,0,0,0.3)", width: "100%", zIndex: 8888,
-                padding: "0.5rem 0", display: "flex", justifyContent: "center", position: "absolute",
-                color: "white"
-            }}>
-                <div style={{
-                     height: '100%', paddingRight: "0.3rem",
-                    width: "50%", display: 'flex', justifyContent: "flex-end", alignItems: "center"
-                }}>
-                    <section style={{
-                        height: "90%",
-                        width: "70%",
-                    }}>
-                        <img src={pos} style={{ width: "100%", height: "100%" }} alt="" />
-                    </section>
-                </div>
-                <div style={{
-                     height: '100%', paddingLeft: "0.3rem",
-                    width: "50%", display: "flex"
-                }}>
-                    <section style={{
-                        height: "50%", width: "60%",
-                        alignSelf: 'center',
-                        display: "flex", justifyContent: "space-between", flexDirection: "column",
-                        textAlign: "left", fontSize: "0.12rem",
-                    }}>
-                        <p style={{
-                            fontWeight: "bold", fontSize: "0.16rem",
-                            width: "100%"
-                        }}>上海碳中和技术创新联盟</p>
-                        <p style={{ height: "0.01rem", background: "white", width: '100%' }}></p>
-                        <p>
-                            <EnvironmentFilled style={{marginRight:"0.08rem",fontSize:"0.12rem"}}/>
 
-                            <span>地址</span>
-                            <span style={{ margin: '0 0.06rem 0 0.03rem' }}>:</span>
-                            <span>上海市崇明区长兴江南大道1333号3号楼</span>
-                        </p>
-                        <p>
-                            <PhoneFilled style={{marginRight:"0.08rem",fontSize:"0.12rem"}}/>
-                            <span>电话</span>
-                            <span style={{ margin: '0 0.06rem 0 0.03rem' }}>:</span>
-                            <span>021-66858866</span>
-                        </p>
-                        <p>
-                            <MailFilled style={{marginRight:"0.08rem",fontSize:"0.12rem"}}/>
-                            <span>邮箱</span>
-                            <span style={{ margin: '0 0.06rem 0 0.03rem' }}>:</span>
-                            <span>huyu@stiacn.com</span>
-                        </p>
-                    </section>
-                </div>
-            </section>
-        </div> */}
+        {/* 联盟宗旨 */}
+        <div style={{  padding: '0 0.5rem'}}>
+        <h3 style={{
+                fontSize: barFontSize, fontWeight: "bold", display: "flex", margin: 0,
+                padding: "0 0.3rem", color: ThemeColor, height: barHeight, lineHeight: barHeight,
+                borderBottom: "none", borderLeft: CutLine, borderRight: CutLine
+            }}>联盟宗旨</h3>
+            <ul style={{ display: "flex",borderLeft:CutLine,borderRight:CutLine }}>
+                {data.map((item, index) => {
+                    return (
+                        <li key={index} style={{ flex: 1, height: '2.7rem', 
+                        display:"flex",
+                        flexDirection:"column",alignItems:'center',
+                        justifyContent:"space-evenly",
+                        position:"relative",
+                        backgroundImage:`url(${AliOss}/new_version_0518/about_us_purpose_${index + 1}.png)` }}>
+                            {/* <div style={{
+                                height: "0.4rem",
+                                width: "0.4rem",
+                                borderRadius: "0.2rem",
+                                overflow: "hidden",
+                                background: ThemeColor,
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: "center"
+                            }}>
+                                <img src={AliOss + `/new_version_0518/index_mission_icon_${index + 1}.png`} alt="" style={{
+                                    width: "0.24rem", height: "0.24rem"
+                                }} />
+                            </div> */}
+                            <section style={{
+                                position:"absolute",
+                                height:"36%",
+                                left:0,
+                                right:0,
+                                bottom:0,
+                                background:"rgba(0,0,0,0.3)",
+                                color:"white",
+                                display:"flex",
+                                justifyContent:'center',
+                                alignItems:"center"
+                            }}>
+                            <span style={{fontSize:"0.14rem",color:'rgba(255,255,255,0.9)'}}>{item}</span>
+
+                            </section>
+                        </li>
+                    )
+                })}
+            </ul>
+        </div>
+        <p style={{ height: "0.5rem", background: "red" }}></p>
     </div>
 }
 
