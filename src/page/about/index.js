@@ -155,20 +155,6 @@ const AboutLeague = () => {
                         justifyContent:"space-evenly",
                         position:"relative",
                         backgroundImage:`url(${AliOss}/new_version_0518/about_us_purpose_${index + 1}.png)` }}>
-                            {/* <div style={{
-                                height: "0.4rem",
-                                width: "0.4rem",
-                                borderRadius: "0.2rem",
-                                overflow: "hidden",
-                                background: ThemeColor,
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: "center"
-                            }}>
-                                <img src={AliOss + `/new_version_0518/index_mission_icon_${index + 1}.png`} alt="" style={{
-                                    width: "0.24rem", height: "0.24rem"
-                                }} />
-                            </div> */}
                             <section style={{
                                 position:"absolute",
                                 height:"36%",
@@ -180,16 +166,28 @@ const AboutLeague = () => {
                                 display:"flex",
                                 justifyContent:'center',
                                 alignItems:"center"
-                            }}>
-                            <span style={{fontSize:"0.14rem",color:'rgba(255,255,255,0.9)'}}>{item}</span>
-
+                            }} className="itemHover">
+                            <span style={{fontSize:"0.14rem",color:'rgba(255,255,255,1)'}}>{item}</span>
                             </section>
                         </li>
                     )
                 })}
             </ul>
+            <h3 style={{
+                fontSize: barFontSize, fontWeight: "bold", display: "flex", margin: 0,
+                padding: "0 0.3rem", color: ThemeColor, height: barHeight, lineHeight: barHeight,
+                borderBottom: "none", borderLeft: CutLine, borderRight: CutLine
+            }}>联盟架构</h3>
+        </div>
+
+        {/* 联盟架构 */}
+        <div style={{borderTop:CutLine,height:"3rem",padding: '0 0.5rem',}}>
+            <div style={{borderLeft:CutLine,borderRight:CutLine,height:"100%"}}>
+                <img src={require('../../static/imgs/jiegou.svg')}/>
+            </div>
         </div>
         <p style={{ height: "0.5rem", background: "red" }}></p>
+
     </div>
 }
 
