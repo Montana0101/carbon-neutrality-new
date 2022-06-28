@@ -5,6 +5,8 @@ import { EnvironmentFilled, PhoneFilled, MailFilled } from '@ant-design/icons';
 import pos from '../../static/imgs/position.png'
 import './index.less'
 
+import jiegouPg from '../../static/imgs/jiagou.png'
+
 const data = [
     "孵化技术创新平台", "研究商业创新模式", "推动行业标准制订", "搭建资本合作平台", "联合产品市场推广"
 ]
@@ -110,13 +112,15 @@ const AboutLeague = () => {
         </div>
 
         <div style={{ borderTop: CutLine, padding: '0 0.5rem', borderBottom: CutLine }}>
-            <ul style={{ display: "flex",borderLeft:CutLine,borderRight:CutLine }}>
+            <ul style={{ display: "flex", borderLeft: CutLine, borderRight: CutLine }}>
                 {data.map((item, index) => {
                     return (
-                        <li key={index} style={{ flex: 1, height: '1.4rem', 
-                        display:"flex",
-                        flexDirection:"column",alignItems:'center',
-                        justifyContent:"space-evenly" }}>
+                        <li key={index} style={{
+                            flex: 1, height: '1.4rem',
+                            display: "flex",
+                            flexDirection: "column", alignItems: 'center',
+                            justifyContent: "space-evenly"
+                        }}>
                             <div style={{
                                 height: "0.4rem",
                                 width: "0.4rem",
@@ -132,7 +136,7 @@ const AboutLeague = () => {
                                 }} />
                             </div>
 
-                            <span style={{fontWeight:"bold",fontSize:"0.12rem",color:'rgba(0,0,0,0.5)'}}>{item}</span>
+                            <span style={{ fontWeight: "bold", fontSize: "0.12rem", color: 'rgba(0,0,0,0.5)' }}>{item}</span>
                         </li>
                     )
                 })}
@@ -140,34 +144,36 @@ const AboutLeague = () => {
         </div>
 
         {/* 联盟宗旨 */}
-        <div style={{  padding: '0 0.5rem'}}>
-        <h3 style={{
+        <div style={{ padding: '0 0.5rem' }}>
+            <h3 style={{
                 fontSize: barFontSize, fontWeight: "bold", display: "flex", margin: 0,
                 padding: "0 0.3rem", color: ThemeColor, height: barHeight, lineHeight: barHeight,
                 borderBottom: "none", borderLeft: CutLine, borderRight: CutLine
             }}>联盟宗旨</h3>
-            <ul style={{ display: "flex",borderLeft:CutLine,borderRight:CutLine }}>
+            <ul style={{ display: "flex", borderLeft: CutLine, borderRight: CutLine }}>
                 {data.map((item, index) => {
                     return (
-                        <li key={index} style={{ flex: 1, height: '2.7rem', 
-                        display:"flex",
-                        flexDirection:"column",alignItems:'center',
-                        justifyContent:"space-evenly",
-                        position:"relative",
-                        backgroundImage:`url(${AliOss}/new_version_0518/about_us_purpose_${index + 1}.png)` }}>
+                        <li key={index} style={{
+                            flex: 1, height: '2.7rem',
+                            display: "flex",
+                            flexDirection: "column", alignItems: 'center',
+                            justifyContent: "space-evenly",
+                            position: "relative",
+                            backgroundImage: `url(${AliOss}/new_version_0518/about_us_purpose_${index + 1}.png)`
+                        }}>
                             <section style={{
-                                position:"absolute",
-                                height:"36%",
-                                left:0,
-                                right:0,
-                                bottom:0,
-                                background:"rgba(0,0,0,0.3)",
-                                color:"white",
-                                display:"flex",
-                                justifyContent:'center',
-                                alignItems:"center"
+                                position: "absolute",
+                                height: "36%",
+                                left: 0,
+                                right: 0,
+                                bottom: 0,
+                                background: "rgba(0,0,0,0.3)",
+                                color: "white",
+                                display: "flex",
+                                justifyContent: 'center',
+                                alignItems: "center"
                             }} className="itemHover">
-                            <span style={{fontSize:"0.14rem",color:'rgba(255,255,255,1)'}}>{item}</span>
+                                <span style={{ fontSize: "0.14rem", color: 'rgba(255,255,255,1)' }}>{item}</span>
                             </section>
                         </li>
                     )
@@ -181,12 +187,31 @@ const AboutLeague = () => {
         </div>
 
         {/* 联盟架构 */}
-        <div style={{borderTop:CutLine,height:"3rem",padding: '0 0.5rem',}}>
-            <div style={{borderLeft:CutLine,borderRight:CutLine,height:"100%"}}>
-                <img src={require('../../static/imgs/jiegou.svg')}/>
+        <div style={{ borderTop: CutLine, height: "6rem", padding: '0 0.5rem', }}>
+            <div style={{ borderLeft: CutLine, borderRight: CutLine, height: "100%" }}>
+                <img src={jiegouPg} style={{ height: "90%" }} />
             </div>
         </div>
-        <p style={{ height: "0.5rem", background: "red" }}></p>
+
+
+        {/* 联盟发起单位 */}
+        <div style={{ padding: '0 0.5rem', borderTop: CutLine, position: "relative" }}>
+            <h3 style={{
+                fontSize: barFontSize, fontWeight: "bold", display: "flex", margin: 0,
+                padding: "0 0.3rem", color: ThemeColor, height: barHeight, lineHeight: barHeight,
+                borderBottom: "none",  zIndex: 777,
+                position:'absolute'
+            }}>联盟发起单位</h3>
+            <section style={{
+                position: "absolute", height: '5.5rem',
+                left: "0.5rem", right: "0.5rem", bottom: 0, top: 0,
+                borderLeft: CutLine, borderRight: CutLine,
+            }}>
+                <img src={AliOss + '/new_version_0518/about_us_companies.png'} style={{
+                    height:"100%"
+                }} alt=""/>
+            </section>
+        </div>
 
     </div>
 }
