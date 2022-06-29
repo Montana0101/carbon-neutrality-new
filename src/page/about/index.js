@@ -12,6 +12,8 @@ const data = [
     "孵化技术创新平台", "研究商业创新模式", "推动行业标准制订", "搭建资本合作平台", "联合产品市场推广"
 ]
 
+var lsz //理事长
+
 const initechOrg = {
     name: "理事会",
     actor: "Gary Cole",
@@ -28,7 +30,7 @@ const initechOrg = {
         //   },
         {
             name: "理事长",
-            actor: "Stephen Root",
+            actor: "lishizhang",
             key: '1-1',
             children: [
                 {
@@ -83,7 +85,27 @@ const initechOrg = {
 
 const MyNodeComponent = ({ node }) => {
     return (
-        <div className="initechNode" onClick={() => alert("Hi my real name is: " + node.actor)}>{node.name}</div>
+        <div className="initechNode" onClick={() => {
+        }} onMouseOver={() => {
+            if (node.actor == 'lishizhang') {
+                let dom = document.getElementById('lishizhang')
+                if (dom) {
+                    dom.setAttribute('id', 'lishizhang_on')
+                         // 理事长
+                    dom.addEventListener("click", () => {
+                        alert(1)
+                    })
+                }
+                // alert("点击了理事长")
+            }
+        }} onMouseLeave={() => {
+            // if(node.actor=='lishizhang'){
+            //     let dom = document.getElementById('lishizhang_on')
+            //     if(dom){
+            //         dom.setAttribute('id','lishizhang')
+            //     }
+            // }
+        }}>{node.name}</div>
     );
 };
 
@@ -91,8 +113,6 @@ const AboutLeague = () => {
     const [inx, setInx] = useState(0)
 
     useEffect(() => {
-        // const dom = document.getElementsByClassName("app-header")[0]
-        // dom.style.display='none'
         const main = document.getElementById('main_container')
         main.style.height = '100%'
 
@@ -100,31 +120,32 @@ const AboutLeague = () => {
         // const doms =  document.querySelector(".reactOrgChart")
         const rot = document.getElementsByClassName("reactOrgChart")[0]
         const doms = rot.getElementsByClassName("orgNodeChildGroup")
-        // console.log("打印下节点",doms)
         const arr = Array.from(doms)
-        arr && arr.map((item) => {
+        arr && arr.map((item, ix) => {
             let d = item.querySelector("td[colspan='0']")
             let sonDom = d.getElementsByClassName("initechNode")
             const arr2 = Array.from(sonDom)
-            // arr2 && arr2.map((item2,index) => {
-            //     var sp = document.createElement("span");
-            //     sp.innerHTML = item2.innerText;
-            //     arr2[index].appendChild(sp)
-            //     // break;
-            //     console.log("```````````````````````", item2)
-            // })
-
             for (var i = 0; i < arr2.length; i++) {
                 var sp = document.createElement("span");
                 sp.innerHTML = arr2[i].innerText;
                 arr2[i].appendChild(sp)
                 arr2[i].removeChild(arr2[i].childNodes[0])
-                console.log("的撒会对撒", arr2[i].childNodes[0])
+
                 break;
-                // console.log("`
             }
-            // console.log("便利每个节点",d)
+
+            lsz = item.querySelector("td[colspan='6']")
+            // let lsz_msc_dom = lsz_msc.getElementsByClassName("initechNode")
+            // let lsz_msc_arr = Array.from(lsz_msc_dom)
+            if (lsz) {
+                if (ix == 0) {
+                    // 理事会
+                    lsz.setAttribute('id', "lishizhang")
+                }
+            }
         })
+
+   
     }, [])
 
     return <div className='about_page'>
