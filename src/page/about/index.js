@@ -118,8 +118,9 @@ const AboutLeague = () => {
                 var sp = document.createElement("span");
                 sp.innerHTML = arr2[i].innerText;
                 arr2[i].appendChild(sp)
-                arr2[i].removeChild(arr2[i].innerText)
-                 break;
+                arr2[i].removeChild(arr2[i].childNodes[0])
+                console.log("的撒会对撒", arr2[i].childNodes[0])
+                break;
                 // console.log("`
             }
             // console.log("便利每个节点",d)
@@ -295,7 +296,7 @@ const AboutLeague = () => {
         <div style={{ borderTop: CutLine, height: "6rem", padding: '0 0.5rem', }}>
             <div style={{
                 borderLeft: CutLine, borderRight: CutLine, height: "100%",
-                display: "flex", alignItems: "center"
+                display: "flex", alignItems: "center", justifyContent: "center"
             }}>
                 {/* <img src={jiegouPg} style={{ height: "90%" }} /> */}
                 <OrgChart tree={initechOrg} NodeComponent={MyNodeComponent} />

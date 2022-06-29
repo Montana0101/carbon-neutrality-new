@@ -6,13 +6,14 @@
     position: relative;
     padding : 0 0.3rem;
 
-    // 架构样式
+
     .initechNode {
         border: solid 1px @primary-color;
         border-radius: 0.1rem;
         padding: 5px 0.2rem;
         // width: 1rem;
         display: inline-block;
+        margin:0 auto;
     }
      
     #initechOrgChart .orgNodeChildGroup .nodeGroupLineVerticalMiddle {
@@ -24,9 +25,10 @@
     }
 
     .reactOrgChart{
+        // margin-top:0.8rem;
         width: 100%;
-        border:1px solid yellowgreen;
-        height: 100%;
+        // border:1px solid yellowgreen;
+        height: 90%;
     }
 
     .reactOrgChart .orgNodeChildGroup .nodeGroupLineVerticalMiddle{
@@ -40,13 +42,13 @@
     .orgNodeChildGroup  {
         [colspan="4"]{
             .initechNode{
-                background-color:pink;
+                // background-color:pink;
             }
         }
 
         [colspan="10"]{
             .initechNode{
-                background-color:pink;
+                // background-color:pink;
             }
         }
 
@@ -54,19 +56,26 @@
             background-color: aqua;
             position: relative;
             .initechNode{
-                background-color: red;
+                // background-color: red;
+                border-top: solid 1px @primary-color;
                 transform-origin: 0 0 ;
                 position: absolute;
                 left:-0.5rem !important;
                 top:0;
-                width: 2rem;
+                width: 2.4rem;
                 height:0.5rem;
                 transform: rotate(90deg) translateY(-0.75rem);
                 overflow: hidden;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                word-wrap: break-work;
                &> span{
                    position: absolute;
-                    transform: rotate(-90deg) translateY(-0.75rem)!important;
-                    display: inline-block;
+                    transform: rotate(-90deg) !important;
+                    display: inline-flex;
+                    justify-content: center;
+                    align-items: center;
                     width:0.2rem;
                     vertical-align: middle;
                     text-align: center;
