@@ -2,21 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { AliOss, ThemeColor, CutLine, barFontSize, barHeight } from "../../lib/const"
 // import {Map, Marker, NavigationControl, InfoWindow} from 'react-bmapgl';
 import { EnvironmentFilled, PhoneFilled, MailFilled } from '@ant-design/icons';
-import Highcharts from 'highcharts';
-import HighchartsMore from 'highcharts/highcharts-more';
-import HighchartsDrilldown from 'highcharts/modules/drilldown';
-import Highcharts3D from 'highcharts/highcharts-3d';
-import HighchartsOrganization from 'highcharts/modules/organization';
+import Highcharts from 'highcharts'
+import HighchartsReact from 'highcharts-react-official'
 
 
-// import 'react-orgchart/index.css';
 import './index.less'
-// import Highcharts from './highchart'
 
-HighchartsMore(Highcharts)
-// HighchartsDrilldown(Highcharts);
-// Highcharts3D(Highcharts);
-HighchartsOrganization(Highcharts)
 
 const data = [
     "孵化技术创新平台", "研究商业创新模式", "推动行业标准制订", "搭建资本合作平台", "联合产品市场推广"
@@ -125,166 +116,130 @@ const AboutLeague = () => {
     useEffect(() => {
         const main = document.getElementById('main_container')
         main.style.height = '100%'
-
-        // 结构节点添加span
-        // const doms =  document.querySelector(".reactOrgChart")
-        // const rot = document.getElementsByClassName("reactOrgChart")[0]
-        // const doms = rot.getElementsByClassName("orgNodeChildGroup")
-        // const arr = Array.from(doms)
-        // arr && arr.map((item, ix) => {
-        //     let d = item.querySelector("td[colspan='0']")
-        //     let sonDom = d.getElementsByClassName("initechNode")
-        //     const arr2 = Array.from(sonDom)
-        //     for (var i = 0; i < arr2.length; i++) {
-        //         var sp = document.createElement("span");
-        //         sp.innerHTML = arr2[i].innerText;
-        //         arr2[i].appendChild(sp)
-        //         arr2[i].removeChild(arr2[i].childNodes[0])
-
-        //         break;
-        //     }
-
-        // 理事长
-        // lsz = item.querySelector("td[colspan='6']")
-        // let lsz_msc_dom = lsz_msc.getElementsByClassName("initechNode")
-        // let lsz_msc_arr = Array.from(lsz_msc_dom)
-        // if (lsz) {
-        //     if (ix == 0) {
-        //         // 理事会
-        //         lsz.setAttribute('id', "lishizhang")
-        //     }
-        // }
-
-        // 理事长下面一行
-        // if(lsz){
-        //     if(ix == 1){
-        //         console.log()
-        //     }
-        // }
-        // })
-        Highcharts.chart('container', {
-            chart: {
-                height: 600,
-                inverted: true
-            },
-            title: {
-                text: 'Highsoft 公司组织结构'
-            },
-            series: [{
-                type: 'organization',
-                name: 'Highsoft',
-                keys: ['from', 'to'],
-                data: [
-                    ['股东', '董事会'],
-                    ['董事会', 'CEO'],
-                    ['CEO', 'CTO'],
-                    ['CEO', 'CPO'],
-                    ['CEO', 'CSO'],
-                    ['CEO', 'CMO'],
-                    ['CEO', 'HR'],
-                    ['CTO', 'Product'],
-                    ['CTO', 'Web'],
-                    ['CSO', 'Sales'],
-                    ['CMO', 'Market']
-                ],
-                levels: [{
-                    level: 0,
-                    color: 'silver',
-                    dataLabels: {
-                        color: 'black'
-                    },
-                    height: 25
-                }, {
-                    level: 1,
-                    color: 'silver',
-                    dataLabels: {
-                        color: 'black'
-                    },
-                    height: 25
-                }, {
-                    level: 2,
-                    color: '#980104'
-                }, {
-                    level: 4,
-                    color: '#359154'
-                }],
-                nodes: [{
-                    id: 'Shareholders'
-                }, {
-                    id: 'Board'
-                }, {
-                    id: 'CEO',
-                    title: 'CEO',
-                    name: 'Grethe Hjetland',
-                    image: 'https://wp-assets.highcharts.com/www-highcharts-com/blog/wp-content/uploads/2018/11/12132317/Grethe.jpg'
-                }, {
-                    id: 'HR',
-                    title: 'HR/CFO',
-                    name: 'Anne Jorunn Fjærestad',
-                    color: '#007ad0',
-                    image: 'https://wp-assets.highcharts.com/www-highcharts-com/blog/wp-content/uploads/2018/11/12132314/AnneJorunn.jpg',
-                    column: 3,
-                    offset: '75%'
-                }, {
-                    id: 'CTO',
-                    title: 'CTO',
-                    name: 'Christer Vasseng',
-                    column: 4,
-                    image: 'https://wp-assets.highcharts.com/www-highcharts-com/blog/wp-content/uploads/2018/11/12140620/Christer.jpg',
-                    layout: 'hanging'
-                }, {
-                    id: 'CPO',
-                    title: 'CPO',
-                    name: 'Torstein Hønsi',
-                    column: 4,
-                    image: 'https://wp-assets.highcharts.com/www-highcharts-com/blog/wp-content/uploads/2018/11/12131849/Torstein1.jpg'
-                }, {
-                    id: 'CSO',
-                    title: 'CSO',
-                    name: 'Anita Nesse',
-                    column: 4,
-                    image: 'https://wp-assets.highcharts.com/www-highcharts-com/blog/wp-content/uploads/2018/11/12132313/Anita.jpg',
-                    layout: 'hanging'
-                }, {
-                    id: 'CMO',
-                    title: 'CMO',
-                    name: 'Vidar Brekke',
-                    column: 4,
-                    image: 'https://wp-assets.highcharts.com/www-highcharts-com/blog/wp-content/uploads/2018/11/13105551/Vidar.jpg',
-                    layout: 'hanging'
-                }, {
-                    id: 'Product',
-                    name: '产品研发'
-                }, {
-                    id: 'Web',
-                    name: '运维',
-                    description: '网站开发，系统维护'
-                }, {
-                    id: 'Sales',
-                    name: '销售部'
-                }, {
-                    id: 'Market',
-                    name: '市场部'
-                }],
-                colorByPoint: false,
-                color: '#007ad0',
-                dataLabels: {
-                    color: 'white'
-                },
-                borderColor: 'white',
-                nodeWidth: 65
-            }],
-            tooltip: {
-                outside: true
-            },
-            exporting: {
-                allowHTML: true,
-                sourceWidth: 800,
-                sourceHeight: 600
-            }
-        });
     }, [])
 
+    const options = {
+        chart: {
+            height: 600,
+            inverted: true
+        },
+        title: {
+            text: 'Highsoft 公司组织结构'
+        },
+        series: [{
+            type: 'organization',
+            name: 'Highsoft',
+            keys: ['from', 'to'],
+            data: [
+                ['股东', '董事会'],
+                ['董事会', 'CEO'],
+                ['CEO', 'CTO'],
+                ['CEO', 'CPO'],
+                ['CEO', 'CSO'],
+                ['CEO', 'CMO'],
+                ['CEO', 'HR'],
+                ['CTO', 'Product'],
+                ['CTO', 'Web'],
+                ['CSO', 'Sales'],
+                ['CMO', 'Market']
+            ],
+            levels: [{
+                level: 0,
+                color: 'silver',
+                dataLabels: {
+                    color: 'black'
+                },
+                height: 25
+            }, {
+                level: 1,
+                color: 'silver',
+                dataLabels: {
+                    color: 'black'
+                },
+                height: 25
+            }, {
+                level: 2,
+                color: '#980104'
+            }, {
+                level: 4,
+                color: '#359154'
+            }],
+            nodes: [{
+                id: 'Shareholders'
+            }, {
+                id: 'Board'
+            }, {
+                id: 'CEO',
+                title: 'CEO',
+                name: 'Grethe Hjetland',
+                image: 'https://wp-assets.highcharts.com/www-highcharts-com/blog/wp-content/uploads/2018/11/12132317/Grethe.jpg'
+            }, {
+                id: 'HR',
+                title: 'HR/CFO',
+                name: 'Anne Jorunn Fjærestad',
+                color: '#007ad0',
+                image: 'https://wp-assets.highcharts.com/www-highcharts-com/blog/wp-content/uploads/2018/11/12132314/AnneJorunn.jpg',
+                column: 3,
+                offset: '75%'
+            }, {
+                id: 'CTO',
+                title: 'CTO',
+                name: 'Christer Vasseng',
+                column: 4,
+                image: 'https://wp-assets.highcharts.com/www-highcharts-com/blog/wp-content/uploads/2018/11/12140620/Christer.jpg',
+                layout: 'hanging'
+            }, {
+                id: 'CPO',
+                title: 'CPO',
+                name: 'Torstein Hønsi',
+                column: 4,
+                image: 'https://wp-assets.highcharts.com/www-highcharts-com/blog/wp-content/uploads/2018/11/12131849/Torstein1.jpg'
+            }, {
+                id: 'CSO',
+                title: 'CSO',
+                name: 'Anita Nesse',
+                column: 4,
+                image: 'https://wp-assets.highcharts.com/www-highcharts-com/blog/wp-content/uploads/2018/11/12132313/Anita.jpg',
+                layout: 'hanging'
+            }, {
+                id: 'CMO',
+                title: 'CMO',
+                name: 'Vidar Brekke',
+                column: 4,
+                image: 'https://wp-assets.highcharts.com/www-highcharts-com/blog/wp-content/uploads/2018/11/13105551/Vidar.jpg',
+                layout: 'hanging'
+            }, {
+                id: 'Product',
+                name: '产品研发'
+            }, {
+                id: 'Web',
+                name: '运维',
+                description: '网站开发，系统维护'
+            }, {
+                id: 'Sales',
+                name: '销售部'
+            }, {
+                id: 'Market',
+                name: '市场部'
+            }],
+            colorByPoint: false,
+            color: '#007ad0',
+            dataLabels: {
+                color: 'white'
+            },
+            borderColor: 'white',
+            nodeWidth: 65
+        }],
+        tooltip: {
+            outside: true
+        },
+        exporting: {
+            allowHTML: true,
+            sourceWidth: 800,
+            sourceHeight: 600
+        }
+    }
+    
     return <div className='about_page'>
         {/* 遮罩 */}
         {/* <div className='mask'>
@@ -475,7 +430,13 @@ const AboutLeague = () => {
                 borderLeft: CutLine, borderRight: CutLine, height: "100%",
                 display: "flex", alignItems: "center", justifyContent: "center"
             }}>
-                <div id="container"></div>
+                {/* <div id="container"></div> */}
+                <HighchartsReact
+                    highcharts={Highcharts}
+                    options={options}
+                //   ref={chartComponentRef}
+
+                />
             </div>
         </div>
 
