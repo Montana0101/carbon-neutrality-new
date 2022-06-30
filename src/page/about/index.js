@@ -133,13 +133,13 @@ const AboutLeague = () => {
             name: 'Highsoft',
             keys: ['from', 'to'],
             data: [
-                ['股东', '董事会'],
-                ['董事会', 'CEO'],
+                ['理事会', '理事长'],
+                ['理事长', 'CEO'],
                 ['CEO', 'CTO'],
                 ['CEO', 'CPO'],
                 ['CEO', 'CSO'],
                 ['CEO', 'CMO'],
-                ['CEO', 'HR'],
+                ['CEO', '副理事长'],
                 ['CTO', 'Product'],
                 ['CTO', 'Web'],
                 ['CSO', 'Sales'],
@@ -176,8 +176,8 @@ const AboutLeague = () => {
                 name: 'Grethe Hjetland',
                 image: 'https://wp-assets.highcharts.com/www-highcharts-com/blog/wp-content/uploads/2018/11/12132317/Grethe.jpg'
             }, {
-                id: 'HR',
-                title: 'HR/CFO',
+                id: '副理事长',
+                title: '副理事长',
                 name: 'Anne Jorunn Fjærestad',
                 color: '#007ad0',
                 image: 'https://wp-assets.highcharts.com/www-highcharts-com/blog/wp-content/uploads/2018/11/12132314/AnneJorunn.jpg',
@@ -427,18 +427,20 @@ const AboutLeague = () => {
         </div>
 
         {/* 联盟架构 */}
-        <div style={{ borderTop: CutLine, height: "6rem", padding: '0 0.5rem', }}>
+        <div style={{ borderTop: CutLine, height: "6.5rem", padding: '0 0.5rem', }}>
             <div style={{
                 borderLeft: CutLine, borderRight: CutLine, height: "100%",
-                display: "flex", alignItems: "center", justifyContent: "center"
+                display: "flex", alignItems: "center", justifyContent: "center",
+               
             }}>
-                {/* <div id="container"></div> */}
+          
                 <HighchartsReact
                     highcharts={Highcharts}
                     options={options}
-                //   ref={chartComponentRef}
-
                 />
+          
+                {/* <div id="container"></div> */}
+              
             </div>
         </div>
 
