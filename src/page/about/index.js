@@ -134,23 +134,23 @@ const AboutLeague = () => {
         //         break;
         //     }
 
-            // 理事长
-            // lsz = item.querySelector("td[colspan='6']")
-            // let lsz_msc_dom = lsz_msc.getElementsByClassName("initechNode")
-            // let lsz_msc_arr = Array.from(lsz_msc_dom)
-            // if (lsz) {
-            //     if (ix == 0) {
-            //         // 理事会
-            //         lsz.setAttribute('id', "lishizhang")
-            //     }
-            // }
+        // 理事长
+        // lsz = item.querySelector("td[colspan='6']")
+        // let lsz_msc_dom = lsz_msc.getElementsByClassName("initechNode")
+        // let lsz_msc_arr = Array.from(lsz_msc_dom)
+        // if (lsz) {
+        //     if (ix == 0) {
+        //         // 理事会
+        //         lsz.setAttribute('id', "lishizhang")
+        //     }
+        // }
 
-            // 理事长下面一行
-            // if(lsz){
-            //     if(ix == 1){
-            //         console.log()
-            //     }
-            // }
+        // 理事长下面一行
+        // if(lsz){
+        //     if(ix == 1){
+        //         console.log()
+        //     }
+        // }
         // })
 
     }, [])
@@ -359,6 +359,28 @@ const AboutLeague = () => {
                     </p>
                     <p className='col_'>
                         <div className='col_line'></div>
+                    </p>
+                    <p className='col'>
+                        <button className="col_btn">理事长</button>
+                        <a>查看详情</a>
+                    </p>
+                    <p className='col_'>
+                        <div className='col_line'></div>
+                    </p>
+                    <p className="_col">
+                        <div></div>
+                        <button>副理事长</button>
+                        <a>查看详情</a>
+                    </p>
+                    <p className='col_'>
+                        <div className='col_line'></div>
+                    </p>
+
+                    <p className="_col">
+                        <div className="_col_left"></div>
+                        <div className="_col_right"></div>
+                        {/* <button>副理事长</button>
+                        <a>查看详情</a> */}
                     </p>
                 </section>
             </div>

@@ -24,7 +24,7 @@ function App() {
     if (JSON.parse(check)) {
       checkLogin(true)
       setUserInfo(JSON.parse(check))
-      _messageTips()
+      // _messageTips()
     } else {
       checkLogin(false)
     }
