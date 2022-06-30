@@ -174,62 +174,76 @@ const AboutLeague = () => {
                    </section>
                 <section className="introduce_card">
                     <div className={`col_base_long col_init_0`} style={{
-                        backgroundImage: AliOss + `/new_version_0518/about_us_banner_1.png`
-                    }}>
+                        backgroundImage: `url(${AliOss}/new_version_0518/about_us_banner_1.png)`
+                    }} onClick={() => { setInx(0) }}>
                         <section className='content'>
-                            <span>联盟</span>
+                            {inx == 0 && <span>联盟</span>}
+                            {inx != 0 && <div className='col_short'>
+                                <span>联盟</span>
+                            </div>}
                             <article>
                                 上海碳中和技术创新联盟（简称“联盟”）由上海新能源科技成果转化与产业促进中心牵头，本市相关高校、科研院所、企业共同发起成立，形成顶级专家领衔、技术转化高效、空间布局合理、资本运作深入的综合性创新平台，构建上下贯通、左右衔接的低碳产业技术创新生态圈。
+                            </article>
+                        </section>
+                    </div>
+
+                    <div className={`col_base_long col_init_1 ${inx >= 1 && 'move_in'}`} style={{
+                        backgroundImage: `url(${AliOss}/new_version_0518/about_us_banner_2.png)`
+                    }} onClick={() => { setInx(1) }}>
+                        <section className='content'>
+                            {inx == 1 && <span>研究院</span>}
+                            {inx != 1 && <div className='col_short'>
+                                <span>研究院</span>
+                            </div>}
+                            <article>
+                                研究院是联盟的核心平台，是服务政府、企业、产业、社会的公益性、枢纽型碳中和产业协同创新功能型平台。有新型电力、生物质高效清洁利用、清洁能源高端装备制造、太阳能、风能、工业节能、储能、空间技术、综合能源管理等领域的技术开发。
+                            </article>
+                        </section>
+
+                    </div>
+
+                    <div className={`col_base_long col_init_2 ${inx >= 2 && 'move_in'}`} style={{
+                        backgroundImage: `url(${AliOss}/new_version_0518/about_us_banner_3.png)`
+                    }} onClick={() => { setInx(2) }}>
+                        <section className='content'>
+                            {inx == 2 && <span>平台公司</span>}
+                            {inx != 2 && <div className='col_short'>
+                                <span>平台公司</span>
+                            </div>}
+                            <article>
+                                上海碳中和技术创新平台有限公司以上海碳中和技术创新联盟总部为物理载体，以上海长兴碳中和创新产业园为实验基地，引入碳中和创新链、产业链、企业研发中心、企业总部、销售中心、展示中心落地，集合企业孵化、挂牌上市、企业管理、资源整合、重组并购、股权融资、债券融资、法务咨询等一系列企业综合服务，通过开展创业培训、辅导、咨询，提供研发、试制、经营的场地和共享设施，以及政策、法律、财务、投融资、企业管理、人力资源、市场推广和加速成长等方面的服务，以降低创业风险和创业成本，提高企业的成活率和成长性，培养成功的科技企业和企业家，致力于打造碳中和技术创新高地、产业集群。
                          </article>
                         </section>
                     </div>
 
-                    <div className={"col_base_long col_init_1"} onClick={() => setInx(1)}
-                    >
-                        <>
-                            <section className='content'>
-                                <span>研究院</span>
-                                <article>
-                                    上海碳中和技术创新联盟（简称“联盟”）由上海新能源科技成果转化与产业促进中心牵头，本市相关高校、科研院所、企业共同发起成立，形成顶级专家领衔、技术转化高效、空间布局合理、资本运作深入的综合性创新平台，构建上下贯通、左右衔接的低碳产业技术创新生态圈。
-                    </article>
-                            </section>
-                            <img src={AliOss + `/new_version_0518/about_us_banner_2.png`} />
-                        </>
-                    </div>
-                    {/* <div className={`col ${inx == 2 && "col_active"}`} onClick={() => setInx(2)}>
-                        {inx == 2 ? <>
-                            <section className='content'>
-                                <span>平台公园</span>
-                                <article>
-                                    上海碳中和技术创新联盟（简称“联盟”）由上海新能源科技成果转化与产业促进中心牵头，本市相关高校、科研院所、企业共同发起成立，形成顶级专家领衔、技术转化高效、空间布局合理、资本运作深入的综合性创新平台，构建上下贯通、左右衔接的低碳产业技术创新生态圈。
-                    </article>
-                            </section>
-                            <img src={AliOss + `/new_version_0518/about_us_banner_${inx + 1}.png`} />
-                        </> : <div>平台公园</div>}
-                    </div>
-                    <div className={`col ${inx == 3 && "col_active"}`} onClick={() => setInx(3)}>
-                        {inx == 3 ? <>
-                            <section className='content'>
+                    <div className={`col_base_long col_init_3 ${inx >= 3 && 'move_in'}`} style={{
+                        backgroundImage: `url(${AliOss}/new_version_0518/about_us_banner_4.png)`
+                    }} onClick={() => { setInx(3) }}>
+                        <section className='content'>
+                            {inx == 3 && <span>产业园</span>}
+                            {inx != 3 && <div className='col_short'>
                                 <span>产业园</span>
-                                <article>
-                                    上海碳中和技术创新联盟（简称“联盟”）由上海新能源科技成果转化与产业促进中心牵头，本市相关高校、科研院所、企业共同发起成立，形成顶级专家领衔、技术转化高效、空间布局合理、资本运作深入的综合性创新平台，构建上下贯通、左右衔接的低碳产业技术创新生态圈。
-                    </article>
-                            </section>
-                            <img src={AliOss + `/new_version_0518/about_us_banner_${inx + 1}.png`} />
-                        </> : <div>产业园</div>}
+                            </div>}
+                            <article>
+                                物理空间承载了联盟及所属单位、研究院、基金等内部机构的经营活动，也承载了相关成员企业入驻并且围绕联盟建立沟通、交流、路演、论坛等活动的办公场所。打造园区“三网融合”试点 ，引进一批碳中和技术领域的重点项目，培育一批碳中和技术战略新兴产业集群，全面夯实产业园区经济布局。
+                         </article>
+                        </section>
                     </div>
-                    <div className={`col ${inx == 4 && "col_active"}`} onClick={() => setInx(4)}>
-                        {inx == 4 ? <>
-                            <section className='content'>
-                                <span>基因</span>
-                                <article>
-                                    上海碳中和技术创新联盟（简称“联盟”）由上海新能源科技成果转化与产业促进中心牵头，本市相关高校、科研院所、企业共同发起成立，形成顶级专家领衔、技术转化高效、空间布局合理、资本运作深入的综合性创新平台，构建上下贯通、左右衔接的低碳产业技术创新生态圈。
-                    </article>
-                            </section>
-                            <img src={AliOss + `/new_version_0518/about_us_banner_${inx + 1}.png`} />
-                        </> : <div>基因</div>}
-                    </div> */}
 
+                    <div className={`col_base_long col_init_4  ${inx == 4 && 'move_in'}`} style={{
+                        backgroundImage: `url(${AliOss}/new_version_0518/about_us_banner_5.png)`
+                    }} onClick={() => { setInx(4) }}>
+                        <section className='content'>
+                            {inx == 4 && <span>基因</span>}
+                            {inx != 4 && <div className='col_short'>
+                                <span>基因</span>
+                            </div>}
+                            <article>
+                                
+联盟拟与机构投资人合作，结合联盟在技术创新、产业应用、资源汇集等优势与机构投资人在综合金融服务领域的优势，上海市崇明区政府资源及区位优势，长三角母基金强大的产业背景，联盟行业的专业度及资源整合能力，发挥基石出资人的引导作用，吸引和撬动其他社会资本。
+                         </article>
+                        </section>
+                    </div>
                 </section>
 
             </div>
