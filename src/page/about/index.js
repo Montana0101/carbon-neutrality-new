@@ -83,31 +83,31 @@ const initechOrg = {
     ]
 };
 
-const MyNodeComponent = ({ node }) => {
-    return (
-        <div className="initechNode" onClick={() => {
-        }} onMouseOver={() => {
-            if (node.actor == 'lishizhang') {
-                let dom = document.getElementById('lishizhang')
-                if (dom) {
-                    dom.setAttribute('id', 'lishizhang_on')
-                    // 理事长
-                    dom.addEventListener("click", () => {
-                        alert(1)
-                    })
-                }
-                // alert("点击了理事长")
-            }
-        }} onMouseLeave={() => {
-            // if(node.actor=='lishizhang'){
-            //     let dom = document.getElementById('lishizhang_on')
-            //     if(dom){
-            //         dom.setAttribute('id','lishizhang')
-            //     }
-            // }
-        }}>{node.name}</div>
-    );
-};
+// const MyNodeComponent = ({ node }) => {
+//     return (
+//         <div className="initechNode" onClick={() => {
+//         }} onMouseOver={() => {
+//             if (node.actor == 'lishizhang') {
+//                 let dom = document.getElementById('lishizhang')
+//                 if (dom) {
+//                     dom.setAttribute('id', 'lishizhang_on')
+//                     // 理事长
+//                     dom.addEventListener("click", () => {
+//                         alert(1)
+//                     })
+//                 }
+//                 // alert("点击了理事长")
+//             }
+//         }} onMouseLeave={() => {
+//             // if(node.actor=='lishizhang'){
+//             //     let dom = document.getElementById('lishizhang_on')
+//             //     if(dom){
+//             //         dom.setAttribute('id','lishizhang')
+//             //     }
+//             // }
+//         }}>{node.name}</div>
+//     );
+// };
 
 const AboutLeague = () => {
     const [inx, setInx] = useState(0)
@@ -118,33 +118,40 @@ const AboutLeague = () => {
 
         // 结构节点添加span
         // const doms =  document.querySelector(".reactOrgChart")
-        const rot = document.getElementsByClassName("reactOrgChart")[0]
-        const doms = rot.getElementsByClassName("orgNodeChildGroup")
-        const arr = Array.from(doms)
-        arr && arr.map((item, ix) => {
-            let d = item.querySelector("td[colspan='0']")
-            let sonDom = d.getElementsByClassName("initechNode")
-            const arr2 = Array.from(sonDom)
-            for (var i = 0; i < arr2.length; i++) {
-                var sp = document.createElement("span");
-                sp.innerHTML = arr2[i].innerText;
-                arr2[i].appendChild(sp)
-                arr2[i].removeChild(arr2[i].childNodes[0])
+        // const rot = document.getElementsByClassName("reactOrgChart")[0]
+        // const doms = rot.getElementsByClassName("orgNodeChildGroup")
+        // const arr = Array.from(doms)
+        // arr && arr.map((item, ix) => {
+        //     let d = item.querySelector("td[colspan='0']")
+        //     let sonDom = d.getElementsByClassName("initechNode")
+        //     const arr2 = Array.from(sonDom)
+        //     for (var i = 0; i < arr2.length; i++) {
+        //         var sp = document.createElement("span");
+        //         sp.innerHTML = arr2[i].innerText;
+        //         arr2[i].appendChild(sp)
+        //         arr2[i].removeChild(arr2[i].childNodes[0])
 
-                break;
-            }
+        //         break;
+        //     }
 
-            lsz = item.querySelector("td[colspan='6']")
+            // 理事长
+            // lsz = item.querySelector("td[colspan='6']")
             // let lsz_msc_dom = lsz_msc.getElementsByClassName("initechNode")
             // let lsz_msc_arr = Array.from(lsz_msc_dom)
-            if (lsz) {
-                if (ix == 0) {
-                    // 理事会
-                    lsz.setAttribute('id', "lishizhang")
-                }
-            }
-        })
+            // if (lsz) {
+            //     if (ix == 0) {
+            //         // 理事会
+            //         lsz.setAttribute('id', "lishizhang")
+            //     }
+            // }
 
+            // 理事长下面一行
+            // if(lsz){
+            //     if(ix == 1){
+            //         console.log()
+            //     }
+            // }
+        // })
 
     }, [])
 
@@ -339,13 +346,21 @@ const AboutLeague = () => {
                 display: "flex", alignItems: "center", justifyContent: "center"
             }}>
                 {/* <img src={jiegouPg} style={{ height: "90%" }} /> */}
-                <OrgChart tree={initechOrg} NodeComponent={MyNodeComponent} />
+                {/* <OrgChart tree={initechOrg} NodeComponent={MyNodeComponent} /> */}
                 {/* <section style={{
                     border:"1px solid pink",
                     width:"70%",
                     height:"90%",
                     margin:"auto"
                 }}></section> */}
+                <section className='strut_area'>
+                    <p className='col'>
+                        <button className="col_btn">理事会</button>
+                    </p>
+                    <p className='col_'>
+                        <div className='col_line'></div>
+                    </p>
+                </section>
             </div>
         </div>
 
