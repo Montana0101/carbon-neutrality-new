@@ -4,10 +4,12 @@ import { AliOss, ThemeColor, CutLine, barFontSize, barHeight } from "../../lib/c
 import { EnvironmentFilled, PhoneFilled, MailFilled } from '@ant-design/icons';
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
-
+import sankey from "highcharts/modules/sankey.js";
+import organization from "highcharts/modules/organization.js";
 
 import './index.less'
-
+sankey(Highcharts);
+organization(Highcharts);
 
 const data = [
     "孵化技术创新平台", "研究商业创新模式", "推动行业标准制订", "搭建资本合作平台", "联合产品市场推广"
@@ -124,7 +126,7 @@ const AboutLeague = () => {
             inverted: true
         },
         title: {
-            text: 'Highsoft 公司组织结构'
+            text: ''
         },
         series: [{
             type: 'organization',
@@ -239,7 +241,7 @@ const AboutLeague = () => {
             sourceHeight: 600
         }
     }
-    
+
     return <div className='about_page'>
         {/* 遮罩 */}
         {/* <div className='mask'>
