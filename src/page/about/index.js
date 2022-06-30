@@ -8,8 +8,10 @@ import sankey from "highcharts/modules/sankey.js";
 import organization from "highcharts/modules/organization.js";
 
 import './index.less'
-import lszp from '../../static/imgs/理事长.png'
-import flszp from '../../static/imgs/副理事长.png'
+import lszp from '../../static/imgs/lishiz.png'
+import flszp from '../../static/imgs/fulishiz.png'
+// const lszp = require("../../static/imgs/理事长.png")
+// const flszp = require("../../static/imgs/副理事长.png")
 sankey(Highcharts);
 organization(Highcharts);
 
@@ -185,14 +187,13 @@ const AboutLeague = () => {
             // backgroundColor:'red',
             // backgroundImage:"",
             formatter: function(e){
-                console.log("打印下e",this)
                 if(this.key == '理事长'){
                     return '<div style="width:5.5rem;">'+
-                    `<img style="width:100%;" src=${lszp}/>`
+                    `<img style="width:100%;" src="https://shbd.oss-cn-beijing.aliyuncs.com/%E7%A2%B3%E4%B8%AD%E5%92%8C/new_version_0518/%E7%90%86%E4%BA%8B%E9%95%BF.png"/>`
                     +'<div/>'
                 }else if(this.key == '副理事长'){
-                    return '<div style="width:6rem;">'+
-                    `<img style="width:100%;" src=${flszp}/>`
+                    return '<div style="width:5.5rem;">'+
+                    `<img style="width:100%;" src="https://shbd.oss-cn-beijing.aliyuncs.com/%E7%A2%B3%E4%B8%AD%E5%92%8C/new_version_0518/%E5%89%AF%E7%90%86%E4%BA%8B%E9%95%BF.png"/>`
                     +'<div/>'
                 }else{
                     return false
