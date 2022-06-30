@@ -61,7 +61,7 @@ const AboutLeague = () => {
         },
         series: [{
             type: 'organization',
-            name: 'Highsoft',
+            name: '',
             keys: ['from', 'to'],
             data: [
                 ['理事会', '理事长'],
@@ -71,7 +71,7 @@ const AboutLeague = () => {
                 ['CEO', '专业技术委员会'],
                 ['CEO', '副理事长'],
                 ['秘书处', 'Product'],
-          
+
                 ['秘书处', 'Web'],
                 ['秘书处', 'Web1'],
                 ['专业咨询委员会', 'Sales'],
@@ -106,8 +106,6 @@ const AboutLeague = () => {
             nodes: [{
                 id: 'Shareholders'
             }, {
-                id: 'Board'
-            }, {
                 id: 'CEO',
                 title: 'CEO',
                 name: 'Grethe Hjetland',
@@ -117,7 +115,7 @@ const AboutLeague = () => {
                 title: '副理事长',
                 name: '董绍明',
                 color: '#007ad0',
-                image: 'https://axure-file.lanhuapp.com/31b63b61-b591-4fa5-badd-980d384a1046__6b132bb8c6317ed194c666d288d058ad.png',
+                image: "https://shbd.oss-cn-beijing.aliyuncs.com/%E7%A2%B3%E4%B8%AD%E5%92%8C/new_version_0518/about_us_vice_director%20.png",
                 column: 3,
                 offset: '75%'
             }, {
@@ -127,12 +125,6 @@ const AboutLeague = () => {
                 column: 4,
                 // image: 'https://wp-assets.highcharts.com/www-highcharts-com/blog/wp-content/uploads/2018/11/12140620/Christer.jpg',
                 layout: 'hanging'
-            }, {
-                id: 'CPO',
-                title: 'CPO',
-                name: 'Torstein Hønsi',
-                column: 4,
-                image: 'https://wp-assets.highcharts.com/www-highcharts-com/blog/wp-content/uploads/2018/11/12131849/Torstein1.jpg'
             }, {
                 id: '专业咨询委员会',
                 // title: '专业咨询委员会',
@@ -158,7 +150,7 @@ const AboutLeague = () => {
                 id: 'Web1',
                 name: '副秘书长',
                 // description: '执行秘书长'
-            },{
+            }, {
                 id: 'Sales',
                 name: '院士'
             }, {
@@ -387,16 +379,16 @@ const AboutLeague = () => {
             <div style={{
                 borderLeft: CutLine, borderRight: CutLine, height: "100%",
                 display: "flex", alignItems: "center", justifyContent: "center",
-               
+
             }}>
-          
+
                 <HighchartsReact
                     highcharts={Highcharts}
                     options={options}
                 />
-          
+
                 {/* <div id="container"></div> */}
-              
+
             </div>
         </div>
 
