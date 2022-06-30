@@ -53,7 +53,7 @@ const AboutLeague = () => {
 
     const options = {
         chart: {
-            height: 600,
+            height: 700,
             inverted: true
         },
         title: {
@@ -65,11 +65,13 @@ const AboutLeague = () => {
             keys: ['from', 'to'],
             data: [
                 ['理事会', '理事长'],
-                ['理事长', 'CEO'],
-                ['CEO', '秘书处'],
-                ['CEO', '专业咨询委员会'],
-                ['CEO', '专业技术委员会'],
-                ['CEO', '副理事长'],
+              
+                ['理事长', '副理事长'],
+                // ['理事长', 'CEO'],
+                ['理事长', '秘书处'],
+                ['理事长', '专业咨询委员会'],
+                ['理事长', '专业技术委员会'],
+        
                 ['秘书处', 'Product'],
 
                 ['秘书处', 'Web'],
@@ -104,40 +106,33 @@ const AboutLeague = () => {
                 color: '#359154'
             }],
             nodes: [{
-                id: 'Shareholders'
+                id: '理事会',
+                // title: '理事长',
+                // name: '黄震',
             }, {
-                id: 'CEO',
-                title: 'CEO',
-                name: 'Grethe Hjetland',
-                image: 'https://wp-assets.highcharts.com/www-highcharts-com/blog/wp-content/uploads/2018/11/12132317/Grethe.jpg'
+                id: '理事长',
+                title: '理事长',
+                name: '黄震',
+                image: 'https://shbd.oss-cn-beijing.aliyuncs.com/%E7%A2%B3%E4%B8%AD%E5%92%8C/new_version_0518/about_ux_director.png'
             }, {
                 id: '副理事长',
                 title: '副理事长',
                 name: '董绍明',
                 color: '#007ad0',
                 image: "https://shbd.oss-cn-beijing.aliyuncs.com/%E7%A2%B3%E4%B8%AD%E5%92%8C/new_version_0518/about_us_vice_director%20.png",
-                column: 3,
+                column: 2,
                 offset: '75%'
             }, {
                 id: '秘书处',
-                // title: '秘书处',
-                // name: 'Christer Vasseng',
-                column: 4,
-                // image: 'https://wp-assets.highcharts.com/www-highcharts-com/blog/wp-content/uploads/2018/11/12140620/Christer.jpg',
+                column: 3,
                 layout: 'hanging'
             }, {
                 id: '专业咨询委员会',
-                // title: '专业咨询委员会',
-                // name: 'Anita Nesse',
-                column: 4,
-                // image: 'https://wp-assets.highcharts.com/www-highcharts-com/blog/wp-content/uploads/2018/11/12132313/Anita.jpg',
+                column: 3,
                 layout: 'hanging'
             }, {
                 id: '专业技术委员会',
-                // title: '专业技术委员会',
-                // name: 'Vidar Brekke',
-                column: 4,
-                // image: 'https://wp-assets.highcharts.com/www-highcharts-com/blog/wp-content/uploads/2018/11/13105551/Vidar.jpg',
+                column: 3,
                 layout: 'hanging'
             }, {
                 id: 'Product',
@@ -169,8 +164,8 @@ const AboutLeague = () => {
                 id: 'Market3',
                 name: '电力行业碳中和技术委员会'
             }, {
-                id: 'Market4',
-                name: '...'
+                // id: 'Market4',
+                // name: '...'
             }],
             colorByPoint: false,
             color: '#007ad0',
@@ -375,7 +370,7 @@ const AboutLeague = () => {
         </div>
 
         {/* 联盟架构 */}
-        <div style={{ borderTop: CutLine, height: "8.5rem", padding: '0 0.5rem', }}>
+        <div style={{ borderTop: CutLine, padding: '0.5rem', }}>
             <div style={{
                 borderLeft: CutLine, borderRight: CutLine, height: "100%",
                 display: "flex", alignItems: "center", justifyContent: "center",

@@ -6,6 +6,9 @@
     position: relative;
     padding : 0 0.3rem;
 
+    .highcharts-credits {
+        display: none;
+    }
 
     .initechNode {
         border       : solid 1px @primary-color;
@@ -339,10 +342,11 @@
         .col {
             // background-color: aqua;
             // border          : 1px solid green;
-            position        : relative;
-            display: flex;
+            position       : relative;
+            display        : flex;
             justify-content: center;
-            align-items: center;
+            align-items    : center;
+
             .col_btn {
                 width        : 1.2rem;
                 border       : 0.01rem dotted @primary-color;
@@ -361,23 +365,23 @@
                 text-decoration: underline;
             }
 
-                // 秘书 专家 咨询 行线
-                .three_items{
-                    width:4.5rem !important; 
-                    height: 0.01rem;
-                    border       : 0.01rem dotted @primary-color;
-                    // background: @primary-color !important;
-                    position: absolute;
-                    margin:0 auto;
-                    // top: 0;
-                    // left: 0;
-    
-                }
+            // 秘书 专家 咨询 行线
+            .three_items {
+                width        : 4.5rem !important;
+                height       : 0.01rem;
+                border       : 0.01rem dotted @primary-color;
+                // background: @primary-color !important;
+                position     : absolute;
+                margin       : 0 auto;
+                // top: 0;
+                // left: 0;
+
+            }
         }
 
         // 副理事长一行
         ._col {
-            height          : 0.01rem;
+            height  : 0.01rem;
             position: relative;
 
             &>div {
@@ -410,7 +414,7 @@
                 text-decoration: underline;
             }
 
-        
+
 
             // ._col_right {
             //     position: absolute;
@@ -436,9 +440,9 @@
         .col_ {
             // border          : 1px solid gold;
             // background-color: bisque;
-            display         : flex;
-            justify-content : center;
-            align-items     : center;
+            display        : flex;
+            justify-content: center;
+            align-items    : center;
 
             // 竖线
             .col_line {
