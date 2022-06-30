@@ -376,12 +376,58 @@ const AboutLeague = () => {
                         <div className='col_line'></div>
                     </p>
 
-                    <p className="_col">
+                    <p className='col'>
+                        <div className="three_items" style={{ position: "relative" }}>
+                            <p className='col_' style={{
+                                position: "absolute",
+                                left: 0
+                            }}>
+                                <div className='col_line'></div>
+                                <button className="col_btn" style={{
+                                    position: "absolute",
+                                    left: "-0.6rem",
+                                    top: "0.4rem"
+                                }}>秘书处</button>
+                            </p>
+                            <p className='col_' style={{
+                                position: "absolute",
+                                left: "50%"
+                            }}>
+                                <div className='col_line'>
+                                    <p style={{ height: "0.3rem", background: "red" }}></p>
+                                </div>
+                                <button className="col_btn" style={{
+                                    position: "absolute",
+                                    left: "10% !important",
+                                    top: "0.4rem"
+                                }}>专家咨询委员会</button>
+                            </p>
+                            <p className='col_' style={{
+                                position: "absolute",
+                                right: 0
+                            }}>
+                                <div className='col_line'></div>
+                                <button className="col_btn" style={{
+                                    position: "absolute",
+                                    left: "10% !important",
+                                    top: "0.4rem"
+                                }}>专业技术委员会</button>
+                            </p>
+                        </div>
+
+                        {/* <button className="col_btn">理事会</button> */}
+                    </p>
+
+
+                    {/* <p className="_col" style={{ background: "red" }}>
                         <div className="_col_left"></div>
                         <div className="_col_right"></div>
-                        {/* <button>副理事长</button>
-                        <a>查看详情</a> */}
+                        <button>副理事长</button>
+                        <a>查看详情</a>
                     </p>
+                    <p className='col_'>
+                        <div className='col_line'></div>
+                    </p> */}
                 </section>
             </div>
         </div>

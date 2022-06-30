@@ -337,10 +337,12 @@
         border: 1px solid red;
 
         .col {
-            background-color: aqua;
-            border          : 1px solid green;
+            // background-color: aqua;
+            // border          : 1px solid green;
             position        : relative;
-
+            display: flex;
+            justify-content: center;
+            align-items: center;
             .col_btn {
                 width        : 1.2rem;
                 border       : 0.01rem dotted @primary-color;
@@ -358,12 +360,24 @@
                 font-size      : 0.12rem;
                 text-decoration: underline;
             }
+
+                // 秘书 专家 咨询 行线
+                .three_items{
+                    width:4.5rem !important; 
+                    height: 0.01rem;
+                    border       : 0.01rem dotted @primary-color;
+                    // background: @primary-color !important;
+                    position: absolute;
+                    margin:0 auto;
+                    // top: 0;
+                    // left: 0;
+    
+                }
         }
 
         // 副理事长一行
         ._col {
-            // height          : 0.01rem;
-            // background-color: blue;
+            height          : 0.01rem;
             position: relative;
 
             &>div {
@@ -396,30 +410,32 @@
                 text-decoration: underline;
             }
 
-            // 秘书 专家 咨询 行线
-            ._col_right {
-                position: absolute;
-                left    : 50%;
-                top     : 0;
-                height  : 0.01rem;
-                border  : 0.01rem dotted @primary-color;
-                width   : 2.3rem;
-            }
+        
 
-            ._col_left {
-                position: absolute;
-                right   : 50%;
-                top     : 0;
-                height  : 0.01rem;
-                border  : 0.01rem dotted @primary-color;
-                width   : 2.3rem;
-            }
+            // ._col_right {
+            //     position: absolute;
+            //     left    : 50%;
+            //     top     : 0;
+            //     height  : 0.01rem;
+            //     border  : 0.01rem dotted @primary-color;
+            //     width   : 2.3rem;
+            // }
+
+            // ._col_left {
+            //     position: absolute;
+            //     left   : 15.5%;
+
+            //     top     : 0;
+            //     height  : 0.01rem;
+            //     border  : 0.01rem dotted @primary-color;
+            //     width   : 2.3rem;
+            // }
         }
 
 
         .col_ {
             // border          : 1px solid gold;
-            background-color: bisque;
+            // background-color: bisque;
             display         : flex;
             justify-content : center;
             align-items     : center;
