@@ -5,7 +5,7 @@ import { AliOss, ThemeColor, CutLine } from "../lib/const"
 import { useEffect, useState } from "react"
 import { UserOutlined } from '@ant-design/icons';
 import IconSearch from "../static/imgs/search.svg"
-import { messageTips, readMessage } from '../apis/index'
+import { messageTips } from '../apis/index'
 
 const logo = AliOss + '/img/logo.png'
 
@@ -24,7 +24,7 @@ function App() {
     if (JSON.parse(check)) {
       checkLogin(true)
       setUserInfo(JSON.parse(check))
-      // _messageTips()
+      _messageTips()
     } else {
       checkLogin(false)
     }

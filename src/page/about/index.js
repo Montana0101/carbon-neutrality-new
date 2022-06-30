@@ -8,6 +8,8 @@ import sankey from "highcharts/modules/sankey.js";
 import organization from "highcharts/modules/organization.js";
 
 import './index.less'
+import lszp from '../../static/imgs/理事长.png'
+import flszp from '../../static/imgs/副理事长.png'
 sankey(Highcharts);
 organization(Highcharts);
 
@@ -54,6 +56,7 @@ const AboutLeague = () => {
     const options = {
         chart: {
             height: 700,
+            width:800,
             inverted: true
         },
         title: {
@@ -178,10 +181,29 @@ const AboutLeague = () => {
             nodeWidth: 65
         }],
         tooltip: {
-            outside: true,
-            backgroundColor:'red',
-            backgroundImage:"",
+            // outside: true,
+            // backgroundColor:'red',
+            // backgroundImage:"",
+            formatter: function(e){
+                console.log("打印下e",this)
+                if(this.key == '理事长'){
+                    return '<div style="width:5.5rem;">'+
+                    `<img style="width:100%;" src=${lszp}/>`
+                    +'<div/>'
+                }else if(this.key == '副理事长'){
+                    return '<div style="width:6rem;">'+
+                    `<img style="width:100%;" src=${flszp}/>`
+                    +'<div/>'
+                }else{
+                    return false
+                }
+               
+            },
+            useHTML: true,
+            shared: true
+
         },
+        
         exporting: {
             allowHTML: true,
             sourceWidth: 800,
