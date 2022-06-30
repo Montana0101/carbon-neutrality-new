@@ -107,19 +107,21 @@ const AboutLeague = () => {
             }],
             nodes: [{
                 id: '理事会',
+                color: '#D79727',
                 // title: '理事长',
                 // name: '黄震',
             }, {
                 id: '理事长',
-                title: '理事长',
-                name: '黄震',
-                image: 'https://shbd.oss-cn-beijing.aliyuncs.com/%E7%A2%B3%E4%B8%AD%E5%92%8C/new_version_0518/about_ux_director.png'
+                color: '#D79727',
+                // title: '理事长',
+                // name: '黄震',
+                // image: 'https://shbd.oss-cn-beijing.aliyuncs.com/%E7%A2%B3%E4%B8%AD%E5%92%8C/new_version_0518/about_ux_director.png'
             }, {
                 id: '副理事长',
-                title: '副理事长',
-                name: '董绍明',
-                color: '#007ad0',
-                image: "https://shbd.oss-cn-beijing.aliyuncs.com/%E7%A2%B3%E4%B8%AD%E5%92%8C/new_version_0518/about_us_vice_director%20.png",
+                // title: '副理事长',
+                // name: '董绍明',
+                color: '#D79727',
+                // image: "https://shbd.oss-cn-beijing.aliyuncs.com/%E7%A2%B3%E4%B8%AD%E5%92%8C/new_version_0518/about_us_vice_director%20.png",
                 column: 2,
                 offset: '75%'
             }, {
@@ -176,7 +178,9 @@ const AboutLeague = () => {
             nodeWidth: 65
         }],
         tooltip: {
-            outside: true
+            outside: true,
+            backgroundColor:'red',
+            backgroundImage:"",
         },
         exporting: {
             allowHTML: true,
