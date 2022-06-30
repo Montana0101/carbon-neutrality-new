@@ -15,76 +15,7 @@ const data = [
     "孵化技术创新平台", "研究商业创新模式", "推动行业标准制订", "搭建资本合作平台", "联合产品市场推广"
 ]
 
-var lsz //理事长
 
-const initechOrg = {
-    name: "理事会",
-    actor: "Gary Cole",
-    children: [
-        //   {
-        //     name: "Peter Gibbons",
-        //     actor: "Ron Livingston",
-        //     children: [
-        //       {
-        //         name: "And More!!",
-        //         actor: "This is just to show how to build a complex tree with multiple levels of children. Enjoy!"
-        //       }
-        //     ]
-        //   },
-        {
-            name: "理事长",
-            actor: "lishizhang",
-            key: '1-1',
-            children: [
-                {
-                    name: "秘书处",
-                    id: "1-1-1",
-                    children: [
-                        {
-                            name: "秘书处",
-                            id: "1-1-1-1",
-                        },
-                        {
-                            name: "执行秘书长",
-                        },
-                        {
-                            name: "副秘书长",
-                        }
-                    ]
-                },
-                {
-                    name: "专家咨询委员会",
-                    children: [
-                        {
-                            name: "院士",
-                        },
-                        {
-                            name: "高级专家",
-                        },
-                    ]
-                },
-                {
-                    name: "专家技术委员会",
-                    children: [
-                        {
-                            name: "新能源技术委员会",
-                        },
-                        {
-                            name: "设计与制造委员会 碳中和装备优化",
-                        },
-                        {
-                            name: "零碳工业流程再造技术委员会"
-                        },
-                        {
-                            name: "电力行业碳中和 技术委员会"
-                        },
-                        { name: "..." }
-                    ]
-                }
-            ]
-        },
-    ]
-};
 
 // const MyNodeComponent = ({ node }) => {
 //     return (
@@ -135,15 +66,21 @@ const AboutLeague = () => {
             data: [
                 ['理事会', '理事长'],
                 ['理事长', 'CEO'],
-                ['CEO', 'CTO'],
-                ['CEO', 'CPO'],
-                ['CEO', 'CSO'],
-                ['CEO', 'CMO'],
+                ['CEO', '秘书处'],
+                ['CEO', '专业咨询委员会'],
+                ['CEO', '专业技术委员会'],
                 ['CEO', '副理事长'],
-                ['CTO', 'Product'],
-                ['CTO', 'Web'],
-                ['CSO', 'Sales'],
-                ['CMO', 'Market']
+                ['秘书处', 'Product'],
+          
+                ['秘书处', 'Web'],
+                ['秘书处', 'Web1'],
+                ['专业咨询委员会', 'Sales'],
+                ['专业咨询委员会', 'Sales1'],
+                ['专业技术委员会', 'Market'],
+                ['专业技术委员会', 'Market1'],
+                ['专业技术委员会', 'Market2'],
+                ['专业技术委员会', 'Market3'],
+                // ['专业技术委员会', 'Market4']
             ],
             levels: [{
                 level: 0,
@@ -178,17 +115,17 @@ const AboutLeague = () => {
             }, {
                 id: '副理事长',
                 title: '副理事长',
-                name: 'Anne Jorunn Fjærestad',
+                name: '董绍明',
                 color: '#007ad0',
-                image: 'https://wp-assets.highcharts.com/www-highcharts-com/blog/wp-content/uploads/2018/11/12132314/AnneJorunn.jpg',
+                image: 'https://axure-file.lanhuapp.com/31b63b61-b591-4fa5-badd-980d384a1046__6b132bb8c6317ed194c666d288d058ad.png',
                 column: 3,
                 offset: '75%'
             }, {
-                id: 'CTO',
-                title: 'CTO',
-                name: 'Christer Vasseng',
+                id: '秘书处',
+                // title: '秘书处',
+                // name: 'Christer Vasseng',
                 column: 4,
-                image: 'https://wp-assets.highcharts.com/www-highcharts-com/blog/wp-content/uploads/2018/11/12140620/Christer.jpg',
+                // image: 'https://wp-assets.highcharts.com/www-highcharts-com/blog/wp-content/uploads/2018/11/12140620/Christer.jpg',
                 layout: 'hanging'
             }, {
                 id: 'CPO',
@@ -197,32 +134,51 @@ const AboutLeague = () => {
                 column: 4,
                 image: 'https://wp-assets.highcharts.com/www-highcharts-com/blog/wp-content/uploads/2018/11/12131849/Torstein1.jpg'
             }, {
-                id: 'CSO',
-                title: 'CSO',
-                name: 'Anita Nesse',
+                id: '专业咨询委员会',
+                // title: '专业咨询委员会',
+                // name: 'Anita Nesse',
                 column: 4,
-                image: 'https://wp-assets.highcharts.com/www-highcharts-com/blog/wp-content/uploads/2018/11/12132313/Anita.jpg',
+                // image: 'https://wp-assets.highcharts.com/www-highcharts-com/blog/wp-content/uploads/2018/11/12132313/Anita.jpg',
                 layout: 'hanging'
             }, {
-                id: 'CMO',
-                title: 'CMO',
-                name: 'Vidar Brekke',
+                id: '专业技术委员会',
+                // title: '专业技术委员会',
+                // name: 'Vidar Brekke',
                 column: 4,
-                image: 'https://wp-assets.highcharts.com/www-highcharts-com/blog/wp-content/uploads/2018/11/13105551/Vidar.jpg',
+                // image: 'https://wp-assets.highcharts.com/www-highcharts-com/blog/wp-content/uploads/2018/11/13105551/Vidar.jpg',
                 layout: 'hanging'
             }, {
                 id: 'Product',
-                name: '产品研发'
+                name: '秘书长'
             }, {
                 id: 'Web',
-                name: '运维',
-                description: '网站开发，系统维护'
+                name: '执行秘书长',
+                // description: '执行秘书长'
             }, {
+                id: 'Web1',
+                name: '副秘书长',
+                // description: '执行秘书长'
+            },{
                 id: 'Sales',
-                name: '销售部'
+                name: '院士'
+            }, {
+                id: 'Sales1',
+                name: '高级专家'
             }, {
                 id: 'Market',
-                name: '市场部'
+                name: '新能源技术委员会'
+            }, {
+                id: 'Market1',
+                name: '碳中和装备优化设计与制造委员会'
+            }, {
+                id: 'Market2',
+                name: '零碳工业流程再造技术委员会'
+            }, {
+                id: 'Market3',
+                name: '电力行业碳中和技术委员会'
+            }, {
+                id: 'Market4',
+                name: '...'
             }],
             colorByPoint: false,
             color: '#007ad0',
@@ -427,7 +383,7 @@ const AboutLeague = () => {
         </div>
 
         {/* 联盟架构 */}
-        <div style={{ borderTop: CutLine, height: "6.5rem", padding: '0 0.5rem', }}>
+        <div style={{ borderTop: CutLine, height: "8.5rem", padding: '0 0.5rem', }}>
             <div style={{
                 borderLeft: CutLine, borderRight: CutLine, height: "100%",
                 display: "flex", alignItems: "center", justifyContent: "center",
