@@ -173,29 +173,28 @@ const AboutLeague = () => {
                 ，即形成顶级专家领衔、技术转化高效、空间布局合理、资本运作深入的综合性技术创新与产业孵化体。
                    </section>
                 <section className="introduce_card">
-                    <div className={`col ${inx == 0 && "col_active col_active_0"}`} onClick={() => setInx(0)}>
-                        {inx == 0 ? <>
-                            <section className='content'>
-                                <span>联盟</span>
-                                <article>
-                                    上海碳中和技术创新联盟（简称“联盟”）由上海新能源科技成果转化与产业促进中心牵头，本市相关高校、科研院所、企业共同发起成立，形成顶级专家领衔、技术转化高效、空间布局合理、资本运作深入的综合性创新平台，构建上下贯通、左右衔接的低碳产业技术创新生态圈。
-                    </article>
-                            </section>
-                            <img src={AliOss + `/new_version_0518/about_us_banner_${inx + 1}.png`} />
-                        </> :
-                            <div>联盟</div>}
+                    <div className={`col_base_long col_init_0`} style={{
+                        backgroundImage: AliOss + `/new_version_0518/about_us_banner_1.png`
+                    }}>
+                        <section className='content'>
+                            <span>联盟</span>
+                            <article>
+                                上海碳中和技术创新联盟（简称“联盟”）由上海新能源科技成果转化与产业促进中心牵头，本市相关高校、科研院所、企业共同发起成立，形成顶级专家领衔、技术转化高效、空间布局合理、资本运作深入的综合性创新平台，构建上下贯通、左右衔接的低碳产业技术创新生态圈。
+                         </article>
+                        </section>
                     </div>
-                    <div className={`col ${inx == 1 && "col_active col_active_1"}`} onClick={() => setInx(1)}
-                        style={{backgroundImage:inx != 1 && `url(${AliOss}/new_version_0518/about_us_banner_mini_${inx}.png)`}}>
-                        {inx == 1 ? <>
+
+                    <div className={"col_base_long col_init_1"} onClick={() => setInx(1)}
+                    >
+                        <>
                             <section className='content'>
                                 <span>研究院</span>
                                 <article>
                                     上海碳中和技术创新联盟（简称“联盟”）由上海新能源科技成果转化与产业促进中心牵头，本市相关高校、科研院所、企业共同发起成立，形成顶级专家领衔、技术转化高效、空间布局合理、资本运作深入的综合性创新平台，构建上下贯通、左右衔接的低碳产业技术创新生态圈。
                     </article>
                             </section>
-                            <img src={AliOss + `/new_version_0518/about_us_banner_${inx + 1}.png`} />
-                        </> : <div>研究院</div>}
+                            <img src={AliOss + `/new_version_0518/about_us_banner_2.png`} />
+                        </>
                     </div>
                     {/* <div className={`col ${inx == 2 && "col_active"}`} onClick={() => setInx(2)}>
                         {inx == 2 ? <>
@@ -230,7 +229,7 @@ const AboutLeague = () => {
                             <img src={AliOss + `/new_version_0518/about_us_banner_${inx + 1}.png`} />
                         </> : <div>基因</div>}
                     </div> */}
-            
+
                 </section>
 
             </div>
