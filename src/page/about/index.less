@@ -72,23 +72,23 @@
         #lishizhang_on {
             &>.initechNode {
                 // background-color: green !important;
-                font-size       : 0.12rem;
-                font-weight     : bold;
-                color           : rgba(0, 0, 0, 0.6);
-                padding         : 0.05rem 0.4rem !important;
-                position        : relative;
+                font-size  : 0.12rem;
+                font-weight: bold;
+                color      : rgba(0, 0, 0, 0.6);
+                padding    : 0.05rem 0.4rem !important;
+                position   : relative;
             }
 
             &>.initechNode::after {
-                position: absolute;
-                content : "查看详情";
-                left    : 1.2rem;
-                top     : 0.04rem;
-                bottom  : 0;
-                width   : 100px !important;
-                color   : @primary-color !important;
+                position       : absolute;
+                content        : "查看详情";
+                left           : 1.2rem;
+                top            : 0.04rem;
+                bottom         : 0;
+                width          : 100px !important;
+                color          : @primary-color  !important;
                 text-decoration: underline;
-                font-weight: 100;
+                font-weight    : 100;
             }
         }
 
@@ -104,9 +104,9 @@
         [colspan="6"]:first-of-type {
             &>.initechNode:first-of-type {
                 // background-color: red;
-                font-size       : 0.12rem;
-                font-weight     : bold;
-                color           : rgba(0, 0, 0, 0.6)
+                font-size  : 0.12rem;
+                font-weight: bold;
+                color      : rgba(0, 0, 0, 0.6)
             }
         }
 
@@ -165,15 +165,44 @@
     // 联盟介绍
     .introduce_card {
         // width  : 100%;
-        // border : 1px solid green;
+        border  : 3px solid red;
         height  : 1.8rem;
         margin  : 0.3rem;
         display : flex;
         overflow: hidden;
+        position: relative;
+
+        // .col_active_0{
+        //     position: absolute;
+        //     width:72%;
+
+        //     &>img {
+        //         position: absolute;
+        //         width   : 100%;
+        //         height  : 100%;
+        //     }
+        // }
+        .col_active_0 {
+            position: absolute;
+            left    : 0;
+            top     : 0;
+            bottom  : 0;
+            z-index : 77;
+            width   : 72%;
+        }
+
+        .col_active_1 {
+            position  : absolute;
+            left      : 72%;
+            top       : 0;
+            bottom    : 0;
+            // right  : 100%;
+            z-index   : 177;
+
+        }
 
         .col_active {
-            flex    : 1;
-            position: relative;
+            width: 72%;
 
             &>img {
                 position: absolute;
@@ -216,14 +245,14 @@
         }
 
         &>.col {
-            width              : 0.8rem;
+            // width              : 0.8rem;
             height             : 100%;
             // border          : 1px solid red;
             display            : flex;
             justify-content    : center;
             align-items        : center;
-            background-color   : goldenrod;
             transition         : all 2s;
+            background-color   : url("https://shbd.oss-cn-beijing.aliyuncs.com/%E7%A2%B3%E4%B8%AD%E5%92%8C/new_version_0518/about_ux_director.png");
 
             &>div {
                 width      : 0.2rem;
@@ -237,5 +266,16 @@
     // 悬浮样式
     .itemHover:hover {
         background-color: @primary-color  !important;
+    }
+
+    // 遮罩
+    .mask {
+        position        : fixed;
+        top             : 0;
+        left            : 0;
+        bottom          : 0;
+        right           : 0;
+        background-color: rgba(0, 0, 0, 0.6);
+        z-index         : 7777;
     }
 }
