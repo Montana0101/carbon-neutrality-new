@@ -187,8 +187,8 @@ function App() {
                     window.location.href = '/contact'
                     setInx(6)
                   } else if (item == "关于联盟") {
-                    // window.location.href = '/about'
-                    // setInx(1)
+                    window.location.href = '/about'
+                    setInx(1)
                   }
                 }}>
                   {item}

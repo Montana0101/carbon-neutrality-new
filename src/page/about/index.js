@@ -7,6 +7,7 @@ import HighchartsReact from 'highcharts-react-official'
 import sankey from "highcharts/modules/sankey.js";
 import organization from "highcharts/modules/organization.js";
 import IframeStruct from './iframe.js'
+import $ from 'jquery'
 
 import './index.less'
 import lszp from '../../static/imgs/lishiz.png'
@@ -32,6 +33,14 @@ const AboutLeague = () => {
         window.onresize = function(){
             setFlag(false)
         }
+        let iframe = document.getElementById("iframe");
+        // let innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+        // // console.log(innerDoc.getElementsByTagName("div"), "iframe未知");
+        // document.getElementById("iframe").onload = function () {
+        //   let innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+        //   console.log(innerDoc.getElementById("u47"), "iframe加载完了");
+        // };
+
     }, [])
 
     useEffect(()=>{
