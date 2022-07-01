@@ -37,7 +37,7 @@ function App() {
     if (JSON.parse(check)) {
       checkLogin(true)
       setUserInfo(JSON.parse(check))
-      _messageTips()
+      // _messageTips()
     } else {
       checkLogin(false)
     }
@@ -187,8 +187,8 @@ function App() {
                     window.location.href = '/contact'
                     setInx(6)
                   } else if (item == "关于联盟") {
-                    window.location.href = '/about'
-                    setInx(1)
+                    // window.location.href = '/about'
+                    // setInx(1)
                   }
                 }}>
                   {item}
@@ -198,7 +198,7 @@ function App() {
           </ul>
         </section>
       </header>
-      <main style={{ position: "relative", height: "50px" }} id='main_container'>
+      <main style={{ position: "relative"}} id='main_container'>
         <Routers />
       </main>
     </div>

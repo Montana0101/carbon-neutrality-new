@@ -21,40 +21,24 @@ const data = [
 ]
 
 
-
-// const MyNodeComponent = ({ node }) => {
-//     return (
-//         <div className="initechNode" onClick={() => {
-//         }} onMouseOver={() => {
-//             if (node.actor == 'lishizhang') {
-//                 let dom = document.getElementById('lishizhang')
-//                 if (dom) {
-//                     dom.setAttribute('id', 'lishizhang_on')
-//                     // 理事长
-//                     dom.addEventListener("click", () => {
-//                         alert(1)
-//                     })
-//                 }
-//                 // alert("点击了理事长")
-//             }
-//         }} onMouseLeave={() => {
-//             // if(node.actor=='lishizhang'){
-//             //     let dom = document.getElementById('lishizhang_on')
-//             //     if(dom){
-//             //         dom.setAttribute('id','lishizhang')
-//             //     }
-//             // }
-//         }}>{node.name}</div>
-//     );
-// };
-
 const AboutLeague = () => {
     const [inx, setInx] = useState(0)
+    const [flag,setFlag] = useState(true)
 
     useEffect(() => {
         const main = document.getElementById('main_container')
         main.style.height = '100%'
+
+        window.onresize = function(){
+            setFlag(false)
+        }
     }, [])
+
+    useEffect(()=>{
+        if(!flag){
+            setFlag(true)
+        }
+    },[flag])
 
     const options = {
         chart: {
@@ -437,7 +421,7 @@ const AboutLeague = () => {
                     options={options}
                 /> */}
 
-                <IframeStruct/>
+              {flag &&  <IframeStruct/>}
                 {/* <div id="container"></div> */}
 
             </div>

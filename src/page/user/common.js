@@ -10,7 +10,7 @@ import { ExclamationCircleFilled } from '@ant-design/icons';
 import { Tabs, Radio, Col, Row, Form, Input, Table, message,Popconfirm} from 'antd';
 import { Pie } from '@ant-design/plots';
 import 'moment/locale/zh-cn';
-import DefaultLogo from '../../static/imgs/common.jpeg' // 默认企业logo
+import DefaultLogo from '../../static/imgs/person.png' // 默认企业logo
 import './admin.less'
 
 const { TabPane } = Tabs;
