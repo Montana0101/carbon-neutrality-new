@@ -58,7 +58,7 @@ const AboutLeague = () => {
     const options = {
         chart: {
             height: 700,
-            width:800,
+            width: 800,
             inverted: true
         },
         title: {
@@ -70,13 +70,13 @@ const AboutLeague = () => {
             keys: ['from', 'to'],
             data: [
                 ['理事会', '理事长'],
-              
+
                 ['理事长', '副理事长'],
                 // ['理事长', 'CEO'],
                 ['理事长', '秘书处'],
                 ['理事长', '专业咨询委员会'],
                 ['理事长', '专业技术委员会'],
-        
+
                 ['秘书处', 'Product'],
 
                 ['秘书处', 'Web'],
@@ -93,7 +93,8 @@ const AboutLeague = () => {
                 level: 0,
                 color: 'silver',
                 dataLabels: {
-                    color: 'black'
+                    color: 'black',
+                    border: "1px solid green"
                 },
                 height: 25
             }, {
@@ -112,12 +113,13 @@ const AboutLeague = () => {
             }],
             nodes: [{
                 id: '理事会',
-                color: '#D79727',
+                color: 'white',
+
                 // title: '理事长',
                 // name: '黄震',
             }, {
                 id: '理事长',
-                color: '#D79727',
+                color: 'white',
                 // title: '理事长',
                 // name: '黄震',
                 // image: 'https://shbd.oss-cn-beijing.aliyuncs.com/%E7%A2%B3%E4%B8%AD%E5%92%8C/new_version_0518/about_ux_director.png'
@@ -125,86 +127,99 @@ const AboutLeague = () => {
                 id: '副理事长',
                 // title: '副理事长',
                 // name: '董绍明',
-                color: '#D79727',
+                color: 'white',
                 // image: "https://shbd.oss-cn-beijing.aliyuncs.com/%E7%A2%B3%E4%B8%AD%E5%92%8C/new_version_0518/about_us_vice_director%20.png",
                 column: 2,
                 offset: '75%'
             }, {
                 id: '秘书处',
                 column: 3,
+                color: 'white',
                 layout: 'hanging'
             }, {
                 id: '专业咨询委员会',
                 column: 3,
+                color: 'white',
                 layout: 'hanging'
             }, {
                 id: '专业技术委员会',
                 column: 3,
-                layout: 'hanging'
+                layout: 'hanging',
+                color: 'white',
             }, {
                 id: 'Product',
-                name: '秘书长'
+                name: '秘书长',
+                color: 'white',
             }, {
                 id: 'Web',
                 name: '执行秘书长',
+                color: 'white',
                 // description: '执行秘书长'
             }, {
                 id: 'Web1',
                 name: '副秘书长',
+                color: 'white',
                 // description: '执行秘书长'
             }, {
                 id: 'Sales',
-                name: '院士'
+                name: '院士',
+                color: 'white',
             }, {
                 id: 'Sales1',
-                name: '高级专家'
+                name: '高级专家',
+                color: 'white',
             }, {
                 id: 'Market',
-                name: '新能源技术委员会'
+                name: '新能源技术委员会',
+                color: 'white',
             }, {
                 id: 'Market1',
-                name: '碳中和装备优化设计与制造委员会'
+                name: '碳中和装备优化设计与制造委员会',
+                color: 'white',
             }, {
                 id: 'Market2',
-                name: '零碳工业流程再造技术委员会'
+                name: '零碳工业流程再造技术委员会',
+                color: 'white',
             }, {
                 id: 'Market3',
-                name: '电力行业碳中和技术委员会'
+                name: '电力行业碳中和技术委员会',
+                color: 'white',
             }, {
                 // id: 'Market4',
                 // name: '...'
             }],
-            colorByPoint: false,
-            color: '#007ad0',
+            colorByPoint: true,
+            // color: '#007ad0',
             dataLabels: {
                 color: 'white'
             },
             borderColor: 'white',
-            nodeWidth: 65
+            nodeWidth: 40,
+
         }],
         tooltip: {
-            // outside: true,
-            // backgroundColor:'red',
+            outside: false,
+            backgroundColor: '#7E7E7F00',
             // backgroundImage:"",
-            formatter: function(e){
-                if(this.key == '理事长'){
-                    return '<div style="width:5.5rem;">'+
-                    `<img style="width:100%;" src="https://shbd.oss-cn-beijing.aliyuncs.com/%E7%A2%B3%E4%B8%AD%E5%92%8C/new_version_0518/%E7%90%86%E4%BA%8B%E9%95%BF.png"/>`
-                    +'<div/>'
-                }else if(this.key == '副理事长'){
-                    return '<div style="width:5.5rem;">'+
-                    `<img style="width:100%;" src="https://shbd.oss-cn-beijing.aliyuncs.com/%E7%A2%B3%E4%B8%AD%E5%92%8C/new_version_0518/%E5%89%AF%E7%90%86%E4%BA%8B%E9%95%BF.png"/>`
-                    +'<div/>'
-                }else{
+            formatter: function (e) {
+                if (this.key == '理事长') {
+                    return '<div style="width:5.5rem;height:auto">' +
+                        `<img style="width:100%;height:100%" src="https://shbd.oss-cn-beijing.aliyuncs.com/%E7%A2%B3%E4%B8%AD%E5%92%8C/new_version_0518/%E7%90%86%E4%BA%8B%E9%95%BF.png"/>`
+                        + '<div/>'
+                } else if (this.key == '副理事长') {
+                    return '<div style="width:5.5rem;">' +
+                        `<img style="width:100%;height:auto;" src="https://shbd.oss-cn-beijing.aliyuncs.com/%E7%A2%B3%E4%B8%AD%E5%92%8C/new_version_0518/%E5%89%AF%E7%90%86%E4%BA%8B%E9%95%BF.png"/>`
+                        + '<div/>'
+                } else {
                     return false
                 }
-               
+
             },
             useHTML: true,
-            shared: true
+            // shared: true
 
         },
-        
+
         exporting: {
             allowHTML: true,
             sourceWidth: 800,
@@ -238,6 +253,8 @@ const AboutLeague = () => {
                    </section>
                 <section className="introduce_card">
                     <div className={`col_base_long col_init_0`} style={{
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: "100% 100%",
                         backgroundImage: `url(${AliOss}/new_version_0518/about_us_banner_1.png)`
                     }} onClick={() => { setInx(0) }}>
                         <section className='content'>
@@ -252,6 +269,8 @@ const AboutLeague = () => {
                     </div>
 
                     <div className={`col_base_long col_init_1 ${inx >= 1 && 'move_in'}`} style={{
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: "100% 100%",
                         backgroundImage: `url(${AliOss}/new_version_0518/about_us_banner_2.png)`
                     }} onClick={() => { setInx(1) }}>
                         <section className='content'>
@@ -267,6 +286,8 @@ const AboutLeague = () => {
                     </div>
 
                     <div className={`col_base_long col_init_2 ${inx >= 2 && 'move_in'}`} style={{
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: "100% 100%",
                         backgroundImage: `url(${AliOss}/new_version_0518/about_us_banner_3.png)`
                     }} onClick={() => { setInx(2) }}>
                         <section className='content'>
@@ -281,6 +302,8 @@ const AboutLeague = () => {
                     </div>
 
                     <div className={`col_base_long col_init_3 ${inx >= 3 && 'move_in'}`} style={{
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: "100% 100%",
                         backgroundImage: `url(${AliOss}/new_version_0518/about_us_banner_4.png)`
                     }} onClick={() => { setInx(3) }}>
                         <section className='content'>
@@ -295,6 +318,8 @@ const AboutLeague = () => {
                     </div>
 
                     <div className={`col_base_long col_init_4  ${inx == 4 && 'move_in'}`} style={{
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: "100% 100%",
                         backgroundImage: `url(${AliOss}/new_version_0518/about_us_banner_5.png)`
                     }} onClick={() => { setInx(4) }}>
                         <section className='content'>
@@ -369,7 +394,9 @@ const AboutLeague = () => {
                             flexDirection: "column", alignItems: 'center',
                             justifyContent: "space-evenly",
                             position: "relative",
-                            backgroundImage: `url(${AliOss}/new_version_0518/about_us_purpose_${index + 1}.png)`
+                            backgroundImage: `url(${AliOss}/new_version_0518/about_us_purpose_${index + 1}.png)`,
+                            backgroundRepeat: "no-repeat",
+                            backgroundSize: "100% 100%"
                         }}>
                             <section style={{
                                 position: "absolute",
