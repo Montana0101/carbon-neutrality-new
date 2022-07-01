@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { AliOss, ThemeColor, CutLine, barFontSize, barHeight } from "../../lib/const"
+import { AliOss, ThemeColor, CutLine, barFontSize, barHeight,IframeUrl } from "../../lib/const"
 // import {Map, Marker, NavigationControl, InfoWindow} from 'react-bmapgl';
 import { EnvironmentFilled, PhoneFilled, MailFilled } from '@ant-design/icons';
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import sankey from "highcharts/modules/sankey.js";
 import organization from "highcharts/modules/organization.js";
+import IframeStruct from './iframe.js'
 
 import './index.less'
 import lszp from '../../static/imgs/lishiz.png'
@@ -254,7 +255,7 @@ const AboutLeague = () => {
                 <section className="introduce_card">
                     <div className={`col_base_long col_init_0`} style={{
                         backgroundRepeat: "no-repeat",
-                        backgroundSize: "100% 100%",
+                        backgroundSize: "cover",
                         backgroundImage: `url(${AliOss}/new_version_0518/about_us_banner_1.png)`
                     }} onClick={() => { setInx(0) }}>
                         <section className='content'>
@@ -270,7 +271,7 @@ const AboutLeague = () => {
 
                     <div className={`col_base_long col_init_1 ${inx >= 1 && 'move_in'}`} style={{
                         backgroundRepeat: "no-repeat",
-                        backgroundSize: "100% 100%",
+                        backgroundSize: "cover",
                         backgroundImage: `url(${AliOss}/new_version_0518/about_us_banner_2.png)`
                     }} onClick={() => { setInx(1) }}>
                         <section className='content'>
@@ -287,7 +288,7 @@ const AboutLeague = () => {
 
                     <div className={`col_base_long col_init_2 ${inx >= 2 && 'move_in'}`} style={{
                         backgroundRepeat: "no-repeat",
-                        backgroundSize: "100% 100%",
+                        backgroundSize: "cover",
                         backgroundImage: `url(${AliOss}/new_version_0518/about_us_banner_3.png)`
                     }} onClick={() => { setInx(2) }}>
                         <section className='content'>
@@ -303,7 +304,7 @@ const AboutLeague = () => {
 
                     <div className={`col_base_long col_init_3 ${inx >= 3 && 'move_in'}`} style={{
                         backgroundRepeat: "no-repeat",
-                        backgroundSize: "100% 100%",
+                        backgroundSize: "cover",
                         backgroundImage: `url(${AliOss}/new_version_0518/about_us_banner_4.png)`
                     }} onClick={() => { setInx(3) }}>
                         <section className='content'>
@@ -319,7 +320,7 @@ const AboutLeague = () => {
 
                     <div className={`col_base_long col_init_4  ${inx == 4 && 'move_in'}`} style={{
                         backgroundRepeat: "no-repeat",
-                        backgroundSize: "100% 100%",
+                        backgroundSize: "cover",
                         backgroundImage: `url(${AliOss}/new_version_0518/about_us_banner_5.png)`
                     }} onClick={() => { setInx(4) }}>
                         <section className='content'>
@@ -396,7 +397,7 @@ const AboutLeague = () => {
                             position: "relative",
                             backgroundImage: `url(${AliOss}/new_version_0518/about_us_purpose_${index + 1}.png)`,
                             backgroundRepeat: "no-repeat",
-                            backgroundSize: "100% 100%"
+                            backgroundSize: "cover"
                         }}>
                             <section style={{
                                 position: "absolute",
@@ -424,18 +425,19 @@ const AboutLeague = () => {
         </div>
 
         {/* 联盟架构 */}
-        <div style={{ borderTop: CutLine, padding: '0.5rem', }}>
+        <div style={{ borderTop: CutLine, padding: '0 0.5rem',height:"auto" }}>
             <div style={{
-                borderLeft: CutLine, borderRight: CutLine, height: "100%",
+                borderLeft: CutLine, borderRight: CutLine, height: "auto",
                 display: "flex", alignItems: "center", justifyContent: "center",
-
+                
             }}>
 
-                <HighchartsReact
+                {/* <HighchartsReact
                     highcharts={Highcharts}
                     options={options}
-                />
+                /> */}
 
+                <IframeStruct/>
                 {/* <div id="container"></div> */}
 
             </div>

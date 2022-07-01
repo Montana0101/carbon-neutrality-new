@@ -14,10 +14,23 @@ const titles = ["首页", '关于联盟', '联盟动态',
 
 function App() {
   const [flag, setFlag] = useState(false)
+  const [inx, setInx] = useState(0)
   const [logined, checkLogin] = useState(false)
   const [dialog, setDialog] = useState(false)
   const [userInfo, setUserInfo] = useState({})
   const [tips, setTips] = useState(0)
+
+  useEffect(() => {
+    console.log(window.location.href)
+    let href = window.location.href
+    if (href.indexOf('about') != -1) {
+      setInx(1)
+    } else if (href.indexOf('contact') != -1) {
+      setInx(6)
+    } else if (href.indexOf('/') == -1) {
+      setInx(0)
+    }
+  }, [])
 
   useEffect(() => {
     const check = localStorage.getItem('user')
@@ -158,19 +171,24 @@ function App() {
             alignItems: "center",
             justifyContent: 'space-between', margin: '0 -0.1rem', zIndex: 0
           }}>
-            {titles.map((item) => {
+            {titles.map((item, index) => {
               return (
                 <li style={{
-                  color: "#51AA52", fontWeight: "bold", height: "0.3rem", display: "flex", flex: 1,
-                  alignItems: 'center', justifyContent: "center", fontSize: "0.14rem", cursor: "pointer"
+                  color: index == inx ? "white" : "#51AA52", fontWeight: "bold", height: "0.3rem", display: "flex", flex: 1,
+                  alignItems: 'center', justifyContent: "center", fontSize: "0.14rem", cursor: "pointer",
+                  background: index == inx ? '#51AA52' : 'white', borderRadius: "0.2rem"
                 }} onClick={() => {
+
                   if (item == '首页') {
+                    setInx(0)
                     // history.push('/')
                     window.location.href = '/'
                   } else if (item == '联系我们') {
                     window.location.href = '/contact'
+                    setInx(6)
                   } else if (item == "关于联盟") {
                     window.location.href = '/about'
+                    setInx(1)
                   }
                 }}>
                   {item}
