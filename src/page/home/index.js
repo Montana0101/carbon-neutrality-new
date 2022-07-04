@@ -153,7 +153,7 @@ export default function Home(props) {
         </Form>
       </Modal>
 
-      <section >
+      <section>
         <Carousel autoplay={true} effect="fade" autoplaySpeed={4000}>
           <div className='banner_area'>
             <h3 style={contentStyle}>

@@ -7,7 +7,6 @@ import HighchartsReact from 'highcharts-react-official'
 import sankey from "highcharts/modules/sankey.js";
 import organization from "highcharts/modules/organization.js";
 import IframeStruct from './iframe.js'
-import $ from 'jquery'
 
 import './index.less'
 import lszp from '../../static/imgs/lishiz.png'
