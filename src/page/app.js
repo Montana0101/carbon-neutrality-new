@@ -39,7 +39,7 @@ function App() {
     if (JSON.parse(check)) {
       checkLogin(true)
       setUserInfo(JSON.parse(check))
-      // _messageTips()
+      _messageTips()
     } else {
       checkLogin(false)
     }
@@ -54,7 +54,7 @@ function App() {
 
   return (
     <div className="app">
-      <header className="app-header">
+      <header className="app-header" style={{height:"0.98rem !important"}}>
         <section className='header-left'>
           <img src={logo} alt="" style={{ height: '0.82rem', marginRight: "0.1rem", width: "0.82rem" }} />
           <div style={{

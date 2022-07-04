@@ -2,79 +2,66 @@
 @import '~antd/lib/style/themes/default.less';
 @import '~antd/dist/antd.less'; // 引入官方提供的 scss 样式入口文件
 
-@primary-color: #51AA52; 
+@primary-color: #51AA52;
 
 .app {
-  text-align: center;
-  height    : 100%;
-  box-sizing: border-box;
-  display: flex;
+  text-align    : center;
+  height        : 100%;
+  box-sizing    : border-box;
+  display       : flex;
   flex-direction: column;
-  font-family: "思源宋体 !important";
-}
+  font-family   : "思源宋体 !important";
 
-// 顶部导航栏
-.app-header {
-  position: relative;
-  margin:0 0.3rem;
-  display : flex;
-  color              : white;
-  height             : 0.98rem;
- 
-  z-index            : 99;
-  // box-sizing         : border-box;
+  // 顶部导航栏
+  .app-header {
+    position: relative;
+    margin  : 0 0.3rem;
+    display : flex;
+    color   : white;
+    height  : 0.98rem !important;
+    z-index : 99;
 
-  .header-left {
-    // flex           : 2;
-    display        : flex;
-    align-items    : center;
-    // justify-content: center;
-    padding:0 0.5rem 0 0.5rem;
-    // border:1px solid red !important;
-    width: 35%;
-    height: 0.98rem;
-  }
+    .header-left {
+      display    : flex;
+      align-items: center;
+      padding    : 0 0.5rem 0 0.5rem;
+      width      : 35%;
+      height     : 0.98rem;
+    }
 
-  .header-right {
-    height: 0.98rem;
-    flex           : 5;
-    box-sizing: border-box;
-    width: 65%;
-    // border:2px solid green;
-    ul {
-      li:hover{
-        background-color:#51AA52 !important;
-        border-radius: 0.2rem;
-        color:white !important;
-        // height: 50%;
-        // z-index: 1;
+    .header-right {
+      height    : 0.98rem;
+      flex      : 5;
+      box-sizing: border-box;
+      width     : 65%;
+
+      ul {
+        li:hover {
+          background-color: #51AA52 !important;
+          border-radius   : 0.2rem;
+          color           : white !important;
+        }
+      }
+    }
+
+    .ant-input {
+      &::placeholder {
+        font-size: 0.12rem;
       }
     }
   }
 
-  
-
-  .ant-input{
-    &::placeholder {
-      font-size: 0.12rem;
-    }
-  }
 }
+
 
 
 // 内容区域
 .app>main {
   width : 100%;
   height: auto;
-  // border:1px solid red;
-  
 }
 
 // 底部区域
-
-
-
-
 
 @keyframes App-logo-spin {
   from {
