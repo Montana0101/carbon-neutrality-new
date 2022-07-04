@@ -11,6 +11,15 @@ const logo = AliOss + '/img/logo.png'
 
 const titles = ["首页", '关于联盟', '联盟动态',
   '业务范围', '专业委员会', '双碳资讯', '联系我们']
+var titleArr = [
+  { inx: 0, path: '/' },
+  { inx: 1, path: "/about" },
+  { inx: 2, path: "/dynamic" },
+  { inx: 3, path: "/" },
+  { inx: 4, path: "/council" },
+  { inx: 5, path: "/" },
+  { inx: 6, path: "/contact" },
+]
 
 function App() {
   const [flag, setFlag] = useState(false)
@@ -23,15 +32,22 @@ function App() {
   useEffect(() => {
     console.log(window.location.href)
     let href = window.location.href
-    if (href.indexOf('about') != -1) {
-      setInx(1)
-    } else if (href.indexOf('contact') != -1) {
-      setInx(6)
-    } else if (href.indexOf('council') != -1) {
-      setInx(4)
-    }else if (href.indexOf('/') == -1) {
-      setInx(0)
-    }
+    // if (href.indexOf('about') != -1) {
+    //   setInx(1)
+    // } else if (href.indexOf('contact') != -1) {
+    //   setInx(6)
+    // } else if (href.indexOf('council') != -1) {
+    //   setInx(4)
+    // } else if (href.indexOf('/') == -1) {
+    //   setInx(0)
+    // }
+    titleArr.map(item=>{
+      if(href.indexOf(item.path) != -1){
+        setInx(titleArr.inx)
+      }else if (href.indexOf('/') == -1) {
+          setInx(0)
+        }
+    })
   }, [])
 
   useEffect(() => {
@@ -54,7 +70,7 @@ function App() {
 
   return (
     <div className="app">
-      <header className="app-header" style={{height:"0.98rem !important"}}>
+      <header className="app-header" style={{ height: "0.98rem !important" }}>
         <section className='header-left'>
           <img src={logo} alt="" style={{ height: '0.82rem', marginRight: "0.1rem", width: "0.82rem" }} />
           <div style={{
@@ -181,20 +197,26 @@ function App() {
                   background: index == inx ? '#51AA52' : 'white', borderRadius: "0.2rem"
                 }} onClick={() => {
 
-                  if (item == titles[0]) {
-                    setInx(0)
-                    // history.push('/')
-                    window.location.href = '/'
-                  } else if (item == titles[6]) {
-                    window.location.href = '/contact'
-                    setInx(6)
-                  } else if (item == titles[1]) {
-                    window.location.href = '/about'
-                    setInx(1)
-                  } else if (item == titles[4]) {
-                    window.location.href = '/council'
-                    setInx(4)
-                  }
+                  titleArr.map((obj) => {
+                    if (item == titles[obj.inx]) {
+                      setInx(obj.inx)
+                      window.location.href = obj.path
+                    }
+                  })
+                  // if (item == titles[0]) {
+                  //   setInx(0)
+                  //   // history.push('/')
+                  //   window.location.href = '/'
+                  // } else if (item == titles[6]) {
+                  //   window.location.href = '/contact'
+                  //   setInx(6)
+                  // } else if (item == titles[1]) {
+                  //   window.location.href = '/about'
+                  //   setInx(1)
+                  // } else if (item == titles[4]) {
+                  //   window.location.href = '/council'
+                  //   setInx(4)
+                  // }
                 }}>
                   {item}
                 </li>
