@@ -11,10 +11,12 @@ const logo = AliOss + '/img/logo.png'
 
 const titles = ["首页", '关于联盟', '联盟动态',
   '业务范围', '专业委员会', '双碳资讯', '联系我们']
+
 var titleArr = [
   { inx: 0, path: '/' },
   { inx: 1, path: "/about" },
-  { inx: 2, path: "/dynamic" },
+  { inx: 2, path: "/" },
+  // { inx: 2, path: "/dynamic" },
   { inx: 3, path: "/" },
   { inx: 4, path: "/council" },
   { inx: 5, path: "/" },
@@ -32,22 +34,25 @@ function App() {
   useEffect(() => {
     console.log(window.location.href)
     let href = window.location.href
-    // if (href.indexOf('about') != -1) {
-    //   setInx(1)
-    // } else if (href.indexOf('contact') != -1) {
-    //   setInx(6)
-    // } else if (href.indexOf('council') != -1) {
-    //   setInx(4)
-    // } else if (href.indexOf('/') == -1) {
-    //   setInx(0)
-    // }
-    titleArr.map(item=>{
-      if(href.indexOf(item.path) != -1){
-        setInx(titleArr.inx)
-      }else if (href.indexOf('/') == -1) {
-          setInx(0)
-        }
-    })
+    if (href.indexOf('about') != -1) {
+      setInx(1)
+    } else if (href.indexOf('contact') != -1) {
+      setInx(6)
+    } else if (href.indexOf('council') != -1) {
+      setInx(4)
+    } else if (href.indexOf('dynamic') != -1) {
+      setInx(2)
+    }else if (href.indexOf('/') == -1) {
+      setInx(0)
+    }
+    // titleArr.map(item => {
+    //   if (href.indexOf(item.path) != -1) {
+    //     setInx(item.inx)
+    //   } else if (href.indexOf('/') == -1) {
+    //     setInx(0)
+    //   }
+    // })
+  
   }, [])
 
   useEffect(() => {
