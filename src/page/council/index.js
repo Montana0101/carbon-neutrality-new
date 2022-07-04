@@ -68,7 +68,8 @@ const data = [{
 const Council = () => {
     const [inx, setInx] = useState(0)
     const [flag, setFlag] = useState(false)
-
+    const [plus,setPlus] = useState(false)
+    const [overInx,setOverInx] = useState(0)
     return (
         <div className="council_page">
             <section style={{ borderTop: CutLine, padding: '0 0.5rem' }}>
@@ -90,6 +91,9 @@ const Council = () => {
                                 overflow:"hidden",
                             }} onClick={() => {
                                 setInx(index)
+                            }} onMouseOver={()=>{
+                                setOverInx(index)
+                                setPlus(!plus)
                             }}>
                                 {/* 文案 */}
                                 { <div style={{
@@ -117,7 +121,9 @@ const Council = () => {
                                 </div>}
                                 <img src={`${AliOss}/new_version_0518/committee/committee_${index + 1}.png`} style={{
                                     height: "2rem",
-                                    width: "100%"
+                                    width: "100%",
+                                    transform:overInx==index && plus ? "scale(1.2)" : 'scale(1)',
+                                    transition:"all 1s"
                                 }} alt="" onClick={() => { setFlag(true) }} />
                                 <section style={{
                                     flex: 1,
@@ -127,7 +133,7 @@ const Council = () => {
                                     justifyContent: 'center',
                                     alignItems: "center",
                                     zIndex: 777,
-                                }} >
+                                }}  onClick={() => { setFlag(true) }} >
                                     <span style={{ fontSize: "0.14rem", color: 'rgba(0,0,0,1)' }}>{item.title}</span>
                                 </section>
                             </li>
