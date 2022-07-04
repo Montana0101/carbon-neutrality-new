@@ -390,125 +390,31 @@
     }
 
     // 人物架构区域
-    .strut_area {
-        height: 90%;
-        width : 60%;
-        border: 1px solid red;
-
-        .col {
-            // background-color: aqua;
-            // border          : 1px solid green;
-            position       : relative;
-            display        : flex;
-            justify-content: center;
-            align-items    : center;
-
-            .col_btn {
-                width        : 1.2rem;
-                border       : 0.01rem dotted @primary-color;
-                font-size    : 0.12rem;
-                font-weight  : bold;
-                color        : rgba(0, 0, 0, 0.6);
-                border-radius: 0.05rem;
-                height       : 0.3rem;
-            }
-
-            a {
-                position       : absolute;
-                top            : 0.04rem;
-                left           : calc(50% + 12vw);
-                font-size      : 0.12rem;
-                text-decoration: underline;
-            }
-
-            // 秘书 专家 咨询 行线
-            .three_items {
-                width        : 4.5rem !important;
-                height       : 0.01rem;
-                border       : 0.01rem dotted @primary-color;
-                // background: @primary-color !important;
-                position     : absolute;
-                margin       : 0 auto;
-                // top: 0;
-                // left: 0;
-
+    #about_mask{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        & > section {
+            position: absolute;
+            left: 0;
+            right:0;
+            margin:auto;
+            bottom: 0;
+            top: 0;
+            width: 6rem;
+            height:3rem;
+            border:1px solid red;
+            background-color: white;
+            border-radius: 0.15rem;
+            padding:0.08rem 0.2rem;
+            &>p {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                background-color: rebeccapurple;
             }
         }
 
-        // 副理事长一行
-        ._col {
-            height  : 0.01rem;
-            position: relative;
-
-            &>div {
-                position: absolute;
-                left    : 50%;
-                top     : 0;
-                height  : 0.01rem;
-                border  : 0.01rem dotted @primary-color;
-                width   : 0.6rem;
-            }
-
-            &>button {
-                width        : 1.2rem;
-                border       : 0.01rem dotted @primary-color;
-                font-size    : 0.12rem;
-                font-weight  : bold;
-                color        : rgba(0, 0, 0, 0.6);
-                border-radius: 0.05rem;
-                height       : 0.3rem;
-                position     : absolute;
-                top          : -0.15rem;
-                left         : calc(50%+9vw);
-            }
-
-            &>a {
-                position       : absolute;
-                top            : -0.1rem;
-                left           : calc(50%+30vw);
-                font-size      : 0.12rem;
-                text-decoration: underline;
-            }
-
-
-
-            // ._col_right {
-            //     position: absolute;
-            //     left    : 50%;
-            //     top     : 0;
-            //     height  : 0.01rem;
-            //     border  : 0.01rem dotted @primary-color;
-            //     width   : 2.3rem;
-            // }
-
-            // ._col_left {
-            //     position: absolute;
-            //     left   : 15.5%;
-
-            //     top     : 0;
-            //     height  : 0.01rem;
-            //     border  : 0.01rem dotted @primary-color;
-            //     width   : 2.3rem;
-            // }
-        }
-
-
-        .col_ {
-            // border          : 1px solid gold;
-            // background-color: bisque;
-            display        : flex;
-            justify-content: center;
-            align-items    : center;
-
-            // 竖线
-            .col_line {
-                // width           : 1px;
-                height             : 0.4rem;
-                // background-color: red;
-                border-style       : dotted;
-                border-color       : @primary-color;
-                border-width       : 0.01rem;
-            }
-        }
+     
     }
 }

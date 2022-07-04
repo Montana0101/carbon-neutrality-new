@@ -25,7 +25,7 @@ const data = [
 const AboutLeague = () => {
     const [inx, setInx] = useState(0)
     const [flag, setFlag] = useState(true)
-    const [mask_flag, setMaskFlag] = useState(false)
+    const [mask_flag, setMaskFlag] = useState(true)
 
     useEffect(() => {
         const main = document.getElementById('main_container')
@@ -41,14 +41,14 @@ const AboutLeague = () => {
         //   let innerDoc = iframe.contentDocument || iframe.contentWindow.document;
         //   console.log(innerDoc.getElementById("u47"), "iframe加载完了");
         // };
-        window.addEventListener('message', function (eve) {
-            console.log("打印下会对撒", eve)
-            if (eve.data == '1') {
-                setMaskFlag(true)
-            } else {
-                setMaskFlag(false)
-            }
-        })
+        // window.addEventListener('message', function (eve) {
+        //     console.log("打印下会对撒", eve)
+        //     if (eve.data == '1') {
+        //         setMaskFlag(true)
+        //     } else {
+        //         setMaskFlag(false)
+        //     }
+        // })
 
     }, [])
 
@@ -242,7 +242,13 @@ const AboutLeague = () => {
             display: mask_flag ? 'block' : "none",
             zIndex: 888,
         }}>
-
+            <section>
+                    <p>
+                        <span></span>
+                        <span style={{fontSize:"0.14rem",fontWeight:"bold"}}>理事长</span>
+                        <span>X</span>
+                    </p>
+            </section>
         </div>
         <div style={{ borderTop: CutLine, padding: '0 0.5rem' }}>
             <h3 style={{

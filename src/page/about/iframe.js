@@ -50,7 +50,7 @@ const AboutLeague = () => {
                     transform: `scale(${screen_scale()[0]})`,
                     transformOrigin: "0 0"
                 }}
-                src={`${IframeUrl}/about/about_us_part.html`}
+                src={`${IframeUrl}/about/jiagou.html`}
             />
         </div>
     )
