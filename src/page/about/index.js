@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { AliOss, ThemeColor, CutLine, barFontSize, barHeight, IframeUrl } from "../../lib/const"
 // import {Map, Marker, NavigationControl, InfoWindow} from 'react-bmapgl';
-import { EnvironmentFilled, PhoneFilled, MailFilled } from '@ant-design/icons';
+import { CloseOutlined } from '@ant-design/icons';
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import sankey from "highcharts/modules/sankey.js";
@@ -25,7 +25,8 @@ const data = [
 const AboutLeague = () => {
     const [inx, setInx] = useState(0)
     const [flag, setFlag] = useState(true)
-    const [mask_flag, setMaskFlag] = useState(true)
+    const [mask_flag, setMaskFlag] = useState(false)
+    const [mask_inx, setMaskInx] = useState(0)
 
     useEffect(() => {
         const main = document.getElementById('main_container')
@@ -34,21 +35,16 @@ const AboutLeague = () => {
         window.onresize = function () {
             setFlag(false)
         }
-        let iframe = document.getElementById("iframe");
-        // let innerDoc = iframe.contentDocument || iframe.contentWindow.document;
-        // // console.log(innerDoc.getElementsByTagName("div"), "iframe未知");
-        // document.getElementById("iframe").onload = function () {
-        //   let innerDoc = iframe.contentDocument || iframe.contentWindow.document;
-        //   console.log(innerDoc.getElementById("u47"), "iframe加载完了");
-        // };
-        // window.addEventListener('message', function (eve) {
-        //     console.log("打印下会对撒", eve)
-        //     if (eve.data == '1') {
-        //         setMaskFlag(true)
-        //     } else {
-        //         setMaskFlag(false)
-        //     }
-        // })
+
+        window.addEventListener('message', function (eve) {
+            if (eve.data == '1') {
+                setMaskFlag(true)
+                setMaskInx(1)
+            } else if (eve.data == '2') {
+                setMaskFlag(true)
+                setMaskInx(2)
+            }
+        })
 
     }, [])
 
@@ -58,177 +54,6 @@ const AboutLeague = () => {
         }
     }, [flag])
 
-    const options = {
-        chart: {
-            height: 700,
-            width: 800,
-            inverted: true
-        },
-        title: {
-            text: ''
-        },
-        series: [{
-            type: 'organization',
-            name: '',
-            keys: ['from', 'to'],
-            data: [
-                ['理事会', '理事长'],
-
-                ['理事长', '副理事长'],
-                // ['理事长', 'CEO'],
-                ['理事长', '秘书处'],
-                ['理事长', '专业咨询委员会'],
-                ['理事长', '专业技术委员会'],
-
-                ['秘书处', 'Product'],
-
-                ['秘书处', 'Web'],
-                ['秘书处', 'Web1'],
-                ['专业咨询委员会', 'Sales'],
-                ['专业咨询委员会', 'Sales1'],
-                ['专业技术委员会', 'Market'],
-                ['专业技术委员会', 'Market1'],
-                ['专业技术委员会', 'Market2'],
-                ['专业技术委员会', 'Market3'],
-                // ['专业技术委员会', 'Market4']
-            ],
-            levels: [{
-                level: 0,
-                color: 'silver',
-                dataLabels: {
-                    color: 'black',
-                    border: "1px solid green"
-                },
-                height: 25
-            }, {
-                level: 1,
-                color: 'silver',
-                dataLabels: {
-                    color: 'black'
-                },
-                height: 25
-            }, {
-                level: 2,
-                color: '#980104'
-            }, {
-                level: 4,
-                color: '#359154'
-            }],
-            nodes: [{
-                id: '理事会',
-                color: 'white',
-
-                // title: '理事长',
-                // name: '黄震',
-            }, {
-                id: '理事长',
-                color: 'white',
-                // title: '理事长',
-                // name: '黄震',
-                // image: 'https://shbd.oss-cn-beijing.aliyuncs.com/%E7%A2%B3%E4%B8%AD%E5%92%8C/new_version_0518/about_ux_director.png'
-            }, {
-                id: '副理事长',
-                // title: '副理事长',
-                // name: '董绍明',
-                color: 'white',
-                // image: "https://shbd.oss-cn-beijing.aliyuncs.com/%E7%A2%B3%E4%B8%AD%E5%92%8C/new_version_0518/about_us_vice_director%20.png",
-                column: 2,
-                offset: '75%'
-            }, {
-                id: '秘书处',
-                column: 3,
-                color: 'white',
-                layout: 'hanging'
-            }, {
-                id: '专业咨询委员会',
-                column: 3,
-                color: 'white',
-                layout: 'hanging'
-            }, {
-                id: '专业技术委员会',
-                column: 3,
-                layout: 'hanging',
-                color: 'white',
-            }, {
-                id: 'Product',
-                name: '秘书长',
-                color: 'white',
-            }, {
-                id: 'Web',
-                name: '执行秘书长',
-                color: 'white',
-                // description: '执行秘书长'
-            }, {
-                id: 'Web1',
-                name: '副秘书长',
-                color: 'white',
-                // description: '执行秘书长'
-            }, {
-                id: 'Sales',
-                name: '院士',
-                color: 'white',
-            }, {
-                id: 'Sales1',
-                name: '高级专家',
-                color: 'white',
-            }, {
-                id: 'Market',
-                name: '新能源技术委员会',
-                color: 'white',
-            }, {
-                id: 'Market1',
-                name: '碳中和装备优化设计与制造委员会',
-                color: 'white',
-            }, {
-                id: 'Market2',
-                name: '零碳工业流程再造技术委员会',
-                color: 'white',
-            }, {
-                id: 'Market3',
-                name: '电力行业碳中和技术委员会',
-                color: 'white',
-            }, {
-                // id: 'Market4',
-                // name: '...'
-            }],
-            colorByPoint: true,
-            // color: '#007ad0',
-            dataLabels: {
-                color: 'white'
-            },
-            borderColor: 'white',
-            nodeWidth: 40,
-
-        }],
-        tooltip: {
-            outside: false,
-            backgroundColor: '#7E7E7F00',
-            // backgroundImage:"",
-            formatter: function (e) {
-                if (this.key == '理事长') {
-                    return '<div style="width:5.5rem;height:auto">' +
-                        `<img style="width:100%;height:100%" src="https://shbd.oss-cn-beijing.aliyuncs.com/%E7%A2%B3%E4%B8%AD%E5%92%8C/new_version_0518/%E7%90%86%E4%BA%8B%E9%95%BF.png"/>`
-                        + '<div/>'
-                } else if (this.key == '副理事长') {
-                    return '<div style="width:5.5rem;">' +
-                        `<img style="width:100%;height:auto;" src="https://shbd.oss-cn-beijing.aliyuncs.com/%E7%A2%B3%E4%B8%AD%E5%92%8C/new_version_0518/%E5%89%AF%E7%90%86%E4%BA%8B%E9%95%BF.png"/>`
-                        + '<div/>'
-                } else {
-                    return false
-                }
-
-            },
-            useHTML: true,
-            // shared: true
-
-        },
-
-        exporting: {
-            allowHTML: true,
-            sourceWidth: 800,
-            sourceHeight: 600
-        }
-    }
 
     return <div className='about_page'>
         {/* 遮罩 */}
@@ -242,13 +67,27 @@ const AboutLeague = () => {
             display: mask_flag ? 'block' : "none",
             zIndex: 888,
         }}>
-            <section>
+            {mask_inx == 1 ? <section style={{ height: '3rem' }}>
+                <p>
+                    <span></span>
+                    <span style={{ fontSize: "0.14rem", fontWeight: "bold" }}>理事长</span>
+                    <CloseOutlined onClick={() => { setMaskFlag(false) }} />
+                </p>
+                <div style={{ margin: "0.2rem 0" }}>
+                    <img src={lszp} style={{ width: "100%", height: "auto" }} />
+                </div>
+            </section> :
+                <section style={{ height: '3.3rem' }}>
                     <p>
                         <span></span>
-                        <span style={{fontSize:"0.14rem",fontWeight:"bold"}}>理事长</span>
-                        <span>X</span>
+                        <span style={{ fontSize: "0.14rem", fontWeight: "bold" }}>副理事长</span>
+                        <CloseOutlined onClick={() => { setMaskFlag(false) }} />
                     </p>
-            </section>
+                    <div style={{ margin: "0.2rem 0" }}>
+                        <img src={flszp} style={{ width: "100%", height: "auto" }} />
+                    </div>
+                </section>
+            }
         </div>
         <div style={{ borderTop: CutLine, padding: '0 0.5rem' }}>
             <h3 style={{
@@ -449,13 +288,7 @@ const AboutLeague = () => {
 
             }}>
 
-                {/* <HighchartsReact
-                    highcharts={Highcharts}
-                    options={options}
-                /> */}
-
                 {flag && <IframeStruct />}
-                {/* <div id="container"></div> */}
 
             </div>
         </div>

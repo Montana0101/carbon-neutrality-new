@@ -42,7 +42,7 @@ const AboutLeague = () => {
                     margin: '0rem !important',
                     position: "relative",
                     top: "-0.2rem",
-                    left: "-0.5rem",
+                    left: "-0.2rem",
                     border: "0px",
                     width: "1320px",
                     height: `${100 * screen_scale()[1]}%`,
