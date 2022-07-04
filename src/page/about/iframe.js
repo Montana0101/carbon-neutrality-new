@@ -38,6 +38,7 @@ const AboutLeague = () => {
                 id='iframe'
                 title="定位导航"
                 style={{
+                    zIndex:6,
                     margin: '0rem !important',
                     position: "relative",
                     top: "-0.2rem",
@@ -49,7 +50,7 @@ const AboutLeague = () => {
                     transform: `scale(${screen_scale()[0]})`,
                     transformOrigin: "0 0"
                 }}
-                src={`${IframeUrl}/about/jiagou.html`}
+                src={`${IframeUrl}/about/about_us_part.html`}
             />
         </div>
     )

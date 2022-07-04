@@ -14,6 +14,7 @@ import Admin from '../page/user/admin'
 import CommonUser from '../page/user/common'
 import ContactUs from '../page/contact/index'
 import AboutLeague from "../page/about/index" // 关于联盟
+import Council from '../page/council/index' // 专业委员会
 
 import NewsDetail2 from "../page/news/detail2"
 
@@ -61,6 +62,7 @@ const Routers = (props) => {
                     <Route path="/common" exact component={CommonUser}></Route>
                     <Route path="/contact" exact component={ContactUs}></Route>
                     <Route path="/about" exact component={AboutLeague}></Route>
+                    <Route path="/council" exact component={Council}/>
                     <Route path="/">
                         <Home />
                     </Route>

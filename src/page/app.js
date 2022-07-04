@@ -27,7 +27,9 @@ function App() {
       setInx(1)
     } else if (href.indexOf('contact') != -1) {
       setInx(6)
-    } else if (href.indexOf('/') == -1) {
+    } else if (href.indexOf('council') != -1) {
+      setInx(4)
+    }else if (href.indexOf('/') == -1) {
       setInx(0)
     }
   }, [])
@@ -179,16 +181,19 @@ function App() {
                   background: index == inx ? '#51AA52' : 'white', borderRadius: "0.2rem"
                 }} onClick={() => {
 
-                  if (item == '首页') {
+                  if (item == titles[0]) {
                     setInx(0)
                     // history.push('/')
                     window.location.href = '/'
-                  } else if (item == '联系我们') {
+                  } else if (item == titles[6]) {
                     window.location.href = '/contact'
                     setInx(6)
-                  } else if (item == "关于联盟") {
+                  } else if (item == titles[1]) {
                     window.location.href = '/about'
                     setInx(1)
+                  } else if (item == titles[4]) {
+                    window.location.href = '/council'
+                    setInx(4)
                   }
                 }}>
                   {item}
@@ -198,7 +203,7 @@ function App() {
           </ul>
         </section>
       </header>
-      <main style={{ position: "relative"}} id='main_container'>
+      <main style={{ position: "relative" }} id='main_container'>
         <Routers />
       </main>
     </div>

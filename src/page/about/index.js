@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { AliOss, ThemeColor, CutLine, barFontSize, barHeight,IframeUrl } from "../../lib/const"
+import { AliOss, ThemeColor, CutLine, barFontSize, barHeight, IframeUrl } from "../../lib/const"
 // import {Map, Marker, NavigationControl, InfoWindow} from 'react-bmapgl';
 import { EnvironmentFilled, PhoneFilled, MailFilled } from '@ant-design/icons';
 import Highcharts from 'highcharts'
@@ -24,13 +24,14 @@ const data = [
 
 const AboutLeague = () => {
     const [inx, setInx] = useState(0)
-    const [flag,setFlag] = useState(true)
+    const [flag, setFlag] = useState(true)
+    const [mask_flag, setMaskFlag] = useState(false)
 
     useEffect(() => {
         const main = document.getElementById('main_container')
         main.style.height = '100%'
 
-        window.onresize = function(){
+        window.onresize = function () {
             setFlag(false)
         }
         let iframe = document.getElementById("iframe");
@@ -40,14 +41,22 @@ const AboutLeague = () => {
         //   let innerDoc = iframe.contentDocument || iframe.contentWindow.document;
         //   console.log(innerDoc.getElementById("u47"), "iframe加载完了");
         // };
+        window.addEventListener('message', function (eve) {
+            console.log("打印下会对撒", eve)
+            if (eve.data == '1') {
+                setMaskFlag(true)
+            } else {
+                setMaskFlag(false)
+            }
+        })
 
     }, [])
 
-    useEffect(()=>{
-        if(!flag){
+    useEffect(() => {
+        if (!flag) {
             setFlag(true)
         }
-    },[flag])
+    }, [flag])
 
     const options = {
         chart: {
@@ -223,9 +232,18 @@ const AboutLeague = () => {
 
     return <div className='about_page'>
         {/* 遮罩 */}
-        {/* <div className='mask'>
-            
-        </div> */}
+        <div id='about_mask' style={{
+            position: "fixed",
+            left: 0,
+            right: 0,
+            bottom: 0,
+            top: 0,
+            background: "rgba(0,0,0,0.6)",
+            display: mask_flag ? 'block' : "none",
+            zIndex: 888,
+        }}>
+
+        </div>
         <div style={{ borderTop: CutLine, padding: '0 0.5rem' }}>
             <h3 style={{
                 fontSize: barFontSize, fontWeight: "bold", display: "flex", margin: 0,
@@ -418,11 +436,11 @@ const AboutLeague = () => {
         </div>
 
         {/* 联盟架构 */}
-        <div style={{ borderTop: CutLine, padding: '0 0.5rem',height:"auto" }}>
+        <div style={{ borderTop: CutLine, padding: '0 0.5rem', height: "auto" }}>
             <div style={{
                 borderLeft: CutLine, borderRight: CutLine, height: "auto",
                 display: "flex", alignItems: "center", justifyContent: "center",
-                
+
             }}>
 
                 {/* <HighchartsReact
@@ -430,7 +448,7 @@ const AboutLeague = () => {
                     options={options}
                 /> */}
 
-              {flag &&  <IframeStruct/>}
+                {flag && <IframeStruct />}
                 {/* <div id="container"></div> */}
 
             </div>
