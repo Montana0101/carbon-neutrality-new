@@ -86,12 +86,13 @@ const Council = () => {
                                 flexDirection: "column",
                                 position: "relative",
                                 marginBottom: "0.6rem",
-                                cursor: "pointer"
+                                cursor: "pointer",
+                                overflow:"hidden",
                             }} onClick={() => {
                                 setInx(index)
                             }}>
                                 {/* 文案 */}
-                                {inx == index && flag && <div style={{
+                                { <div style={{
                                     position: "absolute",
                                     top: 0, bottom: 0,
                                     left: 0,
@@ -107,6 +108,9 @@ const Council = () => {
                                     padding: '0 0.08rem',
                                     alignItems: "center",
                                     textJustify: "inter-ideograph",
+                                  
+                                    transform:inx == index && flag ? "translateY(0%)" : "translateY(100%)",
+                                    transition:"all 1s"
                                 }} onClick={() => { setFlag(false) }}>
                                     <p style={{ textIndent: '0.24rem', lineHeight: "0.2rem" }}> {item.des1}</p>
                                     <p style={{ textIndent: '0.24rem', lineHeight: "0.2rem" }}> {item.des2}</p>
