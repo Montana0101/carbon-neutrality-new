@@ -15,7 +15,7 @@ const titles = ["首页", '关于联盟', '联盟动态',
 var titleArr = [
   { inx: 0, path: '/' },
   { inx: 1, path: "/about" },
-  { inx: 2, path: "/" },
+  // { inx: 2, path: "/" },
   { inx: 2, path: "/dynamic" },
   { inx: 3, path: "/" },
   { inx: 4, path: "/council" },

@@ -1,7 +1,7 @@
 // 专业委员会
 import React, { useState, useEffect } from 'react'
 import { AliOss, ThemeColor, CutLine, barFontSize, barHeight, IframeUrl } from "../../lib/const"
-import './index.less'
+// import './index.less'
 
 
 const data = [{
@@ -71,7 +71,10 @@ const Council = () => {
     const [plus,setPlus] = useState(false)
     const [overInx,setOverInx] = useState(0)
     return (
-        <div className="council_page">
+        <div style={{
+            position:"relative",
+            padding:"0 0.3rem"
+        }}>
             <section style={{ borderTop: CutLine, padding: '0 0.5rem' }}>
                 <ul style={{
                     display: "flex", padding: '0.3rem 0 0.2rem 0',

@@ -1,7 +1,9 @@
 //  联盟动态
 import React, { useState, useEffect } from 'react'
+import { Pagination } from 'antd'
 import { AliOss, ThemeColor, CutLine, barFontSize, barHeight, IframeUrl } from "../../lib/const"
-// import './index.less'
+import { getNewsList } from '../../apis/index'
+import './index.less'
 
 
 const data = [{
@@ -22,40 +24,107 @@ const Dynamic = () => {
     const [flag, setFlag] = useState(false)
     const [plus, setPlus] = useState(false)
     const [overInx, setOverInx] = useState(0)
-    
-    return (
-        <div className="dynamic_page" style={{
-            height: "100%",
-            width: "100%",
-            position: "relative",
-            padding: "0 0.3rem",
-        }}>
-            <section style={{ borderTop: CutLine, padding: '0 0.5rem' }}>
-                <ul style={{
-                    display: "flex", padding: '0.3rem 0 0.2rem 0',
-                    flexWrap: "wrap", justifyContent: "space-evenly", border: CutLine,
-                    borderTop: "none"
-                }}>
-                    {data.map((item, index) => {
-                        return (
-                            <li key={index} style={{
-                                width: "30%",
-                                height: '2.7rem',
-                                display: "flex",
-                                flexDirection: "column",
-                                position: "relative",
-                                marginBottom: "0.6rem",
-                                cursor: "pointer",
-                                overflow: "hidden",
-                            }} onClick={() => {
-                            }} onMouseOver={() => {
+    const [data, setData] = useState([])
 
-                            }}>
-                                1
-                            </li>
-                        )
-                    })}
-                </ul>
+    useEffect(() => {
+        _handleNewsList()
+    }, [])
+
+    const _handleNewsList = async () => {
+        let params = {
+            page: 1, limit: 10
+        }
+        const res = await getNewsList(params)
+        let arr = []
+        if (res.code == 2000) {
+            // setData(res.result.data)
+
+            res.result.data && res.result.data.map(item => {
+                item.releaseTime.split(0, 7)
+                arr.push({
+                    releaseTime: item.releaseTime.substring(0, 10),
+                    title: item.title
+                })
+            })
+        }
+        console.log("答应数据", arr)
+        setData(arr)
+    }
+
+    return (
+        <div className="dynamic_page">
+            <section style={{
+                height: "100%",
+                borderTop: CutLine,
+                padding: '0 0.5rem 0.5rem 0.5rem',
+            }}>
+                <div style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                    border: CutLine,
+                    borderTop: "none",
+                    height: "100%",
+                    padding: '0 0.3rem',
+                    borderBottom: "none"
+                }}>
+                    <ul style={{ height: "90%" }}>
+                        {data.map((item, index) => {
+                            return (
+                                <li key={index} style={{
+                                    height: '20%',
+                                    display: "flex",
+                                    position: "relative",
+                                    cursor: "pointer",
+                                    overflow: "hidden",
+                                    borderBottom: CutLine,
+                                    width: "100%",
+                                    alignItems: "center",
+                                    paddingLeft: "0.02rem"
+                                }} onClick={() => {
+                                }} className="col">
+                                    <div style={{
+                                        fontSize: "0.15rem", fontWeight: "bold",
+                                        color: "rgba(0,0,0,0.5)",
+                                        letterSpacing: '0.02rem',
+                                        width: "25%",
+                                        display: "flex",
+                                        justifyContent: "flex-start",
+                                        alignItems: "center",
+                                    }}>
+                                        <span>{item.releaseTime.substring(0, 4)}</span>
+                                        <span style={{ fontSize: "0.12rem" }}>年</span>
+                                        <span>{item.releaseTime.substring(5, 7) * 1}</span>
+                                        <span style={{ fontSize: "0.12rem" }}>月</span>
+                                        <span>{item.releaseTime.substring(8, 10) * 1}</span>
+                                        <span style={{ fontSize: "0.12rem" }}>号</span>
+                                    </div>
+                                    <div style={{
+                                        color: ThemeColor,
+                                        fontWeight: "bold",
+                                        fontSize: "0.15rem",
+                                        width: "75%",
+                                        height: "100%",
+                                        display: 'flex',
+                                        alignItems: "center",
+                                        justifyContent: 'flex-start'
+                                    }}>{item.title}</div>
+                                </li>
+                            )
+                        })}
+                    </ul>
+                    <p style={{
+                        height: "10%", background: "red", display: "flex",
+                        alignItems: "center"
+                    }}>
+                        <Pagination
+                            total={85}
+                            showTotal={(total) => `Total ${total} items`}
+                            defaultPageSize={20}
+                            defaultCurrent={1}
+                        />
+                    </p>
+                </div>
             </section>
 
         </div>
