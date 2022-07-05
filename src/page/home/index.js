@@ -320,13 +320,13 @@ export default function Home(props) {
               英文缩写为STIACN。
           </div>
               <div style={{ textAlign: "left", lineHeight: "0.25rem" }}>
-                上海碳中和技术创新联盟是以习近平新时代中国特色社会主义思想为指导，在上海市科技党委和上海市科学技术委员会的领导下，全面贯彻落实国家和上海地方“碳达峰、碳中和”战略部署，在上海市科技党委和上海市科学技术委员会的领导下，携手48家在沪中央企业、科研院（所）、高校、企事业单位、社会团体共同发起成立，通过开展全方位、多领域、高质量的专业活动，搭建产学研用金等紧密结合、创新要素集聚的技术创新平台...
+                上海碳中和技术创新联盟是以习近平新时代中国特色社会主义思想为指导，在上海市科技党委和上海市科学技术委员会的领导下，全面贯彻落实国家和上海地方“碳达峰、碳中和”战略部署，在上海市科技党委和上海市科学技术委员会的领导下，携手48家在沪中央企业、科研院（所）、高校、企事业单位、社会团体共同发起成立，通过开展全方位、多领域、高质量的专业活动，搭建产学研用金等紧密结合、创新要素集聚的技术创新平台。
           </div>
               <p style={{ width: "1.2rem", height: "0.4rem", alignSelf: "flex-start", marginTop: "0.05rem" }}
                 onClick={() => {
 
                 }}>
-                <NavigateButton content={"更多信息"} color={ThemeColor} path={``} />
+                <NavigateButton content={"更多信息"} color={ThemeColor} path={`/about`} />
               </p>
 
 
@@ -411,12 +411,13 @@ export default function Home(props) {
                     marginTop: "0.05rem", position: "absolute", right: '0.3rem', bottom: '0.2rem'
                   }}
                     onClick={() => {
-                      if (index == 0) {
-                        window.open('https://mp.weixin.qq.com/s/02SNGgy2hPyIGckaF6oz3g')
-                      }
+                      // if (index == 0) {
+                      //   window.open('https://mp.weixin.qq.com/s/02SNGgy2hPyIGckaF6oz3g','_blank')
+                      
+                      // }
 
                     }}>
-                    <NavigateButton content={"更多信息"} color={ThemeColor} path={`${index != 0 && (index == 1 ? '/news' : `/news/${index}`)}`} />
+                    <NavigateButton content={"更多信息"} color={ThemeColor} path={`${index != 0 ? (index == 1 ? '/news' : `/news/${index}`) : 'news0'}`} />
                   </p>
                 </li>
               )

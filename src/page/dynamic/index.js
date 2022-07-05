@@ -20,19 +20,22 @@ const data = [{
     des2: "专委会工作包括：发展绿色建材助力节能降耗、清洁生产，在绿色建筑全寿命期内，节约资源、保护环境、减少污染，为人们提供健康、适用、高效的使用空间，最大限度地实现人与自然和谐共生的高质量建筑，并且在已有的可再生能源技术支撑下，建筑及由建筑组成的城市社区，可由单纯的能源消耗者转变为可再生能源的提供者，围绕可再生能源与建筑领域碳中和技术，助力城市与建筑碳中和目标早日实现。"
 }]
 const Dynamic = () => {
-    const [inx, setInx] = useState(0)
-    const [flag, setFlag] = useState(false)
-    const [plus, setPlus] = useState(false)
-    const [overInx, setOverInx] = useState(0)
     const [data, setData] = useState([])
+    const [total, setTotal] = useState(0)
+    const [page,setPage] = useState(1)
+    const [limit,setLimit] = useState(5) 
 
     useEffect(() => {
         _handleNewsList()
     }, [])
 
+    useEffect(()=>{
+        _handleNewsList()
+    },[page])
+
     const _handleNewsList = async () => {
         let params = {
-            page: 1, limit: 10
+            page, limit
         }
         const res = await getNewsList(params)
         let arr = []
@@ -46,9 +49,11 @@ const Dynamic = () => {
                     title: item.title
                 })
             })
+            setTotal(res.result.totalRecord)
         }
         console.log("答应数据", arr)
         setData(arr)
+        // setTotal(arr.length)
     }
 
     return (
@@ -64,15 +69,15 @@ const Dynamic = () => {
                     justifyContent: "space-between",
                     border: CutLine,
                     borderTop: "none",
-                    height: "100%",
+                    height:"auto",
                     padding: '0 0.3rem',
-                    borderBottom: "none"
+                    borderBottom: "none",
                 }}>
-                    <ul style={{ height: "90%" }}>
+                    <ul style={{ height: "auto"}}>
                         {data.map((item, index) => {
                             return (
                                 <li key={index} style={{
-                                    height: '20%',
+                                    height: '0.8rem',
                                     display: "flex",
                                     position: "relative",
                                     cursor: "pointer",
@@ -91,6 +96,7 @@ const Dynamic = () => {
                                         display: "flex",
                                         justifyContent: "flex-start",
                                         alignItems: "center",
+                                        fontFamily:"思源宋体 !important"
                                     }}>
                                         <span>{item.releaseTime.substring(0, 4)}</span>
                                         <span style={{ fontSize: "0.12rem" }}>年</span>
@@ -107,21 +113,27 @@ const Dynamic = () => {
                                         height: "100%",
                                         display: 'flex',
                                         alignItems: "center",
-                                        justifyContent: 'flex-start'
+                                        justifyContent: 'flex-start',
+                                        // background:"red"
                                     }}>{item.title}</div>
                                 </li>
                             )
                         })}
                     </ul>
                     <p style={{
-                        height: "10%", background: "red", display: "flex",
-                        alignItems: "center"
+                        height: "0.6rem", display: "flex",
+                        alignItems: "flex-end", justifyContent: "flex-end",
                     }}>
-                        <Pagination
-                            total={85}
-                            showTotal={(total) => `Total ${total} items`}
-                            defaultPageSize={20}
+                     <Pagination
+                            total={total}
+                            showTotal={(total) => `总计 ${total} 条`}
+                            defaultPageSize={5}
                             defaultCurrent={1}
+                            pageSizeOptions={[5, 10]}
+                            onChange={(a,b)=>{
+                                setPage(a)
+                                // console.log("打印下大撒把大厦那",a,b)
+                            }}
                         />
                     </p>
                 </div>
