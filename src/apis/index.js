@@ -21,7 +21,7 @@ export const messageTips = () => {
 }
 
 // 消息读取
-export const readMessage = () =>{
+export const readMessage = () => {
     const url = `/stiacn/message/enter`
     return fetchGadget(url, 'PUT')
 }
@@ -163,5 +163,12 @@ export const cancelAttention = (ids) => {
 // 普通用户 关注统计
 export const myAttention = () => {
     const url = `/stiacn/attention/myAttention`
+    return fetchGadget(url, 'GET')
+}
+
+// 联盟动态
+export const getNewsList = (params) => {
+    let { page, limit } = params
+    const url = `/news/list?page=${page}&limit=${limit}`
     return fetchGadget(url, 'GET')
 }

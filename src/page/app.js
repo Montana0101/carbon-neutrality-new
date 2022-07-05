@@ -16,7 +16,7 @@ var titleArr = [
   { inx: 0, path: '/' },
   { inx: 1, path: "/about" },
   { inx: 2, path: "/" },
-  // { inx: 2, path: "/dynamic" },
+  { inx: 2, path: "/dynamic" },
   { inx: 3, path: "/" },
   { inx: 4, path: "/council" },
   { inx: 5, path: "/" },

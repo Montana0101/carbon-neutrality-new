@@ -1,5 +1,7 @@
 import {ProxyUrl} from '../lib/const'
+
 import {message} from 'antd'
+
 var myHeaders = new Headers()
 myHeaders.append('Content-Type', 'application/json')
 if(JSON.parse(localStorage.getItem('user'))){
@@ -12,6 +14,10 @@ export const fetchGadget = (url, method, params) => {
     // store.dispatch({
     //     type: 'LOADING_START'
     // })
+
+    if(url=='/news/list'){
+        _url=`https://website.stiacn.com${url}`
+    }
 
     return fetch(_url, {
         method: method,
