@@ -68,10 +68,7 @@ function NewsDetail3(props) {
                     alignItems: "center", justifyContent: "center",
                     borderLeft: CutLine, borderRight: CutLine
                 }}>
-                    <div style={{
-                        fontSize: "0.18rem", fontWeight: "bold", color: '#2D2D2D'
-                    }}>中共中央 国务院关于完整准确全面贯彻新发展理念做好碳达峰碳中和工作的意见
-
+                    <div className='newsTitle'>中共中央 国务院关于完整准确全面贯彻新发展理念做好碳达峰碳中和工作的意见
                     </div>
                     <div style={{ color: "rgba(0,0,0,0.6)" }}>发布时间: 2021.12.13</div>
                 </section>
@@ -84,9 +81,10 @@ function NewsDetail3(props) {
                 border: CutLine,
                 borderTop: 'none',
                 borderBottom: 'none',
-                margin: '0 0.5rem 0 0.5rem'
+                margin: '0 0.5rem 0 0.5rem',
+                       padding:'0.3rem 0'
             }}>
-                <p style={{
+                {/* <p style={{
                     fontSize: "0.18rem",
                     fontWeight: "bold",
                     display: "flex",
@@ -104,7 +102,7 @@ function NewsDetail3(props) {
                         沪科〔2021〕497号 关于同意成立上海碳中和技术创新联盟的批复
                     </span>
                     <span />
-                </p>
+                </p> */}
 
                 <p style={{
                     fontSize: "0.14rem"
@@ -370,18 +368,6 @@ function NewsDetail3(props) {
                         <p style={{ fontSize: '0.12rem' }}><span style={{ fontFamily: '"思源宋体 CN Light", "思源宋体 CN Regular", "思源宋体 CN"', fontWeight: 300 }}><br /></span></p>
                     </div>
                 </article>
-
-                <div style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    fontSize: "0.14rem",
-                    cursor: "pointer"
-                }} onClick={() => {
-                    history.push("/news/2")
-                }}>
-                    <span />
-                    <span>下一篇&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; 上海碳中和技术创新联盟发起人会议在新能源中心召开</span>
-                </div>
             </div>
 
             <div style={{

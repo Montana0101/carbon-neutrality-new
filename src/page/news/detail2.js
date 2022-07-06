@@ -81,9 +81,7 @@ function NewsDetail2(props) {
                     alignItems: "center", justifyContent: "center",
                     borderLeft: CutLine, borderRight: CutLine
                 }}>
-                    <div style={{
-                        fontSize: "0.18rem", fontWeight: "bold", color: '#2D2D2D'
-                    }}>上海碳中和技术创新联盟发起人会议在新能源中心成功召开</div>
+                    <div className='newsTitle'>上海碳中和技术创新联盟发起人会议在新能源中心成功召开</div>
                     <div style={{ color: "rgba(0,0,0,0.6)" }}>发布时间: 2021.12.13</div>
                 </section>
             </div>
@@ -95,31 +93,9 @@ function NewsDetail2(props) {
                 border: CutLine,
                 borderTop: 'none',
                 borderBottom: 'none',
-                margin: '0 0.5rem 0 0.5rem'
+                margin: '0 0.5rem 0 0.5rem',
+                       padding:'0.3rem 0'
             }}>
-                <p style={{
-                    fontSize: "0.18rem",
-                    fontWeight: "bold",
-                    display: "flex",
-                    justifyContent: 'space-between'
-                }}>
-                    <span style={{
-                        cursor: "pointer"
-                    }} onClick={() => {
-                        window.history.back()
-                    }}>
-                        <LeftOutlined />
-                        返回
-                    </span>
-                    <span>
-                        沪科〔2021〕497号 关于同意成立上海碳中和技术创新联盟的批复
-                    </span>
-                    <span />
-                </p>
-
-                <p style={{
-                    fontSize: "0.14rem"
-                }}>发布时间：2021.12.17</p>
 
                 <article style={{
                     margin: "0 0.5rem 0.5rem 0.5rem",
@@ -142,19 +118,6 @@ function NewsDetail2(props) {
                     <p style={{  }}>未来新能源中心将与各位发起人一道，凝聚各方力量，高质量建设联盟，不断赋能，建立高效机制，通过联盟这一综合性平台，全力以赴，扎实推动上海“双碳”科技事业蓬勃发展。</p>
                     <img style={{ margin: "0.2rem auto", width: "40%", marginBottom: "0" }} src={img4} />
                 </article>
-
-
-                <div style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    fontSize: "0.14rem",
-                    cursor: "pointer"
-                }} onClick={() => {
-                    history.push("/news/2")
-                }}>
-                    <span />
-                    <span>下一篇&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; 上海碳中和技术创新联盟发起人会议在新能源中心召开</span>
-                </div>
             </div>
 
             <div style={{

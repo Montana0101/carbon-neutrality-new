@@ -93,6 +93,8 @@ const Dynamic = () => {
                                     }else{
                                         if(index!=0){
                                             window.location.href = `/news/${index-1}`
+                                        }else{
+                                             window.location.href = `/news/4`
                                         }
                                     }
                                 }} className="col">

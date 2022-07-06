@@ -63,9 +63,7 @@ function News(props) {
                     alignItems: "center", justifyContent: "center",
                     borderLeft: CutLine, borderRight: CutLine
                 }}>
-                    <div style={{
-                        fontSize: "0.18rem", fontWeight: "bold", color: '#2D2D2D'
-                    }}>沪科〔2021〕497号 关于同意成立上海碳中和技术创新联盟的批复</div>
+                    <div className='newsTitle'>沪科〔2021〕497号 关于同意成立上海碳中和技术创新联盟的批复</div>
                     <div style={{ color: "rgba(0,0,0,0.6)" }}>发布时间: 2021.12.17</div>
                 </section>
             </div>
@@ -77,31 +75,9 @@ function News(props) {
                 border: CutLine,
                 borderTop: 'none',
                 borderBottom: 'none',
-                margin: '0 0.5rem 0 0.5rem'
+                margin: '0 0.5rem 0 0.5rem',
+                       padding:'0.3rem 0'
             }}>
-                <p style={{
-                    fontSize: "0.18rem",
-                    fontWeight: "bold",
-                    display: "flex",
-                    justifyContent: 'space-between'
-                }}>
-                    <span style={{
-                        cursor: "pointer"
-                    }} onClick={() => {
-                        window.history.back()
-                    }}>
-                        <LeftOutlined />
-                        返回
-                    </span>
-                    <span>
-                        沪科〔2021〕497号 关于同意成立上海碳中和技术创新联盟的批复
-                    </span>
-                    <span />
-                </p>
-
-                <p style={{
-                    fontSize: "0.14rem"
-                }}>发布时间：2021.12.17</p>
 
                 <article style={{
                     margin: "0 0"
@@ -109,17 +85,7 @@ function News(props) {
                     <img src={img1} />
                 </article>
 
-                <div style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    fontSize: "0.14rem",
-                    cursor: "pointer"
-                }} onClick={() => {
-                    history.push("/news/2")
-                }}>
-                    <span />
-                    <span>下一篇&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; 上海碳中和技术创新联盟发起人会议在新能源中心召开</span>
-                </div>
+            
             </div>
 
             <div style={{
