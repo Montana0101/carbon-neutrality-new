@@ -1,0 +1,50 @@
+@import '../../lib/common.less';
+
+.scope_page{
+    padding: 0 0.3rem;
+    main{
+        height: 3.6rem;
+        // border:2px solid red;
+        display: flex;
+        flex-direction: column;
+        ul{
+            height: 0.7rem;
+            // background-color: aqua;
+            display: flex;
+            justify-content: center;
+            li{
+                height: 100%;
+                width: 1.2rem;
+                // border:1px solid red;
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                color:rgba(0,0,0,0.6);
+                font-size: 0.12rem;
+                padding-top: 0.05rem;
+                cursor: pointer;
+                span{
+                    display: inline-block;
+                    border-bottom: 2px solid @primary-color;
+                    padding-bottom: 0.05rem;
+                    
+                }
+            }
+            li:nth-of-type(2){
+                // background-color: red;
+                margin: 0 0.4rem;
+            }
+            li:nth-of-type(3){
+                margin-right: 0.4rem;
+            }
+        }
+        
+        .content {
+            background-color: #F7F7F7;
+            width:80%;
+            margin:0 auto;
+            flex:1;
+            margin-bottom: 0.5rem;
+        }
+    }
+}

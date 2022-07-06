@@ -389,7 +389,7 @@ function NewsDetail3(props) {
                         <IconFont type="icon-tuichu" style={{ color: ThemeColor, margin: "0 0.1rem 0 0", fontSize: "0.12rem" }} />
                         <a href="#" style={{ fontSize: "0.12rem", textDecoration: "underline", color: ThemeColor, fontWeight: "400" }}>
                             上海碳中和技术创新联盟发起人会议在新能源中心成功召开
-</a>
+                        </a>
                     </div>
                 </section>
             </div>
