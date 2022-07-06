@@ -22,16 +22,16 @@ const data = [{
 const Dynamic = () => {
     const [data, setData] = useState([])
     const [total, setTotal] = useState(0)
-    const [page,setPage] = useState(1)
-    const [limit,setLimit] = useState(5) 
+    const [page, setPage] = useState(1)
+    const [limit, setLimit] = useState(5)
+
+    // useEffect(() => {
+    //     _handleNewsList()
+    // }, [])
 
     useEffect(() => {
         _handleNewsList()
-    }, [])
-
-    useEffect(()=>{
-        _handleNewsList()
-    },[page])
+    }, [page])
 
     const _handleNewsList = async () => {
         let params = {
@@ -69,15 +69,15 @@ const Dynamic = () => {
                     justifyContent: "space-between",
                     border: CutLine,
                     borderTop: "none",
-                    height:"auto",
+                    height: "auto",
                     padding: '0 0.3rem',
                     borderBottom: "none",
                 }}>
-                    <ul style={{ height: "auto"}}>
+                    <ul style={{ height: "auto" }}>
                         {data.map((item, index) => {
                             return (
                                 <li key={index} style={{
-                                    height: '0.8rem',
+                                    height: '0.84rem',
                                     display: "flex",
                                     position: "relative",
                                     cursor: "pointer",
@@ -96,7 +96,7 @@ const Dynamic = () => {
                                         display: "flex",
                                         justifyContent: "flex-start",
                                         alignItems: "center",
-                                        fontFamily:"思源宋体 !important"
+                                        fontFamily: "思源宋体 !important"
                                     }}>
                                         <span>{item.releaseTime.substring(0, 4)}</span>
                                         <span style={{ fontSize: "0.12rem" }}>年</span>
@@ -114,7 +114,6 @@ const Dynamic = () => {
                                         display: 'flex',
                                         alignItems: "center",
                                         justifyContent: 'flex-start',
-                                        // background:"red"
                                     }}>{item.title}</div>
                                 </li>
                             )
@@ -124,21 +123,19 @@ const Dynamic = () => {
                         height: "0.6rem", display: "flex",
                         alignItems: "flex-end", justifyContent: "flex-end",
                     }}>
-                     <Pagination
+                        <Pagination
                             total={total}
                             showTotal={(total) => `总计 ${total} 条`}
                             defaultPageSize={5}
                             defaultCurrent={1}
                             pageSizeOptions={[5, 10]}
-                            onChange={(a,b)=>{
+                            onChange={(a, b) => {
                                 setPage(a)
-                                // console.log("打印下大撒把大厦那",a,b)
                             }}
                         />
                     </p>
                 </div>
             </section>
-
         </div>
     )
 }

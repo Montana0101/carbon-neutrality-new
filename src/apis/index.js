@@ -169,6 +169,6 @@ export const myAttention = () => {
 // 联盟动态
 export const getNewsList = (params) => {
     let { page, limit } = params
-    const url = `/news/list?page=${page}&limit=${limit}`
+    const url = `/website/news/list?page=${page}&limit=${limit}`
     return fetchGadget(url, 'GET')
 }

@@ -15,9 +15,9 @@ export const fetchGadget = (url, method, params) => {
     //     type: 'LOADING_START'
     // })
 
-    if (url.indexOf('/news/list')!= -1) {
-        _url = `https://website.stiacn.com${url}`
-    }
+    // if (url.indexOf('/news/list')!= -1) {
+    //     _url = `https://website.stiacn.com${url}`
+    // }
 
     return fetch(_url, {
         method: method,

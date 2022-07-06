@@ -1,31 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import { AliOss, ThemeColor, CutLine, barFontSize, barHeight, IframeUrl } from "../../lib/const"
-// import {Map, Marker, NavigationControl, InfoWindow} from 'react-bmapgl';
 import { CloseOutlined } from '@ant-design/icons';
-import Highcharts from 'highcharts'
-import HighchartsReact from 'highcharts-react-official'
-import sankey from "highcharts/modules/sankey.js";
-import organization from "highcharts/modules/organization.js";
 import IframeStruct from './iframe.js'
-
 import './index.less'
 import lszp from '../../static/imgs/lishiz.png'
 import flszp from '../../static/imgs/fulishiz.png'
-// const lszp = require("../../static/imgs/理事长.png")
-// const flszp = require("../../static/imgs/副理事长.png")
-sankey(Highcharts);
-organization(Highcharts);
 
 const data = [
     "孵化技术创新平台", "研究商业创新模式", "推动行业标准制订", "搭建资本合作平台", "联合产品市场推广"
 ]
 
-
 const AboutLeague = () => {
     const [inx, setInx] = useState(0)
     const [flag, setFlag] = useState(true)
     const [mask_flag, setMaskFlag] = useState(false)
-    const [mask_inx, setMaskInx] = useState(0)
+    const [mask_inx, setMaskInx] = useState(-1)
 
     useEffect(() => {
         const main = document.getElementById('main_container')
