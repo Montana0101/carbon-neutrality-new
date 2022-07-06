@@ -417,7 +417,7 @@ export default function Home(props) {
                       // }
 
                     }}>
-                    <NavigateButton content={"更多信息"} color={ThemeColor} path={`${index != 0 ? (index == 1 ? '/news' : `/news/${index}`) : 'news0'}`} />
+                    <NavigateButton content={"更多信息"} color={ThemeColor} path={`${index != 0 ? `/news/${index}` : 'news0'}`} />
                   </p>
                 </li>
               )

@@ -6,6 +6,7 @@ import {
 } from '@ant-design/icons'
 import img1 from './imgs/1.png'
 import { AliOss, ThemeColor, CutLine } from "../../lib/const"
+import './default.less'
 
 const IconFont = createFromIconfontCN({
     scriptUrl: '//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js',
@@ -39,8 +40,21 @@ function NewsDetail3(props) {
                     padding: "0 0.3rem", height: "0.7rem", lineHeight: "0.7rem",
                     borderLeft: CutLine, borderRight: CutLine
                 }}>
-                    <span style={{ color: "rgba(0,0,0,0.6)" }}>首页</span>
-                    <span style={{ margin: "0 0.1rem" }}>/</span><span>新闻详情</span>
+           <span className='homeBtn' onClick={
+                        () => {
+                            window.location.href = '/'
+                        }
+                    }>首页</span>
+                    <span style={{ margin: '0 0.1rem' }}>/</span>
+                    <span className='dynamicBtn' onClick={
+                        () => {
+                            window.location.href = '/dynamic'
+                        }
+                    }>
+                        联盟动态
+                    </span>
+                    <span style={{ margin: '0 0.1rem' }}>/</span>
+                    <span>中共中央 国务院关于完整准确全面贯彻新发展理念做好碳达峰碳中和工作的意见</span>
                 </h3>
             </div>
 

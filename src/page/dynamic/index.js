@@ -46,7 +46,8 @@ const Dynamic = () => {
                 item.releaseTime.split(0, 7)
                 arr.push({
                     releaseTime: item.releaseTime.substring(0, 10),
-                    title: item.title
+                    title: item.title,
+                    linking:item.linking
                 })
             })
             setTotal(res.result.totalRecord)
@@ -87,6 +88,13 @@ const Dynamic = () => {
                                     alignItems: "center",
                                     paddingLeft: "0.02rem"
                                 }} onClick={() => {
+                                    if(item.linking){
+                                        window.open(item.linking)
+                                    }else{
+                                        if(index!=0){
+                                            window.location.href = `/news/${index-1}`
+                                        }
+                                    }
                                 }} className="col">
                                     <div style={{
                                         fontSize: "0.15rem", fontWeight: "bold",
@@ -123,7 +131,7 @@ const Dynamic = () => {
                         height: "0.6rem", display: "flex",
                         alignItems: "flex-end", justifyContent: "flex-end",
                     }}>
-                        <Pagination
+                       {total>5 && <Pagination
                             total={total}
                             showTotal={(total) => `总计 ${total} 条`}
                             defaultPageSize={5}
@@ -132,7 +140,7 @@ const Dynamic = () => {
                             onChange={(a, b) => {
                                 setPage(a)
                             }}
-                        />
+                        />}
                     </p>
                 </div>
             </section>

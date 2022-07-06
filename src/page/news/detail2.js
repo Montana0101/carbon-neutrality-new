@@ -9,6 +9,8 @@ import { AliOss, ThemeColor, CutLine } from "../../lib/const"
 import img2 from './imgs/2.png'
 import img3 from './imgs/3.png'
 import img4 from './imgs/4.png'
+import './default.less'
+
 const IframeUrl = "http://58.33.170.254:8867"
 const data = [
     IframeUrl + "/news_detail_1.html",
@@ -51,8 +53,21 @@ function NewsDetail2(props) {
                     padding: "0 0.3rem", height: "0.7rem", lineHeight: "0.7rem",
                     borderLeft: CutLine, borderRight: CutLine
                 }}>
-                    <span style={{ color: "rgba(0,0,0,0.6)" }}>首页</span>
-                    <span style={{ margin: "0 0.1rem" }}>/</span><span>新闻详情</span>
+                       <span className='homeBtn' onClick={
+                        () => {
+                            window.location.href = '/'
+                        }
+                    }>首页</span>
+                    <span style={{ margin: '0 0.1rem' }}>/</span>
+                    <span className='dynamicBtn' onClick={
+                        () => {
+                            window.location.href = '/dynamic'
+                        }
+                    }>
+                        联盟动态
+                    </span>
+                    <span style={{ margin: '0 0.1rem' }}>/</span>
+                    <span>上海碳中和技术创新联盟发起人会议在新能源中心成功召开</span>
                 </h3>
             </div>
 

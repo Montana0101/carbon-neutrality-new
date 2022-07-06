@@ -7,11 +7,12 @@ import {
 import img1 from './imgs/1.png'
 import { AliOss, ThemeColor, CutLine } from "../../lib/const"
 import { createFromIconfontCN } from '@ant-design/icons';
+import './default.less'
 
 const IconFont = createFromIconfontCN({
     scriptUrl: '//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js',
-  });
-  
+});
+
 
 function News(props) {
     useEffect(() => {
@@ -34,8 +35,21 @@ function News(props) {
                     padding: "0 0.3rem", height: "0.7rem", lineHeight: "0.7rem",
                     borderLeft: CutLine, borderRight: CutLine
                 }}>
-                    <span style={{ color: "rgba(0,0,0,0.6)" }}>首页</span>
-                    <span style={{ margin: "0 0.1rem" }}>/</span><span>新闻详情</span>
+                    <span className='homeBtn' onClick={
+                        () => {
+                            window.location.href = '/'
+                        }
+                    }>首页</span>
+                    <span style={{ margin: '0 0.1rem' }}>/</span>
+                    <span className='dynamicBtn' onClick={
+                        () => {
+                            window.location.href = '/dynamic'
+                        }
+                    }>
+                        联盟动态
+                    </span>
+                    <span style={{ margin: '0 0.1rem' }}>/</span>
+                    <span>沪科〔2021〕497号 关于同意成立上海碳中和技术创新联盟的批复</span>
                 </h3>
             </div>
 
@@ -60,10 +74,10 @@ function News(props) {
                 boxSizing: "border-box",
                 color: 'white',
                 marginBottom: "-0.5rem",
-                border:CutLine,
-                borderTop:'none',
-                borderBottom:'none',
-                margin:'0 0.5rem 0 0.5rem'
+                border: CutLine,
+                borderTop: 'none',
+                borderBottom: 'none',
+                margin: '0 0.5rem 0 0.5rem'
             }}>
                 <p style={{
                     fontSize: "0.18rem",
@@ -118,15 +132,15 @@ function News(props) {
                     alignItems: "flex-start", justifyContent: "center",
                     borderLeft: CutLine, borderRight: CutLine,
                 }}>
-                    <div onClick={()=>{ history.push("/news/2")}}>
-                    <IconFont type="icon-tuichu" style={{ color:ThemeColor, margin: "0 0.1rem 0 0", fontSize: "0.12rem" }} />
-                    <a href="#" style={{ fontSize: "0.12rem", textDecoration: "underline", color:ThemeColor, fontWeight: "400" }}>
-                    上海碳中和技术创新联盟发起人会议在新能源中心召开</a>
+                    <div onClick={() => { history.push("/news/2") }}>
+                        <IconFont type="icon-tuichu" style={{ color: ThemeColor, margin: "0 0.1rem 0 0", fontSize: "0.12rem" }} />
+                        <a href="#" style={{ fontSize: "0.12rem", textDecoration: "underline", color: ThemeColor, fontWeight: "400" }}>
+                            上海碳中和技术创新联盟发起人会议在新能源中心召开</a>
                     </div>
-                    <div onClick={()=>{history.push("/news/3")}}>
-                    <IconFont type="icon-tuichu" style={{ color: ThemeColor, margin: "0 0.1rem 0 0", fontSize: "0.12rem" }} />
-                    <a href="#" style={{ fontSize: "0.12rem", textDecoration: "underline", color: ThemeColor, fontWeight: "400" }}>
-                    中共中央 国务院关于完整准确全面贯彻新发展理念做好碳达峰碳中和工作的意见 (2021年9月22日)
+                    <div onClick={() => { history.push("/news/3") }}>
+                        <IconFont type="icon-tuichu" style={{ color: ThemeColor, margin: "0 0.1rem 0 0", fontSize: "0.12rem" }} />
+                        <a href="#" style={{ fontSize: "0.12rem", textDecoration: "underline", color: ThemeColor, fontWeight: "400" }}>
+                            中共中央 国务院关于完整准确全面贯彻新发展理念做好碳达峰碳中和工作的意见 (2021年9月22日)
 
 </a>
                     </div>

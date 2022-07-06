@@ -42,7 +42,9 @@ function App() {
       setInx(4)
     } else if (href.indexOf('dynamic') != -1) {
       setInx(2)
-    }else if (href.indexOf('/') == -1) {
+    } else if (href.indexOf('news')!= -1) {
+      setInx(2)
+    } else if (href.indexOf('/') == -1) {
       setInx(0)
     }
     // titleArr.map(item => {
@@ -52,7 +54,7 @@ function App() {
     //     setInx(0)
     //   }
     // })
-  
+
   }, [])
 
   useEffect(() => {
