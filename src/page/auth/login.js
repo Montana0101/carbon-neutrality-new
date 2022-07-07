@@ -12,14 +12,6 @@ const Login = () => {
     const [password, setPassword] = useState('')
     const history = useHistory()
 
-    useEffect(()=>{
-        const dom = document.getElementsByClassName("app-header")[0]
-        dom.style.display='none'
-
-        const main = document.getElementById('main_container')
-        main.style.height='100%'
-    },[])
-
     const submit = async () => {
         if (email && password) {
             let params = {
