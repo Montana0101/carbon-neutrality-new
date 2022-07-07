@@ -1,6 +1,7 @@
 //  联盟动态
 import React, { useState, useEffect } from 'react'
 import { Pagination } from 'antd'
+import {withRouter,useHistory} from 'react-router-dom'
 import { AliOss, ThemeColor, CutLine, barFontSize, barHeight, IframeUrl } from "../../lib/const"
 import { getNewsList } from '../../apis/index'
 import './index.less'
@@ -28,6 +29,8 @@ const Dynamic = () => {
     // useEffect(() => {
     //     _handleNewsList()
     // }, [])
+
+    const history = useHistory()
 
     useEffect(() => {
         _handleNewsList()
@@ -92,9 +95,11 @@ const Dynamic = () => {
                                         window.open(item.linking)
                                     }else{
                                         if(index!=0){
-                                            window.location.href = `/news/${index-1}`
+                                            // window.location.href = `/news/${index-1}`
+                                            history.push(`/news/${index-1}`)
                                         }else{
-                                             window.location.href = `/news/4`
+                                            //  window.location.href = `/news/4`
+                                            history.push('/news/4')
                                         }
                                     }
                                 }} className="col">

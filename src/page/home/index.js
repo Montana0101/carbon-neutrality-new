@@ -46,29 +46,36 @@ const tastArr = [
 const news = [
   {
     year: "2022",
+    month: "06",
+    day: "15",
+    title: "上海碳中和技术创新联盟“云签约”活动成功举办",
+    inx: "4",
+    link: null,
+  },
+  {
+    year: "2022",
     month: "04",
     day: "01",
     title:
       " 聚焦绿色低碳在沪外企——上海市外商投资协会召开“碳中和博览会”线上推介会",
+    inx: null,
+    link: "https://mp.weixin.qq.com/s/02SNGgy2hPyIGckaF6oz3g",
   },
   {
     year: "2021",
     month: "12",
     day: "17",
     title: " 沪科〔2021〕497号关于同意成立上海碳中和技术创新联盟的批复",
+    inx: "1",
+    link: null,
   },
   {
     year: "2021",
     month: "12",
     day: "13",
     title: " 上海碳中和技术创新联盟发起人会议在新能源中心召开",
-  },
-  {
-    year: "2021",
-    month: "12",
-    day: "13",
-    title:
-      " 中共中央 国务院关于完整准确全面贯彻新发展理念做好碳达峰碳中和工作的意见(2021年9月22日)",
+    inx: "2",
+    link: null,
   },
 ];
 
@@ -714,7 +721,7 @@ export default function Home(props) {
                   <NavigateButton
                     content={"更多信息"}
                     color={ThemeColor}
-                    path={`${index != 0 ? `/news/${index}` : "news0"}`}
+                    path={`${index != 1 ? `/news/${item.inx}` : "news0"}`}
                   />
                 </p>
               </li>
