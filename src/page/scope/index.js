@@ -35,18 +35,18 @@ const arr = [
 
 const list = [
   {
-    sub:"技术合作",
-    text:"开展技术合作，形成重要的产业技术标准"
+    sub: "技术合作",
+    text: "开展技术合作，形成重要的产业技术标准",
   },
   {
-    sub:"技术转化",
-    text:"实现技术转移，提升产业整体竞争力"
+    sub: "技术转化",
+    text: "实现技术转移，提升产业整体竞争力",
   },
   {
-    sub:"技术服务",
-    text:"建立公共技术服务平台，实现知识产权共享"
-  }
-]
+    sub: "技术服务",
+    text: "建立公共技术服务平台，实现知识产权共享",
+  },
+];
 
 const Scope = () => {
   const [inx, setInx] = useState(0);
@@ -63,17 +63,38 @@ const Scope = () => {
           style={{
             border: CutLine,
             borderBottom: "none",
-    
           }}
         >
-          <section style={{
-                backgroundImage:`url(${scopeBg})`,
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "cover",
-                height:'3.5rem'
-          }}>
-            <ul>
-              <li>132</li>
+          <section
+            style={{
+              backgroundImage: `url(${scopeBg})`,
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+              height: "3.5rem",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <ul className="upperUl">
+              {list.map((item, index) => {
+                return (
+                  <li key={index}>
+                    <img
+                      src={`${AliOss}/new_version_0518/business/business_bg_icon_${
+                        index + 1
+                      }.png`}
+                    />
+                    <span style={{ fontSize: "0.14rem", fontWeight: "bold",
+                    margin:'0.1rem 0 0.05rem 0' }}>
+                      {item.sub}
+                    </span>
+                    <span style={{ fontSize: "0.12rem", fontWeight: "bold" }} className="last_span">
+                      {item.text}
+                    </span>
+                  </li>
+                );
+              })}
             </ul>
           </section>
           <main>
