@@ -32,8 +32,8 @@ var titleArr = [
   { inx: 1, path: "/about" },
   // { inx: 2, path: "/" },
   { inx: 2, path: "/dynamic" },
-  // { inx: 3, path: "/scope" },
-  { inx: 3, path: "/" },
+  { inx: 3, path: "/scope" },
+  // { inx: 3, path: "/" },
   { inx: 4, path: "/council" },
   { inx: 5, path: "/" },
   { inx: 6, path: "/contact" },
@@ -353,7 +353,7 @@ let HeaderCmt = () => {
                 onClick={() => {
                   titleArr.map((obj) => {
                     if (item == titles[obj.inx]) {
-                      if (obj.inx == 3 || obj.inx == 5) {
+                      if ( obj.inx == 5) {
                         setInx(0);
                       } else {
                         setInx(obj.inx);
