@@ -52,15 +52,15 @@ const news = [
     inx: "4",
     link: null,
   },
-  {
-    year: "2022",
-    month: "04",
-    day: "01",
-    title:
-      " 聚焦绿色低碳在沪外企——上海市外商投资协会召开“碳中和博览会”线上推介会",
-    inx: null,
-    link: "https://mp.weixin.qq.com/s/02SNGgy2hPyIGckaF6oz3g",
-  },
+  // {
+  //   year: "2022",
+  //   month: "04",
+  //   day: "01",
+  //   title:
+  //     " 聚焦绿色低碳在沪外企——上海市外商投资协会召开“碳中和博览会”线上推介会",
+  //   inx: null,
+  //   link: "https://mp.weixin.qq.com/s/02SNGgy2hPyIGckaF6oz3g",
+  // },
   {
     year: "2021",
     month: "12",
@@ -77,6 +77,15 @@ const news = [
     inx: "2",
     link: null,
   },
+  {
+    year: "2021",
+    month: "12",
+    day: "13",
+    inx: "3",
+    link: null,
+    title:
+      " 中共中央 国务院关于完整准确全面贯彻新发展理念做好碳达峰碳中和工作的意见(2021年9月22日)",
+  },
 ];
 
 var industry = [
@@ -91,6 +100,7 @@ var industry = [
   "科研",
   "碳交易",
 ];
+
 const bannerArr1 = [
   "打造碳中和万亿新市场",
   "建设碳中和行业新生态",
@@ -98,6 +108,7 @@ const bannerArr1 = [
   "构筑碳中和商业新范式",
   "开创碳中和产业新未来",
 ];
+
 const bannerArr2 = ["工业节能", "建筑节能", "交通节能"];
 
 // 首页首屏
@@ -721,7 +732,7 @@ export default function Home(props) {
                   <NavigateButton
                     content={"更多信息"}
                     color={ThemeColor}
-                    path={`${index != 1 ? `/news/${item.inx}` : "news0"}`}
+                    path={`/news/${item.inx}`}
                   />
                 </p>
               </li>

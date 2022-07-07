@@ -353,9 +353,12 @@ let HeaderCmt = () => {
                 onClick={() => {
                   titleArr.map((obj) => {
                     if (item == titles[obj.inx]) {
-                      // setInx(obj.inx);
-                      window.location.href = obj.path;
-                      history.push(obj.path)
+                      if (obj.inx == 3 || obj.inx == 5) {
+                        setInx(0);
+                      } else {
+                        setInx(obj.inx);
+                      }
+                      history.push(obj.path);
                     }
                   });
                 }}
