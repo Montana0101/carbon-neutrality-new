@@ -30,12 +30,10 @@ const titles = [
 var titleArr = [
   { inx: 0, path: "/" },
   { inx: 1, path: "/about" },
-  // { inx: 2, path: "/" },
   { inx: 2, path: "/dynamic" },
   { inx: 3, path: "/scope" },
-  // { inx: 3, path: "/" },
   { inx: 4, path: "/council" },
-  { inx: 5, path: "/" },
+  { inx: 5, path: "/consult" },
   { inx: 6, path: "/contact" },
 ];
 
@@ -78,16 +76,11 @@ let HeaderCmt = () => {
       setInx(2);
     } else if (href.indexOf("scope") != -1) {
       setInx(3);
+    } else if (href.indexOf("consult") != -1) {
+      setInx(5);
     } else if (href.indexOf("/") == -1) {
       setInx(0);
     }
-    // titleArr.map(item => {
-    //   if (href.indexOf(item.path) != -1) {
-    //     setInx(item.inx)
-    //   } else if (href.indexOf('/') == -1) {
-    //     setInx(0)
-    //   }
-    // })
   }, []);
 
   useEffect(() => {
@@ -353,11 +346,12 @@ let HeaderCmt = () => {
                 onClick={() => {
                   titleArr.map((obj) => {
                     if (item == titles[obj.inx]) {
-                      if ( obj.inx == 5) {
-                        setInx(0);
-                      } else {
-                        setInx(obj.inx);
-                      }
+                      // if (obj.inx == 5) {
+                      //   setInx(0);
+                      // } else {
+
+                      // }
+                      setInx(obj.inx);
                       history.push(obj.path);
                     }
                   });

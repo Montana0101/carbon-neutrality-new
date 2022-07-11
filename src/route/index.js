@@ -11,6 +11,7 @@ import AboutLeague from "../page/about/index"; // 关于联盟
 import Council from "../page/council/index"; // 专业委员会
 import Dynamic from "../page/dynamic/index"; // 联盟动态
 import Scope from "../page/scope/index"; // 业务范围
+import Consult from '../page/consult/index'; // 双碳咨询
 import NewsDetail2 from "../page/news/detail2";
 import NewsDetail3 from "../page/news/detail3";
 import NewsDetail4 from "../page/news/detail4";
@@ -33,6 +34,7 @@ const Routers = () => {
           <Route path="/council" exact component={Council} />
           <Route path="/dynamic" exact component={Dynamic} />
           <Route path="/scope" exact component={Scope} />
+          <Route path='/consult' exact component={Consult}/>
           <Route path="/" exact component={Home} />
         </Switch>
       </>

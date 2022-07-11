@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react'
 import { AliOss, ThemeColor, CutLine, barFontSize, barHeight, IframeUrl } from "../../lib/const"
 // import './index.less'
 
-
 const data = [{
     title: '电力行业碳中和技术专委会',
     des1: '为助推全国电力行业，推动电力技术发展，专委会以战略研究、能力建设、技术交流、标准制定、产学研合作、创投融资、国际合作为目标各相关企业院校搭建开放的交流平台。',
