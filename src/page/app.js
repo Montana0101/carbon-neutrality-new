@@ -65,7 +65,6 @@ let HeaderCmt = () => {
 
   useEffect(() => {
     let href = window.location.href;
-
     if (href.indexOf("about") != -1) {
       setInx(1);
     } else if (href.indexOf("contact") != -1) {
@@ -104,14 +103,16 @@ let HeaderCmt = () => {
   };
 
   return (
-    <div className='header-layout' style={{
-      display: flag ? "none" : " block",
-    }}>
+    <div
+      className="header-layout"
+      style={{
+        display: flag ? "none" : " block",
+      }}
+    >
       <header
         className="app-header"
         style={{
           height: "0.98rem !important",
-   
         }}
       >
         <section className="header-left">
@@ -356,6 +357,7 @@ let HeaderCmt = () => {
                         // } else {
                         //
                         // }
+                        window.scroll(0, 0);
                         setInx(obj.inx);
                         history.push(obj.path);
                       }
@@ -369,7 +371,7 @@ let HeaderCmt = () => {
           </ul>
         </section>
       </header>
-            <div style={{height:"0.98rem"}}></div>
+      <div style={{ height: "0.98rem" }}></div>
     </div>
   );
 };

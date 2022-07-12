@@ -22,3 +22,5 @@ q:before,q:after,
 blockquote:before,blockquote:after {
 	content: "";
 }
+
+::-webkit-scrollbar{display: none;}

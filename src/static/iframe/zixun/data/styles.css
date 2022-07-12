@@ -10,6 +10,7 @@
   line-height:normal;
   text-transform:none;
 }
+::-webkit-scrollbar{display: none;}
 .box_1 {
 }
 .box_2 {

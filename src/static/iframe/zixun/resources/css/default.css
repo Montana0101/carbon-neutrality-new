@@ -12,6 +12,7 @@
     overflow: hidden;
 }
 
+
 a {
   cursor: pointer;
 }
@@ -1042,3 +1043,5 @@ div.mobileText, span.mobileText {
     }
 }
 
+
+::-webkit-scrollbar{display: none;}

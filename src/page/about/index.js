@@ -53,7 +53,7 @@ const AboutLeague = () => {
             top: 0,
             background: "rgba(0,0,0,0.6)",
             display: mask_flag ? 'block' : "none",
-            zIndex: 888,
+            zIndex: 888888,
         }}>
             {mask_inx == 1 ? <section style={{ height: '3rem' }}>
                 <p>

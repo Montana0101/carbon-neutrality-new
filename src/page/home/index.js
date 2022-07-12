@@ -155,6 +155,7 @@ export default function Home(props) {
       setPhone("");
       setContent("");
     }
+    // document.body.scrollTop = 0;
   }, [isModalVisible]);
 
   return (
