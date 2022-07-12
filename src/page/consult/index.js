@@ -1,4 +1,4 @@
-// 专业委员会
+// 双碳咨讯
 import React, { useState, useEffect } from "react";
 import {
   AliOss,
@@ -8,6 +8,8 @@ import {
   barHeight,
   IframeUrl,
 } from "../../lib/const";
+import {useHistory} from 'react-router-dom'
+
 // import './index.less'
 
 const data = [
@@ -52,6 +54,8 @@ const Consult = () => {
   const [flag, setFlag] = useState(false);
   const [plus, setPlus] = useState(false);
   const [overInx, setOverInx] = useState(0);
+
+  const history = useHistory()
 
   return (
     <div
@@ -133,7 +137,9 @@ const Consult = () => {
                           fontSize: "0.12rem",
                           textDecoration: "underline",
                         }}
-                      >
+                       onClick={()=>{
+                        history.push('/information')
+                       }}>
                         了解更多
                       </a>
                     </section>

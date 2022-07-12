@@ -12,6 +12,7 @@ import Council from "../page/council/index"; // 专业委员会
 import Dynamic from "../page/dynamic/index"; // 联盟动态
 import Scope from "../page/scope/index"; // 业务范围
 import Consult from '../page/consult/index'; // 双碳咨询
+import SubIframe from '../page/consult/iframe'; // 双碳子页面
 import NewsDetail2 from "../page/news/detail2";
 import NewsDetail3 from "../page/news/detail3";
 import NewsDetail4 from "../page/news/detail4";
@@ -25,6 +26,7 @@ const Routers = () => {
           <Route path="/news/2" exact component={NewsDetail2} />
           <Route path="/news/3" exact component={NewsDetail3} />
           <Route path="/news/4" exact component={NewsDetail4} />
+          <Route path="/information" exact component={SubIframe} />
           <Route path="/login" exact component={Login} />
           <Route path="/register" exact component={Register} />
           <Route path="/admin" exact component={Admin} />

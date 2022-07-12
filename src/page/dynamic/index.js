@@ -42,7 +42,7 @@ const Dynamic = () => {
         }
         const res = await getNewsList(params)
         let arr = []
-        if (res.code == 2000) {
+        if (res && (res.code == 2000)) {
             // setData(res.result.data)
 
             res.result.data && res.result.data.map(item => {

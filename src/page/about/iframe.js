@@ -3,7 +3,6 @@ import { screen_scale } from "../../util/rem"
 import { IframeUrl } from "../../lib/const"
 import $ from 'jquery'
 
-const ifr = require('../../static/联盟架构/jiagou.html')
 const AboutLeague = () => {
     const ifr = useRef(null)
     useEffect(() => {

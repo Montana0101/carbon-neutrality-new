@@ -31,8 +31,10 @@ var titleArr = [
   { inx: 0, path: "/" },
   { inx: 1, path: "/about" },
   { inx: 2, path: "/dynamic" },
+  // { inx: 3, path: "/" },
   { inx: 3, path: "/scope" },
   { inx: 4, path: "/council" },
+  // { inx: 5, path: "/" },
   { inx: 5, path: "/consult" },
   { inx: 6, path: "/contact" },
 ];
@@ -96,7 +98,7 @@ let HeaderCmt = () => {
 
   const _messageTips = async () => {
     const res = await messageTips();
-    if (res.code === 2000) {
+    if (res && (res.code === 2000)) {
       setTips(res.result);
     }
   };
@@ -346,10 +348,10 @@ let HeaderCmt = () => {
                 onClick={() => {
                   titleArr.map((obj) => {
                     if (item == titles[obj.inx]) {
-                      // if (obj.inx == 5) {
+                      // if (obj.inx == 5 || obj.inx==3) {
                       //   setInx(0);
                       // } else {
-
+                      //  
                       // }
                       setInx(obj.inx);
                       history.push(obj.path);
