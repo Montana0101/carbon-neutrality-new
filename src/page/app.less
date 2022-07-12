@@ -12,56 +12,67 @@
   flex-direction: column;
   font-family   : "思源宋体 !important";
 
-  // 顶部导航栏
-  .app-header {
-    position   : relative;
-    margin     : 0 0.3rem;
-    // display : flex;
-    color      : white;
-    height     : 0.98rem !important;
-    z-index    : 99;
-
-    .header-left {
-      display    : flex;
-      align-items: center;
-      padding    : 0 0.5rem 0 0.5rem;
-      width      : 35%;
+  .header-layout {
+    height: 0.98rem !important;
+    
+    // position: relative;
+    // 顶部导航栏
+    .app-header {
+      position        : fixed;
+      top             : 0;
+      left            : 0;
+      right           : 0;
+      margin          : 0 0.3rem;
+      z-index         : 99999;
+      // display : flex;
+      color           : white;
       height     : 0.98rem;
-      float      : left;
-    }
+      background-color: white;
 
-    .header-right {
-      float     : right;
-      height    : 0.98rem;
-      flex      : 5;
-      box-sizing: border-box;
-      width     : 65%;
+      .header-left {
+        display    : flex;
+        align-items: center;
+        padding    : 0 0.5rem 0 0.5rem;
+        width      : 35%;
+        height     : 0.98rem;
+        float      : left;
+      }
 
-      ul {
-        li:hover {
-          background-color: #51AA52 !important;
-          border-radius   : 0.2rem;
-          color           : white !important;
+      .header-right {
+        float     : right;
+        height    : 0.98rem;
+        flex      : 5;
+        box-sizing: border-box;
+        width     : 65%;
+
+        ul {
+          li:hover {
+            background-color: #51AA52 !important;
+            border-radius   : 0.2rem;
+            color           : white !important;
+          }
+        }
+      }
+
+      .ant-input {
+        &::placeholder {
+          font-size: 0.12rem;
         }
       }
     }
 
-    .ant-input {
-      &::placeholder {
-        font-size: 0.12rem;
-      }
-    }
   }
 
 }
 
 
-
 // 内容区域
 .app>main {
-  width : 100%;
-  height: auto;
-  flex  : 1;
+  // position: fixed;
+  // top: 0.98rem;
+  width    : 100%;
+  // height: auto;
+  flex     : 1;
 }
 
 // 底部区域

@@ -26,7 +26,7 @@ const Routers = () => {
           <Route path="/news/2" exact component={NewsDetail2} />
           <Route path="/news/3" exact component={NewsDetail3} />
           <Route path="/news/4" exact component={NewsDetail4} />
-          <Route path="/information" exact component={SubIframe} />
+          <Route path="/information" component={SubIframe} />
           <Route path="/login" exact component={Login} />
           <Route path="/register" exact component={Register} />
           <Route path="/admin" exact component={Admin} />

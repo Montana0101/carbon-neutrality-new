@@ -9,6 +9,13 @@ export function screen_scale() {
    return [w, w_reverse]
 }
 
+export function screen_scale2() {
+   let w = (document.documentElement.clientWidth / 1500).toFixed(2)
+   let w_reverse = (1500 / document.documentElement.clientWidth).toFixed(2)
+   return [w, w_reverse]
+}
+
+
 font()
 
 window.onresize = font

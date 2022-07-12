@@ -8,7 +8,7 @@ import {
   barHeight,
   IframeUrl,
 } from "../../lib/const";
-import {useHistory} from 'react-router-dom'
+import { useHistory } from "react-router-dom";
 
 // import './index.less'
 
@@ -55,7 +55,7 @@ const Consult = () => {
   const [plus, setPlus] = useState(false);
   const [overInx, setOverInx] = useState(0);
 
-  const history = useHistory()
+  const history = useHistory();
 
   return (
     <div
@@ -90,8 +90,8 @@ const Consult = () => {
                     style={{
                       display: "flex",
                       boxShadow: "0px 15px 10px -12px rgba(0,0,0,0.3)",
-                      justifyContent:"space-between",
-                      padding:'0 0.1rem'
+                      justifyContent: "space-between",
+                      padding: "0 0.1rem",
                     }}
                   >
                     <img
@@ -137,9 +137,11 @@ const Consult = () => {
                           fontSize: "0.12rem",
                           textDecoration: "underline",
                         }}
-                       onClick={()=>{
-                        history.push('/information')
-                       }}>
+                        onClick={() => {
+                          history.push(`/information/${index + 1}`);
+                          // window.location.href=`/information/${index+1}`
+                        }}
+                      >
                         了解更多
                       </a>
                     </section>
@@ -159,8 +161,8 @@ const Consult = () => {
                     style={{
                       display: "flex",
                       boxShadow: "0px 15px 10px -12px rgba(0,0,0,0.3)",
-                      justifyContent:"space-between",
-                      padding:'0 0.1rem'
+                      justifyContent: "space-between",
+                      padding: "0 0.1rem",
                     }}
                   >
                     <section
@@ -195,6 +197,10 @@ const Consult = () => {
                           color: ThemeColor,
                           fontSize: "0.12rem",
                           textDecoration: "underline",
+                        }}
+                        onClick={() => {
+                          history.push(`/information/${index + 1}`);
+                          // window.location.href=`/information/${index+1}`
                         }}
                       >
                         了解更多

@@ -61,7 +61,7 @@ const Register = () => {
                     if (res && (res.code === 2000)) {
                         message.success("操作成功，我们会将审核结果发送至你的邮箱")
                         history.push("/")
-                        const dom = document.getElementsByClassName("app-header")[0]
+                        const dom = document.getElementsByClassName("header-layout")[0]
                         dom.style.display = 'flex'
                     } else {
                         message.error(res.msg)
