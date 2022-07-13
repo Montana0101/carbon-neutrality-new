@@ -16,6 +16,7 @@ import SubIframe from '../page/consult/iframe'; // 双碳子页面
 import ConsultSub1 from '../page/consult/sub/sub1' //双碳子页面
 import ConsultSub2 from '../page/consult/sub/sub2' 
 import ConsultSub3 from '../page/consult/sub/sub3' 
+import ConsultSub4 from '../page/consult/sub/sub4' 
 
 import NewsDetail2 from "../page/news/detail2";
 import NewsDetail3 from "../page/news/detail3";
@@ -44,6 +45,7 @@ const Routers = () => {
           <Route path='/consult/1' exact component={ConsultSub1}/>
           <Route path='/consult/2' exact component={ConsultSub2}/>
           <Route path='/consult/3' exact component={ConsultSub3}/>
+          <Route path='/consult/4' exact component={ConsultSub4}/>
 
           <Route path="/" exact component={Home} />
         </Switch>
