@@ -58,7 +58,7 @@ const ConsultSub6 = () => {
 
   return (
     <div
-      className="page_sub4"
+      className="page_sub6"
       style={{
         height: "auto",
         width: "100%",
@@ -107,11 +107,7 @@ const ConsultSub6 = () => {
             双碳资讯
           </span>
           <span style={{ margin: "0 0.1rem" }}>/</span>
-          <span>
-            {" "}
-            建材行业“六零”示范工厂诠释 |
-            “双碳”之下，“六零”示范工厂引领行业新未来
-          </span>
+          <span>“碳中和”背景下的CCUS</span>
         </h3>
       </div>
 
@@ -126,106 +122,269 @@ const ConsultSub6 = () => {
         }}
       >
         <div
-          style={{
-            color: "white",
-            backgroundImage: `url(${AliOss}/new_version_0518/information/details_4/banner.png)`,
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
-            height: "2.5rem",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            fontWeight: "bold",
-            fontSize: "0.3rem",
-            marginBottom:"0.3rem"
-          }}
-        ></div>
-
-        <p className="col">
-          2021年12月29日，中国建筑材料联合会六届理事会二次会议召开，党委书记、会长阎晓峰代表联合会明确提出“要着重组织打造零外购电、零化石能源、零一次资源、零碳排放、零废弃物排放、零员工的建材行业绿色节能、能源安全、资源综合利用、低碳、清洁、智能的‘六零’示范工厂，并作为行业企业长远发展导向”。{" "}
-        </p>
-        <p className="col">
-          “六零”示范工厂概念一经提出，获得了业内的高度重视,也引发了社会的广泛关注。“六零”示范工厂有怎样的现实意义和发展前景？其具体内涵又包含哪些内容？近日，中国建筑材料联合会对建材行业“六零”示范工厂概念进行诠释，以促进建材行业企业对“六零”示范工厂有更清晰、更全面的认识，推动全行业凝心聚力，以“双碳”工作为统领，加大技术创新力度，加快改造升级步伐，尽快建成一批“六零”示范工厂（车间、企业、园区），为践行“宜业尚品、造福人类”行业发展目标，推进绿色低碳安全高质量发展，提供先进经验和示范标杆。{" "}
-        </p>
-        <p className="col" style={{ color: ThemeColor, fontWeight: "bold" }}>
-          建材行业“六零”示范工厂是指：零外购电工厂、零化石能源工厂、零一次资源工厂、零碳排放工厂、零废弃物排放工厂、零员工工厂。
-        </p>
-        <p className="col">
-          “六零”示范工厂概念，是建材行业深入贯彻新发展理念，在习近平生态文明思想指引下，在“碳达峰、碳中和”历史进程中，积极应对行业能源资源承载型和污染排放较高的现状，充分发挥建材行业资源综合利用、协同处置及作为为光伏、风电等新能源技术装备制造所需材料的生产行业的优势，从绿色节能、能源安全、资源综合利用、低碳、清洁、智能六个维度，创新性提出的建材行业企业转型升级的长远发展导向，是“宜业尚品、造福人类”行业发展目标中“宜业”的具体实践。
-        </p>
-
-        <div
           className="col"
           style={{
             color: ThemeColor,
             fontWeight: "bold",
-            marginTop: "0.3rem",
-            textAlign: "center",
           }}
         >
-          建材行业“六零”示范工厂
+          背景
         </div>
-        <p className="col">
-          “六零”示范工厂是建材行业企业转型发展的重要目标导向，每个“零”都代表一个独立的发展方向，六个方向各有侧重又相互关联、相互促进，生产企业可从“一零”但不限于“一零”起步，不断向“六零”示范工厂迈进，从而推动行业整体实现绿色低碳、安全高质量发展。
-        </p>
-
-        <ul
+        <div
           style={{
             display: "flex",
-            flexWrap: "wrap",
-            margin: "0.3rem 0 0.1rem 0",
-            justifyContent:"space-between"
+            alignItems: "center",
           }}
         >
-          {data.map((item, index) => {
-            return (
-              <li
-                style={{
-                  width: "49%",
-                  display: "flex",
-                  marginBottom:"0.3rem"
-                }}
-              >
-                <div
-                  style={{
-                    background: "#E6EDE6",
-                    borderRadius: "0.05rem",
-                    color: ThemeColor,
-                    fontWeight: "bold",
-                    fontSize: "0.13rem",
-                    // width: "5rem",
-                    height: "0.8rem",
-                    flex: 2,
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    boxShadow: "0 0 0.05rem rgba(0, 0, 0, .2)"
-                  }}
-                >
-                  {item.name}
-                </div>
-                <div
-                  style={{
-                    textAlign: "left",
-                    marginLeft: "0.2rem",
-                    flex: 5,
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                  className="col2"
-                >
-                  {item.txt}
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-        <p className="col3">
-        编辑：《中国建材》杂志
-        </p>
-        <p className="col3" style={{paddingBottom:"0.1rem"}}>
-        内容来源：中国建筑材料联合会
-        </p>
+          <div
+            style={{
+              flex: 4,
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <p className="col">
+              2022年3月21日，中国海油“十四五”重大科研项目CCUS专项启动会在京召开。3月24日，作为“碳达峰碳中和”的重大科技示范项目以及集团公司2021年度十大科技攻关项目——国家能源集团主导的国内最大煤电CCUS示范工程开始现场打桩。2022年4月7日，经济日报指出，CCUS技术是基于基本国情、基本能情实现我国大规模深度减排的必然选择，是我国减少二氧化碳排放的重要战略储备技术。诚然、“碳中和”有两大实现路径：一，通过提升清洁能源占比、提高能源效率等方式降低实际碳排放量；二，针对一些较难降低碳排放的领域，提升碳去除水平。过去，我们的工作重心更多放在“降低碳排放”上。长远看，要实现整体深度脱碳，必须更加重视碳去除技术。考虑到中国国情、能情，能源结构以煤炭为主，油气对外依存度极高，要降低碳排放，大规模提升油气消费占比、抛弃自身煤炭资源优势不仅非常不利于保障能源安全；还会对国内庞大的需求煤基能源的能源、钢铁、水泥等产业造成伤害。在支撑经济合理增长、应对气候变化与保障能源安全的多重目标下，CCUS技术将会是将来的最优解之一。{" "}
+            </p>
+          </div>
+          <div
+            style={{
+              flex: 3,
+              paddingLeft: "0.2rem",
+            }}
+          >
+            <img
+              style={{ width: "100%" }}
+              src={
+                AliOss + `/new_version_0518/information/details_6/table_1.png`
+              }
+              alt=""
+            />
+          </div>
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            marginTop: "0.5rem",
+            height: "2.7rem",
+          }}
+        >
+          <div
+            style={{
+              //   flex: 3,
+              paddingRight: "0.2rem",
+            }}
+          >
+            <img
+              style={{ height: "2.7rem" }}
+              src={
+                AliOss + `/new_version_0518/information/details_6/table_2.png`
+              }
+              alt=""
+            />
+          </div>
+          <div
+            style={{
+              flex: 4,
+              display: "flex",
+              flexDirection: "column",
+              height: "100%",
+              //   alignItems: "center",
+              paddingLeft: "0.2rem",
+            }}
+          >
+            <div
+              className="col"
+              style={{
+                color: ThemeColor,
+                fontWeight: "bold",
+              }}
+            >
+              什么是CCUS？
+            </div>
+            <p className="col">
+              CCUS——是英文Carbon Caputure，Utilization and
+              Storage的缩写，全称二氧化碳捕集利用与封存技术。是指将CO2从工业排放源中分离后或直接加以利用或封存，以实现CO2减排的工业过程。CCUS可以捕集发电和工业过程中使用化石燃料所产生的多达90%的CO2，脱碳水平较高。据IEA的研究结果显示，要达到巴黎协议2℃的气候目标，到2060年，累计减排量的14%将来自于CCUS，且任何额外减排量的37%
+              也来自于CCUS。IPCC 等国际机构也证实没有
+              CCUS就无法实现国际气候变化目标。作为实现碳达峰、碳中和的重要途径。CCUS按照流程可分为捕集、输送、利用与封存几大环节。{" "}
+            </p>
+          </div>
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            marginTop: "0.5rem",
+            height: "2.3rem",
+          }}
+        >
+          <div
+            style={{
+              flex: 4,
+              display: "flex",
+              flexDirection: "column",
+              height: "100%",
+              //   alignItems: "center",
+              paddingRight: "1rem",
+              justifyContent: "center",
+            }}
+          >
+            <div
+              className="col"
+              style={{
+                color: ThemeColor,
+                fontWeight: "bold",
+              }}
+            >
+              CO2捕集
+            </div>
+            <p className="col">
+              是指将电力、钢铁、水泥等行业利用化石能源过程中产生的CO2进行分离和富集、得到大量的纯度达到99%以上的CO2的工业过程。目前最广泛应用的技术是溶剂捕获CO2——收集处理柱内的工业烟气后添加溶剂将CO2与其他成分分离，回收完CO2后将其液化、储存，或直接以气态的形式输送走。{" "}
+            </p>
+          </div>
+
+          <img
+            style={{ height: "100%" }}
+            src={AliOss + `/new_version_0518/information/details_6/table_3.png`}
+            alt=""
+          />
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginTop: "0.4rem",
+            height: "4.5rem",
+            overflow: "hidden",
+          }}
+        >
+          <img
+            style={{ height: "100%" }}
+            src={AliOss + `/new_version_0518/information/details_6/table_4.png`}
+            alt=""
+          />
+          <img
+            style={{ height: "100%" }}
+            src={AliOss + `/new_version_0518/information/details_6/table_5.png`}
+            alt=""
+          />
+          <img
+            style={{ height: "100%" }}
+            src={AliOss + `/new_version_0518/information/details_6/table_6.png`}
+            alt=""
+          />
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            marginTop: "0.5rem",
+            height: "2.6rem",
+          }}
+        >
+          <div
+            style={{
+              flex: 4,
+              display: "flex",
+              flexDirection: "column",
+              height: "100%",
+              //   alignItems: "center",
+              //   paddingRight: "1rem",
+              justifyContent: "space-between",
+            }}
+          >
+            <div
+              className="col"
+              style={{
+                color: ThemeColor,
+                fontWeight: "bold",
+              }}
+            >
+              CO2运输
+            </div>
+            <p className="col" style={{ lineHeight: "0.3rem !important" }}>
+              是指将捕集的CO2运送到利用或封存地的过程，根据运输方式的不同，主要分为管道、船舶、公路槽车和铁路槽车运输四种。{" "}
+            </p>
+            <section>
+              <img
+                style={{ width: "50%" }}
+                src={
+                  AliOss + `/new_version_0518/information/details_6/table_7.png`
+                }
+                alt=""
+              />
+              <img
+                style={{ width: "50%" }}
+                src={
+                  AliOss + `/new_version_0518/information/details_6/table_7.png`
+                }
+                alt=""
+              />
+            </section>
+          </div>
+
+          <img
+            style={{ height: "100%" }}
+            src={AliOss + `/new_version_0518/information/details_6/table_9.png`}
+            alt=""
+          />
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            marginTop: "0.5rem",
+            height: "2.7rem",
+          }}
+        >
+          <div
+            style={{
+              //   flex: 3,
+              paddingRight: "0.2rem",
+            }}
+          >
+            <img
+              style={{ height: "2.7rem" }}
+              src={
+                AliOss + `/new_version_0518/information/details_6/table_10.png`
+              }
+              alt=""
+            />
+          </div>
+          <div
+            style={{
+              flex: 4,
+              display: "flex",
+              flexDirection: "column",
+              height: "100%",
+              //   alignItems: "center",
+              paddingLeft: "0.2rem",
+              justifyContent: "center",
+            }}
+          >
+            <div
+              className="col"
+              style={{
+                color: ThemeColor,
+                fontWeight: "bold",
+              }}
+            >
+              CO2利用
+            </div>
+            <p className="col">
+              是指利用CO2的物理、化学或生物作用，在减少CO2排放的同时实现能源增产增效、矿产资源增采、化学品转化合成、生物农产品增产利用和消费品生产利用等，是具有附带经济效益的减排途径，作为CCUS的最终阶段之一同时也是CCUS重要的环节之一，是CCUS技术是否能从现阶段的以政府引导为主转向政府引导+市场引导的关键因素之一。{" "}
+            </p>
+          </div>
+        </div>
+
+       
+      
       </div>
     </div>
   );
