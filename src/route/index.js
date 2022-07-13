@@ -13,8 +13,9 @@ import Dynamic from "../page/dynamic/index"; // 联盟动态
 import Scope from "../page/scope/index"; // 业务范围
 import Consult from '../page/consult/index'; // 双碳咨询
 import SubIframe from '../page/consult/iframe'; // 双碳子页面
-import ConsultSub1 from '../page/consult/sub/sub1' //双碳子页面1
-import ConsultSub2 from '../page/consult/sub/sub2' //双碳子页面1
+import ConsultSub1 from '../page/consult/sub/sub1' //双碳子页面
+import ConsultSub2 from '../page/consult/sub/sub2' 
+import ConsultSub3 from '../page/consult/sub/sub3' 
 
 import NewsDetail2 from "../page/news/detail2";
 import NewsDetail3 from "../page/news/detail3";
@@ -42,6 +43,7 @@ const Routers = () => {
           <Route path='/consult' exact component={Consult}/>
           <Route path='/consult/1' exact component={ConsultSub1}/>
           <Route path='/consult/2' exact component={ConsultSub2}/>
+          <Route path='/consult/3' exact component={ConsultSub3}/>
 
           <Route path="/" exact component={Home} />
         </Switch>

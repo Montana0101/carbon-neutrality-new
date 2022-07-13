@@ -670,7 +670,7 @@ export default function Home(props) {
         style={{ borderTop: CutLine, padding: "0 0.5rem" }}
         className="news_area"
       >
-        <ul style={{ display: "flex" }}>
+        <ul style={{ display: "flex",margin:"0" }}>
           {news.map((item, index) => {
             return (
               <li

@@ -202,7 +202,7 @@ const AboutLeague = () => {
         </div>
 
         <div style={{ borderTop: CutLine, padding: '0 0.5rem', borderBottom: CutLine }}>
-            <ul style={{ display: "flex", borderLeft: CutLine, borderRight: CutLine }}>
+            <ul style={{ display: "flex", borderLeft: CutLine, borderRight: CutLine,margin:0 }}>
                 {data.map((item, index) => {
                     return (
                         <li key={index} style={{

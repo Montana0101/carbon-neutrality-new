@@ -10,7 +10,7 @@ import {
 } from "../../../lib/const";
 import { useHistory } from "react-router-dom";
 
-import "./sub1.less";
+import "./default.less";
 
 const data = [
   {
