@@ -1,9 +1,19 @@
 // 双碳咨讯
 import React, { useState, useEffect } from "react";
-import { AliOss, ThemeColor, CutLine } from "../../../lib/const";
-import { useHistory } from "react-router-dom";
-import "./default.less";
+import {
+  AliOss,
+  ThemeColor,
+  CutLine,
+  barFontSize,
+  barHeight,
+  IframeUrl,
+} from "../../../lib/const";
+import { Popover, Steps } from "antd";
 
+import { useHistory } from "react-router-dom";
+
+import "./default.less";
+const { Step } = Steps;
 const data = [
   {
     name: "“零外购电”工厂",
@@ -36,8 +46,14 @@ const data = [
       "是指综合应用数字化、自动化、网络化控制技术，实现从原料到产品全过程智能控制，生产一线无需配备人员的工厂。",
   },
 ];
+const year = [2009, 2015, 2017, 2020];
 
-const ConsultSub4 = () => {
+const ConsultSub6 = () => {
+  const [inx, setInx] = useState(0);
+  const [flag, setFlag] = useState(false);
+  const [plus, setPlus] = useState(false);
+  const [overInx, setOverInx] = useState(0);
+
   const history = useHistory();
 
   return (
@@ -121,7 +137,7 @@ const ConsultSub4 = () => {
             alignItems: "center",
             fontWeight: "bold",
             fontSize: "0.3rem",
-            marginBottom: "0.3rem",
+            marginBottom:"0.3rem"
           }}
         ></div>
 
@@ -158,7 +174,7 @@ const ConsultSub4 = () => {
             display: "flex",
             flexWrap: "wrap",
             margin: "0.3rem 0 0.1rem 0",
-            justifyContent: "space-between",
+            justifyContent:"space-between"
           }}
         >
           {data.map((item, index) => {
@@ -167,7 +183,7 @@ const ConsultSub4 = () => {
                 style={{
                   width: "49%",
                   display: "flex",
-                  marginBottom: "0.3rem",
+                  marginBottom:"0.3rem"
                 }}
               >
                 <div
@@ -183,7 +199,7 @@ const ConsultSub4 = () => {
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    boxShadow: "0 0 0.05rem rgba(0, 0, 0, .2)",
+                    boxShadow: "0 0 0.05rem rgba(0, 0, 0, .2)"
                   }}
                 >
                   {item.name}
@@ -204,13 +220,15 @@ const ConsultSub4 = () => {
             );
           })}
         </ul>
-        <p className="col3">编辑：《中国建材》杂志</p>
-        <p className="col3" style={{ paddingBottom: "0.1rem" }}>
-          内容来源：中国建筑材料联合会
+        <p className="col3">
+        编辑：《中国建材》杂志
+        </p>
+        <p className="col3" style={{paddingBottom:"0.1rem"}}>
+        内容来源：中国建筑材料联合会
         </p>
       </div>
     </div>
   );
 };
 
-export default ConsultSub4;
+export default ConsultSub6;
