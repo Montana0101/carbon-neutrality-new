@@ -558,10 +558,15 @@ const ConsultSub6 = () => {
               }
               alt=""
             />
-            <p className="col" style={{
-                textAlign:"center",
-                color:"rgba(0,0,0,0.7"
-            }}>燃煤电厂燃烧成本推移图</p>
+            <p
+              className="col"
+              style={{
+                textAlign: "center",
+                color: "rgba(0,0,0,0.7",
+              }}
+            >
+              燃煤电厂燃烧成本推移图
+            </p>
           </div>
           <div style={{ width: "50%" }}>
             <img
@@ -571,16 +576,26 @@ const ConsultSub6 = () => {
               }
               alt=""
             />
-             <p className="col" style={{
-                textAlign:"center", color:"rgba(0,0,0,0.7"
-            }}> 欧洲、上海碳配额价格推移图</p>
+            <p
+              className="col"
+              style={{
+                textAlign: "center",
+                color: "rgba(0,0,0,0.7",
+              }}
+            >
+              {" "}
+              欧洲、上海碳配额价格推移图
+            </p>
           </div>
         </div>
-        <p className="col3" style={{ paddingBottom: "0",paddingTop:"0.2rem" }}>
-        信息来源：3060
+        <p
+          className="col3"
+          style={{ paddingBottom: "0", paddingTop: "0.2rem" }}
+        >
+          信息来源：3060
         </p>
         <p className="col3" style={{ paddingBottom: "0.1rem" }}>
-        内容来源：上元汇
+          内容来源：上元汇
         </p>
       </div>
     </div>

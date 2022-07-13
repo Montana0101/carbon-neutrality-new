@@ -52,7 +52,7 @@ const ConsultSub5 = () => {
 
   return (
     <div
-      className="page_sub4"
+      className="page_sub5"
       style={{
         height: "auto",
         width: "100%",
@@ -102,9 +102,7 @@ const ConsultSub5 = () => {
           </span>
           <span style={{ margin: "0 0.1rem" }}>/</span>
           <span>
-            {" "}
-            建材行业“六零”示范工厂诠释 |
-            “双碳”之下，“六零”示范工厂引领行业新未来
+            碳中和与大重构，供给侧改革、能源革命与产业升级|碳中和深度报告
           </span>
         </h3>
       </div>
@@ -119,104 +117,348 @@ const ConsultSub5 = () => {
           textAlign: "left",
         }}
       >
+        <p
+          className="col_t"
+          style={{
+            color: ThemeColor,
+            fontWeight: "bold",
+            textAlign: "center",
+          }}
+        >
+          导语
+        </p>
+        <p className="col">
+          “排碳限制”的本质，是一种发展权的限制；而“碳关税”的本质，是应对贸易
+          劣势的一种手段，而这种劣势，可能一部分是由实施碳减排后成本增加而造成的。站在我国的角度：“碳关税”既是贸易壁垒“压力”，也是产业结构升级的“动力”。{" "}
+        </p>
         <div
           style={{
             color: "white",
-            backgroundImage: `url(${AliOss}/new_version_0518/information/details_4/banner.png)`,
+            backgroundImage: `url(${AliOss}/new_version_0518/information/details_5/banner.png)`,
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
-            height: "2.5rem",
+            height: "3.2rem",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
             fontWeight: "bold",
             fontSize: "0.3rem",
-            marginBottom: "0.3rem",
+            margin: "0.2rem 0",
           }}
         ></div>
 
-        <p className="col">
-          2021年12月29日，中国建筑材料联合会六届理事会二次会议召开，党委书记、会长阎晓峰代表联合会明确提出“要着重组织打造零外购电、零化石能源、零一次资源、零碳排放、零废弃物排放、零员工的建材行业绿色节能、能源安全、资源综合利用、低碳、清洁、智能的‘六零’示范工厂，并作为行业企业长远发展导向”。{" "}
-        </p>
-        <p className="col">
-          “六零”示范工厂概念一经提出，获得了业内的高度重视,也引发了社会的广泛关注。“六零”示范工厂有怎样的现实意义和发展前景？其具体内涵又包含哪些内容？近日，中国建筑材料联合会对建材行业“六零”示范工厂概念进行诠释，以促进建材行业企业对“六零”示范工厂有更清晰、更全面的认识，推动全行业凝心聚力，以“双碳”工作为统领，加大技术创新力度，加快改造升级步伐，尽快建成一批“六零”示范工厂（车间、企业、园区），为践行“宜业尚品、造福人类”行业发展目标，推进绿色低碳安全高质量发展，提供先进经验和示范标杆。{" "}
-        </p>
-        <p className="col" style={{ color: ThemeColor, fontWeight: "bold" }}>
-          建材行业“六零”示范工厂是指：零外购电工厂、零化石能源工厂、零一次资源工厂、零碳排放工厂、零废弃物排放工厂、零员工工厂。
-        </p>
-        <p className="col">
-          “六零”示范工厂概念，是建材行业深入贯彻新发展理念，在习近平生态文明思想指引下，在“碳达峰、碳中和”历史进程中，积极应对行业能源资源承载型和污染排放较高的现状，充分发挥建材行业资源综合利用、协同处置及作为为光伏、风电等新能源技术装备制造所需材料的生产行业的优势，从绿色节能、能源安全、资源综合利用、低碳、清洁、智能六个维度，创新性提出的建材行业企业转型升级的长远发展导向，是“宜业尚品、造福人类”行业发展目标中“宜业”的具体实践。
-        </p>
-
-        <div
-          className="col"
+        <p
+          className="col_t"
           style={{
             color: ThemeColor,
             fontWeight: "bold",
-            marginTop: "0.3rem",
             textAlign: "center",
           }}
         >
-          建材行业“六零”示范工厂
-        </div>
+          碳中和与大重构：供给侧改革、能源革命与产业升级
+        </p>
         <p className="col">
-          “六零”示范工厂是建材行业企业转型发展的重要目标导向，每个“零”都代表一个独立的发展方向，六个方向各有侧重又相互关联、相互促进，生产企业可从“一零”但不限于“一零”起步，不断向“六零”示范工厂迈进，从而推动行业整体实现绿色低碳、安全高质量发展。
+          “碳中和”是我国能源安全和经济转型的内在需求，也是世界各国利益对立和统一。其中对立体现在“碳排放权”背后发展权的博弈，统一体现在全球应对气候变化政策的一致。相比发达国家，我国实现“碳中和”的年限更短，碳排放下降的斜率更大。基于碳排放来源的燃烧、非燃烧过程，我们构建了“碳中和”的实现路径：1）供给侧提高可再生能源比例，构建零碳电力为主、氢能为辅的能源结构，同时大力发展储能以保障电网平衡；2）需求侧从工业、交通、建筑三个部门着手，全面推广终端电气化、源头减量、节能提效；3）改良工业过程，针对工业原料的氧化还原、分解采取针对性的原料替换。{" "}
         </p>
 
-        <ul
+        <p
+          className="col_t"
           style={{
-            display: "flex",
-            flexWrap: "wrap",
-            margin: "0.3rem 0 0.1rem 0",
-            justifyContent: "space-between",
+            color: ThemeColor,
+            fontWeight: "bold",
+            textAlign: "center",
           }}
         >
-          {data.map((item, index) => {
-            return (
-              <li
-                style={{
-                  width: "49%",
-                  display: "flex",
-                  marginBottom: "0.3rem",
-                }}
-              >
-                <div
-                  style={{
-                    background: "#E6EDE6",
-                    borderRadius: "0.05rem",
-                    color: ThemeColor,
-                    fontWeight: "bold",
-                    fontSize: "0.13rem",
-                    // width: "5rem",
-                    height: "0.8rem",
-                    flex: 2,
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    boxShadow: "0 0 0.05rem rgba(0, 0, 0, .2)",
-                  }}
-                >
-                  {item.name}
-                </div>
-                <div
-                  style={{
-                    textAlign: "left",
-                    marginLeft: "0.2rem",
-                    flex: 5,
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                  className="col2"
-                >
-                  {item.txt}
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-        <p className="col3">编辑：《中国建材》杂志</p>
-        <p className="col3" style={{ paddingBottom: "0.1rem" }}>
-          内容来源：中国建筑材料联合会
+          六大路线：源头减量、能源替代、节能提效、回收利用、工艺改造、碳捕集
+        </p>
+        <p className="col2">
+          1）<span style={{ color: ThemeColor }}>源头减量</span>
+          ：短期减排压力下，政府可能通过“能耗”等措施进行供给侧改革，需要关注是否发生阶段性冲刺，引发大宗商品价格进一步上涨。吨产品能耗大户：电解铝、硅铁（钢铁）、石墨电极、水泥、铜加工、烧碱、涤纶、黄磷、锌等；
+        </p>
+        <p className="col2">
+          2）<span style={{ color: ThemeColor }}>能源替代</span>
+          ：以风光、储能、氢能、新能源汽车为代表的的新能源行业，包括供应链上下游、制造端、运营端在内的全产业链都将受益于碳中和对投资的拉动；
+        </p>
+        <p className="col2">
+          3）<span style={{ color: ThemeColor }}>节能提效</span>
+          ：工业节能、建筑节能及节能设备将受益；
+        </p>
+        <p className="col2">
+          4）<span style={{ color: ThemeColor }}>回收利用</span>
+          ：再生资源的回收利用可以有效减少初次生产过程中的碳排放，如废钢、电池回收、垃圾分类及固废处理；
+        </p>
+        <p className="col2">
+          5）<span style={{ color: ThemeColor }}>工艺改造</span>
+          ：主要集中在电池技术升级、智慧电网、分布式电源、特高压、能源互联网、装配式等方面；
+        </p>
+        <p className="col2">
+          6）<span style={{ color: ThemeColor }}>碳捕集</span>
+          ：部分路径碳减排的难度较大，二氧化碳捕集、利用与封存可能作为“兜底”技术存在。目前来看成本处于高位，不同路线成本在700-1500元/吨风险分析：政策不及预期，技术路线发展不及预期，能源系统出现超预期事件。
+        </p>
+
+        <div
+          className="col_t"
+          style={{
+            color: ThemeColor,
+            fontWeight: "bold",
+            textAlign: "center",
+            marginTop: "0.2rem",
+          }}
+        >
+          1. 碳中和：大重构
+        </div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "flex-end",
+            marginTop: "0.5rem",
+          }}
+        >
+          <div
+            style={{
+              flex: 4,
+              display: "flex",
+              flexDirection: "column",
+              height: "100%",
+              paddingRight: "0.3rem",
+              justifyContent: "center",
+            }}
+          >
+            <p className="col2" style={{ color: ThemeColor }}>
+              1.1.发展的权利：
+            </p>
+            <p className="col2">
+              大国博弈与利益统一站在全球视角，我们认为中国加快“碳达峰、碳中和”主要基于以下三方面推动：
+            </p>
+            <p className="col" style={{ color: ThemeColor }}>
+              （1）“碳中和”是中国经济的内在需求——能源保障、产业转型在能源保障方面：
+            </p>
+            <p className="col">
+              2020 年底，我国原油进口依赖度达 73%，天然气进口依赖度 也在
+              40%以上；基于能源保障考虑，发展新能源具有必要性。与此同时，我国
+              已在新能源领域建立起全球优势。根据麦肯锡测算，我国在太阳能电池板领域的
+              国家表现远超美国，在所有行业对比中位列第一。
+            </p>
+            <p className="col">
+              在产业转型方面：虽然“新冠疫情”对全球经济的负面影响正在逐步消除，但是
+              仍有流动性泛滥、债务问题等未来潜在的风险点；中国经济已经取得了长足的进
+              度，然而面对比如贸易摩擦、技术封锁等复杂的国际形势，做好自己显得尤为重
+              要，科技创新和产业升级将是未来重要的发展方向，加快新产业的战略布局，产
+              业结构调整的力度前所未有，步伐明显加快，在能源与资源领域、网络信息领域、
+              先进材料与制造领域、农业领域、人口健康领域等出现科技革命的可能性较大。“碳减排”作为重要的抓手，通过“碳成本”这一要素的流动，推动我国产业结
+              构性改革。
+            </p>
+          </div>
+
+          <img
+            style={{ width: "3.7rem" }}
+            src={AliOss + `/new_version_0518/information/details_5/table_1.png`}
+            alt=""
+          />
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            alignItems: "flex-end",
+            marginTop: "0.2rem",
+          }}
+        >
+          <div
+            style={{
+              flex: 4,
+              display: "flex",
+              flexDirection: "column",
+              height: "100%",
+              paddingRight: "0.3rem",
+              justifyContent: "center",
+            }}
+          >
+            <p className="col" style={{ color: ThemeColor }}>
+              （2）“碳中和”的对立性——大国博弈、贸易摩擦：
+            </p>
+            <p className="col">
+              部分发达国家其实此前已多次讨论过包括对中国在内的不实施碳减排限额国家
+              的进口产品征收“碳关税”，但因经济与贸易依赖性、碳市场不成熟等原因而搁
+              浅。根据 OECD 数据，2015 年我国对外出口约 6 亿吨 CO2，其中对美出口
+              2.26 亿 吨，占比约 35%。假设国际对我国按 40
+              美元/吨征收碳税，增加开支约 260 亿 美元；按 100 美元/吨，增加 650
+              亿美元。假设我国碳排放成本全部内部化，2019 年我国碳排放 98.26
+              亿吨，按碳价 100 美元/吨测算，需 9826 亿美元。
+            </p>
+            <p className="col">
+              “排碳限制”的本质，是一种发展权的限制；而“碳关税”的本质，是应对贸易
+              劣势的一种手段，而这种劣势，可能一部分是由实施碳减排后成本增加而造成的。站在我国的角度：“碳关税”既是贸易壁垒“压力”，也是产业结构升级的“动力”。
+            </p>
+          </div>
+
+          <img
+            style={{ width: "3.7rem" }}
+            src={AliOss + `/new_version_0518/information/details_5/table_2.png`}
+            alt=""
+          />
+        </div>
+
+        <p className="col">
+          为什么“新冠疫情”后，我国推动“碳中和”更加迅速？——增加国际声誉和话
+          语权。2019 年我国碳排放量达 98.26 亿吨位列全球第一（人均碳排放和碳排放
+          量/GDP 均相对较低），自 2005 年以来为全球碳排放总量最高的国家（加入世
+          贸组织后，全球产业链分工变化所致）。近年来我国碳排放增速已有所放缓，但
+          较为庞大的人口基数使得我国碳排放全球占比仍在持续提升，2019 年达
+          28.76%。而针对“新冠疫情”源头问题，经常有部分西方国家和人员因政治原因公开抹黑
+          中国。而加速推动“碳中和”将助力我国树立负责任的大国形象，在国际气候法
+          律秩序构建中争取获得“话语权”，并掌握未来全球“游戏规则”的主动权和制
+          定权。目前，全人类气候目标竞赛已经开启，根据 EnergyClimate
+          机构推出的净零排 放竞赛计分卡，目前我国已处于第四梯队，位列全球第 28
+          位。
+        </p>
+
+        <p className="col" style={{ color: ThemeColor }}>
+          （3）“碳中和”的统一性：
+        </p>
+        <p className="col">
+          全球难得的政策与利益一致点从全球来看，多数国家已更新
+          NDC（国家自主贡献）目标。“碳中和”已成为
+          全球大趋势。拜登上台后，美国重新加入《巴黎协定》，应对气候变化是拜登此次总统竞选的
+          核心承诺之一，未来美国将在全球气候变化、新能源发展方面采取更多的措施。虽然前期中美在贸易和技术层面有着种种的不愉快，但是在应对全球气候变化方
+          面，无论是中美还是全球，在碳中和方面，具有相同的利益和方向。
+        </p>
+
+        <div
+          style={{
+            display: "flex",
+            alignItems: "flex-end",
+            marginTop: "0.2rem",
+            height: "3rem",
+          }}
+        >
+          <div
+            style={{
+              flex: 4,
+              display: "flex",
+              flexDirection: "column",
+              height: "100%",
+              paddingRight: "0.5rem",
+              justifyContent: "center",
+            }}
+          >
+            <p className="col2" style={{ color: ThemeColor }}>
+              1.2.我国的碳减排将是一段艰苦的历程：
+            </p>
+
+            <p className="col">
+              尽管全球越来越多的政府正在将碳中和目标纳入国家战略，但就具体目标而言，
+              仍有区别。如欧盟在 2020 年 3
+              月提交《气候中性法》，旨在从法律层面确保欧洲到2050
+              年成为首个“气候中性”大陆。美国加州和中国分别制定了 2045 年 和 2060
+              年“碳中和”目标。加州的目标包括削减所有温室气体排放，包括二氧
+              化碳、甲烷等，并抵消其无法削减的排放量，而中国的目标仅针对二氧化碳。我国碳排放下降斜率更大。由于发展阶段的不同，发达国家已普遍经历“碳达峰”，为达到
+              2050 年“碳中和”，更大程度上只是延续以往的减排斜率。而我国碳排
+              放总量仍在增加，需要经历 2030 年前“碳达峰”，然后走向 2060
+              年前“碳中
+              和”。从实现“碳中和”的年限来看，比发达国家时间更紧迫，碳排放下降的斜率更大。
+            </p>
+          </div>
+
+          <img
+            style={{ height: "2.5rem" }}
+            src={AliOss + `/new_version_0518/information/details_5/table_3.png`}
+            alt=""
+          />
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            alignItems: "flex-end",
+            height: "3rem",
+          }}
+        >
+          <img
+            style={{ height: "2.5rem" }}
+            src={AliOss + `/new_version_0518/information/details_5/table_4.png`}
+            alt=""
+          />
+          <div
+            style={{
+              flex: 4,
+              display: "flex",
+              flexDirection: "column",
+              height: "100%",
+              paddingLeft: "0.5rem",
+              justifyContent: "center",
+              verticalAlign: "middle",
+            }}
+          >
+            <p
+              className="col"
+              style={{ height: "100%", display: "flex", alignItems: "center" }}
+            >
+              尽管全球越来越多的政府正在将碳中和目标纳入国家战略，但就具体目标而言，
+              仍有区别。如欧盟在 2020 年 3
+              月提交《气候中性法》，旨在从法律层面确保欧洲到2050
+              年成为首个“气候中性”大陆。美国加州和中国分别制定了 2045 年 和 2060
+              年“碳中和”目标。加州的目标包括削减所有温室气体排放，包括二氧
+              化碳、甲烷等，并抵消其无法削减的排放量，而中国的目标仅针对二氧化碳。我国碳排放下降斜率更大。由于发展阶段的不同，发达国家已普遍经历“碳达峰”，为达到
+              2050 年“碳中和”，更大程度上只是延续以往的减排斜率。而我国碳排
+              放总量仍在增加，需要经历 2030 年前“碳达峰”，然后走向 2060
+              年前“碳中
+              和”。从实现“碳中和”的年限来看，比发达国家时间更紧迫，碳排放下降的斜率更大。
+            </p>
+          </div>
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            alignItems: "flex-end",
+            marginTop: "0.2rem",
+            height: "3rem",
+          }}
+        >
+          <div
+            style={{
+              flex: 4,
+              display: "flex",
+              flexDirection: "column",
+              height: "100%",
+              paddingRight: "0.5rem",
+              justifyContent: "center",
+            }}
+          >
+            <p className="col2" style={{ color: ThemeColor }}>
+              1.3.“碳中和”对我国意味着什么？
+            </p>
+
+            <p className="col">
+              在碳排放量结构方面，目前发电已成为占比最高的部门。2019
+              年我国碳排放量 115 亿吨，其中发电碳排放量 45.69 亿吨 CO2，占比
+              40%；工业燃烧碳排放量 33.12 亿吨 CO2，占比
+              29%。各大碳排放重点国家中，除美国外，碳排放占比最高的均为发电部门（美国为交通，占比
+              45%）。因此，要实现“碳中和”，能源转型首当其冲。广义的能源板块包括能源的产生、转换、消费过程，用途包括驱动、产热等，是
+              大多数温室气体排放的根源。除此之外，交通、工业过程和农业也是温室气体排
+              放的主要来源。
+            </p>
+          </div>
+
+          <img
+            style={{ height: "2.5rem" }}
+            src={AliOss + `/new_version_0518/information/details_5/table_5.png`}
+            alt=""
+          />
+        </div>
+
+        <p className="col2" style={{ color: ThemeColor }}>
+          从微观角度看，工业企业碳核算边界内主要包含三个方面：
+        </p>
+        <p className="col2">1）燃料在氧化燃烧过程中产生的温室气体排放；</p>
+        <p className="col2">
+          2）在生产、废弃物处理处置过程中除燃料燃烧之外的物理或化学变化造成的温
+          室气体排放；
+        </p>
+        <p className="col2">
+          3）企业输入/出的电力、热力所对应的电力、热力生产环节产生的二氧化碳排放。这意味着我们需要从燃料燃烧/非燃烧过程着手，向可再生能源转变；或通过节
+          能降耗的措施减少二氧化碳的排放。
         </p>
       </div>
     </div>
