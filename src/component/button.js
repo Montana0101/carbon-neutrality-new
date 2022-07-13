@@ -10,8 +10,9 @@ export const NavigateButton = (props) => {
       onClick={() => {
    
         if (props.path != "news0") {
-        //   window.location.href = props.path;
-        history.push(props.path)
+          window.location.href = props.path;
+        // history.push(props.path)
+
         } else {
           window.open(
             "https://mp.weixin.qq.com/s/02SNGgy2hPyIGckaF6oz3g",

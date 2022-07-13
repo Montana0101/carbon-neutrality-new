@@ -73,7 +73,7 @@ let HeaderCmt = () => {
       setInx(4);
     } else if (href.indexOf("dynamic") != -1) {
       setInx(2);
-    } else if (href.indexOf("news") != -1) {
+    } else if (href.indexOf("/news") != -1) {
       setInx(2);
     } else if (href.indexOf("scope") != -1) {
       setInx(3);

@@ -728,6 +728,7 @@ export default function Home(props) {
                     // if (index == 0) {
                     //   window.open('https://mp.weixin.qq.com/s/02SNGgy2hPyIGckaF6oz3g','_blank')
                     // }
+                    
                   }}
                 >
                   <NavigateButton
