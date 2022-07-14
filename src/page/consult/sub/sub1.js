@@ -144,12 +144,11 @@ const ConsultSub1 = () => {
                     boxShadow: "0px 5px 5px -5px grey",
                   }}
                 >
-                  <span>{item.title}</span>
-                  <span>{item.en}</span>
+                  <span style={{   fontWeight: "bold"}}>{item.title}</span>
+                  <span style={{   fontWeight: "bold"}}>{item.en}</span>
                 </p>
                 <div
                   style={{
-                    color: "rgba(0,0,0,0.5)",
                     fontSize: "0.12rem",
                     padding: "0.2rem 0.15rem",
                     textAlign: "left",
@@ -159,6 +158,7 @@ const ConsultSub1 = () => {
                     height: "2.2rem",
                     overflow: "hidden",
                   }}
+                  className="col_act"
                 >
                   {item.content}
                 </div>

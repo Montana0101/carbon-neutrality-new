@@ -138,6 +138,7 @@ const Consult = () => {
                           textDecoration: "underline",
                         }}
                         onClick={() => {
+                          window.scroll(0, 0);
                           history.push(`/consult/${index + 1}`);
                           // window.location.href=`/information/${index+1}`
                         }}
@@ -199,6 +200,7 @@ const Consult = () => {
                           textDecoration: "underline",
                         }}
                         onClick={() => {
+                          window.scroll(0, 0);
                           history.push(`/consult/${index + 1}`);
                           // window.location.href=`/information/${index+1}`
                         }}

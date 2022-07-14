@@ -145,6 +145,7 @@ const ConsultSub4 = () => {
             fontWeight: "bold",
             marginTop: "0.3rem",
             textAlign: "center",
+            fontSize:"0.13rem"
           }}
         >
           建材行业“六零”示范工厂
