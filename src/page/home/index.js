@@ -132,6 +132,11 @@ export default function Home(props) {
       if (res.success) {
         message.success("感谢您的咨询，请耐心等待我们的回复。");
         setModalVisible(false);
+        formRef.current.setFieldsValue({
+          name: "",
+          phone: "",
+          content: "",
+        });
       } else {
         message.error(res.msg);
       }
@@ -230,7 +235,7 @@ export default function Home(props) {
             您也可以选择以下方式直接进行咨询：
           </Row>
           <Row style={{ color: "rgba(0,0,0,0.5)", fontSize: "0.14rem" }}>
-            电话：021-66858866 邮箱：hr@stiacn.com
+            电话：021-66858866 邮箱：green@stiacn.com
           </Row>
         </Form>
       </Modal>

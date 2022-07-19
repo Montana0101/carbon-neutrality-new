@@ -19,7 +19,7 @@ const Login = () => {
                 password
             }
             const res = await login(params)
-            if (res.success) {
+            if (res && res.success) {
                 // 登录成功
                 message.success(res.msg)
                 localStorage.setItem(

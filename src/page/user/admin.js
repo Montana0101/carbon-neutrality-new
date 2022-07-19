@@ -63,7 +63,7 @@ const DemoLine = memo(() => {
   // 折线图数据
   const _yearStatistics = async () => {
     const res = await yearStatistics();
-    if (res && (res && (res.code !== 2000))) {
+    if (res && (res && (res.code === 2000))) {
       // setData(res.result)
       let arr = [];
       res.result.data &&
@@ -341,7 +341,7 @@ function Admin(props) {
   // 读取信息
   const _readMessage = async () => {
     const res = await readMessage();
-    if (res && (res.code !== 2000)) {
+    if (res && (res.code === 2000)) {
       console.warn("readMessage 接口功能异常");
     }
   };
@@ -349,7 +349,7 @@ function Admin(props) {
   // 今天待审核人数
   const _todayPendings = async () => {
     const res = await todayPending();
-    if (res && (res.code !== 2000)) {
+    if (res && (res.code === 2000)) {
       setPendings(res.result);
     }
   };
@@ -357,7 +357,7 @@ function Admin(props) {
   // 累计注册人数
   const _totalRegister = async () => {
     const res = await totalRegister();
-    if (res && (res.code !== 2000)) {
+    if (res && (res.code === 2000)) {
       setTotalRegisters(res.result);
     }
   };
@@ -376,7 +376,7 @@ function Admin(props) {
       applyTimeEnd: applyArr[1] ? applyArr[1] : "",
     };
     const res = await adminManageList(params);
-    if (res && (res.code !== 2000)) {
+    if (res && (res.code === 2000)) {
       let arr = res.result.data;
       arr &&
         arr.map((item, index) => {
@@ -384,6 +384,7 @@ function Admin(props) {
         });
       setList(arr);
       setTotal(res.result.totalRecord);
+      console.log("单刷uidhasiu",arr)
       console.log("page is ", page);
     }
   };
@@ -401,7 +402,7 @@ function Admin(props) {
       consultTimeEnd: consultArr[1] ? consultArr[1] : "",
     };
     const res = await consultList(params);
-    if (res && (res.code !== 2000)) {
+    if (res && (res.code === 2000)) {
       let arr = res.result.data;
       arr &&
         arr.map((item, index) => {
@@ -417,7 +418,7 @@ function Admin(props) {
   const _restartUser = async (id) => {
     const res = await restartUser(id);
     // alert(id)
-    if (res && (res.code !== 2000)) {
+    if (res && (res.code === 2000)) {
       message.success("操作成功");
       _adminManageList();
     } else {
@@ -428,7 +429,7 @@ function Admin(props) {
   // 禁用用户
   const _disableUser = async (id) => {
     const res = await disableUser(id);
-    if (res && (res.code !== 2000)) {
+    if (res && (res.code === 2000)) {
       message.success("操作成功");
       _adminManageList();
     } else {
@@ -439,7 +440,7 @@ function Admin(props) {
   // 通过
   const _passUser = async (arr) => {
     const res = await passUser(arr);
-    if (res && (res.code !== 2000)) {
+    if (res && (res.code === 2000)) {
       message.success("操作成功");
       _adminManageList();
     } else {
@@ -450,7 +451,7 @@ function Admin(props) {
   // 驳回
   const _rejectUser = async (arr) => {
     const res = await rejectUser(arr);
-    if (res && (res.code !== 2000)) {
+    if (res && (res.code === 2000)) {
       message.success("操作成功");
       _adminManageList();
     } else {
@@ -461,7 +462,7 @@ function Admin(props) {
   // 已读
   const _readConsult = async (arr) => {
     const res = await readConsult(arr);
-    if (res && (res.code !== 2000)) {
+    if (res && (res.code === 2000)) {
       message.success("操作成功");
       _consultManageList();
     } else {

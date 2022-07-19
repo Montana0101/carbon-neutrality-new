@@ -26,7 +26,7 @@ const DemoPie = memo(() => {
     // 饼图数据
     const _myAttention = async () => {
         const res = await myAttention()
-        if (res && (res.code !== 2000)) {
+        if (res && (res.code === 2000)) {
             if(res.result){
                 setData(res.result.analyList)
                 setTotal(res.result.total)
@@ -175,7 +175,7 @@ function CommonUser(props) {
             limit: 10
         }
         const res = await attentionList(params)
-        if (res && (res.code !== 2000)) {
+        if (res && (res.code === 2000)) {
             let arr = res.result.data
             arr && arr.map((item, index) => {
                 arr[index].key = item.id
@@ -189,7 +189,7 @@ function CommonUser(props) {
     // 关注的信息
     const _attentionInfo = async () => {
         const res = await attentionInfo()
-        if (res && (res.code !== 2000)) {
+        if (res && (res.code === 2000)) {
             setAttention(res.result)
             _attentionList()
         }
@@ -198,7 +198,7 @@ function CommonUser(props) {
     // 取下关注
     const _cancelAttention = async (arr) => {
         const res = await cancelAttention(arr)
-        if (res && (res.code !== 2000)) {
+        if (res && (res.code === 2000)) {
             message.success("操作成功")
         } else {
             message.error("操作失败")
