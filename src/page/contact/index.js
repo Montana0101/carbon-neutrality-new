@@ -74,7 +74,7 @@ const ContactUs = () => {
                             <MailFilled style={{marginRight:"0.08rem",fontSize:"0.12rem"}}/>
                             <span>邮箱</span>
                             <span style={{ margin: '0 0.06rem 0 0.03rem' }}>:</span>
-                            <span>huyu@stiacn.com</span>
+                            <span>green@stian.com</span>
                         </p>
                     </section>
                 </div>

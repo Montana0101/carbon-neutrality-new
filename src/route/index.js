@@ -25,6 +25,9 @@ import NewsDetail2 from "../page/news/detail2";
 import NewsDetail3 from "../page/news/detail3";
 import NewsDetail4 from "../page/news/detail4";
 
+import SearchResult from '../page/result/index'; // 搜索结果页
+import Declare from '../page/user/declare'; // 申报模块
+
 const Routers = () => {
   return (
     // <Router>
@@ -45,6 +48,9 @@ const Routers = () => {
         <Route path="/dynamic" exact component={Dynamic} />
         <Route path="/scope" exact component={Scope} />
         <Route path="/consult" exact component={Consult} />
+        <Route path="/result" exact component={SearchResult} />
+        <Route path="/declare" exact component={Declare}/>
+
         <Route path="/consult/1" exact component={ConsultSub1} />
         <Route path="/consult/2" exact component={ConsultSub2} />
         <Route path="/consult/3" exact component={ConsultSub3} />
