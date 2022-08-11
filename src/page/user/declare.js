@@ -40,6 +40,13 @@ const titles = [
   "提交完成",
 ];
 
+const data = [
+  { name: "流动资产", lineNo: 0 },
+  {
+    name: "流动负债",
+    lineNo: 0,
+  },
+];
 const asset_reducer = (state, action) => {
   const { name } = action;
   switch (action.type) {
@@ -51,20 +58,20 @@ const asset_reducer = (state, action) => {
       return { ...state, ...name };
     case "assetLine2_1":
       return { ...state, ...name };
+    case "assetLine32_0":
+      return { ...state, ...name };
+    case "assetLine32_1":
+      return { ...state, ...name };
+
     default:
       return state;
   }
 };
 
 const asset_init = {
-  financialAssets: {
-    // beginningBalance: 23, //年初余额
-    // companyId: 2, //公司ID
-    // endingBalance: 203, //期末余额
-    // lineNo: 1, //行次
-    // name: "accountsPayable", //资产名称
-  },
+  financialAssets: {}, // 1
   currentProfitLoss: { lineNo: 2 }, //以公允价值计量且其变动计入当期损益的金融负债
+  shortTermBorrowings: {}, //32
 };
 
 const InputCmt = (props) => {
@@ -102,32 +109,59 @@ function Declare(props) {
     setCutEnter(e);
   };
 
+  // 封装订阅
+  const assetDispatch = (no, name) => {
+    // 判断是期末还是年初，true为年初，false为期末
+    let flag = no.substr(no.length - 1, 1) == 0 ? true : false;
+    return asset_dispatch({
+      type: "assetLine" + no,
+      name: {
+        [name]: {
+          beginningBalance: flag
+            ? cutEnter.value
+            : asset_state[name].beginningBalance || 0,
+          endingBalance: flag
+            ? asset_state[name].endingBalance || 0
+            : cutEnter.value,
+        },
+      },
+    });
+  };
+
   useEffect(() => {
-    console.log("监听当前输入事件", cutEnter);
     switch (cutEnter.line) {
+      // 货币资金
       case "1_0":
-        asset_dispatch({
-          type: "assetLine1_0",
-          name: {
-            financialAssets: {
-              beginningBalance: cutEnter.value,
-              endingBalance: asset_state.financialAssets.endingBalance || 0,
-            },
-          },
-        });
+        assetDispatch("1_0", "financialAssets");
         break;
       case "1_1":
-        asset_dispatch({
-          type: "assetLine1_1",
-          name: {
-            financialAssets: {
-              beginningBalance:
-                asset_state.financialAssets.beginningBalance || 0,
-              endingBalance: cutEnter.value,
-            },
-          },
-        });
+        assetDispatch("1_1", "financialAssets");
         break;
+
+      // 短期借款
+      case "32_0":
+        assetDispatch("32_0", "shortTermBorrowings");
+        break;
+      case "32_1":
+        assetDispatch("32_1", "shortTermBorrowings");
+        break;
+
+      // 以公允价值计量且其变动计入当期损益的金融负债
+      case "2_0":
+        assetDispatch("2_0", "currentProfitLoss");
+        break;
+      case "2_1":
+        assetDispatch("2_1", "currentProfitLoss");
+        break;
+
+      // 以公允价值计量且其变动计入当期损益的金融负债
+      case "33_0":
+        assetDispatch("33_0", "currentProfitLoss");
+        break;
+      case "33_1":
+        assetDispatch("33_1", "currentProfitLoss");
+        break;
+
       default:
         return;
     }
@@ -339,45 +373,59 @@ function Declare(props) {
                   <tr>
                     <td>
                       <span>货币资金</span>
-                    </td>{" "}
-                    <td>1</td>
-                    <td>
-                      <InputCmt event={getCutEnter} line={"1_0"} />
                     </td>
+                    <td>1</td>
                     <td>
                       <InputCmt event={getCutEnter} line={"1_1"} />
                     </td>
                     <td>
+                      <InputCmt event={getCutEnter} line={"1_0"} />
+                    </td>
+                    <td>
                       <span>短期借款</span>
-                    </td>{" "}
+                    </td>
                     <td>32</td>
-                    <td></td>
-                    <td></td>
+                    <td>
+                      {" "}
+                      <InputCmt event={getCutEnter} line={"32_1"} />
+                    </td>
+                    <td>
+                      {" "}
+                      <InputCmt event={getCutEnter} line={"32_0"} />
+                    </td>
                   </tr>
                   <tr>
                     <td>
                       <span>以公允价值计量且其变动计入当期损益的金融资产</span>
-                    </td>{" "}
+                    </td>
                     <td>2</td>
-                    <td></td>
-                    <td></td>
+                    <td>
+                      <InputCmt event={getCutEnter} line={"2_1"} />
+                    </td>
+                    <td>
+                      <InputCmt event={getCutEnter} line={"2_0"} />
+                    </td>
                     <td>
                       <span>以公允价值计量且其变动计入当期损益的金融负债</span>
-                    </td>{" "}
+                    </td>
                     <td>33</td>
-                    <td></td>
-                    <td></td>
+                    <td>
+                      <InputCmt event={getCutEnter} line={"2_1"} />
+                    </td>
+                    <td>
+                      <InputCmt event={getCutEnter} line={"2_0"} />
+                    </td>
                   </tr>
                   <tr>
                     <td>
                       <span>应收票据</span>
-                    </td>{" "}
+                    </td>
                     <td>3</td>
                     <td></td>
                     <td></td>
                     <td>
                       <span>应付票据</span>
-                    </td>{" "}
+                    </td>
                     <td>34</td>
                     <td></td>
                     <td></td>
@@ -385,13 +433,13 @@ function Declare(props) {
                   <tr>
                     <td>
                       <span>应收账款</span>
-                    </td>{" "}
+                    </td>
                     <td>4</td>
                     <td></td>
                     <td></td>
                     <td>
                       <span>应付账款</span>
-                    </td>{" "}
+                    </td>
                     <td>35</td>
                     <td></td>
                     <td></td>
