@@ -172,6 +172,12 @@ export const myDeclare = () => {
     return fetchGadget(url, 'GET')
 }
 
+// 普通用户 财务报表 资产负债表
+export const getDeclareBalance = (params) => {
+    const url = `/stiacn-app/declare/balance`
+    return fetchGadget(url, 'POST', params)
+}
+
 // 联盟动态
 export const getNewsList = (params) => {
     let { page, limit } = params

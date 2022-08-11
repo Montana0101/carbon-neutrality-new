@@ -1,11 +1,12 @@
 import { useState, useEffect, memo } from "react";
-import { withRouter ,useHistory} from "react-router-dom";
+import { withRouter, useHistory } from "react-router-dom";
 import {
   cancelAttention,
   myAttention,
   readMessage,
   attentionList,
   attentionInfo,
+  myDeclare,
 } from "../../apis/index";
 import { ThemeColor, CutLine } from "../../lib/const";
 import { ExclamationCircleFilled } from "@ant-design/icons";
@@ -31,7 +32,6 @@ const DemoPie = memo(() => {
   const [data, setData] = useState([]);
   const [total, setTotal] = useState(0);
 
-  
   useEffect(() => {
     _myAttention();
   }, []);
@@ -118,7 +118,7 @@ const ButtonCmt = (bg, color, text, w = "0.8rem") => {
 function CommonUser(props) {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
-  const [tabInx, setTabInx] = useState(2); // tab切换索引
+  const [tabInx, setTabInx] = useState(1); // tab切换索引
 
   const [info, setInfo] = useState({});
   const [list, setList] = useState([]); //返回数据集合
@@ -131,11 +131,10 @@ function CommonUser(props) {
   const [status, setStatus] = useState("");
   // const [data, setData] = useState([]) // 饼图数据
 
-  const history = useHistory()
-
+  const [d_list, setDlist] = useState([]); // 申报列表
+  const history = useHistory();
 
   // 业务咨询
-
   const rowSelection = {
     selectedRowKeys,
     onChange: (selectedRowKeys, selectedRows) => {
@@ -165,23 +164,30 @@ function CommonUser(props) {
 
   // 调用接口
   useEffect(() => {
-    _attentionInfo();
-    // _readMessage()
+    // _attentionInfo();
+    _readMessage();
+    _declareList();
     // _myAttention()
   }, []);
 
   // 用户管理调用列表
   useEffect(() => {
-    if (page == 1) {
-      _attentionList();
-    } else {
-      setPage(1);
+    if (tabInx * 1 === 2) {
+      if (page == 1) {
+        _attentionList();
+      } else {
+        setPage(1);
+      }
     }
   }, [companyName, status]);
 
   useEffect(() => {
-    _attentionList();
-  }, [page]);
+    if (tabInx * 1 == 1) {
+      _declareList();
+    } else {
+      _attentionList();
+    }
+  }, [tabInx, page]);
 
   // 读取信息
   const _readMessage = async () => {
@@ -191,6 +197,7 @@ function CommonUser(props) {
     }
   };
 
+  // 关注列表
   const _attentionList = async () => {
     const params = {
       page,
@@ -207,6 +214,15 @@ function CommonUser(props) {
         });
       setList(arr);
       setTotal(res.result.totalRecord);
+    }
+  };
+
+  // 申报列表
+  const _declareList = async () => {
+    const res = await myDeclare();
+    if (res && res.code === 2000) {
+      setDlist(res.result);
+      setTotal(res.result.length);
     }
   };
 
@@ -229,6 +245,57 @@ function CommonUser(props) {
     }
   };
 
+  // 申报的表格模型
+  const columns_d = [
+    {
+      title: "序号",
+      render: (text, record, index) => {
+        return <span>{index + 1}</span>;
+      },
+    },
+    {
+      title: "状态",
+      render: (text, record, index) => {
+        return <span style={{
+          color: record.declareStatus ==0 ? "#EFA71C" : (record.declareStatus ==1 ? "#5163AA" : ThemeColor)
+        }}>{record.declareStatus ==0 ? "正在编辑" : (record.declareStatus ==1 ? "待审核" : "已审核 " + record.score)}</span>;
+      },
+    },
+    {
+      title: "公司名称",
+      dataIndex: "companyName",
+    },
+    {
+      title: "创建时间",
+      dataIndex: "createTime",
+    },
+    {
+      title: "最后操作时间",
+      dataIndex: "lastUpdateTime",
+    },
+    {
+      title: "操作",
+      width: 200,
+      render: (text, record) => {
+        return (
+          <div style={{ display: "flex", justifyContent: "space-around" }}>
+            <div style={{ marginBottom: "0.05rem" }}>
+              {ButtonCmt(ThemeColor, "white", "编辑")}
+            </div>
+            <div
+              onClick={() => {
+                _cancelAttention([record.id]);
+              }}
+            >
+              {ButtonCmt("#FD867F", "white", "删除")}
+            </div>
+          </div>
+        );
+      },
+    },
+  ]
+
+  // 关注的表格模型
   const columns = [
     {
       title: "序号",
@@ -423,7 +490,7 @@ function CommonUser(props) {
                   }}
                 >
                   <span style={{ fontSize: "0.2rem" }}>
-                    {attention && attention.current}
+                    {attention ? attention.current : 0}
                   </span>
                   <span style={{ fontSize: "0.12rem", marginTop: "0.03rem" }}>
                     个
@@ -455,7 +522,7 @@ function CommonUser(props) {
                   }}
                 >
                   <span style={{ fontSize: "0.2rem" }}>
-                    {attention && attention.total}
+                    {attention ? attention.total : 0}
                   </span>
                   <span style={{ fontSize: "0.12rem", marginTop: "0.03rem" }}>
                     个
@@ -479,20 +546,15 @@ function CommonUser(props) {
         }}
       >
         <Tabs
-          defaultActiveKey="2"
+          defaultActiveKey="1"
           onChange={(e) => {
-            // 清除缓存
             setTabInx(e);
-            // if (e * 1 == 2) {
-            //     message.warn("功能未开放")
-            // }
-            // alert(e)
           }}
           style={{}}
         >
-          <TabPane tab="我的申报" key="2"></TabPane>
-          <TabPane tab="我的关注" key="1">
-            <section style={{ padding: "0.1rem 0.3rem" }}>
+          <TabPane tab="我的申报" key="1"></TabPane>
+          <TabPane tab="我的关注" key="2">
+            <section style={{ padding: "0.2rem 0.3rem",paddingTop:"0.3rem" }}>
               <Form>
                 <Row>
                   <Col span={11}>
@@ -576,9 +638,9 @@ function CommonUser(props) {
             为您找到<span style={{ margin: "0 0.02rem" }}>{total}</span>
             条相关结果
           </div>
-      
+
           <div style={{ display: "flex" }}>
-            {tabInx * 1 === 1 ? (
+            {tabInx * 1 === 2 ? (
               <div
                 onClick={() => {
                   let arr = [];
@@ -586,7 +648,6 @@ function CommonUser(props) {
                     selectedRows.map((item) => {
                       arr.push(item.id);
                     });
-                  console.log("对你撒娇看", selectedRows);
                   _cancelAttention(arr);
                 }}
               >
@@ -595,8 +656,8 @@ function CommonUser(props) {
             ) : (
               <div
                 onClick={() => {
-                    history.push("/declare")
-                    console.log("的那数据库",history)
+                  history.push("/declare");
+                  console.log("的那数据库", history);
                 }}
               >
                 {ButtonCmt(ThemeColor, "white", "+ 添加申报", "1rem")}
@@ -613,7 +674,7 @@ function CommonUser(props) {
           fontWeight: "400",
           display: "flex",
           margin: "0 0.5rem",
-          padding: "0.3rem",
+          padding: tabInx==1 ? "0 0.3rem" : "0.3rem",
           alignItems: "center",
           justifyContent: "flex-start",
           flexDirection: "column",
@@ -621,7 +682,7 @@ function CommonUser(props) {
           borderTop: "none",
         }}
       >
-        {tabInx * 1 === 1 && (
+        {tabInx * 1 === 2 && (
           <div
             style={{
               display: "flex",
@@ -660,39 +721,45 @@ function CommonUser(props) {
           </div>
         )}
 
-        {
-          tabInx * 1 === 1 && (
-            <Table
-              style={{}}
-              rowSelection={{
-                type: "checkbox",
-                ...rowSelection,
-              }}
-              columns={columns}
-              dataSource={list}
-              style={{
-                width: "100%",
-                marginTop: "0.3rem",
-              }}
-              bordered
-              pagination={{
-                total: total,
-                onChange: (e) => {
-                  setPage(e);
-                },
-              }}
-            />
-          )
-          //  <Table key={456} rowSelection={{
-          //     type: "checkbox",
-          //     ...rowSelection
-          // }} columns={cColumns} dataSource={cList} style={{
-          //     width: "100%", marginTop: "0.3rem"
-          // }} bordered pagination={{
-          //     total: cTotal,
-          //     onChange: (e) => { setPage(e) },
-          // }} />
-        }
+        {tabInx * 1 === 1 ? (
+          <Table
+            style={{}}
+            columns={columns_d}
+            dataSource={d_list}
+            style={{
+              width: "100%",
+              marginTop: "0.3rem",
+            }}
+            bordered
+            pagination={{
+              total: total,
+              onChange: (e) => {
+                setPage(e);
+              },
+            }}
+          />
+        ) : (
+          <Table
+            style={{}}
+            rowSelection={{
+              type: "checkbox",
+              ...rowSelection,
+            }}
+            columns={columns}
+            dataSource={list}
+            style={{
+              width: "100%",
+              marginTop: "0.3rem",
+            }}
+            bordered
+            pagination={{
+              total: total,
+              onChange: (e) => {
+                setPage(e);
+              },
+            }}
+          />
+        )}
       </section>
     </div>
   );
