@@ -166,6 +166,12 @@ export const myAttention = () => {
     return fetchGadget(url, 'GET')
 }
 
+// 普通用户 我的申报
+export const myDeclare = () => {
+    const url = `/stiacn-app/portrait/company/declare`
+    return fetchGadget(url, 'GET')
+}
+
 // 联盟动态
 export const getNewsList = (params) => {
     let { page, limit } = params
