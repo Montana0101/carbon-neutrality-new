@@ -40,12 +40,26 @@ const titles = [
   "提交完成",
 ];
 
-const data = [
+const subs = [
   { name: "流动资产", lineNo: 0 },
   {
     name: "流动负债",
     lineNo: 0,
   },
+  { name: "货币资金", lineNo: 1 },
+  { name: "短期借款", lineNo: 32 },
+  { name: "以公允价值计量且其变动计入当期损益的金融资产", lineNo: 2 },
+  { name: "以公允价值计量且其变动计入当期损益的金融负债", lineNo: 33 },
+  { name: "应收票据", lineNo: 3 },
+  { name: "应付票据", lineNo: 34 },
+  { name: "应收账款", lineNo: 4 },
+  { name: "应付账款", lineNo: 35 },
+  { name: "预付账款", lineNo: 5 },
+  { name: "预收款项", lineNo: 35 },
+  { name: "应收利息", lineNo: 6 },
+  { name: "应付职工薪酬", lineNo: 37 },
+  { name: "应收股利", lineNo: 7 },
+  { name: "应交税费", lineNo: 38 },
 ];
 const asset_reducer = (state, action) => {
   const { name } = action;
@@ -146,12 +160,12 @@ function Declare(props) {
         assetDispatch("32_1", "shortTermBorrowings");
         break;
 
-      // 以公允价值计量且其变动计入当期损益的金融负债
+      // 以公允价值计量且其变动计入当期损益的金融资产
       case "2_0":
-        assetDispatch("2_0", "currentProfitLoss");
+        assetDispatch("2_0", "financialAssets");
         break;
       case "2_1":
-        assetDispatch("2_1", "currentProfitLoss");
+        assetDispatch("2_1", "financialAssets");
         break;
 
       // 以公允价值计量且其变动计入当期损益的金融负债
@@ -360,7 +374,7 @@ function Declare(props) {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                  {/* <tr>
                     <td className="sub_t">流动资产：</td>
                     <td></td>
                     <td></td>
@@ -369,81 +383,38 @@ function Declare(props) {
                     <td></td>
                     <td></td>
                     <td></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <span>货币资金</span>
-                    </td>
-                    <td>1</td>
-                    <td>
-                      <InputCmt event={getCutEnter} line={"1_1"} />
-                    </td>
-                    <td>
-                      <InputCmt event={getCutEnter} line={"1_0"} />
-                    </td>
-                    <td>
-                      <span>短期借款</span>
-                    </td>
-                    <td>32</td>
-                    <td>
-                      {" "}
-                      <InputCmt event={getCutEnter} line={"32_1"} />
-                    </td>
-                    <td>
-                      {" "}
-                      <InputCmt event={getCutEnter} line={"32_0"} />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <span>以公允价值计量且其变动计入当期损益的金融资产</span>
-                    </td>
-                    <td>2</td>
-                    <td>
-                      <InputCmt event={getCutEnter} line={"2_1"} />
-                    </td>
-                    <td>
-                      <InputCmt event={getCutEnter} line={"2_0"} />
-                    </td>
-                    <td>
-                      <span>以公允价值计量且其变动计入当期损益的金融负债</span>
-                    </td>
-                    <td>33</td>
-                    <td>
-                      <InputCmt event={getCutEnter} line={"2_1"} />
-                    </td>
-                    <td>
-                      <InputCmt event={getCutEnter} line={"2_0"} />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <span>应收票据</span>
-                    </td>
-                    <td>3</td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                      <span>应付票据</span>
-                    </td>
-                    <td>34</td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <span>应收账款</span>
-                    </td>
-                    <td>4</td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                      <span>应付账款</span>
-                    </td>
-                    <td>35</td>
-                    <td></td>
-                    <td></td>
-                  </tr>
+                  </tr> */}
+                  {new Array(Math.ceil(subs.length / 2))
+                    .fill("")
+                    .map((v, i) => {
+                      return (
+                        <tr>
+                          <td className={subs[i*2].lineNo == 0 && "sub_t"}>
+                            <span>{subs[i*2].name}</span>
+                          </td>
+                          <td>{subs[i*2].lineNo != 0 && subs[i*2].lineNo}</td>
+                          <td>
+                            <InputCmt event={getCutEnter} line={"1_1"} />
+                          </td>
+                          <td>
+                            <InputCmt event={getCutEnter} line={"1_0"} />
+                          </td>
+
+                          <td className={subs[i*2 + 1].lineNo == 0 && "sub_t"}>
+                            <span>{subs[i*2 + 1].name}</span>
+                          </td>
+                          <td>
+                            {subs[i*2 + 1].lineNo != 0 && subs[i*2 + 1].lineNo}
+                          </td>
+                          <td>
+                            <InputCmt event={getCutEnter} line={"32_1"} />
+                          </td>
+                          <td>
+                            <InputCmt event={getCutEnter} line={"32_0"} />
+                          </td>
+                        </tr>
+                      );
+                    })}
                 </tbody>
               </table>
             </div>
