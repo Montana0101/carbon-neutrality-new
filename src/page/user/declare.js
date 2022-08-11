@@ -20,30 +20,12 @@ import {
   Table,
   message,
   Popconfirm,
+  InputNumber,
 } from "antd";
 import "moment/locale/zh-cn";
 import "./declare.less";
 
 const defaultColor = "rgba(0,0,0,0.3)";
-
-const ButtonCmt = (bg, color, text, w = "0.8rem") => {
-  return (
-    <button
-      style={{
-        background: bg,
-        color: color,
-        fontSize: "0.12rem",
-        padding: "0.03rem 0.1rem",
-        width: w,
-        borderRadius: "0.03rem",
-        cursor: "pointer",
-        border: `0.01rem solid ${color}`,
-      }}
-    >
-      {text}
-    </button>
-  );
-};
 
 const titles = [
   "财务报表",
@@ -58,9 +40,51 @@ const titles = [
   "提交完成",
 ];
 
+const asset_reducer = (state, action) => {
+  const { name } = action;
+  switch (action.type) {
+    case "assetLine1_0":
+      return { ...state, ...name };
+    case "assetLine1_1":
+      return { ...state, ...name };
+    case "assetLine2_0":
+      return { ...state, ...name };
+    case "assetLine2_1":
+      return { ...state, ...name };
+    default:
+      return state;
+  }
+};
+
+const asset_init = {
+  financialAssets: {
+    // beginningBalance: 23, //年初余额
+    // companyId: 2, //公司ID
+    // endingBalance: 203, //期末余额
+    // lineNo: 1, //行次
+    // name: "accountsPayable", //资产名称
+  },
+  currentProfitLoss: { lineNo: 2 }, //以公允价值计量且其变动计入当期损益的金融负债
+};
+
+const InputCmt = (props) => {
+  return (
+    <Input
+      bordered={false}
+      controls={false}
+      onChange={(e) => {
+        props.event({ value: e.target.value, line: props.line });
+      }}
+    />
+  );
+};
+
 function Declare(props) {
-  const [tabInx,setTabInx] = useState(0)
+  const [tabInx, setTabInx] = useState(0);
   const [inx, setInx] = useState(0);
+  const [cutEnter, setCutEnter] = useState({ value: "", line: null }); //当前input值
+
+  const [asset_state, asset_dispatch] = useReducer(asset_reducer, asset_init); // 资产
   const history = useHistory();
 
   useEffect(() => {
@@ -70,9 +94,44 @@ function Declare(props) {
 
   // 调用接口
   useEffect(() => {
-  }, []);
+    console.log("打印下当前的state", asset_state);
+  }, [asset_state]);
 
-  
+  // 订阅子组件事件
+  const getCutEnter = (e) => {
+    setCutEnter(e);
+  };
+
+  useEffect(() => {
+    console.log("监听当前输入事件", cutEnter);
+    switch (cutEnter.line) {
+      case "1_0":
+        asset_dispatch({
+          type: "assetLine1_0",
+          name: {
+            financialAssets: {
+              beginningBalance: cutEnter.value,
+              endingBalance: asset_state.financialAssets.endingBalance || 0,
+            },
+          },
+        });
+        break;
+      case "1_1":
+        asset_dispatch({
+          type: "assetLine1_1",
+          name: {
+            financialAssets: {
+              beginningBalance:
+                asset_state.financialAssets.beginningBalance || 0,
+              endingBalance: cutEnter.value,
+            },
+          },
+        });
+        break;
+      default:
+        return;
+    }
+  }, [cutEnter]);
 
   return (
     <div className="declare_page">
@@ -282,8 +341,12 @@ function Declare(props) {
                       <span>货币资金</span>
                     </td>{" "}
                     <td>1</td>
-                    <td><Input/></td>
-                    <td><Input/></td>
+                    <td>
+                      <InputCmt event={getCutEnter} line={"1_0"} />
+                    </td>
+                    <td>
+                      <InputCmt event={getCutEnter} line={"1_1"} />
+                    </td>
                     <td>
                       <span>短期借款</span>
                     </td>{" "}
