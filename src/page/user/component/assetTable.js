@@ -9,16 +9,43 @@ const profitJson = require("../json/profit.json"); // 利润表json
 const profitJsonT = require("../json/profit_t.json");
 
 const InputCmt = (props) => {
+  let { data, line } = props;
+  var amount;
   useEffect(() => {
-    console.log("获取当前数据", props.data);
-  }, [props.data]);
+    console.log("获取当前数据", props);
+    getCacheData()
+  }, [props]);
+
+  //缓存数据
+  const getCacheData = () => {
+    if (line.substr(line.length - 1, 1) == 1) {
+      // 前一个
+      Object.values(data).map((item) => {
+        if (item.lineNo+'_1' == line) {
+          amount = item.endingBalance;
+          // setAmount(item.endingBalance)
+          return item.endingBalance;
+        }
+      });
+    } else {
+      // 后一个
+      Object.values(data).map((item) => {
+        if (item.lineNo+'_0' == line) {
+          amount = item.beginningBalance;
+          // setAmount(item.beginningBalance)\
+          return item.beginningBalance;
+        }
+      });
+    }
+  };
+
   return (
     <InputNumber
       bordered={false}
       controls={false}
-      defaultValue={props.data}
+      defaultValue={amount}
       onChange={(e) => {
-        e != undefined && props.event({ value: e, line: props.line });
+        e != undefined && props.event({ value: e, line: line });
       }}
     />
   );
@@ -26,34 +53,11 @@ const InputCmt = (props) => {
 
 const AssetTable = (props) => {
   let { onInput, data } = props;
-  let [amount,setAmount] = useState(0);
+  // let [amount,setAmount] = useState(0);
 
   useEffect(() => {
     console.log("监听数据变化", data);
   }, [data]);
-
-  //缓存数据
-  const getCacheData = (i, line) => {
-    console.log("第三节课", line);
-    if (i == 1) {
-      // 前一个
-      Object.values(data).map((item) => {
-        if (item.lineNo == line) {
-          setAmount(item.endingBalance)
-          return item.endingBalance;
-        }
-      });
-    } else {
-      // 后一个
-      Object.values(data).map((item) => {
-        if (item.lineNo == line) {
-        setAmount(item.beginningBalance)
-
-          return item.beginningBalance;
-        }
-      });
-    }
-  };
 
   return (
     <table className="table_1" rules="all">
@@ -83,11 +87,11 @@ const AssetTable = (props) => {
               </td>
               {assetJsonT[l_inx].lineNo != null ? (
                 <td>
-              {getCacheData(1,assetJsonT[l_inx].lineNo) && <InputCmt
+                  <InputCmt
                     event={onInput}
                     line={assetJsonT[l_inx].lineNo + "_1"}
-                    data={amount}
-                  />}
+                    data={data}
+                  />
                 </td>
               ) : (
                 <td></td>
@@ -97,6 +101,7 @@ const AssetTable = (props) => {
                   <InputCmt
                     event={onInput}
                     line={assetJsonT[l_inx].lineNo + "_0"}
+                    data={data}
                   />
                 </td>
               ) : (
@@ -114,6 +119,7 @@ const AssetTable = (props) => {
                   <InputCmt
                     event={onInput}
                     line={assetJsonT[r_inx].lineNo + "_1"}
+                    data={data}
                   />
                 </td>
               ) : (
@@ -125,6 +131,7 @@ const AssetTable = (props) => {
                   <InputCmt
                     event={onInput}
                     line={assetJsonT[r_inx].lineNo + "_0"}
+                    data={data}
                   />
                 </td>
               ) : (

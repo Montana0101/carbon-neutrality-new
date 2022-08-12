@@ -1,19 +1,19 @@
 {
     "accountsPayable": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": 10,
+        "endingBalance": 10,
         "lineNo": 35,
         "name": "accountsPayable"
     },
     "accountsReceivable": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": 20,
+        "endingBalance": 30,
         "lineNo": 4,
         "name": "accountsReceivable"
     },
     "advancesReceived": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": 30,
+        "endingBalance": 20,
         "lineNo": 36,
         "name": "advancesReceived"
     },
