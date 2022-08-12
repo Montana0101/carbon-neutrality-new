@@ -65,5 +65,9 @@
     { "name": "递延所得税资产", "lineNo": 28 },
     { "name": "盈余公积", "lineNo": 59 },
     { "name": "其他非流动资产", "lineNo": 29 },
-    { "name": "未分配利润", "lineNo": 60 }
+    { "name": "未分配利润", "lineNo": 60 },
+    { "name": "非流动资产合计", "lineNo": 30 },
+    { "name": "所有者权益（或股东权益）合计:", "lineNo": 61 ,"sub":true,"empty":false },
+    { "name": "资产总计:", "lineNo": 31 ,"sub":true,"empty":false },
+    { "name": "负债和所有者权益（或股东权益）总计:", "lineNo": 62 ,"sub":true,"empty":false }
   ]

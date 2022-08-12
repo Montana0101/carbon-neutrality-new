@@ -24,6 +24,7 @@ import {
 } from "antd";
 import "moment/locale/zh-cn";
 import "./declare.less";
+import { ButtonCmt } from "../../component/button";
 
 const defaultColor = "rgba(0,0,0,0.3)";
 const assetJson = require("./json/asset.json"); //资产负债json
@@ -41,9 +42,9 @@ const titles = [
   "提交完成",
 ];
 
-// const subs = ;
 const asset_reducer = (state, action) => {
   const { name } = action;
+  return { ...state, ...name };
   // switch (action.type) {
   // case "assetLine1_0":
   //   return { ...state, ...name };
@@ -51,21 +52,21 @@ const asset_reducer = (state, action) => {
   //   return { ...state, ...name };
   //   default:
   //     return state;
-  switch (1) {
-    case 1:
-      return { ...state, ...name };
-    default:
-      return state;
-  }
+  // switch (1) {
+  //   case 1:
+  //     return { ...state, ...name };
+  //   default:
+  //     return state;
+  // }
 };
 
 const InputCmt = (props) => {
   return (
-    <Input
+    <InputNumber
       bordered={false}
       controls={false}
       onChange={(e) => {
-        props.event({ value: e.target.value, line: props.line });
+        e != undefined && props.event({ value: e, line: props.line });
       }}
     />
   );
@@ -76,6 +77,8 @@ function Declare(props) {
   const [inx, setInx] = useState(0);
   const [cutEnter, setCutEnter] = useState({ value: "", line: null }); //当前input值
   const [asset_state, asset_dispatch] = useReducer(asset_reducer, assetJson); // 资产负债
+  const [companyId, setCompanyId] = useState(null); //公司id
+  const [years, setYears] = useState(null); // 当前年份
   const history = useHistory();
 
   // 表格展示所用数据
@@ -139,6 +142,23 @@ function Declare(props) {
   useEffect(() => {
     dispathTrigger();
   }, [cutEnter]);
+
+  // 保存资产负债表
+  const saveDeclareBalance = async () => {
+    // 资产负债表
+    if (tabInx == 0) {
+      let params = JSON.parse(JSON.stringify(asset_state));
+      params.years = 2022;
+      params.companyId = companyId;
+      const res = await getDeclareBalance(params);
+      if (res && res.code == 2000) {
+        setCompanyId(res.result);
+        message.success("操作成功！");
+      } else {
+        message.error("操作失败！");
+      }
+    }
+  };
 
   return (
     <div className="declare_page">
@@ -317,103 +337,160 @@ function Declare(props) {
                   })}
                 </div>
               </section>
-
               {/* 主要表格区域 */}
-              <table className="table_1" rules="all">
-                <thead>
-                  <tr>
-                    <th>资产</th>
-                    <th>行次</th>
-                    <th>期末余额</th>
-                    <th>年初余额</th>
-                    <th>负债和所有者权益</th>
-                    <th>行次</th>
-                    <th>期末余额</th>
-                    <th>年初余额</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {/* <tr>
-                    <td className="sub_t">流动资产：</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td className="sub_t">流动负债：</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr> */}
-                  {new Array(Math.ceil(assetJsonT.length / 2))
-                    .fill("")
-                    .map((v, i) => {
-                      let l_inx = i * 2;
-                      let r_inx = i * 2 + 1;
-                      return (
-                        <tr>
-                          <td
-                            className={assetJsonT[l_inx].sub == true && "sub_t"}
-                          >
-                            <span>{assetJsonT[l_inx].name}</span>
-                          </td>
-                          <td>
-                            {assetJsonT[l_inx].lineNo != null &&
-                              assetJsonT[l_inx].lineNo}
-                          </td>
-                          {assetJsonT[l_inx].lineNo != null ? (
-                            <td>
-                              <InputCmt
-                                event={getCutEnter}
-                                line={assetJsonT[l_inx].lineNo + "_1"}
-                              />
+              {/* 资产负债表 */}
+              {tabInx == 0 && (
+                <table className="table_1" rules="all">
+                  <thead>
+                    <tr>
+                      <th>资产</th>
+                      <th>行次</th>
+                      <th>期末余额</th>
+                      <th>年初余额</th>
+                      <th>负债和所有者权益</th>
+                      <th>行次</th>
+                      <th>期末余额</th>
+                      <th>年初余额</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {new Array(Math.ceil(assetJsonT.length / 2))
+                      .fill("")
+                      .map((v, i) => {
+                        let l_inx = i * 2;
+                        let r_inx = i * 2 + 1;
+                        return (
+                          <tr>
+                            <td
+                              className={
+                                assetJsonT[l_inx].sub == true && "sub_t"
+                              }
+                            >
+                              <span>{assetJsonT[l_inx].name}</span>
                             </td>
-                          ) : (
-                            <td></td>
-                          )}
-                          {assetJsonT[l_inx].lineNo != null ? (
                             <td>
-                              <InputCmt
-                                event={getCutEnter}
-                                line={
-                                  assetJsonT[l_inx].lineNo + "_0"
-                                }
-                              />
+                              {assetJsonT[l_inx].lineNo != null &&
+                                assetJsonT[l_inx].lineNo}
                             </td>
-                          ) : (
-                            <td></td>
-                          )}
+                            {assetJsonT[l_inx].lineNo != null ? (
+                              <td>
+                                <InputCmt
+                                  event={getCutEnter}
+                                  line={assetJsonT[l_inx].lineNo + "_1"}
+                                />
+                              </td>
+                            ) : (
+                              <td></td>
+                            )}
+                            {assetJsonT[l_inx].lineNo != null ? (
+                              <td>
+                                <InputCmt
+                                  event={getCutEnter}
+                                  line={assetJsonT[l_inx].lineNo + "_0"}
+                                />
+                              </td>
+                            ) : (
+                              <td></td>
+                            )}
 
-                          <td
-                            className={assetJsonT[r_inx].sub == true && "sub_t"}
-                          >
-                            <span>{assetJsonT[r_inx].name}</span>
-                          </td>
-                          <td>
-                            {assetJsonT[r_inx].lineNo != null &&
-                              assetJsonT[r_inx].lineNo}
-                          </td>
-                          <td>
-                            <InputCmt
-                              event={getCutEnter}
-                              line={
-                                assetJsonT[r_inx].lineNo != null &&
-                                assetJsonT[r_inx].lineNo + "_1"
+                            <td
+                              className={
+                                assetJsonT[r_inx].sub == true && "sub_t"
                               }
-                            />
-                          </td>
-                          <td>
-                            <InputCmt
-                              event={getCutEnter}
-                              line={
-                                assetJsonT[r_inx].lineNo != null &&
-                                assetJsonT[r_inx].lineNo + "_0"
-                              }
-                            />
-                          </td>
-                        </tr>
-                      );
-                    })}
-                </tbody>
-              </table>
+                            >
+                              <span>{assetJsonT[r_inx].name}</span>
+                            </td>
+                            <td>
+                              {assetJsonT[r_inx].lineNo != null &&
+                                assetJsonT[r_inx].lineNo}
+                            </td>
+                            {assetJsonT[r_inx].lineNo != null ? (
+                              <td>
+                                <InputCmt
+                                  event={getCutEnter}
+                                  line={assetJsonT[r_inx].lineNo + "_1"}
+                                />
+                              </td>
+                            ) : (
+                              <td></td>
+                            )}
+
+                            {assetJsonT[r_inx].lineNo != null ? (
+                              <td>
+                                <InputCmt
+                                  event={getCutEnter}
+                                  line={assetJsonT[r_inx].lineNo + "_0"}
+                                />
+                              </td>
+                            ) : (
+                              <td></td>
+                            )}
+                          </tr>
+                        );
+                      })}
+                  </tbody>
+                </table>
+              )}
+
+              {/* 利润表 */}
+              {tabInx == 1 && (
+                <table className="table_2" rules="all">
+                  <thead>
+                    <tr>
+                      <th>项目</th>
+                      <th>行次</th>
+                      <th>本年累计金额</th>
+                      <th>本期金额</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>1</td>
+                      <td>1</td>
+                      <td>1</td>
+                    </tr>
+                  </tbody>
+                </table>
+              )}
+              <p
+                style={{
+                  height: "1.4rem",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <div
+                  style={{ marginRight: "0.3rem" }}
+                  onClick={() => {
+                    if (tabInx < 2) {
+                      setTabInx(tabInx + 1);
+                    }
+                  }}
+                >
+                  <ButtonCmt
+                    bg={ThemeColor}
+                    w="0.8rem"
+                    color="white"
+                    t="下一步"
+                    h="0.4rem"
+                  />
+                </div>
+                <div
+                  onClick={() => {
+                    saveDeclareBalance();
+                  }}
+                >
+                  <ButtonCmt
+                    bg="#51AA95"
+                    w="0.8rem"
+                    color="white"
+                    t="保存"
+                    h="0.4rem"
+                  />
+                </div>
+              </p>
             </div>
           )}
         </section>

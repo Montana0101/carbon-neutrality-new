@@ -1,0 +1,259 @@
+{
+    "administrativeExpenses": {
+        "accumulatedAmount": 203,
+        "companyId": 2,
+        "currentAmount": 23,
+        "lineNo": 5,
+        "name": "administrativeExpenses",
+        "years": 2022
+    },
+    "afterTaxIncome": {
+        "accumulatedAmount": 203,
+        "companyId": 2,
+        "currentAmount": 23,
+        "lineNo": 19,
+        "name": "afterTaxIncome",
+        "years": 2022
+    },
+    "assetsImpairmentLoss": {
+        "accumulatedAmount": 203,
+        "companyId": 2,
+        "currentAmount": 23,
+        "lineNo": 7,
+        "name": "assetsImpairmentLoss",
+        "years": 2022
+    },
+    "associatesIncome": {
+        "accumulatedAmount": 203,
+        "companyId": 2,
+        "currentAmount": 23,
+        "lineNo": 10,
+        "name": "associatesIncome",
+        "years": 2022
+    },
+    "basicEarningsPerShare": {
+        "accumulatedAmount": 203,
+        "companyId": 2,
+        "currentAmount": 23,
+        "lineNo": 31,
+        "name": "basicEarningsPerShare",
+        "years": 2022
+    },
+    "businessIncome": {
+        "accumulatedAmount": 203,
+        "companyId": 2,
+        "currentAmount": 23,
+        "lineNo": 1,
+        "name": "businessIncome",
+        "years": 2022
+    },
+    "changesIncome": {
+        "accumulatedAmount": 203,
+        "companyId": 2,
+        "currentAmount": 23,
+        "lineNo": 8,
+        "name": "changesIncome",
+        "years": 2022
+    },
+    "changesSaleAssets": {
+        "accumulatedAmount": 203,
+        "companyId": 2,
+        "currentAmount": 23,
+        "lineNo": 25,
+        "name": "changesSaleAssets",
+        "years": 2022
+    },
+    "companyId": 2,
+    "dilutedEarningsPerShare": {
+        "accumulatedAmount": 203,
+        "companyId": 2,
+        "currentAmount": 23,
+        "lineNo": 32,
+        "name": "dilutedEarningsPerShare",
+        "years": 2022
+    },
+    "disposalGains": {
+        "accumulatedAmount": 203,
+        "companyId": 2,
+        "currentAmount": 23,
+        "lineNo": 13,
+        "name": "disposalGains",
+        "years": 2022
+    },
+    "earningsPerShare": {
+        "accumulatedAmount": 203,
+        "companyId": 2,
+        "currentAmount": 23,
+        "lineNo": 30,
+        "name": "earningsPerShare",
+        "years": 2022
+    },
+    "financialExpenses": {
+        "accumulatedAmount": 203,
+        "companyId": 2,
+        "currentAmount": 23,
+        "lineNo": 6,
+        "name": "financialExpenses",
+        "years": 2022
+    },
+    "foreignFinancialStatements": {
+        "accumulatedAmount": 203,
+        "companyId": 2,
+        "currentAmount": 23,
+        "lineNo": 28,
+        "name": "foreignFinancialStatements",
+        "years": 2022
+    },
+    "investmentIncome": {
+        "accumulatedAmount": 203,
+        "companyId": 2,
+        "currentAmount": 23,
+        "lineNo": 9,
+        "name": "investmentIncome",
+        "years": 2022
+    },
+    "investmentsSaleAssets": {
+        "accumulatedAmount": 203,
+        "companyId": 2,
+        "currentAmount": 23,
+        "lineNo": 26,
+        "name": "investmentsSaleAssets",
+        "years": 2022
+    },
+    "measurementChangesLiabilities": {
+        "accumulatedAmount": 203,
+        "companyId": 2,
+        "currentAmount": 23,
+        "lineNo": 21,
+        "name": "measurementChangesLiabilities",
+        "years": 2022
+    },
+    "netProfit": {
+        "accumulatedAmount": 203,
+        "companyId": 2,
+        "currentAmount": 23,
+        "lineNo": 18,
+        "name": "netProfit",
+        "years": 2022
+    },
+    "nonLossDisposal": {
+        "accumulatedAmount": 203,
+        "companyId": 2,
+        "currentAmount": 23,
+        "lineNo": 15,
+        "name": "nonLossDisposal",
+        "years": 2022
+    },
+    "nonOperatingExpenses": {
+        "accumulatedAmount": 203,
+        "companyId": 2,
+        "currentAmount": 23,
+        "lineNo": 14,
+        "name": "nonOperatingExpenses",
+        "years": 2022
+    },
+    "nonOperatingIncome": {
+        "accumulatedAmount": 203,
+        "companyId": 2,
+        "currentAmount": 23,
+        "lineNo": 12,
+        "name": "nonOperatingIncome",
+        "years": 2022
+    },
+    "nonReclassifiedOtherComprehensiveIncome": {
+        "accumulatedAmount": 203,
+        "companyId": 2,
+        "currentAmount": 23,
+        "lineNo": 20,
+        "name": "nonReclassifiedOtherComprehensiveIncome",
+        "years": 2022
+    },
+    "operatingCost": {
+        "accumulatedAmount": 203,
+        "companyId": 2,
+        "currentAmount": 23,
+        "lineNo": 2,
+        "name": "operatingCost",
+        "years": 2022
+    },
+    "operatingProfit": {
+        "accumulatedAmount": 203,
+        "companyId": 2,
+        "currentAmount": 23,
+        "lineNo": 11,
+        "name": "operatingProfit",
+        "years": 2022
+    },
+    "otherComprehensiveIncome": {
+        "accumulatedAmount": 203,
+        "companyId": 2,
+        "currentAmount": 23,
+        "lineNo": 23,
+        "name": "otherComprehensiveIncome",
+        "years": 2022
+    },
+    "partProfitLoss": {
+        "accumulatedAmount": 203,
+        "companyId": 2,
+        "currentAmount": 23,
+        "lineNo": 27,
+        "name": "partProfitLoss",
+        "years": 2022
+    },
+    "sellingExpenses": {
+        "accumulatedAmount": 203,
+        "companyId": 2,
+        "currentAmount": 23,
+        "lineNo": 4,
+        "name": "sellingExpenses",
+        "years": 2022
+    },
+    "shareInvesteeComprehensiveIncome": {
+        "accumulatedAmount": 203,
+        "companyId": 2,
+        "currentAmount": 23,
+        "lineNo": 22,
+        "name": "ShareInvesteeComprehensiveIncome",
+        "years": 2022
+    },
+    "shareOtherComprehensiveIncome": {
+        "accumulatedAmount": 203,
+        "companyId": 2,
+        "currentAmount": 23,
+        "lineNo": 24,
+        "name": "shareOtherComprehensiveIncome",
+        "years": 2022
+    },
+    "taxExpense": {
+        "accumulatedAmount": 203,
+        "companyId": 2,
+        "currentAmount": 23,
+        "lineNo": 17,
+        "name": "taxExpense",
+        "years": 2022
+    },
+    "taxesSurcharges": {
+        "accumulatedAmount": 203,
+        "companyId": 2,
+        "currentAmount": 23,
+        "lineNo": 3,
+        "name": "taxesSurcharges",
+        "years": 2022
+    },
+    "totalComprehensiveIncome": {
+        "accumulatedAmount": 203,
+        "companyId": 2,
+        "currentAmount": 23,
+        "lineNo": 29,
+        "name": "totalComprehensiveIncome",
+        "years": 2022
+    },
+    "totalProfit": {
+        "accumulatedAmount": 203,
+        "companyId": 2,
+        "currentAmount": 23,
+        "lineNo": 16,
+        "name": "totalProfit",
+        "years": 2022
+    }
+}

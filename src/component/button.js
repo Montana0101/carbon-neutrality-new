@@ -27,4 +27,25 @@ export const NavigateButton = (props) => {
   );
 };
 
+export const ButtonCmt = (props) => {
+  return (
+    <button
+      style={{
+        background: props.bg,
+        color: props.color,
+        fontSize: "0.12rem",
+        padding: "0.03rem 0.1rem",
+        width: props.w ? props.w : '0.8rem',
+        borderRadius: "0.05rem",
+        cursor: "pointer",
+        height:props.h,
+        border: `0.01rem solid ${props.color}`,
+      }}
+    >
+      {props.t}
+    </button>
+  );
+};
+
+
 // withRouter(NavigateButton)
