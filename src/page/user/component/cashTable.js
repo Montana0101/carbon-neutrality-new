@@ -1,12 +1,7 @@
 import { useState, useEffect, useReducer } from "react";
 import { InputNumber } from "antd";
 import "moment/locale/zh-cn";
-import { ButtonCmt } from "../../../component/button";
-
-const assetJson = require("../json/asset.json"); //资产负债json
-const assetJsonT = require("../json/asset_t.json"); //资产负债展示文案json
-const profitJson = require("../json/profit.json"); // 利润表json
-const profitJsonT = require("../json/profit_t.json");
+const cashJsonT = require("../json/cash_t.json");
 
 const InputCmt = (props) => {
   return (
@@ -20,7 +15,7 @@ const InputCmt = (props) => {
   );
 };
 
-const ProfitTable = (props) => {
+const CashTable = (props) => {
   let { onInput } = props;
   return (
     <table className="table_2" rules="all">
@@ -33,7 +28,7 @@ const ProfitTable = (props) => {
         </tr>
       </thead>
       <tbody>
-        {profitJsonT.map((item) => {
+        {cashJsonT.map((item) => {
           return (
             <tr>
               <td>
@@ -43,16 +38,10 @@ const ProfitTable = (props) => {
               </td>
               <td>{item.lineNo}</td>
               <td>
-                <InputCmt
-                  event={onInput}
-                  line={item.lineNo + "_1"}
-                />
+                <InputCmt event={onInput} line={item.lineNo + "_1"} />
               </td>
               <td>
-                <InputCmt
-                  event={onInput}
-                  line={item.lineNo + "_0"}
-                />
+                <InputCmt event={onInput} line={item.lineNo + "_0"} />
               </td>
             </tr>
           );
@@ -61,4 +50,4 @@ const ProfitTable = (props) => {
     </table>
   );
 };
-export default ProfitTable;
+export default CashTable;

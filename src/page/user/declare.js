@@ -6,7 +6,8 @@ import {
   readMessage,
   attentionList,
   attentionInfo,
-  getDeclareBalance,
+  putDeclareBalance,
+  putDeclareProfit,
 } from "../../apis/index";
 import { ThemeColor, CutLine } from "../../lib/const";
 import { ExclamationCircleFilled } from "@ant-design/icons";
@@ -25,8 +26,8 @@ import {
 import "moment/locale/zh-cn";
 import "./declare.less";
 import { ButtonCmt } from "../../component/button";
-import AssetTable from './component/assetTable';
-import ProfitTable from './component/profitTable';
+import AssetTable from "./component/assetTable";
+import ProfitTable from "./component/profitTable";
 
 const defaultColor = "rgba(0,0,0,0.3)";
 const assetJson = require("./json/asset.json"); //资产负债json
@@ -59,7 +60,6 @@ const profit_reducer = (state, action) => {
   return { ...state, ...name };
 };
 
-
 function Declare(props) {
   const [tabInx, setTabInx] = useState(0);
   const [inx, setInx] = useState(0);
@@ -70,7 +70,6 @@ function Declare(props) {
     profit_reducer,
     profitJson
   ); // 利润表订阅
-
   const [companyId, setCompanyId] = useState(null); //公司id
   const [years, setYears] = useState(null); // 当前年份
   const history = useHistory();
@@ -90,13 +89,9 @@ function Declare(props) {
 
   // 监听输入变化
   useEffect(() => {
-    console.log("监听输入变化", asset_state);
-  }, [asset_state]);
-
-  // 订阅子组件事件
-  const getCutEnter = (e) => {
-    setAssetEnter(e);
-  };
+    console.log("asset_state输入变化", asset_state);
+    console.log("profit_state输入变化", profit_state);
+  }, [asset_state, profit_state]);
 
   // 资产负债表封装订阅
   const assetDispatch = (no, name) => {
@@ -138,23 +133,42 @@ function Declare(props) {
 
   // 根据行进行事件订阅
   const dispathTrigger = () => {
-    let line = assetEnter.line || "";
+    let line;
     let arr = [];
     let no;
+    if (tabInx == 0) {
+      line = assetEnter.line || "";
+    } else if (tabInx == 1) {
+      line = profitEnter.line || "";
+    }
     no = line.length == 3 ? line.substr(0, 1) : line.substr(0, 2);
-    Object.values(assetJson).map((item, index) => {
-      arr.push(item);
-      if (item.lineNo == no) {
-        assetDispatch(line, item.name);
-      }
-    });
-    console.log("当前Line", no);
-    // assetDispatch()
+
+    if (tabInx == 0) {
+      Object.values(assetJson).map((item, index) => {
+        arr.push(item);
+        if (item.lineNo == no) {
+          assetDispatch(line, item.name);
+        }
+      });
+    } else if (tabInx == 1) {
+      Object.values(profitJson).map((item, index) => {
+        arr.push(item);
+        if (item.lineNo == no) {
+          console.log("dsna", line, item.name);
+          profitDispatch(line, item.name);
+        }
+      });
+    }
   };
 
   useEffect(() => {
     dispathTrigger();
   }, [assetEnter]);
+
+  useEffect(() => {
+    dispathTrigger();
+    console.log("的撒娇看", profitEnter);
+  }, [profitEnter]);
 
   // 保存资产负债表
   const saveDeclareBalance = async () => {
@@ -163,7 +177,18 @@ function Declare(props) {
       let params = JSON.parse(JSON.stringify(asset_state));
       params.years = 2022;
       params.companyId = companyId;
-      const res = await getDeclareBalance(params);
+      const res = await putDeclareBalance(params);
+      if (res && res.code == 2000) {
+        setCompanyId(res.result);
+        message.success("操作成功！");
+      } else {
+        message.error("操作失败！");
+      }
+    } else if (tabInx == 1) {
+      let params = JSON.parse(JSON.stringify(profit_state));
+      params.years = 2022;
+      params.companyId = companyId;
+      const res = await putDeclareProfit(params);
       if (res && res.code == 2000) {
         setCompanyId(res.result);
         message.success("操作成功！");
@@ -352,10 +377,12 @@ function Declare(props) {
               </section>
               {/* 主要表格区域 */}
               {/* 资产负债表 */}
-              {tabInx == 0 && <AssetTable onInput={getCutEnter} />}
+              {tabInx == 0 && <AssetTable onInput={(e) => setAssetEnter(e)} />}
 
               {/* 利润表 */}
-              {tabInx == 1 && <ProfitTable onInput={getCutEnter} />}
+              {tabInx == 1 && (
+                <ProfitTable onInput={(e) => setProfitEnter(e)} />
+              )}
               <p
                 style={{
                   height: "1.4rem",
