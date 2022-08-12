@@ -1,0 +1,498 @@
+{
+    "accountsPayable": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 35,
+        "name": "accountsPayable",
+        "years": 2022
+    },
+    "accountsReceivable": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 4,
+        "name": "accountsReceivable",
+        "years": 2022
+    },
+    "advancesReceived": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 36,
+        "name": "advancesReceived",
+        "years": 2022
+    },
+    "availableSaleFinancialAssets": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 13,
+        "name": "availableSaleFinancialAssets",
+        "years": 2022
+    },
+    "biologicalAssets": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 22,
+        "name": "biologicalAssets",
+        "years": 2022
+    },
+    "bondsPayable": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 46,
+        "name": "bondsPayable",
+        "years": 2022
+    },
+    "capital": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 56,
+        "name": "capital",
+        "years": 2022
+    },
+    "constructionInProgress": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 19,
+        "name": "constructionInProgress",
+        "years": 2022
+    },
+    "currentAssets": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 10,
+        "name": "currentAssets",
+        "years": 2022
+    },
+    "currentProfitLoss": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 33,
+        "name": "currentProfitLoss",
+        "years": 2022
+    },
+    "deferredIncome": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 50,
+        "name": "deferredIncome",
+        "years": 2022
+    },
+    "deferredTaxAssets": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 28,
+        "name": "deferredTaxAssets",
+        "years": 2022
+    },
+    "deferredTaxLiability": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 51,
+        "name": "deferredTaxLiability",
+        "years": 2022
+    },
+    "developmentExpenditure": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 25,
+        "name": "developmentExpenditure",
+        "years": 2022
+    },
+    "dividendsPayable": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 40,
+        "name": "dividendsPayable",
+        "years": 2022
+    },
+    "dividendsReceivable": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 7,
+        "name": "dividendsReceivable",
+        "years": 2022
+    },
+    "engineeringMaterials": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 20,
+        "name": "engineeringMaterials",
+        "years": 2022
+    },
+    "estimatedLiabilities": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 49,
+        "name": "estimatedLiabilities",
+        "years": 2022
+    },
+    "financialAssets": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 2,
+        "name": "financialAssets",
+        "years": 2022
+    },
+    "fixedAssets": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 18,
+        "name": "fixedAssets",
+        "years": 2022
+    },
+    "goodWill": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 26,
+        "name": "goodWill",
+        "years": 2022
+    },
+    "heldInvestment": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 14,
+        "name": "heldInvestment",
+        "years": 2022
+    },
+    "intangibleAssets": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 24,
+        "name": "intangibleAssets",
+        "years": 2022
+    },
+    "interestPayable": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 39,
+        "name": "interestPayable",
+        "years": 2022
+    },
+    "interestReceivable": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 6,
+        "name": "interestReceivable",
+        "years": 2022
+    },
+    "investmentRealEstate": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 17,
+        "name": "investmentRealEstate",
+        "years": 2022
+    },
+    "lessTreasuryShares": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 57,
+        "name": "lessTreasuryShares",
+        "years": 2022
+    },
+    "liquidationFixedAssets": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 21,
+        "name": "liquidationFixedAssets",
+        "years": 2022
+    },
+    "longTermInvestment": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 16,
+        "name": "longTermInvestment",
+        "years": 2022
+    },
+    "longTermLoan": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 45,
+        "name": "longTermLoan",
+        "years": 2022
+    },
+    "longTermPayables": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 47,
+        "name": "longTermPayables",
+        "years": 2022
+    },
+    "longTermReceivables": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 15,
+        "name": "longTermReceivables",
+        "years": 2022
+    },
+    "longTermUnamortizedExpenses": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 27,
+        "name": "longTermUnamortizedExpenses",
+        "years": 2022
+    },
+    "monetaryFund": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 1,
+        "name": "monetaryFund",
+        "years": 2022
+    },
+    "nonCurrentLiabilitiesWithinOne": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 42,
+        "name": "nonCurrentLiabilitiesWithinOne",
+        "years": 2022
+    },
+    "notesPayable": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 34,
+        "name": "notesPayable",
+        "years": 2022
+    },
+    "notesReceivable": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 3,
+        "name": "notesReceivable",
+        "years": 2022
+    },
+    "oilGasAssets": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 23,
+        "name": "oilGasAssets",
+        "years": 2022
+    },
+    "otherAssets": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 11,
+        "name": "otherAssets",
+        "years": 2022
+    },
+    "otherComprehensiveIncome": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 58,
+        "name": "otherComprehensiveIncome",
+        "years": 2022
+    },
+    "otherCurrentLiabilities": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 43,
+        "name": "otherCurrentLiabilities",
+        "years": 2022
+    },
+    "otherNonCurrentAssets": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 29,
+        "name": "otherNonCurrentAssets",
+        "years": 2022
+    },
+    "otherNonCurrentLiabilities": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 52,
+        "name": "otherNonCurrentLiabilities",
+        "years": 2022
+    },
+    "otherPayables": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 41,
+        "name": "otherPayables",
+        "years": 2022
+    },
+    "otherReceivables": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 8,
+        "name": "otherReceivables",
+        "years": 2022
+    },
+    "paidInCapital": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 55,
+        "name": "paidInCapital",
+        "years": 2022
+    },
+    "payrollPayable": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 37,
+        "name": "payrollPayable",
+        "years": 2022
+    },
+    "prepayments": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 5,
+        "name": "prepayments",
+        "years": 2022
+    },
+    "shortTermBorrowings": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 32,
+        "name": "shortTermBorrowings",
+        "years": 2022
+    },
+    "specialPayables": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 48,
+        "name": "specialPayables",
+        "years": 2022
+    },
+    "stock": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 9,
+        "name": "stock",
+        "years": 2022
+    },
+    "surplusReserve": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 59,
+        "name": "surplusReserve",
+        "years": 2022
+    },
+    "taxesPayable": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 38,
+        "name": "taxesPayable",
+        "years": 2022
+    },
+    "totalAssets": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 31,
+        "name": "totalAssets",
+        "years": 2022
+    },
+    "totalCurrentAssets": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 12,
+        "name": "totalCurrentAssets",
+        "years": 2022
+    },
+    "totalCurrentLiabilities": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 44,
+        "name": "totalCurrentLiabilities",
+        "years": 2022
+    },
+    "totalLiabilities": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 54,
+        "name": "totalLiabilities",
+        "years": 2022
+    },
+    "totalLiabilitiesEquity": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 62,
+        "name": "totalLiabilitiesEquity",
+        "years": 2022
+    },
+    "totalNonCurrentAssets": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 30,
+        "name": "totalNonCurrentAssets",
+        "years": 2022
+    },
+    "totalNonCurrentLiabilities": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 53,
+        "name": "totalNonCurrentLiabilities",
+        "years": 2022
+    },
+    "totalOwnersEquity": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 61,
+        "name": "totalOwnersEquity",
+        "years": 2022
+    },
+    "undistributedProfits": {
+        "beginningBalance": 23,
+        "companyId": 2,
+        "endingBalance": 203,
+        "lineNo": 60,
+        "name": "undistributedProfits",
+        "years": 2022
+    }
+}
