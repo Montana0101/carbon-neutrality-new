@@ -184,6 +184,12 @@ export const putDeclareProfit = (params) => {
     return fetchGadget(url, 'POST', params)
 }
 
+// 普通用户 财务报表 现金流量表
+export const putDeclareCash = (params) => {
+    const url = `/stiacn-app/declare/cashflow`
+    return fetchGadget(url, 'POST', params)
+}
+
 // 联盟动态
 export const getNewsList = (params) => {
     let { page, limit } = params

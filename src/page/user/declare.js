@@ -1,16 +1,11 @@
 import { useState, useEffect, useReducer } from "react";
 import { withRouter, useHistory } from "react-router-dom";
 import {
-  cancelAttention,
-  myAttention,
-  readMessage,
-  attentionList,
-  attentionInfo,
   putDeclareBalance,
   putDeclareProfit,
+  putDeclareCash,
 } from "../../apis/index";
 import { ThemeColor, CutLine } from "../../lib/const";
-import { ExclamationCircleFilled } from "@ant-design/icons";
 import {
   Tabs,
   Radio,
@@ -28,12 +23,12 @@ import "./declare.less";
 import { ButtonCmt } from "../../component/button";
 import AssetTable from "./component/assetTable";
 import ProfitTable from "./component/profitTable";
+import CashTable from "./component/cashTable";
 
 const defaultColor = "rgba(0,0,0,0.3)";
 const assetJson = require("./json/asset.json"); //资产负债json
-const assetJsonT = require("./json/asset_t.json"); //资产负债展示文案json
 const profitJson = require("./json/profit.json"); // 利润表json
-const profitJsonT = require("./json/profit_t.json");
+const cashJson = require("./json/cash.json");
 
 const titles = [
   "财务报表",
@@ -60,6 +55,12 @@ const profit_reducer = (state, action) => {
   return { ...state, ...name };
 };
 
+// 现金流量表reducer
+const cash_reducer = (state, action) => {
+  const { name } = action;
+  return { ...state, ...name };
+};
+
 function Declare(props) {
   const [tabInx, setTabInx] = useState(0);
   const [inx, setInx] = useState(0);
@@ -70,6 +71,8 @@ function Declare(props) {
     profit_reducer,
     profitJson
   ); // 利润表订阅
+  const [cashEnter, setCashEnter] = useState({ value: "", line: null });
+  const [cash_state, cash_dispatch] = useReducer(cash_reducer, cashJson); // 现金流量表订阅
   const [companyId, setCompanyId] = useState(null); //公司id
   const [years, setYears] = useState(null); // 当前年份
   const history = useHistory();
@@ -85,13 +88,21 @@ function Declare(props) {
   useEffect(() => {
     document.getElementsByTagName("html")[0].style.overflowX = "hidden";
     document.getElementsByTagName("html")[0].style.overflowY = "scroll";
+    if (localStorage.getItem("companyId")) {
+      setCompanyId(localStorage.getItem("companyId"));
+    }
   }, []);
 
   // 监听输入变化
   useEffect(() => {
-    console.log("asset_state输入变化", asset_state);
-    console.log("profit_state输入变化", profit_state);
-  }, [asset_state, profit_state]);
+    // console.log("asset_state输入变化", cash_state);
+    // console.log("profit_state输入变化", profit_state);
+  }, [asset_state, profit_state, cash_state]);
+
+  // 触发事件
+  useEffect(() => {
+    dispathTrigger();
+  }, [assetEnter, profitEnter, cashEnter]);
 
   // 资产负债表封装订阅
   const assetDispatch = (no, name) => {
@@ -131,70 +142,88 @@ function Declare(props) {
     });
   };
 
+  // 利润表封装订阅
+  const cashDispatch = (no, name) => {
+    // 判断是累计还是当前，true为累计，false为当前
+    let flag = no.substr(no.length - 1, 1) == 0 ? true : false;
+    return cash_dispatch({
+      type: "cashLine" + no,
+      name: {
+        [name]: {
+          accumulatedAmount: flag
+            ? cashEnter.value
+            : cash_state[name].accumulatedAmount || 0,
+          currentAmount: flag
+            ? cash_state[name].currentAmount || 0
+            : cashEnter.value,
+        },
+      },
+    });
+  };
+
   // 根据行进行事件订阅
   const dispathTrigger = () => {
     let line;
-    let arr = [];
     let no;
     if (tabInx == 0) {
       line = assetEnter.line || "";
     } else if (tabInx == 1) {
       line = profitEnter.line || "";
+    } else if (tabInx == 2) {
+      line = cashEnter.line || "";
     }
+
     no = line.length == 3 ? line.substr(0, 1) : line.substr(0, 2);
 
     if (tabInx == 0) {
-      Object.values(assetJson).map((item, index) => {
-        arr.push(item);
+      Object.values(assetJson).map((item) => {
         if (item.lineNo == no) {
           assetDispatch(line, item.name);
         }
       });
     } else if (tabInx == 1) {
-      Object.values(profitJson).map((item, index) => {
-        arr.push(item);
+      Object.values(profitJson).map((item) => {
         if (item.lineNo == no) {
-          console.log("dsna", line, item.name);
           profitDispatch(line, item.name);
+        }
+      });
+    } else if (tabInx == 2) {
+      Object.values(cashJson).map((item) => {
+        if (item.lineNo == no) {
+          cashDispatch(line, item.name);
         }
       });
     }
   };
 
-  useEffect(() => {
-    dispathTrigger();
-  }, [assetEnter]);
-
-  useEffect(() => {
-    dispathTrigger();
-    console.log("的撒娇看", profitEnter);
-  }, [profitEnter]);
-
   // 保存资产负债表
   const saveDeclareBalance = async () => {
+    let res;
     // 资产负债表
     if (tabInx == 0) {
       let params = JSON.parse(JSON.stringify(asset_state));
-      params.years = 2022;
+      params.years = years;
       params.companyId = companyId;
-      const res = await putDeclareBalance(params);
-      if (res && res.code == 2000) {
-        setCompanyId(res.result);
-        message.success("操作成功！");
-      } else {
-        message.error("操作失败！");
-      }
+      res = await putDeclareBalance(params);
     } else if (tabInx == 1) {
       let params = JSON.parse(JSON.stringify(profit_state));
-      params.years = 2022;
+      params.years = years;
       params.companyId = companyId;
-      const res = await putDeclareProfit(params);
-      if (res && res.code == 2000) {
+      res = await putDeclareProfit(params);
+    } else if (tabInx == 2) {
+      let params = JSON.parse(JSON.stringify(cash_state));
+      params.years = years;
+      params.companyId = companyId;
+      res = await putDeclareCash(params);
+    }
+    if (res && res.code == 2000) {
+      if (res.result) {
         setCompanyId(res.result);
         message.success("操作成功！");
-      } else {
-        message.error("操作失败！");
+        localStorage.setItem("companyId", res.result);
       }
+    } else {
+      message.error("操作失败！");
     }
   };
 
@@ -210,13 +239,6 @@ function Declare(props) {
       >
         <h3
           style={{
-            fontSize: "0.12rem",
-            fontWeight: "400",
-            display: "flex",
-            margin: 0,
-            padding: "0 0.3rem",
-            height: "0.7rem",
-            lineHeight: "0.7rem",
             borderLeft: CutLine,
             borderRight: CutLine,
           }}
@@ -332,7 +354,6 @@ function Declare(props) {
           padding: "0 0.5rem",
           borderRight: "none",
           borderLeft: "none",
-
           // borderTop: "none"
         }}
       >
@@ -377,12 +398,15 @@ function Declare(props) {
               </section>
               {/* 主要表格区域 */}
               {/* 资产负债表 */}
-              {tabInx == 0 && <AssetTable onInput={(e) => setAssetEnter(e)} />}
+              {tabInx == 0 && <AssetTable onInput={(e) => setAssetEnter(e)} data={asset_state}/>}
 
               {/* 利润表 */}
               {tabInx == 1 && (
-                <ProfitTable onInput={(e) => setProfitEnter(e)} />
+                <ProfitTable onInput={(e) => setProfitEnter(e)} data={profit_state}/>
               )}
+
+              {/* 现金流量表 */}
+              {tabInx == 2 && <CashTable onInput={(e) => setCashEnter(e)} data={profit_state}/>}
               <p
                 style={{
                   height: "1.4rem",

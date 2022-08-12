@@ -4,6 +4,17 @@
     background: white;
     padding   : 0 0.3rem;
 
+    // 子导航
+    h3 {
+        font-size  : 0.12rem;
+        font-weight: 400;
+        display    : flex;
+        margin     : 0;
+        padding    : 0 0.3rem;
+        height     : 0.7rem;
+        line-height: 0.7rem;
+    }
+
     // 数字输入框隐藏按钮
     .ant-input-number-handler-wrap {
         display: none !important;
@@ -47,11 +58,13 @@
         }
 
         .sub_t {
-            font-weight    : bold;
-            span{
+            font-weight: bold;
+
+            span {
                 // margin-left: 0.02rem !important;
             }
         }
+
         th {
             background-color: #D7F3DF;
             display         : flex;
@@ -76,7 +89,7 @@
                 }
             }
 
-      
+
 
             tr {
                 display: flex;
@@ -163,12 +176,13 @@
                     display: flex;
 
                     &>:nth-child(1) {
-                        flex : 7;
-                        color: rgba(0, 0, 0, 0.7);
-                        display: flex;
+                        flex           : 7;
+                        color          : rgba(0, 0, 0, 0.7);
+                        display        : flex;
                         justify-content: flex-start;
-                        align-items: center;
-                        span{
+                        align-items    : center;
+
+                        span {
                             margin-left: 0.12rem;
                         }
                     }
@@ -177,22 +191,22 @@
                         flex           : 2;
                         display        : flex;
                         justify-content: center;
-                        align-items: center;
+                        align-items    : center;
                         color          : rgba(0, 0, 0, 0.7)
                     }
 
                     &>:nth-child(3) {
-                        flex: 3;
+                        flex           : 3;
                         display        : flex;
                         justify-content: center;
-                        align-items: center;
+                        align-items    : center;
                     }
 
                     &>:nth-child(4) {
-                        flex: 3;
-                            display        : flex;
+                        flex           : 3;
+                        display        : flex;
                         justify-content: center;
-                        align-items: center;
+                        align-items    : center;
                     }
                 }
             }
