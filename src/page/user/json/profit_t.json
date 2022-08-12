@@ -42,7 +42,8 @@
     },
     {
         "name": "二、营业利润（亏损以“－”号填列）：",
-        "lineNo": 11
+        "lineNo": 11,
+        "sub": true
     },
     {
         "name": "加：营业外收入",
@@ -62,7 +63,8 @@
     },
     {
         "name": "三、利润总额（亏损总额以“－”号填列）：",
-        "lineNo": 16
+        "lineNo": 16,
+        "sub": true
     },
     {
         "name": "减：所得税费用",
@@ -70,15 +72,18 @@
     },
     {
         "name": "四、净利润（净亏损以“－”号填列）：",
-        "lineNo": 18
+        "lineNo": 18,
+        "sub": true
     },
     {
         "name": "五、其他综合收益的税后净额：",
-        "lineNo": 19
+        "lineNo": 19,
+        "sub": true
     },
     {
         "name": "(一)以后不能重分类进损益的其他综合收益",
-        "lineNo": 20
+        "lineNo": 20,
+        "sub": true
     },
     {
         "name": "1.重新计量设定受益计划净负债或净资产的变动",
@@ -90,7 +95,8 @@
     },
     {
         "name": "(二)以后将重分类进损益的其他综合收益",
-        "lineNo": 23
+        "lineNo": 23,
+        "sub": true
     },
     {
         "name": "1.权益法下在被投资单位以后将重分类进损益的其他综合收益中享有的份额",
@@ -119,21 +125,21 @@
     {
         "name": "六、综合收益总额：",
         "lineNo": 29,
-        "sub": true,
-        "empty": true
+        "sub": true
     },
     {
         "name": "七、每股收益：",
         "lineNo": 30,
-        "sub": true,
-        "empty": true
+        "sub": true
     },
     {
         "name": "(一) 基本每股收益",
-        "lineNo": 31
+        "lineNo": 31,
+        "sub": true
     },
     {
         "name": "(二) 稀释每股收益",
-        "lineNo": 32
+        "lineNo": 32,
+        "sub": true
     }
 ]

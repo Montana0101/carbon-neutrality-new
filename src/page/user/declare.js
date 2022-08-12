@@ -25,10 +25,15 @@ import {
 import "moment/locale/zh-cn";
 import "./declare.less";
 import { ButtonCmt } from "../../component/button";
+import AssetTable from './component/assetTable';
+import ProfitTable from './component/profitTable';
 
 const defaultColor = "rgba(0,0,0,0.3)";
 const assetJson = require("./json/asset.json"); //资产负债json
 const assetJsonT = require("./json/asset_t.json"); //资产负债展示文案json
+const profitJson = require("./json/profit.json"); // 利润表json
+const profitJsonT = require("./json/profit_t.json");
+
 const titles = [
   "财务报表",
   "基本信息",
@@ -42,41 +47,30 @@ const titles = [
   "提交完成",
 ];
 
+// 资产负债表reducer
 const asset_reducer = (state, action) => {
   const { name } = action;
   return { ...state, ...name };
-  // switch (action.type) {
-  // case "assetLine1_0":
-  //   return { ...state, ...name };
-  // case "assetLine1_1":
-  //   return { ...state, ...name };
-  //   default:
-  //     return state;
-  // switch (1) {
-  //   case 1:
-  //     return { ...state, ...name };
-  //   default:
-  //     return state;
-  // }
 };
 
-const InputCmt = (props) => {
-  return (
-    <InputNumber
-      bordered={false}
-      controls={false}
-      onChange={(e) => {
-        e != undefined && props.event({ value: e, line: props.line });
-      }}
-    />
-  );
+// 利润表reducer
+const profit_reducer = (state, action) => {
+  const { name } = action;
+  return { ...state, ...name };
 };
+
 
 function Declare(props) {
   const [tabInx, setTabInx] = useState(0);
   const [inx, setInx] = useState(0);
-  const [cutEnter, setCutEnter] = useState({ value: "", line: null }); //当前input值
-  const [asset_state, asset_dispatch] = useReducer(asset_reducer, assetJson); // 资产负债
+  const [assetEnter, setAssetEnter] = useState({ value: "", line: null });
+  const [asset_state, asset_dispatch] = useReducer(asset_reducer, assetJson); // 资产负债表订阅
+  const [profitEnter, setProfitEnter] = useState({ value: "", line: null });
+  const [profit_state, profit_dispatch] = useReducer(
+    profit_reducer,
+    profitJson
+  ); // 利润表订阅
+
   const [companyId, setCompanyId] = useState(null); //公司id
   const [years, setYears] = useState(null); // 当前年份
   const history = useHistory();
@@ -101,10 +95,10 @@ function Declare(props) {
 
   // 订阅子组件事件
   const getCutEnter = (e) => {
-    setCutEnter(e);
+    setAssetEnter(e);
   };
 
-  // 封装订阅
+  // 资产负债表封装订阅
   const assetDispatch = (no, name) => {
     // 判断是期末还是年初，true为年初，false为期末
     let flag = no.substr(no.length - 1, 1) == 0 ? true : false;
@@ -113,11 +107,30 @@ function Declare(props) {
       name: {
         [name]: {
           beginningBalance: flag
-            ? cutEnter.value
+            ? assetEnter.value
             : asset_state[name].beginningBalance || 0,
           endingBalance: flag
             ? asset_state[name].endingBalance || 0
-            : cutEnter.value,
+            : assetEnter.value,
+        },
+      },
+    });
+  };
+
+  // 利润表封装订阅
+  const profitDispatch = (no, name) => {
+    // 判断是累计还是当前，true为累计，false为当前
+    let flag = no.substr(no.length - 1, 1) == 0 ? true : false;
+    return profit_dispatch({
+      type: "profitLine" + no,
+      name: {
+        [name]: {
+          accumulatedAmount: flag
+            ? profitEnter.value
+            : profit_state[name].accumulatedAmount || 0,
+          currentAmount: flag
+            ? profit_state[name].currentAmount || 0
+            : profitEnter.value,
         },
       },
     });
@@ -125,7 +138,7 @@ function Declare(props) {
 
   // 根据行进行事件订阅
   const dispathTrigger = () => {
-    let line = cutEnter.line || "";
+    let line = assetEnter.line || "";
     let arr = [];
     let no;
     no = line.length == 3 ? line.substr(0, 1) : line.substr(0, 2);
@@ -141,7 +154,7 @@ function Declare(props) {
 
   useEffect(() => {
     dispathTrigger();
-  }, [cutEnter]);
+  }, [assetEnter]);
 
   // 保存资产负债表
   const saveDeclareBalance = async () => {
@@ -339,120 +352,10 @@ function Declare(props) {
               </section>
               {/* 主要表格区域 */}
               {/* 资产负债表 */}
-              {tabInx == 0 && (
-                <table className="table_1" rules="all">
-                  <thead>
-                    <tr>
-                      <th>资产</th>
-                      <th>行次</th>
-                      <th>期末余额</th>
-                      <th>年初余额</th>
-                      <th>负债和所有者权益</th>
-                      <th>行次</th>
-                      <th>期末余额</th>
-                      <th>年初余额</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {new Array(Math.ceil(assetJsonT.length / 2))
-                      .fill("")
-                      .map((v, i) => {
-                        let l_inx = i * 2;
-                        let r_inx = i * 2 + 1;
-                        return (
-                          <tr>
-                            <td
-                              className={
-                                assetJsonT[l_inx].sub == true && "sub_t"
-                              }
-                            >
-                              <span>{assetJsonT[l_inx].name}</span>
-                            </td>
-                            <td>
-                              {assetJsonT[l_inx].lineNo != null &&
-                                assetJsonT[l_inx].lineNo}
-                            </td>
-                            {assetJsonT[l_inx].lineNo != null ? (
-                              <td>
-                                <InputCmt
-                                  event={getCutEnter}
-                                  line={assetJsonT[l_inx].lineNo + "_1"}
-                                />
-                              </td>
-                            ) : (
-                              <td></td>
-                            )}
-                            {assetJsonT[l_inx].lineNo != null ? (
-                              <td>
-                                <InputCmt
-                                  event={getCutEnter}
-                                  line={assetJsonT[l_inx].lineNo + "_0"}
-                                />
-                              </td>
-                            ) : (
-                              <td></td>
-                            )}
-
-                            <td
-                              className={
-                                assetJsonT[r_inx].sub == true && "sub_t"
-                              }
-                            >
-                              <span>{assetJsonT[r_inx].name}</span>
-                            </td>
-                            <td>
-                              {assetJsonT[r_inx].lineNo != null &&
-                                assetJsonT[r_inx].lineNo}
-                            </td>
-                            {assetJsonT[r_inx].lineNo != null ? (
-                              <td>
-                                <InputCmt
-                                  event={getCutEnter}
-                                  line={assetJsonT[r_inx].lineNo + "_1"}
-                                />
-                              </td>
-                            ) : (
-                              <td></td>
-                            )}
-
-                            {assetJsonT[r_inx].lineNo != null ? (
-                              <td>
-                                <InputCmt
-                                  event={getCutEnter}
-                                  line={assetJsonT[r_inx].lineNo + "_0"}
-                                />
-                              </td>
-                            ) : (
-                              <td></td>
-                            )}
-                          </tr>
-                        );
-                      })}
-                  </tbody>
-                </table>
-              )}
+              {tabInx == 0 && <AssetTable onInput={getCutEnter} />}
 
               {/* 利润表 */}
-              {tabInx == 1 && (
-                <table className="table_2" rules="all">
-                  <thead>
-                    <tr>
-                      <th>项目</th>
-                      <th>行次</th>
-                      <th>本年累计金额</th>
-                      <th>本期金额</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>1</td>
-                      <td>1</td>
-                      <td>1</td>
-                    </tr>
-                  </tbody>
-                </table>
-              )}
+              {tabInx == 1 && <ProfitTable onInput={getCutEnter} />}
               <p
                 style={{
                   height: "1.4rem",
