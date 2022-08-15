@@ -15,15 +15,21 @@ import {
   Input,
   Table,
   message,
+  DatePicker,
   Popconfirm,
   InputNumber,
+  Upload,
+  Button,
 } from "antd";
-import "moment/locale/zh-cn";
 import "./declare.less";
 import { ButtonCmt } from "../../component/button";
 import AssetTable from "./component/assetTable";
 import ProfitTable from "./component/profitTable";
 import CashTable from "./component/cashTable";
+import "moment/locale/zh-cn";
+import locale from "antd/es/date-picker/locale/zh_CN";
+import { UploadOutlined } from "@ant-design/icons";
+import Others from './others'; //其他模块
 
 const defaultColor = "rgba(0,0,0,0.3)";
 const assetJson = require("./json/asset.json"); //资产负债json
@@ -42,6 +48,46 @@ const titles = [
   "行业成长性",
   "提交完成",
 ];
+
+// 上传报表
+const UpdateCmt = () => {
+  const [fileList, setFileList] = useState([
+    // {
+    //   uid: "-1",
+    //   name: "xxx.png",
+    //   status: "done",
+    //   url: "http://www.baidu.com/xxx.png",
+    // },
+  ]);
+
+  const handleChange = (info) => {
+    let newFileList = [...info.fileList]; // 1. Limit the number of uploaded files
+    // Only to show two recent uploaded files, and old ones will be replaced by the new
+
+    newFileList = fileList.slice(-2); // 2. Read from response and show file link
+
+    newFileList = fileList.map((file) => {
+      if (file.response) {
+        // Component will show file.url as link
+        file.url = file.response.url;
+      }
+
+      return file;
+    });
+    setFileList(newFileList);
+  };
+
+  const props = {
+    action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
+    onChange: handleChange,
+    multiple: true,
+  };
+  return (
+    <Upload {...props} fileList={fileList}>
+      <Button icon={<UploadOutlined />}>Upload</Button>
+    </Upload>
+  );
+};
 
 // 资产负债表reducer
 const asset_reducer = (state, action) => {
@@ -63,7 +109,7 @@ const cash_reducer = (state, action) => {
 
 function Declare(props) {
   const [tabInx, setTabInx] = useState(0);
-  const [inx, setInx] = useState(0);
+  const [inx, setInx] = useState(1);
   const [assetEnter, setAssetEnter] = useState({ value: "", line: null });
   const [asset_state, asset_dispatch] = useReducer(asset_reducer, assetJson); // 资产负债表订阅
   const [profitEnter, setProfitEnter] = useState({ value: "", line: null });
@@ -74,7 +120,7 @@ function Declare(props) {
   const [cashEnter, setCashEnter] = useState({ value: "", line: null });
   const [cash_state, cash_dispatch] = useReducer(cash_reducer, cashJson); // 现金流量表订阅
   const [companyId, setCompanyId] = useState(null); //公司id
-  const [years, setYears] = useState(2022); // 当前年份
+  const [years, setYears] = useState(null); // 当前年份
   const history = useHistory();
 
   // 表格展示所用数据
@@ -198,6 +244,10 @@ function Declare(props) {
 
   // 保存资产负债表
   const saveDeclareBalance = async () => {
+    if (!years) {
+      message.warn("请选择年份！");
+      return;
+    }
     let res;
     // 资产负债表
     if (tabInx == 0) {
@@ -395,6 +445,30 @@ function Declare(props) {
                     );
                   })}
                 </div>
+                <div className="_right">
+                  <div>
+                    <span style={{ fontWeight: "bold" }}>选择年份：</span>
+                    <DatePicker
+                      onChange={(moment, str) => {
+                        console.log("str", str);
+                        setYears(str);
+                      }}
+                      picker="year"
+                      locale={locale}
+                    />
+                  </div>
+
+                  <div
+                    style={{
+                      border: "0px solid red",
+                      marginLeft: "0.5rem",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    <span>上传报表：</span>
+                    <UpdateCmt />{" "}
+                  </div>
+                </div>
               </section>
               {/* 主要表格区域 */}
               {/* 资产负债表 */}
@@ -433,6 +507,8 @@ function Declare(props) {
                   onClick={() => {
                     if (tabInx < 2) {
                       setTabInx(tabInx + 1);
+                    }else{
+                      setInx(1)
                     }
                   }}
                 >
@@ -460,6 +536,9 @@ function Declare(props) {
               </p>
             </div>
           )}
+
+          {/* 其他模块 */}
+          {inx != 0 && <Others setInx={(e)=>{setInx(e)}} inx={inx}/>}
         </section>
       </div>
     </div>
