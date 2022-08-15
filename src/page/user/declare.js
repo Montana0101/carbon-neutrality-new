@@ -74,7 +74,7 @@ function Declare(props) {
   const [cashEnter, setCashEnter] = useState({ value: "", line: null });
   const [cash_state, cash_dispatch] = useReducer(cash_reducer, cashJson); // 现金流量表订阅
   const [companyId, setCompanyId] = useState(null); //公司id
-  const [years, setYears] = useState(null); // 当前年份
+  const [years, setYears] = useState(2022); // 当前年份
   const history = useHistory();
 
   // 表格展示所用数据
@@ -398,15 +398,28 @@ function Declare(props) {
               </section>
               {/* 主要表格区域 */}
               {/* 资产负债表 */}
-              {tabInx == 0 && <AssetTable onInput={(e) => setAssetEnter(e)} data={asset_state}/>}
+              {tabInx == 0 && (
+                <AssetTable
+                  onInput={(e) => setAssetEnter(e)}
+                  data={asset_state}
+                />
+              )}
 
               {/* 利润表 */}
               {tabInx == 1 && (
-                <ProfitTable onInput={(e) => setProfitEnter(e)} data={profit_state}/>
+                <ProfitTable
+                  onInput={(e) => setProfitEnter(e)}
+                  data={profit_state}
+                />
               )}
 
               {/* 现金流量表 */}
-              {tabInx == 2 && <CashTable onInput={(e) => setCashEnter(e)} data={profit_state}/>}
+              {tabInx == 2 && (
+                <CashTable
+                  onInput={(e) => setCashEnter(e)}
+                  data={profit_state}
+                />
+              )}
               <p
                 style={{
                   height: "1.4rem",

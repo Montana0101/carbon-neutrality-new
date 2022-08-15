@@ -127,6 +127,7 @@ function CommonUser(props) {
   const [total, setTotal] = useState(0);
 
   const [page, setPage] = useState(1); // 页码
+  const [limit,setLimit] = useState(10);
   const [companyName, setCompanyName] = useState("");
   const [status, setStatus] = useState("");
   // const [data, setData] = useState([]) // 饼图数据
@@ -203,7 +204,7 @@ function CommonUser(props) {
       page,
       industry: status,
       companyName,
-      limit: 10,
+      limit: limit,
     };
     const res = await attentionList(params);
     if (res && res.code === 2000) {
@@ -250,7 +251,7 @@ function CommonUser(props) {
     {
       title: "序号",
       render: (text, record, index) => {
-        return <span>{index + 1}</span>;
+        return <span>{(page-1)*limit + (index + 1)}</span>;
       },
     },
     {

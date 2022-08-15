@@ -13,7 +13,7 @@
     { "name": "应收账款", "lineNo": 4 },
     { "name": "应付账款", "lineNo": 35 },
     { "name": "预付账款", "lineNo": 5 },
-    { "name": "预收款项", "lineNo": 35 },
+    { "name": "预收款项", "lineNo": 36 },
     { "name": "应收利息", "lineNo": 6 },
     { "name": "应付职工薪酬", "lineNo": 37 },
     { "name": "应收股利", "lineNo": 7 },

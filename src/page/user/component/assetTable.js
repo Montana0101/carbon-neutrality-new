@@ -10,29 +10,29 @@ const profitJsonT = require("../json/profit_t.json");
 
 const InputCmt = (props) => {
   let { data, line } = props;
-  var amount;
+  const [amount, setAmount] = useState(0);
+  // var amount;
   useEffect(() => {
-    console.log("获取当前数据", props);
-    getCacheData()
-  }, [props]);
+    getCacheData();
+  }, [line]);
 
   //缓存数据
   const getCacheData = () => {
     if (line.substr(line.length - 1, 1) == 1) {
       // 前一个
       Object.values(data).map((item) => {
-        if (item.lineNo+'_1' == line) {
-          amount = item.endingBalance;
-          // setAmount(item.endingBalance)
+        if (item.lineNo + "_1" == line) {
+          // amount = item.endingBalance;
+          setAmount(item.endingBalance);
           return item.endingBalance;
         }
       });
     } else {
       // 后一个
       Object.values(data).map((item) => {
-        if (item.lineNo+'_0' == line) {
-          amount = item.beginningBalance;
-          // setAmount(item.beginningBalance)\
+        if (item.lineNo + "_0" == line) {
+          // amount = item.beginningBalance;
+          setAmount(item.beginningBalance);
           return item.beginningBalance;
         }
       });
@@ -40,14 +40,28 @@ const InputCmt = (props) => {
   };
 
   return (
-    <InputNumber
-      bordered={false}
-      controls={false}
-      defaultValue={amount}
-      onChange={(e) => {
-        e != undefined && props.event({ value: e, line: line });
-      }}
-    />
+    <>
+      {amount > 0 && (
+        <InputNumber
+          bordered={false}
+          controls={false}
+          defaultValue={amount}
+          onChange={(e) => {
+            e != undefined && props.event({ value: e, line: line });
+          }}
+        />
+      )}
+
+      {amount == 0 && (
+        <InputNumber
+          bordered={false}
+          controls={false}
+          onChange={(e) => {
+            e != undefined && props.event({ value: e, line: line });
+          }}
+        />
+      )}
+    </>
   );
 };
 
