@@ -29,7 +29,7 @@ import CashTable from "./component/cashTable";
 import "moment/locale/zh-cn";
 import locale from "antd/es/date-picker/locale/zh_CN";
 import { UploadOutlined } from "@ant-design/icons";
-import Others from './others'; //其他模块
+import Others from "./others"; //其他模块
 
 const defaultColor = "rgba(0,0,0,0.3)";
 const assetJson = require("./json/asset.json"); //资产负债json
@@ -63,7 +63,6 @@ const UpdateCmt = () => {
   const handleChange = (info) => {
     let newFileList = [...info.fileList]; // 1. Limit the number of uploaded files
     // Only to show two recent uploaded files, and old ones will be replaced by the new
-
     newFileList = fileList.slice(-2); // 2. Read from response and show file link
 
     newFileList = fileList.map((file) => {
@@ -125,6 +124,7 @@ function Declare(props) {
 
   // 表格展示所用数据
   let tArr = [];
+
   Object.values(assetJson).map((item, index) => {
     if (index + 1 == item.lineNo) {
       tArr.push(item);
@@ -507,8 +507,8 @@ function Declare(props) {
                   onClick={() => {
                     if (tabInx < 2) {
                       setTabInx(tabInx + 1);
-                    }else{
-                      setInx(1)
+                    } else {
+                      setInx(1);
                     }
                   }}
                 >
@@ -538,7 +538,14 @@ function Declare(props) {
           )}
 
           {/* 其他模块 */}
-          {inx != 0 && <Others setInx={(e)=>{setInx(e)}} inx={inx}/>}
+          {inx != 0 && (
+            <Others
+              setInx={(e) => {
+                setInx(e);
+              }}
+              inx={inx}
+            />
+          )}
         </section>
       </div>
     </div>

@@ -13,7 +13,7 @@ import {
   PlusCircleOutlined,
   MinusCircleOutlined,
 } from "@ant-design/icons";
-import { Button, Col, Form, Input, Row, Select, Checkbox,message} from "antd";
+import { Button, Col, Form, Input, Row, Select, Checkbox, message } from "antd";
 import React, { useState } from "react";
 import { ButtonCmt } from "../../component/button";
 import sPng from "../../static/imgs/save.png";
@@ -27,11 +27,12 @@ function Others(props) {
   const [teams, setTeams] = useState(1); // 核心团队
   const [patent, setPatent] = useState(1); // 专利
   const [investor, setInvestor] = useState(1); // 投资方
-  const [checked,setChecked] = useState(false)
+  const [checked, setChecked] = useState(false);
 
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
   };
+
   const layout = {
     labelCol: {
       span: 4,
@@ -40,6 +41,7 @@ function Others(props) {
       span: 20,
     },
   };
+
   return (
     <div className="others_page">
       <div>
@@ -895,20 +897,22 @@ function Others(props) {
             >
               点击“提交“，直接上交申报数据
             </section>
-            <section style={{
+            <section
+              style={{
                 marginTop: "0.1rem",
                 fontSize: "0.12rem",
                 color: "rgba(0,0,0,0.7)",
-                display:"flex",
-                alignItems:"center",
-                justifyContent:"center"
-              }}>
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
               <span>
                 <Checkbox
                   onChange={(e) => setChecked(e.target.checked)}
                 ></Checkbox>
               </span>
-              <span style={{marginLeft:"0.05rem"}}>
+              <span style={{ marginLeft: "0.05rem" }}>
                 本公司承诺，以上所有申报内容均为本公司真实信息，且授权上海碳中和技术创新联盟可公开展示所有申报内容。
               </span>
             </section>
@@ -981,10 +985,10 @@ function Others(props) {
           >
             <div
               onClick={() => {
-                if(checked){
-                  message.success("提交成功 ！")
-                }else{
-                  message.warn("请授权后再提交 ！")
+                if (checked) {
+                  message.success("提交成功 ！");
+                } else {
+                  message.warn("请授权后再提交 ！");
                 }
                 // saveDeclareBalance();
               }}

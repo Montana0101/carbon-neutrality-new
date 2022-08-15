@@ -24,7 +24,7 @@ const Dynamic = () => {
     const [data, setData] = useState([])
     const [total, setTotal] = useState(0)
     const [page, setPage] = useState(1)
-    const [limit, setLimit] = useState(5)
+    const [limit, setLimit] = useState(10)
 
     // useEffect(() => {
     //     _handleNewsList()
@@ -94,12 +94,21 @@ const Dynamic = () => {
                                     if(item.linking){
                                         window.open(item.linking)
                                     }else{
-                                        if(index!=0){
-                                            // window.location.href = `/news/${index-1}`
-                                            history.push(`/news/${index-1}`)
-                                        }else{
-                                            //  window.location.href = `/news/4`
-                                            history.push('/news/4')
+                                        // if(index!=0){
+                                        //     // window.location.href = `/news/${index-1}`
+                                        //     history.push(`/news/${index}`)
+                                        // }else{
+                                        //     //  window.location.href = `/news/4`
+                                        //     history.push('/news/4')
+                                        // }
+                                        if(index==3){
+                                            history.push(`/news/1`)
+                                        }else if(index==4){
+                                            history.push(`/news/2`)
+                                        }else if(index==5){
+                                            history.push(`/news/3`)
+                                        }else if(index==1){
+                                            history.push(`/news/4`)
                                         }
                                     }
                                 }} className="col">
@@ -138,7 +147,7 @@ const Dynamic = () => {
                         height: "0.6rem", display: "flex",
                         alignItems: "flex-end", justifyContent: "flex-end",
                     }}>
-                       {total>5 && <Pagination
+                       {total>10 && <Pagination
                             total={total}
                             showTotal={(total) => `总计 ${total} 条`}
                             defaultPageSize={5}

@@ -84,25 +84,6 @@ function NewsDetail3(props) {
                 margin: '0 0.5rem 0 0.5rem',
                        padding:'0.3rem 0'
             }}>
-                {/* <p style={{
-                    fontSize: "0.18rem",
-                    fontWeight: "bold",
-                    display: "flex",
-                    justifyContent: 'space-between'
-                }}>
-                    <span style={{
-                        cursor: "pointer"
-                    }} onClick={() => {
-                        window.history.back()
-                    }}>
-                        <LeftOutlined />
-                        返回
-                    </span>
-                    <span>
-                        沪科〔2021〕497号 关于同意成立上海碳中和技术创新联盟的批复
-                    </span>
-                    <span />
-                </p> */}
 
                 <p style={{
                     fontSize: "0.14rem"

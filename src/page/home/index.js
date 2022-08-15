@@ -46,6 +46,14 @@ const tastArr = [
 const news = [
   {
     year: "2022",
+    month: "08",
+    day: "14",
+    title: " 上海碳中和技术创新联盟第一届理事会代表大会顺利召开!",
+    inx: null,
+    link: "https://mp.weixin.qq.com/s/lqIH3Fu9Qr1bCNKLm1cRKA",
+  },
+  {
+    year: "2022",
     month: "06",
     day: "15",
     title: "上海碳中和技术创新联盟“云签约”活动成功举办",
@@ -77,15 +85,15 @@ const news = [
     inx: "2",
     link: null,
   },
-  {
-    year: "2021",
-    month: "12",
-    day: "13",
-    inx: "3",
-    link: null,
-    title:
-      " 中共中央 国务院关于完整准确全面贯彻新发展理念做好碳达峰碳中和工作的意见(2021年9月22日)",
-  },
+  // {
+  //   year: "2021",
+  //   month: "12",
+  //   day: "13",
+  //   inx: "3",
+  //   link: null,
+  //   title:
+  //     " 中共中央 国务院关于完整准确全面贯彻新发展理念做好碳达峰碳中和工作的意见(2021年9月22日)",
+  // },
 ];
 
 var industry = [
@@ -675,7 +683,7 @@ export default function Home(props) {
         style={{ borderTop: CutLine, padding: "0 0.5rem" }}
         className="news_area"
       >
-        <ul style={{ display: "flex",margin:"0" }}>
+        <ul style={{ display: "flex", margin: "0" }}>
           {news.map((item, index) => {
             return (
               <li
@@ -719,29 +727,69 @@ export default function Home(props) {
                 >
                   {item.title}
                 </div>
-                <p
-                  style={{
-                    width: "1.2rem",
-                    height: "0.4rem",
-                    alignSelf: "flex-end",
-                    marginTop: "0.05rem",
-                    position: "absolute",
-                    right: "0.3rem",
-                    bottom: "0.2rem",
-                  }}
-                  onClick={() => {
-                    // if (index == 0) {
-                    //   window.open('https://mp.weixin.qq.com/s/02SNGgy2hPyIGckaF6oz3g','_blank')
-                    // }
-                    
-                  }}
-                >
-                  <NavigateButton
-                    content={"更多信息"}
-                    color={ThemeColor}
-                    path={`/news/${item.inx}`}
-                  />
-                </p>
+                {index != 0 ? (
+                  <p
+                    style={{
+                      width: "1.2rem",
+                      height: "0.4rem",
+                      alignSelf: "flex-end",
+                      marginTop: "0.05rem",
+                      position: "absolute",
+                      right: "0.3rem",
+                      bottom: "0.2rem",
+                    }}
+                    onClick={() => {
+                      if (index == 0) {
+                        window.open(
+                          "https://mp.weixin.qq.com/s/lqIH3Fu9Qr1bCNKLm1cRKA",
+                          "_blank"
+                        );
+                      }
+                    }}
+                  >
+                    <NavigateButton
+                      content={"更多信息"}
+                      color={ThemeColor}
+                      path={`/news/${item.inx}`}
+                    />
+                  </p>
+                ) : (
+                  <p
+                    style={{
+                      width: "1.2rem",
+                      height: "0.4rem",
+                      alignSelf: "flex-end",
+                      marginTop: "0.05rem",
+                      position: "absolute",
+                      right: "0.3rem",
+                      bottom: "0.2rem",
+                    }}
+                    onClick={() => {
+                      if (index == 0) {
+                        window.open(
+                          "https://mp.weixin.qq.com/s/lqIH3Fu9Qr1bCNKLm1cRKA",
+                          "_blank"
+                        );
+                      }
+                    }}
+                  >
+                    <div
+                      className="navigate_button"
+                      onClick={() => {
+                        window.open(
+                          "https://mp.weixin.qq.com/s/lqIH3Fu9Qr1bCNKLm1cRKA",
+                          "_blank"
+                        );
+                      }}
+                      style={{
+                        color: "#51AA52",
+                        border: `1px solid ${props.color}`,
+                      }}
+                    >
+                      <span>更多信息</span>
+                    </div>
+                  </p>
+                )}
               </li>
             );
           })}

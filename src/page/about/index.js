@@ -503,7 +503,7 @@ const AboutLeague = () => {
             position: "absolute",
           }}
         >
-          联盟发起单位
+          理事单位
         </h3>
 
         <section
