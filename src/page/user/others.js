@@ -10,20 +10,24 @@ import "./others.less";
 import {
   DownOutlined,
   UpOutlined,
-  PlusCircleOutlined,MinusCircleOutlined
+  PlusCircleOutlined,
+  MinusCircleOutlined,
 } from "@ant-design/icons";
-import { Button, Col, Form, Input, Row, Select } from "antd";
+import { Button, Col, Form, Input, Row, Select, Checkbox,message} from "antd";
 import React, { useState } from "react";
 import { ButtonCmt } from "../../component/button";
+import sPng from "../../static/imgs/save.png";
+
 const { Option } = Select;
 
 function Others(props) {
   const [expand, setExpand] = useState(false);
   const [form] = Form.useForm();
   const [leaders, setLeaders] = useState(1); // 领军人物
-  const [teams,setTeams] = useState(1); // 核心团队
-  const [patent,setPatent] = useState(1); // 专利
-  // const []
+  const [teams, setTeams] = useState(1); // 核心团队
+  const [patent, setPatent] = useState(1); // 专利
+  const [investor, setInvestor] = useState(1); // 投资方
+  const [checked,setChecked] = useState(false)
 
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
@@ -282,7 +286,6 @@ function Others(props) {
             </Row>
           </Form>
         )}
-
         {/* 3 - 公司战略 */}
         {props.inx == 2 && (
           <Form
@@ -331,7 +334,6 @@ function Others(props) {
             </Row>
           </Form>
         )}
-
         {/* 4 - 公司经营 */}
         {props.inx == 3 && (
           <Form
@@ -494,7 +496,6 @@ function Others(props) {
             </Row>
           </Form>
         )}
-
         {/* 5 - 核心竞争力 */}
         {props.inx == 4 && (
           <Form
@@ -525,7 +526,6 @@ function Others(props) {
             </Row>
           </Form>
         )}
-
         {/* 6 - 核心团队 */}
         {props.inx == 5 && (
           <Form
@@ -534,7 +534,7 @@ function Others(props) {
             className="ant-advanced-search-form"
             onFinish={onFinish}
             // {...layout}
-            labelCol = {{span:4}}
+            labelCol={{ span: 4 }}
             // labelCol: {
             //   span: 4,
             // },
@@ -547,7 +547,11 @@ function Others(props) {
                 return (
                   <Col span={24}>
                     <Form.Item
-                      label={index == 0 ? "领军人物（最多五个）" : "领军人物"+(index+1)}
+                      label={
+                        index == 0
+                          ? "领军人物（最多五个）"
+                          : "领军人物" + (index + 1)
+                      }
                       rules={[
                         {
                           required: true,
@@ -574,9 +578,8 @@ function Others(props) {
                         {index === 0 ? (
                           <PlusCircleOutlined
                             onClick={() => {
-                              if(leaders<5){
+                              if (leaders < 5) {
                                 setLeaders(leaders + 1);
-
                               }
                             }}
                             style={{
@@ -602,11 +605,15 @@ function Others(props) {
               })}
             </Row>
             <Row gutter={24}>
-             {new Array(teams).fill("").map((item, index) => {
+              {new Array(teams).fill("").map((item, index) => {
                 return (
                   <Col span={24}>
                     <Form.Item
-                      label={index == 0 ? "核心团队（最多十个）" : "核心团队"+(index+1)}
+                      label={
+                        index == 0
+                          ? "核心团队（最多十个）"
+                          : "核心团队" + (index + 1)
+                      }
                       rules={[
                         {
                           required: true,
@@ -633,9 +640,8 @@ function Others(props) {
                         {index === 0 ? (
                           <PlusCircleOutlined
                             onClick={() => {
-                              if(teams<10){
+                              if (teams < 10) {
                                 setTeams(teams + 1);
-
                               }
                             }}
                             style={{
@@ -662,7 +668,6 @@ function Others(props) {
             </Row>
           </Form>
         )}
-
         {/* 7 - 核心技术 */}
         {props.inx == 6 && (
           <Form
@@ -670,9 +675,10 @@ function Others(props) {
             name="advanced_search"
             className="ant-advanced-search-form"
             onFinish={onFinish}
-            {...layout}
+            labelCol={{ span: 2 }}
+            // {...layout}
           >
-             <Row gutter={24}>
+            <Row gutter={24}>
               <Col span={24}>
                 <Form.Item
                   label={"核心技术"}
@@ -692,11 +698,11 @@ function Others(props) {
               </Col>
             </Row>
             <Row gutter={24}>
-             {new Array(teams).fill("").map((item, index) => {
+              {new Array(patent).fill("").map((item, index) => {
                 return (
                   <Col span={24}>
                     <Form.Item
-                      label={index == 0 ? "专利" : "专利"+(index+1)}
+                      label={patent == 1 ? "专利" : "专利" + (index + 1)}
                       rules={[
                         {
                           required: true,
@@ -704,110 +710,295 @@ function Others(props) {
                         },
                       ]}
                     >
-                      <section
-                        style={{ display: "flex", alignItems: "center" }}
-                      >
-                        {/* {index != 0 && <span style={{opacity:0}}>领军人物（最多五个）: &nbsp;</span>} */}
-                        <Input
-                          placeholder="请输入姓名"
-                          style={{ marginRight: "0.1rem", flex: 1 }}
-                        />
-                        <Input
-                          placeholder="请输入职务"
-                          style={{ marginRight: "0.1rem", flex: 1 }}
-                        />
-                        <Input
-                          placeholder="请输入描述"
-                          style={{ marginRight: "0.1rem", flex: 4 }}
-                        />
-                        {index === 0 ? (
-                          <PlusCircleOutlined
-                            onClick={() => {
-                              if(teams<10){
-                                setTeams(teams + 1);
-
-                              }
-                            }}
-                            style={{
-                              height: "100%",
-                              fontSize: "0.2rem",
-                            }}
+                      <div>
+                        <section
+                          style={{ display: "flex", alignItems: "center" }}
+                        >
+                          {/* {index != 0 && <span style={{opacity:0}}>领军人物（最多五个）: &nbsp;</span>} */}
+                          <Input
+                            placeholder="请输入专利名称"
+                            style={{ marginRight: "0.1rem", flex: 4 }}
                           />
-                        ) : (
-                          <MinusCircleOutlined
-                            onClick={() => {
-                              setTeams(teams - 1);
-                            }}
-                            style={{
-                              height: "100%",
-                              fontSize: "0.2rem",
-                            }}
+                          <Select
+                            defaultValue="2"
+                            placeholder="请选择专利类型"
+                            style={{ marginRight: "0.1rem", flex: 1 }}
+                          >
+                            <Option value="1">1</Option>
+                            <Option value="2">1</Option>
+                          </Select>
+                          <Select
+                            defaultValue="2"
+                            placeholder="请选择专利状态"
+                            style={{ marginRight: "0.1rem", flex: 1 }}
+                          >
+                            <Option value="1">1</Option>
+                            <Option value="2">1</Option>
+                          </Select>
+                          {index === 0 ? (
+                            <PlusCircleOutlined
+                              onClick={() => {
+                                setPatent(patent + 1);
+                              }}
+                              style={{
+                                height: "100%",
+                                fontSize: "0.2rem",
+                              }}
+                            />
+                          ) : (
+                            <MinusCircleOutlined
+                              onClick={() => {
+                                setPatent(patent - 1);
+                              }}
+                              style={{
+                                height: "100%",
+                                fontSize: "0.2rem",
+                              }}
+                            />
+                          )}
+                        </section>
+                        <section style={{ marginTop: "0.1rem" }}>
+                          <Input
+                            placeholder="请输入专利优势"
+                            style={{ marginRight: "0.1rem", flex: 4 }}
                           />
-                        )}
-                      </section>
+                        </section>
+                      </div>
                     </Form.Item>
                   </Col>
                 );
               })}
             </Row>
-            </Form>
+          </Form>
         )}
+        {/* 8 - 投资方 */}
+        {props.inx == 7 && (
+          <Form
+            form={form}
+            name="advanced_search"
+            className="ant-advanced-search-form"
+            onFinish={onFinish}
+            // {...layout}
+          >
+            <Row gutter={24}>
+              {new Array(investor).fill("").map((item, index) => {
+                return (
+                  <Col span={24}>
+                    <Form.Item
+                      label={investor == 1 ? "投资方" : "投资方" + (index + 1)}
+                      rules={[
+                        {
+                          required: true,
+                          message: "Input something!",
+                        },
+                      ]}
+                    >
+                      <div>
+                        <section
+                          style={{ display: "flex", alignItems: "center" }}
+                        >
+                          {/* {index != 0 && <span style={{opacity:0}}>领军人物（最多五个）: &nbsp;</span>} */}
+                          <Input
+                            placeholder="请输入投资方名称"
+                            style={{ marginRight: "0.1rem", flex: 4 }}
+                          />
+                          <Input
+                            placeholder="请输入轮次"
+                            style={{ marginRight: "0.1rem", flex: 4 }}
+                          />
+                          <Input
+                            placeholder="请输入投资金额，不填则代表暂不公开"
+                            style={{ marginRight: "0.1rem", flex: 4 }}
+                          />
 
-        <p
-          style={{
-            height: "1rem",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <div
-            style={{ marginRight: "0.3rem" }}
-            onClick={() => {
-              // if (tabInx < 2) {
-              //   setTabInx(tabInx + 1);
-              // }
-              props.setInx(props.inx - 1);
+                          {index === 0 ? (
+                            <PlusCircleOutlined
+                              onClick={() => {
+                                setInvestor(investor + 1);
+                              }}
+                              style={{
+                                height: "100%",
+                                fontSize: "0.2rem",
+                              }}
+                            />
+                          ) : (
+                            <MinusCircleOutlined
+                              onClick={() => {
+                                setInvestor(investor - 1);
+                              }}
+                              style={{
+                                height: "100%",
+                                fontSize: "0.2rem",
+                              }}
+                            />
+                          )}
+                        </section>
+                      </div>
+                    </Form.Item>
+                  </Col>
+                );
+              })}
+            </Row>
+          </Form>
+        )}
+        {/* 9 - 行业成长性 */}
+        {props.inx == 8 && (
+          <Form
+            form={form}
+            name="advanced_search"
+            className="ant-advanced-search-form"
+            onFinish={onFinish}
+            // {...layout}
+          >
+            <Row gutter={24}>
+              <Col span={24}>
+                <Form.Item
+                  label={"行业介绍"}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Input something!",
+                    },
+                  ]}
+                >
+                  <Input.TextArea
+                    showCount
+                    maxLength={500}
+                    placeholder="请输入行业前景、现状、痛点、周期、需求、供给、政策、技术、模式等。最多500个字。"
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+          </Form>
+        )}
+        {/* 10 - 保存提交 */}
+        {props.inx == 9 && (
+          <div>
+            <img src={sPng} style={{ width: "1rem" }} />
+
+            <section
+              style={{
+                marginTop: "0.1rem",
+                fontWeight: "bold",
+                fontSize: "0.2rem",
+              }}
+            >
+              填写完成
+            </section>
+            <section
+              style={{
+                marginTop: "0.1rem",
+                fontWeight: "bold",
+                fontSize: "0.12rem",
+                color: "rgba(0,0,0,0.5)",
+              }}
+            >
+              点击“提交“，直接上交申报数据
+            </section>
+            <section style={{
+                marginTop: "0.1rem",
+                fontSize: "0.12rem",
+                color: "rgba(0,0,0,0.7)",
+                display:"flex",
+                alignItems:"center",
+                justifyContent:"center"
+              }}>
+              <span>
+                <Checkbox
+                  onChange={(e) => setChecked(e.target.checked)}
+                ></Checkbox>
+              </span>
+              <span style={{marginLeft:"0.05rem"}}>
+                本公司承诺，以上所有申报内容均为本公司真实信息，且授权上海碳中和技术创新联盟可公开展示所有申报内容。
+              </span>
+            </section>
+          </div>
+        )}
+        {props.inx != 9 ? (
+          <p
+            style={{
+              height: "1rem",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            <ButtonCmt
-              bg={ThemeColor}
-              w="0.8rem"
-              color="white"
-              t="上一步"
-              h="0.4rem"
-            />
-          </div>
-          <div
-            style={{ marginRight: "0.3rem" }}
-            onClick={() => {
-              if (props.inx < 9) {
-                props.setInx(props.inx + 1);
-              }
+            <div
+              style={{ marginRight: "0.3rem" }}
+              onClick={() => {
+                // if (tabInx < 2) {
+                //   setTabInx(tabInx + 1);
+                // }
+                props.setInx(props.inx - 1);
+              }}
+            >
+              <ButtonCmt
+                bg={ThemeColor}
+                w="0.8rem"
+                color="white"
+                t="上一步"
+                h="0.4rem"
+              />
+            </div>
+            <div
+              style={{ marginRight: "0.3rem" }}
+              onClick={() => {
+                if (props.inx < 9) {
+                  props.setInx(props.inx + 1);
+                }
+              }}
+            >
+              <ButtonCmt
+                bg={ThemeColor}
+                w="0.8rem"
+                color="white"
+                t="下一步"
+                h="0.4rem"
+              />
+            </div>
+            <div
+              onClick={() => {
+                // saveDeclareBalance();
+              }}
+            >
+              <ButtonCmt
+                bg="#51AA95"
+                w="0.8rem"
+                color="white"
+                t="保存"
+                h="0.4rem"
+              />
+            </div>
+          </p>
+        ) : (
+          <p
+            style={{
+              height: "1rem",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            <ButtonCmt
-              bg={ThemeColor}
-              w="0.8rem"
-              color="white"
-              t="下一步"
-              h="0.4rem"
-            />
-          </div>
-          <div
-            onClick={() => {
-              // saveDeclareBalance();
-            }}
-          >
-            <ButtonCmt
-              bg="#51AA95"
-              w="0.8rem"
-              color="white"
-              t="保存"
-              h="0.4rem"
-            />
-          </div>
-        </p>
+            <div
+              onClick={() => {
+                if(checked){
+                  message.success("提交成功 ！")
+                }else{
+                  message.warn("请授权后再提交 ！")
+                }
+                // saveDeclareBalance();
+              }}
+            >
+              <ButtonCmt
+                bg="#51AA95"
+                w="0.8rem"
+                color="white"
+                t="提交"
+                h="0.4rem"
+              />
+            </div>
+          </p>
+        )}{" "}
       </div>
     </div>
   );
