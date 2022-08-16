@@ -14,20 +14,48 @@ import {
   MinusCircleOutlined,
 } from "@ant-design/icons";
 import { Button, Col, Form, Input, Row, Select, Checkbox, message } from "antd";
-import React, { useState } from "react";
+import React, { useState, useReducer, useEffect } from "react";
 import { ButtonCmt } from "../../component/button";
 import sPng from "../../static/imgs/save.png";
+i
 
 const { Option } = Select;
+
+const init2 = {
+  id: "", //企业ID
+  companyName: "", //公司名称
+  province: "上海", //注册省
+  city: "宝山", //注册城市
+  district: "罗店", //注册地区
+  contactNumber: "15026829392", //联系电话
+  stage: "IPO", //融资阶段
+  financingScale: "5000", //融资金额
+  industry: "2", //行业
+  website: "https://www.stiacn.com", //官网
+  enterpriseAbbreviation: "上海碳中和联盟", //简称
+  regCapital: "2500", //注册资金（万元）
+  regTime: "2022-08-15 09:45:45", //注册时间
+  email: "Admin@shbeidou.com", //联系邮箱
+  enterpriseValuation: "900000", //企业估值（万元）
+  legalPersonName: "陈诚", //法人
+  companyProfile: "", //公司简介
+};
+
+const reducer2 = (state, action) => {
+  console.log("基本信息state is", state);
+  console.log("基本信息action is", action);
+};
 
 function Others(props) {
   const [expand, setExpand] = useState(false);
   const [form] = Form.useForm();
+
   const [leaders, setLeaders] = useState(1); // 领军人物
   const [teams, setTeams] = useState(1); // 核心团队
   const [patent, setPatent] = useState(1); // 专利
   const [investor, setInvestor] = useState(1); // 投资方
   const [checked, setChecked] = useState(false);
+  const [state2, dispatch2] = useReducer(reducer2, init2); //基本信息
 
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
@@ -42,6 +70,10 @@ function Others(props) {
     },
   };
 
+  useEffect(() => {
+    console.log("监听基本信息state 变化", state2);
+  }, [state2]);
+
   return (
     <div className="others_page">
       <div>
@@ -53,122 +85,97 @@ function Others(props) {
             className="ant-advanced-search-form"
             onFinish={onFinish}
             {...layout}
+            onChange={(e) =>
+              console.log("基本信息表格变化", form.getFieldsValue())
+            }
           >
             <Row gutter={24}>
               <Col span={10}>
                 <Form.Item
                   label={"企业名称"}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Input something!",
-                    },
-                  ]}
+                  name="companyName"
+                  rules={
+                    [
+                      // {
+                      //   required: true,
+                      //   message: "Input something!",
+                      // },
+                    ]
+                  }
                 >
                   <Input placeholder="请输入" />
                 </Form.Item>
               </Col>
 
               <Col span={10} offset={4}>
-                <Form.Item
-                  label={"企业名称"}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Input something!",
-                    },
-                  ]}
-                >
+                <Form.Item label={"企业简介"} name="enterpriseAbbreviation">
                   <Input placeholder="请输入" />
                 </Form.Item>
               </Col>
             </Row>
             <Row gutter={24}>
               <Col span={10}>
-                <Form.Item
-                  label={"企业名称"}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Input something!",
-                    },
-                  ]}
-                >
+                <Form.Item label={"注册地"}>
                   <section
                     style={{
                       display: "flex",
+                      justifyContent: "space-between",
                     }}
                   >
-                    <Select defaultValue="2" style={{}}>
-                      <Option value="1">1</Option>
-                      <Option value="2">1</Option>
-                    </Select>
-                    <Select defaultValue="2">
-                      <Option value="1">1</Option>
-                      <Option value="2">1</Option>
-                    </Select>
-                    <Select defaultValue="2">
-                      <Option value="1">1</Option>
-                      <Option value="2">1</Option>
-                    </Select>
+                  
+                        <Form.Item name="province" style={{flex:1,marginRight: "0.1rem"}}>
+                          <Select
+                            defaultValue="2"
+                          >
+                            <Option value="1">1</Option>
+                            <Option value="2">1</Option>
+                          </Select>
+                        </Form.Item>
+                 
+                        <Form.Item name="city"  style={{flex:1,marginRight: "0.1rem"}}>
+                          <Select
+                            defaultValue="2"
+                          >
+                            <Option value="1">1</Option>
+                            <Option value="2">1</Option>
+                          </Select>
+                        </Form.Item>
+                 
+                        <Form.Item name="district"  style={{flex:1,marginRight: "0rem"}}>
+                          <Select
+                            defaultValue="2"
+                          >
+                            <Option value="1">1</Option>
+                            <Option value="2">1</Option>
+                          </Select>
+                        </Form.Item>
+                 
                   </section>
                 </Form.Item>
               </Col>
 
               <Col span={10} offset={4}>
-                <Form.Item
-                  label={"注册资金"}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Input something!",
-                    },
-                  ]}
-                >
+                <Form.Item label={"注册资金"} name="regCapital">
                   <Input placeholder="请输入" />
                 </Form.Item>
               </Col>
             </Row>
             <Row gutter={24}>
               <Col span={10}>
-                <Form.Item
-                  label={"联系电话"}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Input something!",
-                    },
-                  ]}
-                >
+                <Form.Item label={"联系电话"} name="contactNumber"> 
                   <Input placeholder="请输入" />
                 </Form.Item>
               </Col>
 
               <Col span={10} offset={4}>
-                <Form.Item
-                  label={"注册时间"}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Input something!",
-                    },
-                  ]}
-                >
-                  <Input placeholder="请输入" />
+                <Form.Item label={"注册时间"}>
+                  <Input placeholder="请输入" name="regTime"/>
                 </Form.Item>
               </Col>
             </Row>
             <Row gutter={24}>
               <Col span={10}>
-                <Form.Item
-                  label={"融资阶段"}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Input something!",
-                    },
-                  ]}
-                >
+                <Form.Item label={"融资阶段"} name="stage">
                   <Select defaultValue="2">
                     <Option value="1">1</Option>
                     <Option value="2">1</Option>
@@ -177,15 +184,7 @@ function Others(props) {
               </Col>
 
               <Col span={10} offset={4}>
-                <Form.Item
-                  label={"联系邮箱"}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Input something!",
-                    },
-                  ]}
-                >
+                <Form.Item label={"联系邮箱"} name="email">
                   <Input placeholder="请输入" />
                 </Form.Item>
               </Col>
@@ -193,44 +192,20 @@ function Others(props) {
 
             <Row gutter={24}>
               <Col span={10}>
-                <Form.Item
-                  label={"融资金额"}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Input something!",
-                    },
-                  ]}
-                >
-                  <Input placeholder="请输入" />
+                <Form.Item label={"融资金额"}>
+                  <Input placeholder="请输入" name="financingScale"/>
                 </Form.Item>
               </Col>
 
               <Col span={10} offset={4}>
-                <Form.Item
-                  label={"投前估值"}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Input something!",
-                    },
-                  ]}
-                >
-                  <Input placeholder="请输入" />
+                <Form.Item label={"投前估值"}>
+                  <Input placeholder="请输入" name="enterpriseValuation"/>
                 </Form.Item>
               </Col>
             </Row>
             <Row gutter={24}>
               <Col span={10}>
-                <Form.Item
-                  label={"所属行业"}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Input something!",
-                    },
-                  ]}
-                >
+                <Form.Item label={"所属行业"} name="industry">
                   <Select defaultValue="2">
                     <Option value="1">1</Option>
                     <Option value="2">1</Option>
@@ -239,15 +214,7 @@ function Others(props) {
               </Col>
 
               <Col span={10} offset={4}>
-                <Form.Item
-                  label={"法定代表人"}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Input something!",
-                    },
-                  ]}
-                >
+                <Form.Item label={"法定代表人"}  name="legalPersonName">
                   <Input placeholder="请输入" />
                 </Form.Item>
               </Col>
@@ -255,29 +222,13 @@ function Others(props) {
 
             <Row gutter={24}>
               <Col span={10}>
-                <Form.Item
-                  label={"官网"}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Input something!",
-                    },
-                  ]}
-                >
+                <Form.Item label={"官网"} name="website">
                   <Input placeholder="请输入" />
                 </Form.Item>
               </Col>
 
               <Col span={10} offset={4}>
-                <Form.Item
-                  label={"公司简介"}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Input something!",
-                    },
-                  ]}
-                >
+                <Form.Item label={"公司简介"} name="companyProfile">
                   <Input.TextArea
                     showCount
                     maxLength={300}
@@ -299,15 +250,7 @@ function Others(props) {
           >
             <Row gutter={24}>
               <Col span={10}>
-                <Form.Item
-                  label={"战略定位"}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Input something!",
-                    },
-                  ]}
-                >
+                <Form.Item label={"战略定位"}>
                   <Input.TextArea
                     showCount
                     maxLength={300}
@@ -317,15 +260,7 @@ function Others(props) {
               </Col>
 
               <Col span={10} offset={4}>
-                <Form.Item
-                  label={"战略规划"}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Input something!",
-                    },
-                  ]}
-                >
+                <Form.Item label={"战略规划"}>
                   <Input.TextArea
                     showCount
                     maxLength={300}
@@ -346,15 +281,7 @@ function Others(props) {
           >
             <Row gutter={24}>
               <Col span={12}>
-                <Form.Item
-                  label={"商业模式"}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Input something!",
-                    },
-                  ]}
-                >
+                <Form.Item label={"商业模式"}>
                   <section style={{ display: "flex" }}>
                     <span>&nbsp;</span> <span>&nbsp;</span>
                     <span>&nbsp;</span>
@@ -369,15 +296,7 @@ function Others(props) {
               </Col>
 
               <Col span={12} offset={0}>
-                <Form.Item
-                  label={"主营业务"}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Input something!",
-                    },
-                  ]}
-                >
+                <Form.Item label={"主营业务"}>
                   <section style={{ display: "flex" }}>
                     <span>&nbsp;</span> <span>&nbsp;</span>
                     <span>&nbsp;</span>
@@ -393,15 +312,7 @@ function Others(props) {
             </Row>
             <Row gutter={24}>
               <Col span={24}>
-                <Form.Item
-                  label={"业务标签"}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Input something!",
-                    },
-                  ]}
-                >
+                <Form.Item label={"业务标签"}>
                   <section style={{ display: "flex" }}>
                     <span>&nbsp;</span> <span>&nbsp;</span>
                     <span>&nbsp;</span>
@@ -433,15 +344,7 @@ function Others(props) {
 
             <Row gutter={24}>
               <Col span={24}>
-                <Form.Item
-                  label={"业务构成"}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Input something!",
-                    },
-                  ]}
-                >
+                <Form.Item label={"业务构成"}>
                   <section style={{ display: "flex" }}>
                     <span>&nbsp;</span> <span>&nbsp;</span>
                     <span>&nbsp;</span>
@@ -453,15 +356,7 @@ function Others(props) {
 
             <Row gutter={24}>
               <Col span={24}>
-                <Form.Item
-                  label={"核心客户"}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Input something!",
-                    },
-                  ]}
-                >
+                <Form.Item label={"核心客户"}>
                   <section style={{ display: "flex" }}>
                     <span>&nbsp;</span> <span>&nbsp;</span>
                     <span>&nbsp;</span>
@@ -477,15 +372,7 @@ function Others(props) {
 
             <Row gutter={24}>
               <Col span={24}>
-                <Form.Item
-                  label={"核心供应商"}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Input something!",
-                    },
-                  ]}
-                >
+                <Form.Item label={"核心供应商"}>
                   <section style={{ display: "flex" }}>
                     <Input
                       placeholder="请输入"
@@ -509,15 +396,7 @@ function Others(props) {
           >
             <Row gutter={24}>
               <Col span={24}>
-                <Form.Item
-                  label={"核心竞争力"}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Input something!",
-                    },
-                  ]}
-                >
+                <Form.Item label={"核心竞争力"}>
                   <Input.TextArea
                     showCount
                     maxLength={300}
@@ -682,15 +561,7 @@ function Others(props) {
           >
             <Row gutter={24}>
               <Col span={24}>
-                <Form.Item
-                  label={"核心技术"}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Input something!",
-                    },
-                  ]}
-                >
+                <Form.Item label={"核心技术"}>
                   <Input.TextArea
                     showCount
                     maxLength={300}
@@ -854,15 +725,7 @@ function Others(props) {
           >
             <Row gutter={24}>
               <Col span={24}>
-                <Form.Item
-                  label={"行业介绍"}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Input something!",
-                    },
-                  ]}
-                >
+                <Form.Item label={"行业介绍"}>
                   <Input.TextArea
                     showCount
                     maxLength={500}
