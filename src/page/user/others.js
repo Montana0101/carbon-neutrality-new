@@ -44,31 +44,6 @@ import locale from "antd/es/date-picker/locale/zh_CN";
 
 const { Option } = Select;
 
-const init2 = {
-  id: "", //企业ID
-  companyName: "", //公司名称
-  province: "上海", //注册省
-  city: "宝山", //注册城市
-  district: "罗店", //注册地区
-  contactNumber: "15026829392", //联系电话
-  stage: "IPO", //融资阶段
-  financingScale: "5000", //融资金额
-  industry: "2", //行业
-  website: "https://www.stiacn.com", //官网
-  enterpriseAbbreviation: "上海碳中和联盟", //简称
-  regCapital: "2500", //注册资金（万元）
-  regTime: "2022-08-15 09:45:45", //注册时间
-  email: "Admin@shbeidou.com", //联系邮箱
-  enterpriseValuation: "900000", //企业估值（万元）
-  legalPersonName: "陈诚", //法人
-  companyProfile: "", //公司简介
-};
-
-const reducer2 = (state, action) => {
-  console.log("基本信息state is", state);
-  console.log("基本信息action is", action);
-};
-
 // 专利技术item 用户增删行数
 const cpPatentsItem = {
   abstracts: "", //专利优势
@@ -84,22 +59,62 @@ const cpInvestorsItem = {
   investorRounds: null, //投资轮次
 };
 
+// 业务标签item
+const companyMarksItem = {
+  mark: null, //标签
+};
+
+// 业务构成
+const compositionsItem = {
+  composition: "", //客户名
+};
+
+// 客户
+const cpCustomersItem = {
+  customerName: "", //客户名
+  proportionSale: "", //客户销售占比
+};
+
+//供应商
+const cpSuppliersItem = {
+  purchaseProportion: "", //购买占比
+  supplierName: "", //供应商名称
+};
+
 function Others(props) {
   const { inx, companyId } = props;
-
+  const history = useHistory();
   const [form] = Form.useForm();
 
   const [leaders, setLeaders] = useState(1); // 领军人物
   const [teams, setTeams] = useState(1); // 核心团队
   const [patent, setPatent] = useState(1); // 专利
   const [investor, setInvestor] = useState(1); // 投资方
+  const [marks, setMarks] = useState(1); // 业务标签
+  const [compositions, setCompositions] = useState(1); // 业务构成
+  const [cpCustomers, setcpCustomers] = useState(1); //客户
+  const [cpSuppliers, setcpSuppliers] = useState(1); // 供应商
+
   const [checked, setChecked] = useState(false);
-  const [state2, dispatch2] = useReducer(reducer2, init2); //基本信息
   const [rigsterTime, setRigsterTime] = useState(null);
 
   const [table1, setTable1] = useState({}); // 基本信息表
   const [table2, setTable2] = useState({}); // 公司战略
-  const [table3, setTable3] = useState({}); // 公司经营
+  const [table3, setTable3] = useState({
+    businessModel: "",
+    mainBusiness: "",
+    companyMarks: [
+      companyMarksItem,
+      companyMarksItem,
+      companyMarksItem,
+      companyMarksItem,
+      companyMarksItem,
+      companyMarksItem,
+    ],
+    compositions: [compositionsItem],
+    cpCustomers: [cpCustomersItem],
+    cpSuppliers: [cpSuppliersItem],
+  }); // 公司经营
   const [table4, setTable4] = useState({}); // 核心竞争力
 
   const [table5, setTable5] = useState({
@@ -236,6 +251,19 @@ function Others(props) {
     }
   };
 
+  // 保存所有表格
+  const saveAll = async () => {
+    const res = await commit(companyId);
+    if (res && res.code == 2000) {
+      message.success("提交成功！");
+      setTimeout(() => {
+        history.push("/common");
+      }, 1500);
+    } else {
+      message.error("提交失败！");
+    }
+  };
+
   // 提交
   const submit = () => {
     switch (inx) {
@@ -284,7 +312,6 @@ function Others(props) {
             onFinish={onFinish}
             {...layout}
             onChange={(e) => {
-              console.log("基本信息表格变化", form.getFieldsValue());
               let obj = form.getFieldsValue();
               obj.id = companyId ? companyId : null;
               setTable1(obj);
@@ -534,31 +561,112 @@ function Others(props) {
             <Row gutter={24}>
               <Col span={24}>
                 <Form.Item label={"业务标签"}>
-                  <section style={{ display: "flex" }}>
-                    <span>&nbsp;</span> <span>&nbsp;</span>
-                    <span>&nbsp;</span>
-                    <Input
-                      placeholder="请输入"
-                      style={{ marginRight: "0.1rem" }}
-                    />
-                    <Input
-                      placeholder="请输入"
-                      style={{ marginRight: "0.1rem" }}
-                    />
-                    <Input
-                      placeholder="请输入"
-                      style={{ marginRight: "0.1rem" }}
-                    />
-                    <Input
-                      placeholder="请输入"
-                      style={{ marginRight: "0.1rem" }}
-                    />
-                    <Input
-                      placeholder="请输入"
-                      style={{ marginRight: "0.1rem" }}
-                    />
-                    <Input placeholder="请输入" />
-                  </section>
+                  {new Array(marks).fill("").map((item, index) => {
+                    return (
+                      <section
+                        style={{
+                          display: "flex",
+                          marginTop: index != 0 && "0.2rem",
+                          alignItems: "center",
+                        }}
+                        key={index}
+                      >
+                        <span>&nbsp;</span> <span>&nbsp;</span>
+                        <span>&nbsp;</span>
+                        <Input
+                          placeholder="请输入"
+                          style={{ marginRight: "0.1rem" }}
+                          onChange={(e) => {
+                            let _obj = JSON.parse(JSON.stringify(table3));
+                            _obj.companyMarks[index * 6].mark = e.target.value;
+                            setTable3(_obj);
+                          }}
+                        />
+                        <Input
+                          placeholder="请输入"
+                          style={{ marginRight: "0.1rem" }}
+                          onChange={(e) => {
+                            let _obj = JSON.parse(JSON.stringify(table3));
+                            _obj.companyMarks[index * 6 + 1].mark =
+                              e.target.value;
+                            setTable3(_obj);
+                          }}
+                        />
+                        <Input
+                          placeholder="请输入"
+                          style={{ marginRight: "0.1rem" }}
+                          onChange={(e) => {
+                            let _obj = JSON.parse(JSON.stringify(table3));
+                            _obj.companyMarks[index * 6 + 2].mark =
+                              e.target.value;
+                            setTable3(_obj);
+                          }}
+                        />
+                        <Input
+                          placeholder="请输入"
+                          style={{ marginRight: "0.1rem" }}
+                          onChange={(e) => {
+                            let _obj = JSON.parse(JSON.stringify(table3));
+                            _obj.companyMarks[index * 6 + 3].mark =
+                              e.target.value;
+                            setTable3(_obj);
+                          }}
+                        />
+                        <Input
+                          placeholder="请输入"
+                          style={{ marginRight: "0.1rem" }}
+                          onChange={(e) => {
+                            let _obj = JSON.parse(JSON.stringify(table3));
+                            _obj.companyMarks[index * 6 + 4].mark =
+                              e.target.value;
+                            setTable3(_obj);
+                          }}
+                        />
+                        <Input
+                          placeholder="请输入"
+                          style={{ marginRight: "0.1rem" }}
+                          onChange={(e) => {
+                            let _obj = JSON.parse(JSON.stringify(table3));
+                            _obj.companyMarks[index * 6 + 5].mark =
+                              e.target.value;
+                            setTable3(_obj);
+                          }}
+                        />
+                        {index === 0 ? (
+                          <PlusCircleOutlined
+                            onClick={() => {
+                              setMarks(marks + 1);
+                              let _obj = JSON.parse(JSON.stringify(table3));
+                              _obj.companyMarks.push(companyMarksItem);
+                              _obj.companyMarks.push(companyMarksItem);
+                              _obj.companyMarks.push(companyMarksItem);
+                              _obj.companyMarks.push(companyMarksItem);
+                              _obj.companyMarks.push(companyMarksItem);
+                              _obj.companyMarks.push(companyMarksItem);
+                              setTable3(_obj);
+                            }}
+                            style={{
+                              height: "100%",
+                              fontSize: "0.2rem",
+                            }}
+                          />
+                        ) : (
+                          <MinusCircleOutlined
+                            onClick={() => {
+                              setMarks(marks - 1);
+                              let _obj = JSON.parse(JSON.stringify(table3));
+                              _obj.companyMarks.splice(index * 6, 6);
+                              setTable3(_obj);
+                            }}
+                            style={{
+                              height: "100%",
+                              fontSize: "0.2rem",
+                            }}
+                          />
+                        )}
+                      </section>
+                    );
+                  })}
                 </Form.Item>
               </Col>
             </Row>
@@ -566,11 +674,58 @@ function Others(props) {
             <Row gutter={24}>
               <Col span={24}>
                 <Form.Item label={"业务构成"}>
-                  <section style={{ display: "flex" }}>
-                    <span>&nbsp;</span> <span>&nbsp;</span>
-                    <span>&nbsp;</span>
-                    <Input placeholder="请输入" />
-                  </section>
+                  {new Array(compositions).fill("").map((item, index) => {
+                    return (
+                      <section
+                        style={{
+                          display: "flex",
+                          marginTop: index != 0 && "0.2rem",
+                          alignItems: "center",
+                        }}
+                        key={index}
+                      >
+                        <span>&nbsp;</span> <span>&nbsp;</span>
+                        <span>&nbsp;</span>
+                        <Input
+                          placeholder="请输入"
+                          style={{ marginRight: "0.1rem" }}
+                          onChange={(e) => {
+                            let _obj = JSON.parse(JSON.stringify(table3));
+                            _obj.compositions[index].composition =
+                              e.target.value;
+                            setTable3(_obj);
+                          }}
+                        />
+                        {index === 0 ? (
+                          <PlusCircleOutlined
+                            onClick={() => {
+                              setCompositions(compositions + 1);
+                              let _obj = JSON.parse(JSON.stringify(table3));
+                              _obj.compositions.push(compositionsItem);
+                              setTable3(_obj);
+                            }}
+                            style={{
+                              height: "100%",
+                              fontSize: "0.2rem",
+                            }}
+                          />
+                        ) : (
+                          <MinusCircleOutlined
+                            onClick={() => {
+                              setCompositions(compositions - 1);
+                              let _obj = JSON.parse(JSON.stringify(table3));
+                              _obj.compositions.splice(index, 1);
+                              setTable3(_obj);
+                            }}
+                            style={{
+                              height: "100%",
+                              fontSize: "0.2rem",
+                            }}
+                          />
+                        )}
+                      </section>
+                    );
+                  })}
                 </Form.Item>
               </Col>
             </Row>
@@ -578,15 +733,68 @@ function Others(props) {
             <Row gutter={24}>
               <Col span={24}>
                 <Form.Item label={"核心客户"}>
-                  <section style={{ display: "flex" }}>
-                    <span>&nbsp;</span> <span>&nbsp;</span>
-                    <span>&nbsp;</span>
-                    <Input
-                      placeholder="请输入"
-                      style={{ marginRight: "0.1rem" }}
-                    />
-                    <Input placeholder="请输入占比" />
-                  </section>
+                  {new Array(cpCustomers).fill("").map((item, index) => {
+                    return (
+                      <section
+                        style={{
+                          display: "flex",
+                          marginTop: index != 0 && "0.2rem",
+                          alignItems: "center",
+                        }}
+                        key={index}
+                      >
+                        <span>&nbsp;</span> <span>&nbsp;</span>
+                        <span>&nbsp;</span>
+                        <Input
+                          placeholder="请输入客户名称"
+                          style={{ marginRight: "0.1rem" }}
+                          onChange={(e) => {
+                            let _obj = JSON.parse(JSON.stringify(table3));
+                            _obj.cpCustomers[index].customerName =
+                              e.target.value;
+                            setTable3(_obj);
+                          }}
+                        />
+                        <Input
+                          placeholder="请输入占比"
+                          style={{ marginRight: "0.1rem" }}
+                          onChange={(e) => {
+                            let _obj = JSON.parse(JSON.stringify(table3));
+                            _obj.cpCustomers[index].proportionSale =
+                              e.target.value;
+                            setTable3(_obj);
+                          }}
+                        />
+                        {index === 0 ? (
+                          <PlusCircleOutlined
+                            onClick={() => {
+                              setcpCustomers(cpCustomers + 1);
+                              let _obj = JSON.parse(JSON.stringify(table3));
+                              _obj.cpCustomers.push(cpCustomersItem);
+                              setTable3(_obj);
+                            }}
+                            style={{
+                              height: "100%",
+                              fontSize: "0.2rem",
+                            }}
+                          />
+                        ) : (
+                          <MinusCircleOutlined
+                            onClick={() => {
+                              setcpCustomers(cpCustomers - 1);
+                              let _obj = JSON.parse(JSON.stringify(table3));
+                              _obj.cpCustomers.splice(index, 1);
+                              setTable3(_obj);
+                            }}
+                            style={{
+                              height: "100%",
+                              fontSize: "0.2rem",
+                            }}
+                          />
+                        )}
+                      </section>
+                    );
+                  })}
                 </Form.Item>
               </Col>
             </Row>
@@ -594,13 +802,66 @@ function Others(props) {
             <Row gutter={24}>
               <Col span={24}>
                 <Form.Item label={"核心供应商"}>
-                  <section style={{ display: "flex" }}>
-                    <Input
-                      placeholder="请输入"
-                      style={{ marginRight: "0.1rem" }}
-                    />
-                    <Input placeholder="请输入占比" />
-                  </section>
+                  {new Array(cpSuppliers).fill("").map((item, index) => {
+                    return (
+                      <section
+                        style={{
+                          display: "flex",
+                          marginTop: index != 0 && "0.2rem",
+                          alignItems: "center",
+                        }}
+                        key={index}
+                      >
+                        <Input
+                          placeholder="请输入供应商名称"
+                          style={{ marginRight: "0.1rem" }}
+                          onChange={(e) => {
+                            let _obj = JSON.parse(JSON.stringify(table3));
+                            _obj.cpSuppliers[index].supplierName =
+                              e.target.value;
+                            setTable3(_obj);
+                          }}
+                        />
+                        <Input
+                          placeholder="请输入占比"
+                          style={{ marginRight: "0.1rem" }}
+                          onChange={(e) => {
+                            let _obj = JSON.parse(JSON.stringify(table3));
+                            _obj.cpSuppliers[index].purchaseProportion =
+                              e.target.value;
+                            setTable3(_obj);
+                          }}
+                        />
+                        {index === 0 ? (
+                          <PlusCircleOutlined
+                            onClick={() => {
+                              setcpSuppliers(cpSuppliers + 1);
+                              let _obj = JSON.parse(JSON.stringify(table3));
+                              _obj.cpSuppliers.push(cpSuppliersItem);
+                              setTable3(_obj);
+                            }}
+                            style={{
+                              height: "100%",
+                              fontSize: "0.2rem",
+                            }}
+                          />
+                        ) : (
+                          <MinusCircleOutlined
+                            onClick={() => {
+                              setcpSuppliers(cpSuppliers - 1);
+                              let _obj = JSON.parse(JSON.stringify(table3));
+                              _obj.cpSuppliers.splice(index, 1);
+                              setTable3(_obj);
+                            }}
+                            style={{
+                              height: "100%",
+                              fontSize: "0.2rem",
+                            }}
+                          />
+                        )}
+                      </section>
+                    );
+                  })}
                 </Form.Item>
               </Col>
             </Row>
@@ -964,7 +1225,7 @@ function Others(props) {
             </Row>
           </Form>
         )}
-        {/* 8 - 投资方 */}
+        {/* 7 - 投资方 */}
         {props.inx == 7 && (
           <Form
             form={form}
@@ -1027,7 +1288,7 @@ function Others(props) {
                               onClick={() => {
                                 setInvestor(investor + 1);
                                 let _obj = JSON.parse(JSON.stringify(table7));
-                                _obj.cpInvestors.push(cpInvestorsItem)
+                                _obj.cpInvestors.push(cpInvestorsItem);
                                 setTable7(_obj);
                               }}
                               style={{
@@ -1040,7 +1301,7 @@ function Others(props) {
                               onClick={() => {
                                 setInvestor(investor - 1);
                                 let _obj = JSON.parse(JSON.stringify(table7));
-                                _obj.cpInvestors.splice(index,1)
+                                _obj.cpInvestors.splice(index, 1);
                                 setTable7(_obj);
                               }}
                               style={{
@@ -1058,18 +1319,22 @@ function Others(props) {
             </Row>
           </Form>
         )}
-        {/* 9 - 行业成长性 */}
+        {/* 8 - 行业成长性 */}
         {props.inx == 8 && (
           <Form
             form={form}
             name="advanced_search"
             className="ant-advanced-search-form"
             onFinish={onFinish}
-            // {...layout}
+            onChange={(e) => {
+              let obj = form.getFieldsValue();
+              obj.id = companyId ? companyId : null;
+              setTable8(obj);
+            }}
           >
             <Row gutter={24}>
               <Col span={24}>
-                <Form.Item label={"行业介绍"}>
+                <Form.Item label={"行业介绍"} name="industryIntroduction">
                   <Input.TextArea
                     showCount
                     maxLength={500}
@@ -1080,7 +1345,7 @@ function Others(props) {
             </Row>
           </Form>
         )}
-        {/* 10 - 保存提交 */}
+        {/* 9 - 保存提交 */}
         {props.inx == 9 && (
           <div>
             <img src={sPng} style={{ width: "1rem" }} />
@@ -1195,7 +1460,8 @@ function Others(props) {
             <div
               onClick={() => {
                 if (checked) {
-                  message.success("提交成功 ！");
+                  // message.success("提交成功 ！");
+                  saveAll();
                 } else {
                   message.warn("请授权后再提交 ！");
                 }

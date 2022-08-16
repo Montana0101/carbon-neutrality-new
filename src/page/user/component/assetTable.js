@@ -3,10 +3,7 @@ import { InputNumber } from "antd";
 import "moment/locale/zh-cn";
 import { ButtonCmt } from "../../../component/button";
 
-const assetJson = require("../json/asset.json"); //资产负债json
 const assetJsonT = require("../json/asset_t.json"); //资产负债展示文案json
-const profitJson = require("../json/profit.json"); // 利润表json
-const profitJsonT = require("../json/profit_t.json");
 
 const InputCmt = (props) => {
   let { data, line } = props;
