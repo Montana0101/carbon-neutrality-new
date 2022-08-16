@@ -33,7 +33,12 @@ import {
 import React, { useState, useReducer, useEffect } from "react";
 import { ButtonCmt } from "../../component/button";
 import sPng from "../../static/imgs/save.png";
-import { industryEnum, stageEnum } from "../../lib/enum"; // 行业枚举
+import {
+  industryEnum,
+  stageEnum,
+  patentStatus,
+  patentType,
+} from "../../lib/enum"; // 行业枚举
 import "moment/locale/zh-cn";
 import locale from "antd/es/date-picker/locale/zh_CN";
 
@@ -72,6 +77,13 @@ const cpPatentsItem = {
   patentType: "", //专利类型 1-实用新型  2-外观专利  3-发明专利  4-其他
 };
 
+// 投资方item
+const cpInvestorsItem = {
+  investorAmount: null, //投资金额
+  investorName: null, //投资者
+  investorRounds: null, //投资轮次
+};
+
 function Others(props) {
   const { inx, companyId } = props;
 
@@ -108,12 +120,14 @@ function Others(props) {
   }); // 核心团队
 
   const [table6, setTable6] = useState({
-    cpPatents: [
-      { coreTechnology: "" }, //核心技术
-      cpPatentsItem,
-    ],
+    coreTechnology: "",
+    cpPatents: [cpPatentsItem],
   }); // 核心技术
-  const [table7, setTable7] = useState({}); // 投资方
+
+  const [table7, setTable7] = useState({
+    cpInvestors: [cpInvestorsItem],
+  }); // 投资方
+
   const [table8, setTable8] = useState({}); // 行业成长性
 
   const onFinish = (values) => {
@@ -190,7 +204,9 @@ function Others(props) {
 
   // 核心技术
   const save6 = async () => {
-    const res = await savePatent(table6);
+    let _t = JSON.parse(JSON.stringify(table6));
+    _t.id = companyId ? companyId : null;
+    const res = await savePatent(_t);
     if (res && res.code == 2000) {
       message.success("核心技术保存成功！");
     } else {
@@ -200,7 +216,9 @@ function Others(props) {
 
   // 投资方
   const save7 = async () => {
-    const res = await saveInvestor(table7);
+    let _t = JSON.parse(JSON.stringify(table7));
+    _t.id = companyId ? companyId : null;
+    const res = await saveInvestor(_t);
     if (res && res.code == 2000) {
       message.success("投资方保存成功！");
     } else {
@@ -810,7 +828,7 @@ function Others(props) {
             </Row>
           </Form>
         )}
-        {/* 7 - 核心技术 */}
+        {/* 6 - 核心技术 */}
         {props.inx == 6 && (
           <Form
             form={form}
@@ -827,6 +845,11 @@ function Others(props) {
                     showCount
                     maxLength={300}
                     placeholder="请输入核心技术，最多300个字符。"
+                    onChange={(e) => {
+                      let _obj = JSON.parse(JSON.stringify(table6));
+                      _obj.coreTechnology = e.target.value;
+                      setTable6(_obj);
+                    }}
                   />
                 </Form.Item>
               </Col>
@@ -852,27 +875,55 @@ function Others(props) {
                           <Input
                             placeholder="请输入专利名称"
                             style={{ marginRight: "0.1rem", flex: 4 }}
+                            onChange={(e) => {
+                              let _obj = JSON.parse(JSON.stringify(table6));
+                              _obj.cpPatents[index].patentName = e.target.value;
+                              setTable6(_obj);
+                            }}
                           />
                           <Select
-                            defaultValue="2"
+                            defaultValue=""
                             placeholder="请选择专利类型"
                             style={{ marginRight: "0.1rem", flex: 1 }}
+                            onChange={(e) => {
+                              let _obj = JSON.parse(JSON.stringify(table6));
+                              _obj.cpPatents[index].patentType = e;
+                              setTable6(_obj);
+                            }}
                           >
-                            <Option value="1">1</Option>
-                            <Option value="2">1</Option>
+                            {patentType.map((item, index) => {
+                              return (
+                                <Option value={item.value} key={index}>
+                                  {item.name}
+                                </Option>
+                              );
+                            })}
                           </Select>
                           <Select
-                            defaultValue="2"
+                            defaultValue=""
                             placeholder="请选择专利状态"
                             style={{ marginRight: "0.1rem", flex: 1 }}
+                            onChange={(e) => {
+                              let _obj = JSON.parse(JSON.stringify(table6));
+                              _obj.cpPatents[index].patentStatus = e;
+                              setTable6(_obj);
+                            }}
                           >
-                            <Option value="1">1</Option>
-                            <Option value="2">1</Option>
+                            {patentStatus.map((item, index) => {
+                              return (
+                                <Option value={item.value} key={index}>
+                                  {item.name}
+                                </Option>
+                              );
+                            })}
                           </Select>
                           {index === 0 ? (
                             <PlusCircleOutlined
                               onClick={() => {
                                 setPatent(patent + 1);
+                                let _obj = JSON.parse(JSON.stringify(table6));
+                                _obj.cpPatents.push(cpPatentsItem);
+                                setTable6(_obj);
                               }}
                               style={{
                                 height: "100%",
@@ -883,6 +934,9 @@ function Others(props) {
                             <MinusCircleOutlined
                               onClick={() => {
                                 setPatent(patent - 1);
+                                let _obj = JSON.parse(JSON.stringify(table6));
+                                _obj.cpPatents.splice(index, 1);
+                                setTable6(_obj);
                               }}
                               style={{
                                 height: "100%",
@@ -895,6 +949,11 @@ function Others(props) {
                           <Input
                             placeholder="请输入专利优势"
                             style={{ marginRight: "0.1rem", flex: 4 }}
+                            onChange={(e) => {
+                              let _obj = JSON.parse(JSON.stringify(table6));
+                              _obj.cpPatents[index].abstracts = e.target.value;
+                              setTable6(_obj);
+                            }}
                           />
                         </section>
                       </div>
@@ -935,20 +994,41 @@ function Others(props) {
                           <Input
                             placeholder="请输入投资方名称"
                             style={{ marginRight: "0.1rem", flex: 4 }}
+                            onChange={(e) => {
+                              let _obj = JSON.parse(JSON.stringify(table7));
+                              _obj.cpInvestors[index].investorName =
+                                e.target.value;
+                              setTable7(_obj);
+                            }}
                           />
                           <Input
                             placeholder="请输入轮次"
                             style={{ marginRight: "0.1rem", flex: 4 }}
+                            onChange={(e) => {
+                              let _obj = JSON.parse(JSON.stringify(table7));
+                              _obj.cpInvestors[index].investorRounds =
+                                e.target.value;
+                              setTable7(_obj);
+                            }}
                           />
                           <Input
                             placeholder="请输入投资金额，不填则代表暂不公开"
                             style={{ marginRight: "0.1rem", flex: 4 }}
+                            onChange={(e) => {
+                              let _obj = JSON.parse(JSON.stringify(table7));
+                              _obj.cpInvestors[index].investorAmount =
+                                e.target.value;
+                              setTable7(_obj);
+                            }}
                           />
 
                           {index === 0 ? (
                             <PlusCircleOutlined
                               onClick={() => {
                                 setInvestor(investor + 1);
+                                let _obj = JSON.parse(JSON.stringify(table7));
+                                _obj.cpInvestors.push(cpInvestorsItem)
+                                setTable7(_obj);
                               }}
                               style={{
                                 height: "100%",
@@ -959,6 +1039,9 @@ function Others(props) {
                             <MinusCircleOutlined
                               onClick={() => {
                                 setInvestor(investor - 1);
+                                let _obj = JSON.parse(JSON.stringify(table7));
+                                _obj.cpInvestors.splice(index,1)
+                                setTable7(_obj);
                               }}
                               style={{
                                 height: "100%",

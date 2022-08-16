@@ -80,62 +80,142 @@ export const industryEnum = [
   },
 ];
 
-
 // 融资阶段
 export const stageEnum = [
+  {
+    value: 1,
+    name: "天使",
+  },
+  {
+    value: 2,
+    name: "种子",
+  },
+  {
+    value: 3,
+    name: "早期",
+  },
+  {
+    value: 4,
+    name: "Pre-A轮",
+  },
+  {
+    value: 5,
+    name: "A轮",
+  },
+  {
+    value: 6,
+    name: "A+轮",
+  },
+  {
+    value: 7,
+    name: "A++轮",
+  },
+  {
+    value: 8,
+    name: "B轮",
+  },
+  {
+    value: 9,
+    name: "B+轮",
+  },
+  {
+    value: 10,
+    name: "B++轮",
+  },
+  {
+    value: 11,
+    name: "C轮",
+  },
+  {
+    value: 12,
+    name: "C+轮",
+  },
+  {
+    value: 13,
+    name: "C++轮",
+  },
+  {
+    value: 14,
+    name: "D轮",
+  },
+  {
+    value: 15,
+    name: "D+轮",
+  },
+  {
+    value: 16,
+    name: "D++轮",
+  },
+  {
+    value: 17,
+    name: "Pre-IPO",
+  },
+  {
+    value: 18,
+    name: "IPO",
+  },
+];
+
+// 专利状态
+export const patentStatus = [
+  {
+    value: 1,
+    name: "申请公开",
+  },
+  {
+    value: 2,
+    name: "实质审查",
+  },
+  {
+    value: 3,
+    name: "驳回",
+  },
+  {
+    value: 4,
+    name: "撤回",
+  },
+  {
+    value: 5,
+    name: "授权",
+  },
+  {
+    value: 6,
+    name: "转让和继承",
+  },
+  {
+    value: 7,
+    name: "无效宣告",
+  },
+  {
+    value: 8,
+    name: "终止",
+  },
+  {
+    value: 9,
+    name: "恢复",
+  },
+  {
+    value: 10,
+    name: "强制许可",
+  },
+];
+
+// 专利类型
+export const patentType = [
     {
-        value:1,
-        name:'天使'
-    },{
-        value:2,
-        name:"种子"
-    },{
-        value:3,
-        name:"早期"
-    },{
-        value:4,
-        name:"Pre-A轮"
-    },{
-        value:5,
-        name:"A轮"
-    },{
-        value:6,
-        name:"A+轮"
-    },{
-        value:7,
-        name:"A++轮"
-    },{
-        value:8,
-        name:"B轮"
-    },{
-        value:9,
-        name:"B+轮"
-    },{
-        value:10,
-        name:"B++轮"
-    },{
-        value:11,
-        name:"C轮"
-    },{
-        value:12,
-        name:"C+轮"
-    },{
-        value:13,
-        name:"C++轮"
-    },{
-        value:14,
-        name:"D轮"
-    },{
-        value:15,
-        name:"D+轮"
-    },{
-        value:16,
-        name:"D++轮"
-    },{
-        value:17,
-        name:"Pre-IPO"
-    },{
-        value:18,
-        name:"IPO"
-    }
+        value: 1,
+        name: "实用新型",
+      },
+      {
+        value: 2,
+        name: "外观专利",
+      },
+      {
+        value: 3,
+        name: "发明专利",
+      },
+      {
+        value: 4,
+        name: "其他",
+      },
 ]
