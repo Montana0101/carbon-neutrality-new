@@ -6,6 +6,9 @@ import {
   saveOperation,
   savePatent,
   saveStrategic,
+  saveIndustry,
+  saveInvestor,
+  commit,
 } from "../../apis/index";
 import { ThemeColor, CutLine } from "../../lib/const";
 
@@ -61,6 +64,14 @@ const reducer2 = (state, action) => {
   console.log("基本信息action is", action);
 };
 
+// 专利技术item 用户增删行数
+const cpPatentsItem = {
+  abstracts: "", //专利优势
+  patentName: "", //专利名称
+  patentStatus: "", //专利状态
+  patentType: "", //专利类型 1-实用新型  2-外观专利  3-发明专利  4-其他
+};
+
 function Others(props) {
   const { inx, companyId } = props;
 
@@ -76,7 +87,34 @@ function Others(props) {
 
   const [table1, setTable1] = useState({}); // 基本信息表
   const [table2, setTable2] = useState({}); // 公司战略
+  const [table3, setTable3] = useState({}); // 公司经营
   const [table4, setTable4] = useState({}); // 核心竞争力
+
+  const [table5, setTable5] = useState({
+    cpLeaders: [
+      {
+        briefIntroduction: "", //领军人物简介
+        leaderName: "", //领军人物名称
+        position: "", //职务
+      },
+    ],
+    cpTeams: [
+      {
+        briefIntroduction: "", //简介
+        memberName: "", //成员名称
+        position: "", //职务
+      },
+    ],
+  }); // 核心团队
+
+  const [table6, setTable6] = useState({
+    cpPatents: [
+      { coreTechnology: "" }, //核心技术
+      cpPatentsItem,
+    ],
+  }); // 核心技术
+  const [table7, setTable7] = useState({}); // 投资方
+  const [table8, setTable8] = useState({}); // 行业成长性
 
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
@@ -101,9 +139,9 @@ function Others(props) {
     }
     const res = await saveBaseInfo(_t1);
     if (res && res.code == 2000) {
-      message.success("保存成功！");
+      message.success("基本信息保存成功！");
     } else {
-      message.error("保存失败！");
+      message.error("基本信息保存失败！");
     }
     console.log("基本信息表", res);
   };
@@ -112,9 +150,9 @@ function Others(props) {
   const save2 = async () => {
     const res = await saveStrategic(table2);
     if (res && res.code == 2000) {
-      message.success("保存成功！");
+      message.success("公司战略保存成功！");
     } else {
-      message.error("保存失败！");
+      message.error("公司战略保存失败！");
     }
   };
 
@@ -122,9 +160,9 @@ function Others(props) {
   const save3 = async () => {
     const res = await saveOperation(table3);
     if (res && res.code == 2000) {
-      message.success("保存成功！");
+      message.success("公司经营保存成功！");
     } else {
-      message.error("保存失败！");
+      message.error("公司经营保存失败！");
     }
   };
 
@@ -132,19 +170,21 @@ function Others(props) {
   const save4 = async () => {
     const res = await saveCoreCompetence(table4);
     if (res && res.code == 2000) {
-      message.success("保存成功！");
+      message.success("核心竞争力保存成功！");
     } else {
-      message.error("保存失败！");
+      message.error("核心竞争力保存失败！");
     }
   };
 
   // 核心团队
   const save5 = async () => {
-    const res = await saveLeader(table5);
+    let _t = JSON.parse(JSON.stringify(table5));
+    _t.id = companyId ? companyId : null;
+    const res = await saveLeader(_t);
     if (res && res.code == 2000) {
-      message.success("保存成功！");
+      message.success("核心团队保存成功！");
     } else {
-      message.error("保存失败！");
+      message.error("核心团队保存失败！");
     }
   };
 
@@ -152,9 +192,29 @@ function Others(props) {
   const save6 = async () => {
     const res = await savePatent(table6);
     if (res && res.code == 2000) {
-      message.success("保存成功！");
+      message.success("核心技术保存成功！");
     } else {
-      message.error("保存失败！");
+      message.error("核心技术保存失败！");
+    }
+  };
+
+  // 投资方
+  const save7 = async () => {
+    const res = await saveInvestor(table7);
+    if (res && res.code == 2000) {
+      message.success("投资方保存成功！");
+    } else {
+      message.error("投资方保存失败！");
+    }
+  };
+
+  // 行业成长性
+  const save8 = async () => {
+    const res = await saveIndustry(table8);
+    if (res && res.code == 2000) {
+      message.success("行业成长性保存成功！");
+    } else {
+      message.error("行业成长性保存失败！");
     }
   };
 
@@ -197,7 +257,7 @@ function Others(props) {
   return (
     <div className="others_page">
       <div>
-        {/* 2 - 基本信息 */}
+        {/* 1 - 基本信息 */}
         {props.inx == 1 && (
           <Form
             form={form}
@@ -377,7 +437,7 @@ function Others(props) {
             </Row>
           </Form>
         )}
-        {/* 3 - 公司战略 */}
+        {/* 2 - 公司战略 */}
         {props.inx == 2 && (
           <Form
             form={form}
@@ -555,7 +615,7 @@ function Others(props) {
             </Row>
           </Form>
         )}
-        {/* 6 - 核心团队 */}
+        {/* 5 - 核心团队 */}
         {props.inx == 5 && (
           <Form
             form={form}
@@ -564,12 +624,12 @@ function Others(props) {
             onFinish={onFinish}
             // {...layout}
             labelCol={{ span: 4 }}
-            // labelCol: {
-            //   span: 4,
-            // },
-            // wrapperCol: {
-            //   span: 20,
-            // },
+            onChange={(e) => {
+              // let obj = form.getFieldsValue();
+              // obj.id = companyId ? companyId : null;
+              // setTable5(obj);
+              console.log();
+            }}
           >
             <Row gutter={24}>
               {new Array(leaders).fill("").map((item, index) => {
@@ -592,23 +652,47 @@ function Others(props) {
                         style={{ display: "flex", alignItems: "center" }}
                       >
                         {/* {index != 0 && <span style={{opacity:0}}>领军人物（最多五个）: &nbsp;</span>} */}
+
                         <Input
+                          onChange={(e) => {
+                            let _obj = JSON.parse(JSON.stringify(table5));
+                            _obj.cpLeaders[index].leaderName = e.target.value;
+                            setTable5(_obj);
+                          }}
                           placeholder="请输入姓名"
                           style={{ marginRight: "0.1rem", flex: 1 }}
                         />
                         <Input
                           placeholder="请输入职务"
                           style={{ marginRight: "0.1rem", flex: 1 }}
+                          onChange={(e) => {
+                            let _obj = JSON.parse(JSON.stringify(table5));
+                            _obj.cpLeaders[index].position = e.target.value;
+                            setTable5(_obj);
+                          }}
                         />
                         <Input
                           placeholder="请输入领军人物描述"
                           style={{ marginRight: "0.1rem", flex: 4 }}
+                          onChange={(e) => {
+                            let _obj = JSON.parse(JSON.stringify(table5));
+                            _obj.cpLeaders[index].briefIntroduction =
+                              e.target.value;
+                            setTable5(_obj);
+                          }}
                         />
                         {index === 0 ? (
                           <PlusCircleOutlined
                             onClick={() => {
                               if (leaders < 5) {
                                 setLeaders(leaders + 1);
+                                let _obj = JSON.parse(JSON.stringify(table5));
+                                _obj.cpLeaders.push({
+                                  briefIntroduction: "", //领军人物简介
+                                  leaderName: "", //领军人物名称
+                                  position: "", //职务
+                                });
+                                setTable5(_obj);
                               }
                             }}
                             style={{
@@ -620,6 +704,9 @@ function Others(props) {
                           <MinusCircleOutlined
                             onClick={() => {
                               setLeaders(leaders - 1);
+                              let _obj = JSON.parse(JSON.stringify(table5));
+                              _obj.cpLeaders.splice(index, 1);
+                              setTable5(_obj);
                             }}
                             style={{
                               height: "100%",
@@ -657,20 +744,43 @@ function Others(props) {
                         <Input
                           placeholder="请输入姓名"
                           style={{ marginRight: "0.1rem", flex: 1 }}
+                          onChange={(e) => {
+                            let _obj = JSON.parse(JSON.stringify(table5));
+                            _obj.cpTeams[index].memberName = e.target.value;
+                            setTable5(_obj);
+                          }}
                         />
                         <Input
                           placeholder="请输入职务"
                           style={{ marginRight: "0.1rem", flex: 1 }}
+                          onChange={(e) => {
+                            let _obj = JSON.parse(JSON.stringify(table5));
+                            _obj.cpTeams[index].position = e.target.value;
+                            setTable5(_obj);
+                          }}
                         />
                         <Input
                           placeholder="请输入描述"
                           style={{ marginRight: "0.1rem", flex: 4 }}
+                          onChange={(e) => {
+                            let _obj = JSON.parse(JSON.stringify(table5));
+                            _obj.cpTeams[index].briefIntroduction =
+                              e.target.value;
+                            setTable5(_obj);
+                          }}
                         />
                         {index === 0 ? (
                           <PlusCircleOutlined
                             onClick={() => {
                               if (teams < 10) {
                                 setTeams(teams + 1);
+                                let _obj = JSON.parse(JSON.stringify(table5));
+                                _obj.cpTeams.push({
+                                  briefIntroduction: "", //简介
+                                  memberName: "", //成员名称
+                                  position: "", //职务
+                                });
+                                setTable5(_obj);
                               }
                             }}
                             style={{
@@ -682,6 +792,9 @@ function Others(props) {
                           <MinusCircleOutlined
                             onClick={() => {
                               setTeams(teams - 1);
+                              let _obj = JSON.parse(JSON.stringify(table5));
+                              _obj.cpTeams.splice(index, 1);
+                              setTable5(_obj);
                             }}
                             style={{
                               height: "100%",
