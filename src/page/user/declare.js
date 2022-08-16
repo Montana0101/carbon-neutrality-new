@@ -450,7 +450,6 @@ function Declare(props) {
                     <span style={{ fontWeight: "bold" }}>选择年份：</span>
                     <DatePicker
                       onChange={(moment, str) => {
-                        console.log("str", str);
                         setYears(str);
                       }}
                       picker="year"
@@ -544,6 +543,7 @@ function Declare(props) {
                 setInx(e);
               }}
               inx={inx}
+              companyId = {companyId}
             />
           )}
         </section>

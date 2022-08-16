@@ -1,7 +1,7 @@
 // 枚举
 
 // 行业
-export const industry = [
+export const industryEnum = [
   {
     value: 0,
     name: "农、林、牧、渔业",
@@ -79,3 +79,63 @@ export const industry = [
     name: "综合",
   },
 ];
+
+
+// 融资阶段
+export const stageEnum = [
+    {
+        value:1,
+        name:'天使'
+    },{
+        value:2,
+        name:"种子"
+    },{
+        value:3,
+        name:"早期"
+    },{
+        value:4,
+        name:"Pre-A轮"
+    },{
+        value:5,
+        name:"A轮"
+    },{
+        value:6,
+        name:"A+轮"
+    },{
+        value:7,
+        name:"A++轮"
+    },{
+        value:8,
+        name:"B轮"
+    },{
+        value:9,
+        name:"B+轮"
+    },{
+        value:10,
+        name:"B++轮"
+    },{
+        value:11,
+        name:"C轮"
+    },{
+        value:12,
+        name:"C+轮"
+    },{
+        value:13,
+        name:"C++轮"
+    },{
+        value:14,
+        name:"D轮"
+    },{
+        value:15,
+        name:"D+轮"
+    },{
+        value:16,
+        name:"D++轮"
+    },{
+        value:17,
+        name:"Pre-IPO"
+    },{
+        value:18,
+        name:"IPO"
+    }
+]

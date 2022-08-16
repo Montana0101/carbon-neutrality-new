@@ -13,6 +13,13 @@ export const login = (params) => {
     return fetchGadget(url, 'GET')
 }
 
+// 联盟动态
+export const getNewsList = (params) => {
+    let { page, limit } = params
+    const url = `/website/news/list?page=${page}&limit=${limit}`
+    return fetchGadget(url, 'GET')
+}
+
 
 // 未读消息
 export const messageTips = () => {
@@ -190,9 +197,59 @@ export const putDeclareCash = (params) => {
     return fetchGadget(url, 'POST', params)
 }
 
-// 联盟动态
-export const getNewsList = (params) => {
-    let { page, limit } = params
-    const url = `/website/news/list?page=${page}&limit=${limit}`
-    return fetchGadget(url, 'GET')
+// 申报 - 基本信息表
+export const saveBaseInfo = (params) => {
+    const url = `/stiacn-app/declare/baseInfo`
+    return fetchGadget(url, 'PUT',params)
 }
+
+// 申报 - 公司战略
+export const saveStrategic = (params) => {
+    const url = `/stiacn-app/declare/strategic`
+    return fetchGadget(url, 'PUT',params)
+}
+
+// 申报 - 公司经营
+export const saveOperation = (params) => {
+    const url = `/stiacn-app/declare/operation`
+    return fetchGadget(url, 'PUT',params)
+}
+
+// 申报 - 核心竞争力
+export const saveCoreCompetence = (params) => {
+    const url = `/stiacn-app/declare/coreCompetence`
+    return fetchGadget(url, 'PUT',params)
+}
+
+// 申报 - 核心团队
+export const saveLeader = (params) => {
+    const url = `/stiacn-app/declare/leader`
+    return fetchGadget(url, 'PUT',params)
+}
+
+// 申报 - 核心技术
+export const savePatent = (params) => {
+    const url = `/stiacn-app/declare/patent`
+    return fetchGadget(url, 'PUT',params)
+}
+
+
+// 申报 - 投资方
+export const saveInvestor= (params) => {
+    const url = `/stiacn-app/declare/investor`
+    return fetchGadget(url, 'PUT',params)
+}
+
+// 申报 - 行业成长性
+export const saveIndustry= (params) => {
+    const url = `/stiacn-app/declare/industry`
+    return fetchGadget(url, 'PUT',params)
+}
+
+// 申报 - 提交
+export const commit = (id) => {
+    const url = `/stiacn-app/declare/commit?id=${id}`
+    return fetchGadget(url, 'PUT')
+}
+
+

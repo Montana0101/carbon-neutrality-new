@@ -1,8 +1,11 @@
 import { withRouter, useHistory } from "react-router-dom";
 import {
-  putDeclareBalance,
-  putDeclareProfit,
-  putDeclareCash,
+  saveBaseInfo,
+  saveLeader,
+  saveCoreCompetence,
+  saveOperation,
+  savePatent,
+  saveStrategic,
 } from "../../apis/index";
 import { ThemeColor, CutLine } from "../../lib/const";
 
@@ -13,11 +16,23 @@ import {
   PlusCircleOutlined,
   MinusCircleOutlined,
 } from "@ant-design/icons";
-import { Button, Col, Form, Input, Row, Select, Checkbox, message } from "antd";
+import {
+  Button,
+  Col,
+  Form,
+  Input,
+  Row,
+  Select,
+  Checkbox,
+  message,
+  DatePicker,
+} from "antd";
 import React, { useState, useReducer, useEffect } from "react";
 import { ButtonCmt } from "../../component/button";
 import sPng from "../../static/imgs/save.png";
-i
+import { industryEnum, stageEnum } from "../../lib/enum"; // 行业枚举
+import "moment/locale/zh-cn";
+import locale from "antd/es/date-picker/locale/zh_CN";
 
 const { Option } = Select;
 
@@ -47,7 +62,8 @@ const reducer2 = (state, action) => {
 };
 
 function Others(props) {
-  const [expand, setExpand] = useState(false);
+  const { inx, companyId } = props;
+
   const [form] = Form.useForm();
 
   const [leaders, setLeaders] = useState(1); // 领军人物
@@ -56,6 +72,11 @@ function Others(props) {
   const [investor, setInvestor] = useState(1); // 投资方
   const [checked, setChecked] = useState(false);
   const [state2, dispatch2] = useReducer(reducer2, init2); //基本信息
+  const [rigsterTime, setRigsterTime] = useState(null);
+
+  const [table1, setTable1] = useState({}); // 基本信息表
+  const [table2, setTable2] = useState({}); // 公司战略
+  const [table4, setTable4] = useState({}); // 核心竞争力
 
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
@@ -70,9 +91,108 @@ function Others(props) {
     },
   };
 
+  // 保存基本信息
+  const save1 = async () => {
+    let _t1 = JSON.parse(JSON.stringify(table1));
+    _t1.id = companyId ? companyId : null;
+    delete _t1.regTime;
+    if (rigsterTime) {
+      _t1.regTime = rigsterTime;
+    }
+    const res = await saveBaseInfo(_t1);
+    if (res && res.code == 2000) {
+      message.success("保存成功！");
+    } else {
+      message.error("保存失败！");
+    }
+    console.log("基本信息表", res);
+  };
+
+  // 公司战略
+  const save2 = async () => {
+    const res = await saveStrategic(table2);
+    if (res && res.code == 2000) {
+      message.success("保存成功！");
+    } else {
+      message.error("保存失败！");
+    }
+  };
+
+  // 公司经营
+  const save3 = async () => {
+    const res = await saveOperation(table3);
+    if (res && res.code == 2000) {
+      message.success("保存成功！");
+    } else {
+      message.error("保存失败！");
+    }
+  };
+
+  // 核心竞争力
+  const save4 = async () => {
+    const res = await saveCoreCompetence(table4);
+    if (res && res.code == 2000) {
+      message.success("保存成功！");
+    } else {
+      message.error("保存失败！");
+    }
+  };
+
+  // 核心团队
+  const save5 = async () => {
+    const res = await saveLeader(table5);
+    if (res && res.code == 2000) {
+      message.success("保存成功！");
+    } else {
+      message.error("保存失败！");
+    }
+  };
+
+  // 核心技术
+  const save6 = async () => {
+    const res = await savePatent(table6);
+    if (res && res.code == 2000) {
+      message.success("保存成功！");
+    } else {
+      message.error("保存失败！");
+    }
+  };
+
+  // 提交
+  const submit = () => {
+    switch (inx) {
+      case 1:
+        save1();
+        break;
+      case 2:
+        save2();
+        break;
+      case 3:
+        save3();
+        break;
+      case 4:
+        save4();
+        break;
+      case 5:
+        save5();
+        break;
+      case 6:
+        save6();
+        break;
+      case 7:
+        save7();
+        break;
+      case 8:
+        save8();
+        break;
+      default:
+        break;
+    }
+  };
+
   useEffect(() => {
-    console.log("监听基本信息state 变化", state2);
-  }, [state2]);
+    console.log("监听基本信息state 变化", table2);
+  }, [table2]);
 
   return (
     <div className="others_page">
@@ -85,9 +205,12 @@ function Others(props) {
             className="ant-advanced-search-form"
             onFinish={onFinish}
             {...layout}
-            onChange={(e) =>
-              console.log("基本信息表格变化", form.getFieldsValue())
-            }
+            onChange={(e) => {
+              console.log("基本信息表格变化", form.getFieldsValue());
+              let obj = form.getFieldsValue();
+              obj.id = companyId ? companyId : null;
+              setTable1(obj);
+            }}
           >
             <Row gutter={24}>
               <Col span={10}>
@@ -122,34 +245,35 @@ function Others(props) {
                       justifyContent: "space-between",
                     }}
                   >
-                  
-                        <Form.Item name="province" style={{flex:1,marginRight: "0.1rem"}}>
-                          <Select
-                            defaultValue="2"
-                          >
-                            <Option value="1">1</Option>
-                            <Option value="2">1</Option>
-                          </Select>
-                        </Form.Item>
-                 
-                        <Form.Item name="city"  style={{flex:1,marginRight: "0.1rem"}}>
-                          <Select
-                            defaultValue="2"
-                          >
-                            <Option value="1">1</Option>
-                            <Option value="2">1</Option>
-                          </Select>
-                        </Form.Item>
-                 
-                        <Form.Item name="district"  style={{flex:1,marginRight: "0rem"}}>
-                          <Select
-                            defaultValue="2"
-                          >
-                            <Option value="1">1</Option>
-                            <Option value="2">1</Option>
-                          </Select>
-                        </Form.Item>
-                 
+                    <Form.Item
+                      name="province"
+                      style={{ flex: 1, marginRight: "0.1rem" }}
+                    >
+                      <Select defaultValue="2">
+                        <Option value="1">1</Option>
+                        <Option value="2">1</Option>
+                      </Select>
+                    </Form.Item>
+
+                    <Form.Item
+                      name="city"
+                      style={{ flex: 1, marginRight: "0.1rem" }}
+                    >
+                      <Select defaultValue="2">
+                        <Option value="1">1</Option>
+                        <Option value="2">1</Option>
+                      </Select>
+                    </Form.Item>
+
+                    <Form.Item
+                      name="district"
+                      style={{ flex: 1, marginRight: "0rem" }}
+                    >
+                      <Select defaultValue="2">
+                        <Option value="1">1</Option>
+                        <Option value="2">1</Option>
+                      </Select>
+                    </Form.Item>
                   </section>
                 </Form.Item>
               </Col>
@@ -162,23 +286,36 @@ function Others(props) {
             </Row>
             <Row gutter={24}>
               <Col span={10}>
-                <Form.Item label={"联系电话"} name="contactNumber"> 
+                <Form.Item label={"联系电话"} name="contactNumber">
                   <Input placeholder="请输入" />
                 </Form.Item>
               </Col>
 
               <Col span={10} offset={4}>
-                <Form.Item label={"注册时间"}>
-                  <Input placeholder="请输入" name="regTime"/>
+                <Form.Item label={"注册时间"} name="regTime">
+                  <DatePicker
+                    style={{ width: "100%" }}
+                    onChange={(moment, str) => {
+                      setRigsterTime(str);
+                      console.log("Dsabhjh ", str);
+                    }}
+                    // picker="day"
+                    locale={locale}
+                  />
                 </Form.Item>
               </Col>
             </Row>
             <Row gutter={24}>
               <Col span={10}>
                 <Form.Item label={"融资阶段"} name="stage">
-                  <Select defaultValue="2">
-                    <Option value="1">1</Option>
-                    <Option value="2">1</Option>
+                  <Select defaultValue="">
+                    {stageEnum.map((item) => {
+                      return (
+                        <Option value={item.value} key={item.value}>
+                          {item.name}
+                        </Option>
+                      );
+                    })}
                   </Select>
                 </Form.Item>
               </Col>
@@ -192,29 +329,30 @@ function Others(props) {
 
             <Row gutter={24}>
               <Col span={10}>
-                <Form.Item label={"融资金额"}>
-                  <Input placeholder="请输入" name="financingScale"/>
+                <Form.Item label={"融资金额"} name="financingScale">
+                  <Input placeholder="请输入" />
                 </Form.Item>
               </Col>
 
               <Col span={10} offset={4}>
-                <Form.Item label={"投前估值"}>
-                  <Input placeholder="请输入" name="enterpriseValuation"/>
+                <Form.Item label={"投前估值"} name="enterpriseValuation">
+                  <Input placeholder="请输入" />
                 </Form.Item>
               </Col>
             </Row>
             <Row gutter={24}>
               <Col span={10}>
                 <Form.Item label={"所属行业"} name="industry">
-                  <Select defaultValue="2">
-                    <Option value="1">1</Option>
-                    <Option value="2">1</Option>
+                  <Select defaultValue="">
+                    {industryEnum.map((item, index) => {
+                      return <Option value={item.value}>{item.name}</Option>;
+                    })}
                   </Select>
                 </Form.Item>
               </Col>
 
               <Col span={10} offset={4}>
-                <Form.Item label={"法定代表人"}  name="legalPersonName">
+                <Form.Item label={"法定代表人"} name="legalPersonName">
                   <Input placeholder="请输入" />
                 </Form.Item>
               </Col>
@@ -246,11 +384,16 @@ function Others(props) {
             name="advanced_search"
             className="ant-advanced-search-form"
             onFinish={onFinish}
+            onChange={(e) => {
+              let obj = form.getFieldsValue();
+              obj.id = companyId ? companyId : null;
+              setTable2(obj);
+            }}
             {...layout}
           >
             <Row gutter={24}>
               <Col span={10}>
-                <Form.Item label={"战略定位"}>
+                <Form.Item label={"战略定位"} name="strategicPositioning">
                   <Input.TextArea
                     showCount
                     maxLength={300}
@@ -260,7 +403,7 @@ function Others(props) {
               </Col>
 
               <Col span={10} offset={4}>
-                <Form.Item label={"战略规划"}>
+                <Form.Item label={"战略规划"} name="strategicPlanning">
                   <Input.TextArea
                     showCount
                     maxLength={300}
@@ -271,7 +414,7 @@ function Others(props) {
             </Row>
           </Form>
         )}
-        {/* 4 - 公司经营 */}
+        {/* 3 - 公司经营 */}
         {props.inx == 3 && (
           <Form
             form={form}
@@ -281,7 +424,7 @@ function Others(props) {
           >
             <Row gutter={24}>
               <Col span={12}>
-                <Form.Item label={"商业模式"}>
+                <Form.Item label={"商业模式"} name="businessModel">
                   <section style={{ display: "flex" }}>
                     <span>&nbsp;</span> <span>&nbsp;</span>
                     <span>&nbsp;</span>
@@ -297,7 +440,7 @@ function Others(props) {
 
               <Col span={12} offset={0}>
                 <Form.Item label={"主营业务"}>
-                  <section style={{ display: "flex" }}>
+                  <section style={{ display: "flex" }} name="mainBusiness">
                     <span>&nbsp;</span> <span>&nbsp;</span>
                     <span>&nbsp;</span>
                     <Input.TextArea
@@ -385,18 +528,23 @@ function Others(props) {
             </Row>
           </Form>
         )}
-        {/* 5 - 核心竞争力 */}
+        {/* 4 - 核心竞争力 */}
         {props.inx == 4 && (
           <Form
             form={form}
             name="advanced_search"
             className="ant-advanced-search-form"
             onFinish={onFinish}
+            onChange={(e) => {
+              let obj = form.getFieldsValue();
+              obj.id = companyId ? companyId : null;
+              setTable4(obj);
+            }}
             // {...layout}
           >
             <Row gutter={24}>
               <Col span={24}>
-                <Form.Item label={"核心竞争力"}>
+                <Form.Item label={"核心竞争力"} name="coreCompetitiveness">
                   <Input.TextArea
                     showCount
                     maxLength={300}
@@ -825,6 +973,8 @@ function Others(props) {
             </div>
             <div
               onClick={() => {
+                // alert(1)
+                submit();
                 // saveDeclareBalance();
               }}
             >
