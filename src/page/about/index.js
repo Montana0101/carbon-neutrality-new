@@ -13,6 +13,7 @@ import "./index.less";
 import lszp from "../../static/imgs/lishiz.png";
 import flszp from "../../static/imgs/fulishiz.png";
 import Logo1 from "../../static/logo/logo墙-01.jpg";
+import { message } from "antd";
 
 const data = [
   "孵化技术创新平台",
@@ -37,13 +38,14 @@ const AboutLeague = () => {
     };
 
     window.addEventListener("message", function (eve) {
-      if (eve.data == "1") {
-        setMaskFlag(true);
-        setMaskInx(1);
-      } else if (eve.data == "2") {
-        setMaskFlag(true);
-        setMaskInx(2);
-      }
+      // if (eve.data == "1") {
+      //   setMaskFlag(true);
+      //   setMaskInx(1);
+      // } else if (eve.data == "2") {
+      //   setMaskFlag(true);
+      //   setMaskInx(2);
+      // }
+      // message.info("信息未公开")
     });
   }, []);
 
@@ -395,7 +397,8 @@ const AboutLeague = () => {
           联盟宗旨
         </h3>
         <ul
-          style={{ display: "flex", borderLeft: CutLine, borderRight: CutLine }}
+          style={{ display: "flex", borderLeft: CutLine, borderRight: CutLine ,
+        margin:0}}
         >
           {data.map((item, index) => {
             return (
@@ -509,7 +512,7 @@ const AboutLeague = () => {
         <section
           style={{
             position: "absolute",
-            height: "5.5rem",
+            height: "7rem",
             left: "0.5rem",
             right: "0.5rem",
             bottom: 0,
@@ -523,7 +526,6 @@ const AboutLeague = () => {
               width: "90%",
               height: "100%",
               position: "relative",
-              // border: "1px solid red",
               display: "flex",
               margin: "0 auto",
               justifyContent: "center",
@@ -545,7 +547,7 @@ const AboutLeague = () => {
                 bottom: 0,
                 margin: "0 auto",
               }}
-              src={`${AliOss}/new_version_0518/about_us_companies.png`}
+              src={`${AliOss}/new_version_0518/company.svg`}
             />
             {/* <section
               style={{

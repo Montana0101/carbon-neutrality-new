@@ -657,7 +657,7 @@ function CommonUser(props) {
             ) : (
               <div
                 onClick={() => {
-                  history.push("/declare");
+                  // history.push("/declare");
                 }}
               >
                 {ButtonCmt(ThemeColor, "white", "+ 添加申报", "1rem")}
