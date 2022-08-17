@@ -257,3 +257,15 @@ export const fetchAreas = (pid) => {
     const url = `/stiacn-app/pcd/get?pid=${pid}`
     return fetchGadget(url, 'GET')
 }
+
+// 申报 - 删除
+export const deleteDeclare = (id) => {
+    const url = `/stiacn-app/declare/del?id=${id}`
+    return fetchGadget(url, 'DELETE')
+}
+
+// 编辑申报
+export const getDeclareDetail = (id) => {
+    const url = `/stiacn-app/portrait/company?id=${id}`
+    return fetchGadget(url, 'GET')
+}

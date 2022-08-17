@@ -4,6 +4,7 @@ import {
   putDeclareBalance,
   putDeclareProfit,
   putDeclareCash,
+  getDeclareDetail,
 } from "../../apis/index";
 import { ThemeColor, CutLine } from "../../lib/const";
 import {
@@ -32,9 +33,9 @@ import { UploadOutlined } from "@ant-design/icons";
 import Others from "./others"; //其他模块
 
 const defaultColor = "rgba(0,0,0,0.3)";
-const assetJson = require("./json/asset.json"); //资产负债json
-const profitJson = require("./json/profit.json"); // 利润表json
-const cashJson = require("./json/cash.json");
+var assetJson = require("./json/asset.json"); //资产负债json
+var profitJson = require("./json/profit.json"); // 利润表json
+var cashJson = require("./json/cash.json");
 
 const titles = [
   "财务报表",
@@ -106,6 +107,7 @@ const cash_reducer = (state, action) => {
   return { ...state, ...name };
 };
 
+
 function Declare(props) {
   const [tabInx, setTabInx] = useState(0);
   const [inx, setInx] = useState(0);
@@ -122,6 +124,10 @@ function Declare(props) {
   const [years, setYears] = useState(null); // 当前年份
   const history = useHistory();
 
+  const [capitalModels, setCapitalModels] = useState({}); //资产负债表
+  
+  const [obj, setObj] = useState({}); // 编辑时代入
+
   // 表格展示所用数据
   let tArr = [];
 
@@ -134,15 +140,65 @@ function Declare(props) {
   useEffect(() => {
     document.getElementsByTagName("html")[0].style.overflowX = "hidden";
     document.getElementsByTagName("html")[0].style.overflowY = "scroll";
-    if (localStorage.getItem("companyId")) {
-      setCompanyId(localStorage.getItem("companyId"));
+
+    let {state} = props.location
+    if (state && state.action ==1) {
+      assetJson = {}
+      profitJson = {}
+      // 编辑状态
+      // alert(1)
+      setCompanyId(state.id);
+      localStorage.setItem("companyId", props.location.state.id);
+    } else if(state && state.action ==0){
+      // 新增数据
+      // alert(0)
+      localStorage.removeItem("companyId")
     }
+    // if (localStorage.getItem("companyId")) {
+    //   setCompanyId(localStorage.getItem("companyId"));
+    // }
   }, []);
+
+  // 编辑时-获取数据详情
+  const _getDeclareDetail = async (id) => {
+    const res = await getDeclareDetail(id);
+
+    // console.log(res)
+    if (res && res.code == 2000) {
+      let capitalModels = res.result.balanceSheet;      // 资产负债表
+      let profitModels = res.result.profitStatement; // 利润表
+      // let cashModels = res.result.cashFlowModels; // 现金流量表
+      // setCapitalModels(capitalModels);
+      !capitalModels.years && setYears(2022)
+      delete capitalModels.companyId 
+      delete capitalModels.years
+      assetJson = capitalModels;
+
+      delete profitModels.companyId 
+      delete profitModels.years
+
+      profitJson = profitModels;
+      console.log("xxxxxxxxxxx", profitJson);
+
+      // profitJson = profitModels;
+      // cashJson = cashModels;
+      // 
+    }
+  };
+
+  useEffect(() => {
+    
+    if (companyId) {
+      // 编辑状态
+      _getDeclareDetail(companyId);
+    }
+
+  }, [companyId]);
 
   // 监听输入变化
   useEffect(() => {
     // console.log("asset_state输入变化", cash_state);
-    // console.log("profit_state输入变化", profit_state);
+    console.log("profit_state输入变化", profit_state);
   }, [asset_state, profit_state, cash_state]);
 
   // 触发事件
@@ -164,6 +220,7 @@ function Declare(props) {
           endingBalance: flag
             ? asset_state[name].endingBalance || 0
             : assetEnter.value,
+          // lineNo:asset_state[name].lineNo
         },
       },
     });
@@ -452,6 +509,7 @@ function Declare(props) {
                       onChange={(moment, str) => {
                         setYears(str);
                       }}
+                      defaultValue={years}
                       picker="year"
                       locale={locale}
                     />
@@ -469,7 +527,6 @@ function Declare(props) {
                   </div>
                 </div>
               </section>
-              {/* 主要表格区域 */}
               {/* 资产负债表 */}
               {tabInx == 0 && (
                 <AssetTable
@@ -490,7 +547,7 @@ function Declare(props) {
               {tabInx == 2 && (
                 <CashTable
                   onInput={(e) => setCashEnter(e)}
-                  data={profit_state}
+                  data={cash_state}
                 />
               )}
               <p
@@ -543,7 +600,7 @@ function Declare(props) {
                 setInx(e);
               }}
               inx={inx}
-              companyId = {companyId}
+              companyId={companyId}
             />
           )}
         </section>

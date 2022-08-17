@@ -9,19 +9,75 @@ const profitJson = require("../json/profit.json"); // 利润表json
 const profitJsonT = require("../json/profit_t.json");
 
 const InputCmt = (props) => {
+  let { data, line } = props;
+  const [amount, setAmount] = useState(0);
+  // var amount;
+  useEffect(() => {
+    getCacheData();
+  }, [line]);
+
+  //缓存数据
+  const getCacheData = () => {
+    if (line.substr(line.length - 1, 1) == 1) {
+
+      // 前一个
+      Object.values(data).map((item) => {
+        if (item.lineNo + "_1" == line) {
+      console.log("111111111111111111",item.lineNo,line,item.accumulatedAmount)
+
+          // amount = item.endingBalance;
+          setAmount(item.accumulatedAmount);
+          return item.accumulatedAmount;
+        }
+      });
+    } else {
+      // 后一个
+      Object.values(data).map((item) => {
+
+        if (item.lineNo + "_0" == line) {
+          console.log("222222222222222222",item.lineNo)
+
+          // amount = item.beginningBalance;
+          setAmount(item.currentAmount);
+          return item.currentAmount;
+        }
+      });
+    }
+  };
+
   return (
-    <InputNumber
-      bordered={false}
-      controls={false}
-      onChange={(e) => {
-        e != undefined && props.event({ value: e, line: props.line });
-      }}
-    />
+    <>
+    {amount > 0 && (
+      <InputNumber
+        bordered={false}
+        controls={false}
+        defaultValue={amount}
+        onChange={(e) => {
+          e != undefined && props.event({ value: e, line: line });
+        }}
+      />
+    )}
+
+    {(amount == 0 || amount == null) && (
+      <InputNumber
+        bordered={false}
+        controls={false}
+        onChange={(e) => {
+          e != undefined && props.event({ value: e, line: line });
+        }}
+      />
+    )}
+  </>
   );
 };
 
 const ProfitTable = (props) => {
-  let { onInput } = props;
+  let { onInput ,data} = props;
+
+  useEffect(()=>{
+    console.log('监听第二张表数据变化',data)
+  },[data])
+
   return (
     <table className="table_2" rules="all">
       <thead>
@@ -46,12 +102,14 @@ const ProfitTable = (props) => {
                 <InputCmt
                   event={onInput}
                   line={item.lineNo + "_1"}
+                  data={data}
                 />
               </td>
               <td>
                 <InputCmt
                   event={onInput}
                   line={item.lineNo + "_0"}
+                  data={data}
                 />
               </td>
             </tr>

@@ -1,259 +1,195 @@
 {
     "administrativeExpenses": {
-        "accumulatedAmount": 203,
-        "companyId": 2,
-        "currentAmount": 23,
+        "accumulatedAmount": 0,
+        "currentAmount": 0,
         "lineNo": 5,
-        "name": "administrativeExpenses",
-        "years": 2022
+        "name": "administrativeExpenses"
     },
     "afterTaxIncome": {
-        "accumulatedAmount": 203,
-        "companyId": 2,
-        "currentAmount": 23,
+        "accumulatedAmount": 0,
+        "currentAmount": 0,
         "lineNo": 19,
-        "name": "afterTaxIncome",
-        "years": 2022
+        "name": "afterTaxIncome"
     },
     "assetsImpairmentLoss": {
-        "accumulatedAmount": 203,
-        "companyId": 2,
-        "currentAmount": 23,
+        "accumulatedAmount": 0,
+        "currentAmount": 0,
         "lineNo": 7,
-        "name": "assetsImpairmentLoss",
-        "years": 2022
+        "name": "assetsImpairmentLoss"
     },
     "associatesIncome": {
-        "accumulatedAmount": 203,
-        "companyId": 2,
-        "currentAmount": 23,
+        "accumulatedAmount": 0,
+        "currentAmount": 0,
         "lineNo": 10,
-        "name": "associatesIncome",
-        "years": 2022
+        "name": "associatesIncome"
     },
     "basicEarningsPerShare": {
-        "accumulatedAmount": 203,
-        "companyId": 2,
-        "currentAmount": 23,
+        "accumulatedAmount": 0,
+        "currentAmount": 0,
         "lineNo": 31,
-        "name": "basicEarningsPerShare",
-        "years": 2022
+        "name": "basicEarningsPerShare"
     },
     "businessIncome": {
-        "accumulatedAmount": 203,
-        "companyId": 2,
-        "currentAmount": 23,
+        "accumulatedAmount": 0,
+        "currentAmount": 0,
         "lineNo": 1,
-        "name": "businessIncome",
-        "years": 2022
+        "name": "businessIncome"
     },
     "changesIncome": {
-        "accumulatedAmount": 203,
-        "companyId": 2,
-        "currentAmount": 23,
+        "accumulatedAmount": 0,
+        "currentAmount": 0,
         "lineNo": 8,
-        "name": "changesIncome",
-        "years": 2022
+        "name": "changesIncome"
     },
     "changesSaleAssets": {
-        "accumulatedAmount": 203,
-        "companyId": 2,
-        "currentAmount": 23,
+        "accumulatedAmount": 0,
+        "currentAmount": 0,
         "lineNo": 25,
-        "name": "changesSaleAssets",
-        "years": 2022
+        "name": "changesSaleAssets"
     },
     "companyId": 2,
     "dilutedEarningsPerShare": {
-        "accumulatedAmount": 203,
-        "companyId": 2,
-        "currentAmount": 23,
+        "accumulatedAmount": 0,
+        "currentAmount": 0,
         "lineNo": 32,
-        "name": "dilutedEarningsPerShare",
-        "years": 2022
+        "name": "dilutedEarningsPerShare"
     },
     "disposalGains": {
-        "accumulatedAmount": 203,
-        "companyId": 2,
-        "currentAmount": 23,
+        "accumulatedAmount": 0,
+        "currentAmount": 0,
         "lineNo": 13,
-        "name": "disposalGains",
-        "years": 2022
+        "name": "disposalGains"
     },
     "earningsPerShare": {
-        "accumulatedAmount": 203,
-        "companyId": 2,
-        "currentAmount": 23,
+        "accumulatedAmount": 0,
+        "currentAmount": 0,
         "lineNo": 30,
-        "name": "earningsPerShare",
-        "years": 2022
+        "name": "earningsPerShare"
     },
     "financialExpenses": {
-        "accumulatedAmount": 203,
-        "companyId": 2,
-        "currentAmount": 23,
+        "accumulatedAmount": 0,
+        "currentAmount": 0,
         "lineNo": 6,
-        "name": "financialExpenses",
-        "years": 2022
+        "name": "financialExpenses"
     },
     "foreignFinancialStatements": {
-        "accumulatedAmount": 203,
-        "companyId": 2,
-        "currentAmount": 23,
+        "accumulatedAmount": 0,
+        "currentAmount": 0,
         "lineNo": 28,
-        "name": "foreignFinancialStatements",
-        "years": 2022
+        "name": "foreignFinancialStatements"
     },
     "investmentIncome": {
-        "accumulatedAmount": 203,
-        "companyId": 2,
-        "currentAmount": 23,
+        "accumulatedAmount": 0,
+        "currentAmount": 0,
         "lineNo": 9,
-        "name": "investmentIncome",
-        "years": 2022
+        "name": "investmentIncome"
     },
     "investmentsSaleAssets": {
-        "accumulatedAmount": 203,
-        "companyId": 2,
-        "currentAmount": 23,
+        "accumulatedAmount": 0,
+        "currentAmount": 0,
         "lineNo": 26,
-        "name": "investmentsSaleAssets",
-        "years": 2022
+        "name": "investmentsSaleAssets"
     },
     "measurementChangesLiabilities": {
-        "accumulatedAmount": 203,
-        "companyId": 2,
-        "currentAmount": 23,
+        "accumulatedAmount": 0,
+        "currentAmount": 0,
         "lineNo": 21,
-        "name": "measurementChangesLiabilities",
-        "years": 2022
+        "name": "measurementChangesLiabilities"
     },
     "netProfit": {
-        "accumulatedAmount": 203,
-        "companyId": 2,
-        "currentAmount": 23,
+        "accumulatedAmount": 0,
+        "currentAmount": 0,
         "lineNo": 18,
-        "name": "netProfit",
-        "years": 2022
+        "name": "netProfit"
     },
     "nonLossDisposal": {
-        "accumulatedAmount": 203,
-        "companyId": 2,
-        "currentAmount": 23,
+        "accumulatedAmount": 0,
+        "currentAmount": 0,
         "lineNo": 15,
-        "name": "nonLossDisposal",
-        "years": 2022
+        "name": "nonLossDisposal"
     },
     "nonOperatingExpenses": {
-        "accumulatedAmount": 203,
-        "companyId": 2,
-        "currentAmount": 23,
+        "accumulatedAmount": 0,
+        "currentAmount": 0,
         "lineNo": 14,
-        "name": "nonOperatingExpenses",
-        "years": 2022
+        "name": "nonOperatingExpenses"
     },
     "nonOperatingIncome": {
-        "accumulatedAmount": 203,
-        "companyId": 2,
-        "currentAmount": 23,
+        "accumulatedAmount": 0,
+        "currentAmount": 0,
         "lineNo": 12,
-        "name": "nonOperatingIncome",
-        "years": 2022
+        "name": "nonOperatingIncome"
     },
     "nonReclassifiedOtherComprehensiveIncome": {
-        "accumulatedAmount": 203,
-        "companyId": 2,
-        "currentAmount": 23,
+        "accumulatedAmount": 0,
+        "currentAmount": 0,
         "lineNo": 20,
-        "name": "nonReclassifiedOtherComprehensiveIncome",
-        "years": 2022
+        "name": "nonReclassifiedOtherComprehensiveIncome"
     },
     "operatingCost": {
-        "accumulatedAmount": 203,
-        "companyId": 2,
-        "currentAmount": 23,
+        "accumulatedAmount": 0,
+        "currentAmount": 0,
         "lineNo": 2,
-        "name": "operatingCost",
-        "years": 2022
+        "name": "operatingCost"
     },
     "operatingProfit": {
-        "accumulatedAmount": 203,
-        "companyId": 2,
-        "currentAmount": 23,
+        "accumulatedAmount": 0,
+        "currentAmount": 0,
         "lineNo": 11,
-        "name": "operatingProfit",
-        "years": 2022
+        "name": "operatingProfit"
     },
     "otherComprehensiveIncome": {
-        "accumulatedAmount": 203,
-        "companyId": 2,
-        "currentAmount": 23,
-        "lineNo": 23,
-        "name": "otherComprehensiveIncome",
-        "years": 2022
+        "accumulatedAmount": 0,
+        "currentAmount": 0,
+        "lineNo": 0,
+        "name": "otherComprehensiveIncome"
     },
     "partProfitLoss": {
-        "accumulatedAmount": 203,
-        "companyId": 2,
-        "currentAmount": 23,
+        "accumulatedAmount": 0,
+        "currentAmount": 0,
         "lineNo": 27,
-        "name": "partProfitLoss",
-        "years": 2022
+        "name": "partProfitLoss"
     },
     "sellingExpenses": {
-        "accumulatedAmount": 203,
-        "companyId": 2,
-        "currentAmount": 23,
+        "accumulatedAmount": 0,
+        "currentAmount": 0,
         "lineNo": 4,
-        "name": "sellingExpenses",
-        "years": 2022
+        "name": "sellingExpenses"
     },
     "shareInvesteeComprehensiveIncome": {
-        "accumulatedAmount": 203,
-        "companyId": 2,
-        "currentAmount": 23,
+        "accumulatedAmount": 0,
+        "currentAmount": 0,
         "lineNo": 22,
-        "name": "ShareInvesteeComprehensiveIncome",
-        "years": 2022
+        "name": "ShareInvesteeComprehensiveIncome"
     },
     "shareOtherComprehensiveIncome": {
-        "accumulatedAmount": 203,
-        "companyId": 2,
-        "currentAmount": 23,
+        "accumulatedAmount": 0,
+        "currentAmount": 0,
         "lineNo": 24,
-        "name": "shareOtherComprehensiveIncome",
-        "years": 2022
+        "name": "shareOtherComprehensiveIncome"
     },
     "taxExpense": {
-        "accumulatedAmount": 203,
-        "companyId": 2,
-        "currentAmount": 23,
+        "accumulatedAmount": 0,
+        "currentAmount": 0,
         "lineNo": 17,
-        "name": "taxExpense",
-        "years": 2022
+        "name": "taxExpense"
     },
     "taxesSurcharges": {
-        "accumulatedAmount": 203,
-        "companyId": 2,
-        "currentAmount": 23,
+        "accumulatedAmount": 0,
+        "currentAmount": 0,
         "lineNo": 3,
-        "name": "taxesSurcharges",
-        "years": 2022
+        "name": "taxesSurcharges"
     },
     "totalComprehensiveIncome": {
-        "accumulatedAmount": 203,
-        "companyId": 2,
-        "currentAmount": 23,
+        "accumulatedAmount": 0,
+        "currentAmount": 0,
         "lineNo": 29,
-        "name": "totalComprehensiveIncome",
-        "years": 2022
+        "name": "totalComprehensiveIncome"
     },
     "totalProfit": {
-        "accumulatedAmount": 203,
-        "companyId": 2,
-        "currentAmount": 23,
+        "accumulatedAmount": 0,
+        "currentAmount": 0,
         "lineNo": 16,
-        "name": "totalProfit",
-        "years": 2022
+        "name": "totalProfit"
     }
 }

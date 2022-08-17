@@ -6,7 +6,7 @@ import {
   readMessage,
   attentionList,
   attentionInfo,
-  myDeclare,
+  myDeclare,deleteDeclare
 } from "../../apis/index";
 import { ThemeColor, CutLine } from "../../lib/const";
 import { ExclamationCircleFilled } from "@ant-design/icons";
@@ -248,8 +248,13 @@ function CommonUser(props) {
 
   // 删除申报记录
   const _deleteRecord = async (id) => {
-    // const res = await 
-  
+    const res = await deleteDeclare(id)
+    if (res && res.code === 2000) {
+      message.success("删除成功");
+      _declareList()
+    } else {
+      message.error("删除失败");
+    }
   }
 
   // 申报模型
@@ -286,12 +291,16 @@ function CommonUser(props) {
       render: (text, record) => {
         return (
           <div style={{ display: "flex", justifyContent: "space-around" }}>
-            <div style={{ marginBottom: "0.05rem" }}>
+            <div style={{ marginBottom: "0.05rem" }} onClick={
+              ()=>{
+                // _editDeclare([record.id]);
+                history.push("declare",{id:record.id,action:1})
+              }
+            }>
               {ButtonCmt(ThemeColor, "white", "编辑")}
             </div>
             <div
               onClick={() => {
-                // _cancelAttention([record.id]);
                 _deleteRecord([record.id]);
               }}
             >
@@ -664,7 +673,7 @@ function CommonUser(props) {
             ) : (
               <div
                 onClick={() => {
-                  history.push("/declare");
+                  history.push("/declare",{action:0});
                 }}
               >
                 {ButtonCmt(ThemeColor, "white", "+ 添加申报", "1rem")}
