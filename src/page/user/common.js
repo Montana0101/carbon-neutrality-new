@@ -246,7 +246,13 @@ function CommonUser(props) {
     }
   };
 
-  // 申报的表格模型
+  // 删除申报记录
+  const _deleteRecord = async (id) => {
+    // const res = await 
+  
+  }
+
+  // 申报模型
   const columns_d = [
     {
       title: "序号",
@@ -285,7 +291,8 @@ function CommonUser(props) {
             </div>
             <div
               onClick={() => {
-                _cancelAttention([record.id]);
+                // _cancelAttention([record.id]);
+                _deleteRecord([record.id]);
               }}
             >
               {ButtonCmt("#FD867F", "white", "删除")}
@@ -296,7 +303,7 @@ function CommonUser(props) {
     },
   ]
 
-  // 关注的表格模型
+  // 关注模型
   const columns = [
     {
       title: "序号",
@@ -657,7 +664,7 @@ function CommonUser(props) {
             ) : (
               <div
                 onClick={() => {
-                  // history.push("/declare");
+                  history.push("/declare");
                 }}
               >
                 {ButtonCmt(ThemeColor, "white", "+ 添加申报", "1rem")}

@@ -252,4 +252,8 @@ export const commit = (id) => {
     return fetchGadget(url, 'PUT')
 }
 
-
+// 省市区
+export const fetchAreas = (pid) => {
+    const url = `/stiacn-app/pcd/get?pid=${pid}`
+    return fetchGadget(url, 'GET')
+}

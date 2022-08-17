@@ -108,7 +108,7 @@ const cash_reducer = (state, action) => {
 
 function Declare(props) {
   const [tabInx, setTabInx] = useState(0);
-  const [inx, setInx] = useState(1);
+  const [inx, setInx] = useState(0);
   const [assetEnter, setAssetEnter] = useState({ value: "", line: null });
   const [asset_state, asset_dispatch] = useReducer(asset_reducer, assetJson); // 资产负债表订阅
   const [profitEnter, setProfitEnter] = useState({ value: "", line: null });

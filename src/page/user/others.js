@@ -9,6 +9,7 @@ import {
   saveIndustry,
   saveInvestor,
   commit,
+  fetchAreas,
 } from "../../apis/index";
 import { ThemeColor, CutLine } from "../../lib/const";
 
@@ -81,10 +82,25 @@ const cpSuppliersItem = {
   supplierName: "", //供应商名称
 };
 
+const layout = {
+  labelCol: {
+    span: 4,
+  },
+  wrapperCol: {
+    span: 20,
+  },
+};
+
 function Others(props) {
   const { inx, companyId } = props;
   const history = useHistory();
   const [form] = Form.useForm();
+  const [d1, setD1] = useState([]); //省
+  const [d1_id, setD1_id] = useState(null); 
+  const [d2, setD2] = useState([]); //市
+  const [d2_id, setD2_id] = useState(null); 
+  const [d3, setD3] = useState([]); //区
+  const [d3_id, setD3_id] = useState(null); 
 
   const [leaders, setLeaders] = useState(1); // 领军人物
   const [teams, setTeams] = useState(1); // 核心团队
@@ -116,7 +132,6 @@ function Others(props) {
     cpSuppliers: [cpSuppliersItem],
   }); // 公司经营
   const [table4, setTable4] = useState({}); // 核心竞争力
-
   const [table5, setTable5] = useState({
     cpLeaders: [
       {
@@ -138,30 +153,38 @@ function Others(props) {
     coreTechnology: "",
     cpPatents: [cpPatentsItem],
   }); // 核心技术
-
   const [table7, setTable7] = useState({
     cpInvestors: [cpInvestorsItem],
   }); // 投资方
-
   const [table8, setTable8] = useState({}); // 行业成长性
 
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
   };
 
-  const layout = {
-    labelCol: {
-      span: 4,
-    },
-    wrapperCol: {
-      span: 20,
-    },
+  // 省市区
+  const _fetchAreas = async (pid, level) => {
+    const res = await fetchAreas(pid);
+    if (res && res.code === 2000) {
+      if (level == 0) {
+        console.log("省市区", res.result);
+        setD1(res.result);
+      }else if(level == 1){
+        setD2(res.result);
+        console.log("省市区1111", res.result);
+      }else if(level == 2){
+        setD3(res.result);
+      }
+    }
   };
 
   // 保存基本信息
   const save1 = async () => {
     let _t1 = JSON.parse(JSON.stringify(table1));
     _t1.id = companyId ? companyId : null;
+    _t1.province = d1_id
+    _t1.city = d2_id
+    _t1.district = d3_id
     delete _t1.regTime;
     if (rigsterTime) {
       _t1.regTime = rigsterTime;
@@ -300,6 +323,11 @@ function Others(props) {
     console.log("监听基本信息state 变化", table2);
   }, [table2]);
 
+  useEffect(() => {
+    // 省市区
+    _fetchAreas(0, 0);
+  }, []);
+
   return (
     <div className="others_page">
       <div>
@@ -350,17 +378,49 @@ function Others(props) {
                       justifyContent: "space-between",
                     }}
                   >
-                    <Form.Item
+                    {/* <Form.Item
                       name="province"
                       style={{ flex: 1, marginRight: "0.1rem" }}
                     >
-                      <Select defaultValue="2">
-                        <Option value="1">1</Option>
-                        <Option value="2">1</Option>
-                      </Select>
-                    </Form.Item>
+                    
+                    </Form.Item> */}
 
-                    <Form.Item
+                    <Select style={{ flex: 1, marginRight: "0.1rem" }} onChange={e=>{
+                      _fetchAreas(e,1)
+                      setD1_id(e)}}>
+                      {d1 &&
+                        d1.map((item, index) => {
+                          return (
+                            <Option value={item.id} key={index}>
+                              {item.name}
+                            </Option>
+                          );
+                        })}
+                    </Select>
+                    <Select defaultValue="" style={{ flex: 1, marginRight: "0.1rem" }} onChange={e=>{
+                      _fetchAreas(e,2)
+                      setD2_id(e)}}>
+                      {d2 &&
+                        d2.map((item, index) => {
+                          return (
+                            <Option value={item.id} key={index}>
+                              {item.name}
+                            </Option>
+                          );
+                        })}
+                    </Select>
+                    <Select defaultValue="" style={{ flex: 1, marginRight: "0rem" }} onChange={e=>{
+                      setD3_id(e)}}>
+                      {d3 &&
+                        d3.map((item, index) => {
+                          return (
+                            <Option value={item.id} key={index}>
+                              {item.name}
+                            </Option>
+                          );
+                        })}
+                    </Select>
+                    {/* <Form.Item
                       name="city"
                       style={{ flex: 1, marginRight: "0.1rem" }}
                     >
@@ -378,7 +438,7 @@ function Others(props) {
                         <Option value="1">1</Option>
                         <Option value="2">1</Option>
                       </Select>
-                    </Form.Item>
+                    </Form.Item> */}
                   </section>
                 </Form.Item>
               </Col>
