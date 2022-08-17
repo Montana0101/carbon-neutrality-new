@@ -1,4 +1,4 @@
-import { useState, useEffect, useReducer } from "react";
+import { useState, useEffect, useReducer ,useCallback} from "react";
 import { withRouter, useHistory } from "react-router-dom";
 import {
   putDeclareBalance,
@@ -107,6 +107,7 @@ const cash_reducer = (state, action) => {
   return { ...state, ...name };
 };
 
+// 卸载组件
 
 function Declare(props) {
   const [tabInx, setTabInx] = useState(0);
@@ -143,8 +144,8 @@ function Declare(props) {
 
     let {state} = props.location
     if (state && state.action ==1) {
-      assetJson = {}
-      profitJson = {}
+      // assetJson = {}
+      // profitJson = {}
       // 编辑状态
       // alert(1)
       setCompanyId(state.id);
@@ -154,9 +155,17 @@ function Declare(props) {
       // alert(0)
       localStorage.removeItem("companyId")
     }
-    // if (localStorage.getItem("companyId")) {
-    //   setCompanyId(localStorage.getItem("companyId"));
-    // }
+    window.addEventListener('popstate', routeChangeCB, false);
+    return () => {
+      window.removeEventListener('popstate', routeChangeCB)
+    };
+    
+  }, []);
+
+  const routeChangeCB = useCallback((e) => {
+    let ev = document.createEvent('Event')
+    ev.initEvent('resize', true, true)
+    window.dispatchEvent(ev)
   }, []);
 
   // 编辑时-获取数据详情
@@ -188,9 +197,10 @@ function Declare(props) {
 
   useEffect(() => {
     
-    if (companyId) {
+    if (companyId && props.location.state.action == 1) {
       // 编辑状态
       _getDeclareDetail(companyId);
+
     }
 
   }, [companyId]);
@@ -198,8 +208,18 @@ function Declare(props) {
   // 监听输入变化
   useEffect(() => {
     // console.log("asset_state输入变化", cash_state);
+    console.log("asset_state输入变化", asset_state);
+  }, [asset_state]);
+
+  useEffect(() => {
+    // console.log("asset_state输入变化", cash_state);
     console.log("profit_state输入变化", profit_state);
-  }, [asset_state, profit_state, cash_state]);
+  }, [profit_state]);
+
+  useEffect(() => {
+    // console.log("asset_state输入变化", cash_state);
+    console.log("cash_state输入变化", cash_state);
+  }, [cash_state]);
 
   // 触发事件
   useEffect(() => {
@@ -335,7 +355,9 @@ function Declare(props) {
   };
 
   return (
-    <div className="declare_page">
+    <div className="declare_page" style={{
+  
+    }}>
       <div
         style={{
           border: CutLine,
@@ -362,7 +384,9 @@ function Declare(props) {
           <span
             style={{ color: "rgba(0,0,0,0.6)", cursor: "pointer" }}
             onClick={() => {
-              history.go(-1);
+              // window.reload();
+              // history.push('/common');
+              // window.location.href = 'common'
             }}
           >
             个人中心

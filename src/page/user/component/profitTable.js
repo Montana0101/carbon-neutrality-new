@@ -23,8 +23,6 @@ const InputCmt = (props) => {
       // 前一个
       Object.values(data).map((item) => {
         if (item.lineNo + "_1" == line) {
-      console.log("111111111111111111",item.lineNo,line,item.accumulatedAmount)
-
           // amount = item.endingBalance;
           setAmount(item.accumulatedAmount);
           return item.accumulatedAmount;
@@ -35,7 +33,6 @@ const InputCmt = (props) => {
       Object.values(data).map((item) => {
 
         if (item.lineNo + "_0" == line) {
-          console.log("222222222222222222",item.lineNo)
 
           // amount = item.beginningBalance;
           setAmount(item.currentAmount);
@@ -75,7 +72,7 @@ const ProfitTable = (props) => {
   let { onInput ,data} = props;
 
   useEffect(()=>{
-    console.log('监听第二张表数据变化',data)
+    // console.log('监听第二张表数据变化',data)
   },[data])
 
   return (
