@@ -31,7 +31,7 @@ import {
   message,
   DatePicker,
 } from "antd";
-import React, { useState, useReducer, useEffect } from "react";
+import React, { useState, useReducer, useEffect, useRef } from "react";
 import { ButtonCmt } from "../../component/button";
 import sPng from "../../static/imgs/save.png";
 import {
@@ -42,7 +42,7 @@ import {
 } from "../../lib/enum"; // 行业枚举
 import "moment/locale/zh-cn";
 import locale from "antd/es/date-picker/locale/zh_CN";
-
+import moment from "moment";
 const { Option } = Select;
 
 // 专利技术item 用户增删行数
@@ -92,15 +92,15 @@ const layout = {
 };
 
 function Others(props) {
-  const { inx, companyId } = props;
+  const { inx, companyId, obj } = props;
   const history = useHistory();
   const [form] = Form.useForm();
   const [d1, setD1] = useState([]); //省
-  const [d1_id, setD1_id] = useState(null); 
+  const [d1_id, setD1_id] = useState(null);
   const [d2, setD2] = useState([]); //市
-  const [d2_id, setD2_id] = useState(null); 
+  const [d2_id, setD2_id] = useState(null);
   const [d3, setD3] = useState([]); //区
-  const [d3_id, setD3_id] = useState(null); 
+  const [d3_id, setD3_id] = useState(null);
 
   const [leaders, setLeaders] = useState(1); // 领军人物
   const [teams, setTeams] = useState(1); // 核心团队
@@ -167,12 +167,10 @@ function Others(props) {
     const res = await fetchAreas(pid);
     if (res && res.code === 2000) {
       if (level == 0) {
-        console.log("省市区", res.result);
         setD1(res.result);
-      }else if(level == 1){
+      } else if (level == 1) {
         setD2(res.result);
-        console.log("省市区1111", res.result);
-      }else if(level == 2){
+      } else if (level == 2) {
         setD3(res.result);
       }
     }
@@ -182,9 +180,9 @@ function Others(props) {
   const save1 = async () => {
     let _t1 = JSON.parse(JSON.stringify(table1));
     _t1.id = companyId ? companyId : null;
-    _t1.province = d1_id
-    _t1.city = d2_id
-    _t1.district = d3_id
+    _t1.province = d1_id;
+    _t1.city = d2_id;
+    _t1.district = d3_id;
     delete _t1.regTime;
     if (rigsterTime) {
       _t1.regTime = rigsterTime;
@@ -195,7 +193,6 @@ function Others(props) {
     } else {
       message.error("基本信息保存失败！");
     }
-    console.log("基本信息表", res);
   };
 
   // 公司战略
@@ -319,14 +316,85 @@ function Others(props) {
     }
   };
 
-  useEffect(() => {
-    console.log("监听基本信息state 变化", table2);
-  }, [table2]);
+  useEffect(() => {}, [table2]);
 
   useEffect(() => {
     // 省市区
     _fetchAreas(0, 0);
   }, []);
+
+  // 编辑状态初始化数据
+  const initDataByEdit = () => {
+    let {inx} = props;
+    // 基本信息
+    if (props.inx == 1) {
+      form.setFieldsValue({
+        companyName: obj.companyName,
+        enterpriseAbbreviation: obj.enterpriseAbbreviation,
+        regCapital: obj.regCapital,
+        contactNumber: obj.contactNumber,
+        // regTime: moment(obj.regTime),
+        stage:
+          stageEnum[obj.stage * 1 - 1] && stageEnum[obj.stage * 1 - 1].name,
+        email: obj.email,
+        financingScale: obj.financingScale,
+        enterpriseValuation: obj.enterpriseValuation,
+        industry:
+          industryEnum[obj.industry * 1] && industryEnum[obj.industry * 1].name,
+        legalPersonName: obj.legalPersonName,
+        website: obj.website,
+        companyProfile: obj.companyProfile,
+      });
+
+      let _obj = JSON.parse(JSON.stringify(table1));
+      _obj.id = companyId ? companyId : null;
+      _obj.stage = stageEnum[obj.stage - 1] && stageEnum[obj.stage - 1].value;
+      _obj.industry =
+        industryEnum[obj.industry] && industryEnum[obj.industry].value;
+      setTable1(_obj);
+    } else if (props.inx == 2) {
+      // 公司战略
+      form.setFieldsValue({
+        strategicPositioning:obj.strategicPositioning,
+        strategicPlanning:obj.strategicPlanning
+      })
+    }else if(inx == 4){
+      // 核心竞争力
+      form.setFieldsValue({
+        coreCompetitiveness:obj.coreCompetitiveness,
+      })
+    }else if(inx == 7){
+      // 投资方
+      // form.setFieldsValue({
+      //   industryIntroduction:obj.industryIntroduction,
+      // })
+      let _obj = JSON.parse(JSON.stringify(table7));
+      // _obj.cpInvestors[index];
+
+      // let _arr = obj.cpInvestors 
+      // 有数据情况下
+      if(obj.cpInvestors && obj.cpInvestors.length>0){
+        setInvestor(obj.cpInvestors.length)
+        setTable7({cpInvestors:obj.cpInvestors})
+      }
+    }else if(inx == 8){
+      // 行业成长性
+      form.setFieldsValue({
+        industryIntroduction:obj.industryIntroduction,
+      })
+    }
+  };
+
+  useEffect(() => {
+    // console.log("编辑状态接收数据", obj);
+    initDataByEdit();
+  }, [obj]);
+
+  useEffect(()=>{
+    initDataByEdit()
+  },[props.inx])
+
+  const initRef = useRef();
 
   return (
     <div className="others_page">
@@ -334,6 +402,7 @@ function Others(props) {
         {/* 1 - 基本信息 */}
         {props.inx == 1 && (
           <Form
+            ref={initRef}
             form={form}
             name="advanced_search"
             className="ant-advanced-search-form"
@@ -378,16 +447,13 @@ function Others(props) {
                       justifyContent: "space-between",
                     }}
                   >
-                    {/* <Form.Item
-                      name="province"
+                    <Select
                       style={{ flex: 1, marginRight: "0.1rem" }}
+                      onChange={(e) => {
+                        _fetchAreas(e, 1);
+                        setD1_id(e);
+                      }}
                     >
-                    
-                    </Form.Item> */}
-
-                    <Select style={{ flex: 1, marginRight: "0.1rem" }} onChange={e=>{
-                      _fetchAreas(e,1)
-                      setD1_id(e)}}>
                       {d1 &&
                         d1.map((item, index) => {
                           return (
@@ -397,9 +463,14 @@ function Others(props) {
                           );
                         })}
                     </Select>
-                    <Select defaultValue="" style={{ flex: 1, marginRight: "0.1rem" }} onChange={e=>{
-                      _fetchAreas(e,2)
-                      setD2_id(e)}}>
+                    <Select
+                      defaultValue=""
+                      style={{ flex: 1, marginRight: "0.1rem" }}
+                      onChange={(e) => {
+                        _fetchAreas(e, 2);
+                        setD2_id(e);
+                      }}
+                    >
                       {d2 &&
                         d2.map((item, index) => {
                           return (
@@ -409,8 +480,13 @@ function Others(props) {
                           );
                         })}
                     </Select>
-                    <Select defaultValue="" style={{ flex: 1, marginRight: "0rem" }} onChange={e=>{
-                      setD3_id(e)}}>
+                    <Select
+                      defaultValue=""
+                      style={{ flex: 1, marginRight: "0rem" }}
+                      onChange={(e) => {
+                        setD3_id(e);
+                      }}
+                    >
                       {d3 &&
                         d3.map((item, index) => {
                           return (
@@ -473,7 +549,14 @@ function Others(props) {
             <Row gutter={24}>
               <Col span={10}>
                 <Form.Item label={"融资阶段"} name="stage">
-                  <Select defaultValue="">
+                  <Select
+                    defaultValue=""
+                    onChange={(e) => {
+                      let _obj = JSON.parse(JSON.stringify(table1));
+                      _obj.stage = e;
+                      setTable1(_obj);
+                    }}
+                  >
                     {stageEnum.map((item) => {
                       return (
                         <Option value={item.value} key={item.value}>
@@ -508,7 +591,14 @@ function Others(props) {
             <Row gutter={24}>
               <Col span={10}>
                 <Form.Item label={"所属行业"} name="industry">
-                  <Select defaultValue="">
+                  <Select
+                    defaultValue=""
+                    onChange={(e) => {
+                      let _obj = JSON.parse(JSON.stringify(table1));
+                      _obj.industry = e;
+                      setTable1(_obj);
+                    }}
+                  >
                     {industryEnum.map((item, index) => {
                       return <Option value={item.value}>{item.name}</Option>;
                     })}
@@ -1317,20 +1407,21 @@ function Others(props) {
                             style={{ marginRight: "0.1rem", flex: 4 }}
                             onChange={(e) => {
                               let _obj = JSON.parse(JSON.stringify(table7));
-                              _obj.cpInvestors[index].investorName =
-                                e.target.value;
+                              _obj.cpInvestors[index] && (_obj.cpInvestors[index].investorName = e.target.value);
                               setTable7(_obj);
                             }}
+                            defaultValue={table7 && table7.cpInvestors[index] && table7.cpInvestors[index].investorName}
                           />
                           <Input
                             placeholder="请输入轮次"
                             style={{ marginRight: "0.1rem", flex: 4 }}
                             onChange={(e) => {
                               let _obj = JSON.parse(JSON.stringify(table7));
-                              _obj.cpInvestors[index].investorRounds =
-                                e.target.value;
+                              _obj.cpInvestors[index] && (_obj.cpInvestors[index].investorRounds =
+                                e.target.value);
                               setTable7(_obj);
                             }}
+                            defaultValue={table7 && table7.cpInvestors[index] && table7.cpInvestors[index].investorRounds}
                           />
                           <Input
                             placeholder="请输入投资金额，不填则代表暂不公开"
@@ -1341,6 +1432,8 @@ function Others(props) {
                                 e.target.value;
                               setTable7(_obj);
                             }}
+                            defaultValue={table7 && table7.cpInvestors[index] && table7.cpInvestors[index].investorAmount}
+
                           />
 
                           {index === 0 ? (
@@ -1348,7 +1441,7 @@ function Others(props) {
                               onClick={() => {
                                 setInvestor(investor + 1);
                                 let _obj = JSON.parse(JSON.stringify(table7));
-                                _obj.cpInvestors.push(cpInvestorsItem);
+                                _obj.cpInvestors && _obj.cpInvestors.push(cpInvestorsItem);
                                 setTable7(_obj);
                               }}
                               style={{
@@ -1361,7 +1454,7 @@ function Others(props) {
                               onClick={() => {
                                 setInvestor(investor - 1);
                                 let _obj = JSON.parse(JSON.stringify(table7));
-                                _obj.cpInvestors.splice(index, 1);
+                                _obj.cpInvestors && _obj.cpInvestors.splice(index, 1);
                                 setTable7(_obj);
                               }}
                               style={{

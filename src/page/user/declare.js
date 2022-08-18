@@ -131,7 +131,7 @@ function Declare(props) {
   const [flag, setFlag] = useState(false);
   const [action, setAction] = useState(-1);
 
-  const [obj, setObj] = useState({}); // 编辑时代入
+  const [obj, setObj] = useState({}); // 编辑所有数据
   const [key, setKey] = useState(null);
 
   var date = new Date();
@@ -187,6 +187,7 @@ function Declare(props) {
       delete cashModels.years;
       cashJson = cashModels;
       dispathTrigger("监听步骤222222222");
+      setObj(res.result)
       // setFlag(true)
     }
   };
@@ -207,18 +208,15 @@ function Declare(props) {
 
   // 监听输入变化
   useEffect(() => {
-    // console.log("asset_state输入变化", cash_state);
-    console.log("asset_state输入变化", asset_state);
+    // console.log("asset_state输入变化", asset_state);
   }, [asset_state]);
 
   useEffect(() => {
-    // console.log("asset_state输入变化", cash_state);
-    console.log("profit_state输入变化", profit_state);
+    // console.log("profit_state输入变化", profit_state);
   }, [profit_state]);
 
   useEffect(() => {
-    // console.log("asset_state输入变化", cash_state);
-    console.log("cash_state输入变化", cash_state);
+    // console.log("cash_state输入变化", cash_state);
   }, [cash_state]);
 
   // 触发事件
@@ -287,7 +285,7 @@ function Declare(props) {
 
   // 根据行进行事件订阅
   const dispathTrigger = (str) => {
-    console.log(str);
+    // console.log(str);
     let line;
     let no;
     if (tabInx == 0) {
@@ -301,7 +299,6 @@ function Declare(props) {
     no = line.length == 3 ? line.substr(0, 1) : line.substr(0, 2);
 
     if (tabInx == 0) {
-      console.log("打印下assetJson", assetJson);
       Object.values(assetJson).map((item) => {
         if (item.lineNo == no) {
           assetDispatch(line, item.name);
@@ -641,6 +638,7 @@ function Declare(props) {
               }}
               inx={inx}
               companyId={companyId}
+              obj={obj}
             />
           )}
         </section>
