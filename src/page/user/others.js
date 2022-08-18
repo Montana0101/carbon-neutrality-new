@@ -1305,17 +1305,23 @@ function Others(props) {
                             }
                           />
                           <Select
-                            defaultValue={
-                              table6 &&
-                              table6.cpPatents[index] &&
-                              table6.cpPatents[index].patentType
-                            }
+                            defaultValue={{
+                              value: table6.cpPatents[index].patentType || "",
+                              label: patentType[
+                                table6.cpPatents[index].patentType - 1
+                              ]
+                                ? patentType[
+                                    table6.cpPatents[index].patentType - 1
+                                  ].name
+                                : "",
+                            }}
+                            labelInValue
                             placeholder="请选择专利类型"
                             style={{ marginRight: "0.1rem", flex: 1 }}
                             onChange={(e) => {
                               let _obj = JSON.parse(JSON.stringify(table6));
                               _obj.cpPatents[index] &&
-                                (_obj.cpPatents[index].patentType = e);
+                                (_obj.cpPatents[index].patentType = e.value);
                               setTable6(_obj);
                             }}
                           >
@@ -1328,17 +1334,23 @@ function Others(props) {
                             })}
                           </Select>
                           <Select
-                            defaultValue={
-                              table6 &&
-                              table6.cpPatents[index] &&
-                              table6.cpPatents[index].patentStatus.toString()
-                            }
+                            defaultValue={{
+                              value: table6.cpPatents[index].patentStatus || "",
+                              label: patentStatus[
+                                table6.cpPatents[index].patentStatus - 1
+                              ]
+                                ? patentStatus[
+                                    table6.cpPatents[index].patentStatus - 1
+                                  ].name
+                                : "",
+                            }}
+                            labelInValue
                             placeholder="请选择专利状态"
                             style={{ marginRight: "0.1rem", flex: 1 }}
                             onChange={(e) => {
                               let _obj = JSON.parse(JSON.stringify(table6));
                               _obj.cpPatents[index] &&
-                                (_obj.cpPatents[index].patentStatus = e);
+                                (_obj.cpPatents[index].patentStatus = e.value);
                               setTable6(_obj);
                             }}
                           >
