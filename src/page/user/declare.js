@@ -191,7 +191,7 @@ function Declare(props) {
       delete cashModels.years
       cashJson = cashModels
       dispathTrigger("监听步骤222222222");
-      setFlag(true)
+      // setFlag(true)
 
     }
   };
@@ -276,7 +276,7 @@ function Declare(props) {
     });
   };
 
-  // 利润表封装订阅
+  // 现金流量表封装订阅
   const cashDispatch = (no, name) => {
     // 判断是累计还是当前，true为累计，false为当前
     let flag = no.substr(no.length - 1, 1) == 0 ? true : false;
@@ -286,9 +286,9 @@ function Declare(props) {
         [name]: {
           accumulatedAmount: flag
             ? cashEnter.value
-            : cash_state[name].accumulatedAmount || 0,
+            : cash_state[name].accumulatedAmount,
           currentAmount: flag
-            ? cash_state[name].currentAmount || 0
+            ? cash_state[name].currentAmount 
             : cashEnter.value,
         },
       },
@@ -312,7 +312,7 @@ function Declare(props) {
 
   
     if (tabInx == 0) {
-      // console.log("打印下assetJson",assetJson)
+      console.log("打印下assetJson",assetJson)
       Object.values(assetJson).map((item) => {
         if (item.lineNo == no) {
           assetDispatch(line, item.name);

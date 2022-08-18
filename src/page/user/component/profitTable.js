@@ -19,11 +19,9 @@ const InputCmt = (props) => {
   //缓存数据
   const getCacheData = () => {
     if (line.substr(line.length - 1, 1) == 1) {
-
       // 前一个
       Object.values(data).map((item) => {
         if (item.lineNo + "_1" == line) {
-          // amount = item.endingBalance;
           setAmount(item.accumulatedAmount);
           return item.accumulatedAmount;
         }
@@ -32,7 +30,6 @@ const InputCmt = (props) => {
       // 后一个
       Object.values(data).map((item) => {
         if (item.lineNo + "_0" == line) {
-          // amount = item.beginningBalance;
           setAmount(item.currentAmount);
           return item.currentAmount;
         }
@@ -96,18 +93,17 @@ const ProfitTable = (props) => {
               <td>
                 <InputCmt
                   event={onInput}
-                  line={item.lineNo + "_0"}
+                  line={item.lineNo + "_1"}
                   data={data}
                 />
               </td>
               <td>
                 <InputCmt
                   event={onInput}
-                  line={item.lineNo + "_1"}
+                  line={item.lineNo + "_0"}
                   data={data}
                 />
               </td>
-          
             </tr>
           );
         })}
