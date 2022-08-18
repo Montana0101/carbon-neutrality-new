@@ -325,7 +325,7 @@ function Others(props) {
 
   // 编辑状态初始化数据
   const initDataByEdit = () => {
-    let {inx} = props;
+    let { inx } = props;
     // 基本信息
     if (props.inx == 1) {
       form.setFieldsValue({
@@ -355,33 +355,34 @@ function Others(props) {
     } else if (props.inx == 2) {
       // 公司战略
       form.setFieldsValue({
-        strategicPositioning:obj.strategicPositioning,
-        strategicPlanning:obj.strategicPlanning
-      })
-    }else if(inx == 4){
+        strategicPositioning: obj.strategicPositioning,
+        strategicPlanning: obj.strategicPlanning,
+      });
+    } else if (inx == 4) {
       // 核心竞争力
       form.setFieldsValue({
-        coreCompetitiveness:obj.coreCompetitiveness,
-      })
-    }else if(inx == 7){
-      // 投资方
-      // form.setFieldsValue({
-      //   industryIntroduction:obj.industryIntroduction,
-      // })
-      let _obj = JSON.parse(JSON.stringify(table7));
-      // _obj.cpInvestors[index];
-
-      // let _arr = obj.cpInvestors 
-      // 有数据情况下
-      if(obj.cpInvestors && obj.cpInvestors.length>0){
-        setInvestor(obj.cpInvestors.length)
-        setTable7({cpInvestors:obj.cpInvestors})
+        coreCompetitiveness: obj.coreCompetitiveness,
+      });
+    } else if (inx == 6) {
+      // 核心技术
+      let _obj = JSON.parse(JSON.stringify(table6));
+      _obj.coreTechnology = obj.coreTechnology;
+      if (obj.cpPatents && obj.cpPatents.length > 0) {
+        _obj.cpPatents = obj.cpPatents;
+        setPatent(obj.cpPatents.length);
       }
-    }else if(inx == 8){
+      setTable6(_obj);
+    } else if (inx == 7) {
+      // 有数据
+      if (obj.cpInvestors && obj.cpInvestors.length > 0) {
+        setInvestor(obj.cpInvestors.length);
+        setTable7({ cpInvestors: obj.cpInvestors });
+      }
+    } else if (inx == 8) {
       // 行业成长性
       form.setFieldsValue({
-        industryIntroduction:obj.industryIntroduction,
-      })
+        industryIntroduction: obj.industryIntroduction,
+      });
     }
   };
 
@@ -390,9 +391,13 @@ function Others(props) {
     initDataByEdit();
   }, [obj]);
 
-  useEffect(()=>{
-    initDataByEdit()
-  },[props.inx])
+  useEffect(() => {
+    initDataByEdit();
+  }, [props.inx]);
+
+  useEffect(() => {
+    console.log("第八十九", table6);
+  }, [table6]);
 
   const initRef = useRef();
 
@@ -1261,6 +1266,7 @@ function Others(props) {
                       _obj.coreTechnology = e.target.value;
                       setTable6(_obj);
                     }}
+                    defaultValue={table6 && table6.coreTechnology}
                   />
                 </Form.Item>
               </Col>
@@ -1282,23 +1288,34 @@ function Others(props) {
                         <section
                           style={{ display: "flex", alignItems: "center" }}
                         >
-                          {/* {index != 0 && <span style={{opacity:0}}>领军人物（最多五个）: &nbsp;</span>} */}
                           <Input
                             placeholder="请输入专利名称"
                             style={{ marginRight: "0.1rem", flex: 4 }}
                             onChange={(e) => {
                               let _obj = JSON.parse(JSON.stringify(table6));
-                              _obj.cpPatents[index].patentName = e.target.value;
+                              _obj.cpPatents[index] &&
+                                (_obj.cpPatents[index].patentName =
+                                  e.target.value);
                               setTable6(_obj);
                             }}
+                            defaultValue={
+                              table6 &&
+                              table6.cpPatents[index] &&
+                              table6.cpPatents[index].patentName
+                            }
                           />
                           <Select
-                            defaultValue=""
+                            defaultValue={
+                              table6 &&
+                              table6.cpPatents[index] &&
+                              table6.cpPatents[index].patentType
+                            }
                             placeholder="请选择专利类型"
                             style={{ marginRight: "0.1rem", flex: 1 }}
                             onChange={(e) => {
                               let _obj = JSON.parse(JSON.stringify(table6));
-                              _obj.cpPatents[index].patentType = e;
+                              _obj.cpPatents[index] &&
+                                (_obj.cpPatents[index].patentType = e);
                               setTable6(_obj);
                             }}
                           >
@@ -1311,12 +1328,17 @@ function Others(props) {
                             })}
                           </Select>
                           <Select
-                            defaultValue=""
+                            defaultValue={
+                              table6 &&
+                              table6.cpPatents[index] &&
+                              table6.cpPatents[index].patentStatus.toString()
+                            }
                             placeholder="请选择专利状态"
                             style={{ marginRight: "0.1rem", flex: 1 }}
                             onChange={(e) => {
                               let _obj = JSON.parse(JSON.stringify(table6));
-                              _obj.cpPatents[index].patentStatus = e;
+                              _obj.cpPatents[index] &&
+                                (_obj.cpPatents[index].patentStatus = e);
                               setTable6(_obj);
                             }}
                           >
@@ -1362,9 +1384,16 @@ function Others(props) {
                             style={{ marginRight: "0.1rem", flex: 4 }}
                             onChange={(e) => {
                               let _obj = JSON.parse(JSON.stringify(table6));
-                              _obj.cpPatents[index].abstracts = e.target.value;
+                              _obj.cpPatents[index] &&
+                                (_obj.cpPatents[index].abstracts =
+                                  e.target.value);
                               setTable6(_obj);
                             }}
+                            defaultValue={
+                              table6 &&
+                              table6.cpPatents[index] &&
+                              table6.cpPatents[index].abstracts
+                            }
                           />
                         </section>
                       </div>
@@ -1407,21 +1436,32 @@ function Others(props) {
                             style={{ marginRight: "0.1rem", flex: 4 }}
                             onChange={(e) => {
                               let _obj = JSON.parse(JSON.stringify(table7));
-                              _obj.cpInvestors[index] && (_obj.cpInvestors[index].investorName = e.target.value);
+                              _obj.cpInvestors[index] &&
+                                (_obj.cpInvestors[index].investorName =
+                                  e.target.value);
                               setTable7(_obj);
                             }}
-                            defaultValue={table7 && table7.cpInvestors[index] && table7.cpInvestors[index].investorName}
+                            defaultValue={
+                              table7 &&
+                              table7.cpInvestors[index] &&
+                              table7.cpInvestors[index].investorName
+                            }
                           />
                           <Input
                             placeholder="请输入轮次"
                             style={{ marginRight: "0.1rem", flex: 4 }}
                             onChange={(e) => {
                               let _obj = JSON.parse(JSON.stringify(table7));
-                              _obj.cpInvestors[index] && (_obj.cpInvestors[index].investorRounds =
-                                e.target.value);
+                              _obj.cpInvestors[index] &&
+                                (_obj.cpInvestors[index].investorRounds =
+                                  e.target.value);
                               setTable7(_obj);
                             }}
-                            defaultValue={table7 && table7.cpInvestors[index] && table7.cpInvestors[index].investorRounds}
+                            defaultValue={
+                              table7 &&
+                              table7.cpInvestors[index] &&
+                              table7.cpInvestors[index].investorRounds
+                            }
                           />
                           <Input
                             placeholder="请输入投资金额，不填则代表暂不公开"
@@ -1432,8 +1472,11 @@ function Others(props) {
                                 e.target.value;
                               setTable7(_obj);
                             }}
-                            defaultValue={table7 && table7.cpInvestors[index] && table7.cpInvestors[index].investorAmount}
-
+                            defaultValue={
+                              table7 &&
+                              table7.cpInvestors[index] &&
+                              table7.cpInvestors[index].investorAmount
+                            }
                           />
 
                           {index === 0 ? (
@@ -1441,7 +1484,8 @@ function Others(props) {
                               onClick={() => {
                                 setInvestor(investor + 1);
                                 let _obj = JSON.parse(JSON.stringify(table7));
-                                _obj.cpInvestors && _obj.cpInvestors.push(cpInvestorsItem);
+                                _obj.cpInvestors &&
+                                  _obj.cpInvestors.push(cpInvestorsItem);
                                 setTable7(_obj);
                               }}
                               style={{
@@ -1454,7 +1498,8 @@ function Others(props) {
                               onClick={() => {
                                 setInvestor(investor - 1);
                                 let _obj = JSON.parse(JSON.stringify(table7));
-                                _obj.cpInvestors && _obj.cpInvestors.splice(index, 1);
+                                _obj.cpInvestors &&
+                                  _obj.cpInvestors.splice(index, 1);
                                 setTable7(_obj);
                               }}
                               style={{
