@@ -71,6 +71,7 @@ const UpdateCmt = () => {
       if (file.response) {
         // Component will show file.url as link
         file.url = file.response.url;
+        console.log("回传的",file)
       }
 
       return file;
@@ -79,13 +80,13 @@ const UpdateCmt = () => {
   };
 
   const props = {
-    action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
+    action: "https://api.stiacn-app.com/stiacn-app/oss/fileUpload",
     onChange: handleChange,
     multiple: true,
   };
   return (
     <Upload {...props} fileList={fileList}>
-      <Button icon={<UploadOutlined />}>Upload</Button>
+      <Button icon={<UploadOutlined />}></Button>
     </Upload>
   );
 };
@@ -160,10 +161,6 @@ function Declare(props) {
       localStorage.removeItem("companyId");
     }
 
-    
-    // let xx = date.getFullYear()
-    // window.alert(y)
-
   }, []);
 
  
@@ -177,7 +174,7 @@ function Declare(props) {
       let profitModels = res.result.profitStatement; // 利润表
       let cashModels = res.result.cashFlowStatement; // 现金流量表
       // setCapitalModels(capitalModels);
-      setYears("2022");
+      capitalModels.years && setYears(capitalModels.years);
       delete capitalModels.companyId;
       delete capitalModels.years;
       assetJson = capitalModels;
@@ -328,8 +325,8 @@ function Declare(props) {
   // 保存资产负债表
   const saveDeclareBalance = async () => {
     if (!years) {
-      message.warn("请选择年份！");
-      return;
+      // message.warn("请选择年份！");
+      setYears(y)
     }
     let res;
     // 资产负债表
