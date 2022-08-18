@@ -31,6 +31,7 @@ import "moment/locale/zh-cn";
 import locale from "antd/es/date-picker/locale/zh_CN";
 import { UploadOutlined } from "@ant-design/icons";
 import Others from "./others"; //其他模块
+import moment from "moment";
 
 const defaultColor = "rgba(0,0,0,0.3)";
 var assetJson = require("./json/asset.json"); //资产负债json
@@ -132,6 +133,8 @@ function Declare(props) {
   const [obj, setObj] = useState({}); // 编辑时代入
   const [key, setKey] = useState(null);
 
+  var date = new Date();
+  var y = date.getFullYear()
   // 表格展示所用数据
   let tArr = [];
 
@@ -156,17 +159,14 @@ function Declare(props) {
       setAction(0);
       localStorage.removeItem("companyId");
     }
-    window.addEventListener("popstate", routeChangeCB, false);
-    return () => {
-      window.removeEventListener("popstate", routeChangeCB);
-    };
+
+    
+    // let xx = date.getFullYear()
+    // window.alert(y)
+
   }, []);
 
-  const routeChangeCB = useCallback((e) => {
-    let ev = document.createEvent("Event");
-    ev.initEvent("resize", true, true);
-    window.dispatchEvent(ev);
-  }, []);
+ 
 
   // 编辑时-获取数据详情
   const _getDeclareDetail = async (id) => {
@@ -177,7 +177,7 @@ function Declare(props) {
       let profitModels = res.result.profitStatement; // 利润表
       let cashModels = res.result.cashFlowStatement; // 现金流量表
       // setCapitalModels(capitalModels);
-      !capitalModels.years && setYears(2022);
+      setYears("2022");
       delete capitalModels.companyId;
       delete capitalModels.years;
       assetJson = capitalModels;
@@ -202,10 +202,10 @@ function Declare(props) {
   }, [companyId]);
 
   useEffect(() => {
-    // if (props.location.state.action == 1) {
-    //   // 编辑状态
-    //   _getDeclareDetail(companyId);
-    // }
+    if (props.location.state.action == 1) {
+      // 编辑状态
+      _getDeclareDetail(companyId);
+    }
   }, []);
 
   // 监听输入变化
@@ -278,11 +278,11 @@ function Declare(props) {
       name: {
         [name]: {
           currentAmount: flag
-          ? cashEnter.value
-          : cash_state[name].currentAmount || 0,
-        accumulatedAmount: flag
-          ? cash_state[name].accumulatedAmount || 0
-          : cashEnter.value,
+            ? cashEnter.value
+            : cash_state[name].currentAmount || 0,
+          accumulatedAmount: flag
+            ? cash_state[name].accumulatedAmount || 0
+            : cashEnter.value,
         },
       },
     });
@@ -547,14 +547,17 @@ function Declare(props) {
                 <div className="_right">
                   <div>
                     <span style={{ fontWeight: "bold" }}>选择年份：</span>
-                    <DatePicker
-                      onChange={(moment, str) => {
-                        setYears(str);
-                      }}
-                      defaultValue={years}
-                      picker="year"
-                      locale={locale}
-                    />
+              
+                      <DatePicker
+                        onChange={(moment, str) => {
+                          setYears(str);
+                        }}
+                        defaultValue={years ? moment(years) : moment(y.toString())}
+                        // showTime={{ defaultValue: 2022}}
+                        picker="year"
+                        locale={locale}
+                      />
+            
                   </div>
 
                   <div
