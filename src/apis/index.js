@@ -175,97 +175,97 @@ export const myAttention = () => {
 
 // 普通用户 我的申报
 export const myDeclare = () => {
-    const url = `/stiacn-app/portrait/company/declare`
+    const url = `/stiacn/portrait/company/declare`
     return fetchGadget(url, 'GET')
 }
 
 // 普通用户 财务报表 资产负债表
 export const putDeclareBalance = (params) => {
-    const url = `/stiacn-app/declare/balance`
+    const url = `/stiacn/declare/balance`
     return fetchGadget(url, 'POST', params)
 }
 
 // 普通用户 财务报表 利润表
 export const putDeclareProfit = (params) => {
-    const url = `/stiacn-app/declare/profit`
+    const url = `/stiacn/declare/profit`
     return fetchGadget(url, 'POST', params)
 }
 
 // 普通用户 财务报表 现金流量表
 export const putDeclareCash = (params) => {
-    const url = `/stiacn-app/declare/cashflow`
+    const url = `/stiacn/declare/cashflow`
     return fetchGadget(url, 'POST', params)
 }
 
 // 申报 - 基本信息表
 export const saveBaseInfo = (params) => {
-    const url = `/stiacn-app/declare/baseInfo`
+    const url = `/stiacn/declare/baseInfo`
     return fetchGadget(url, 'PUT',params)
 }
 
 // 申报 - 公司战略
 export const saveStrategic = (params) => {
-    const url = `/stiacn-app/declare/strategic`
+    const url = `/stiacn/declare/strategic`
     return fetchGadget(url, 'PUT',params)
 }
 
 // 申报 - 公司经营
 export const saveOperation = (params) => {
-    const url = `/stiacn-app/declare/operation`
+    const url = `/stiacn/declare/operation`
     return fetchGadget(url, 'PUT',params)
 }
 
 // 申报 - 核心竞争力
 export const saveCoreCompetence = (params) => {
-    const url = `/stiacn-app/declare/coreCompetence`
+    const url = `/stiacn/declare/coreCompetence`
     return fetchGadget(url, 'PUT',params)
 }
 
 // 申报 - 核心团队
 export const saveLeader = (params) => {
-    const url = `/stiacn-app/declare/leader`
+    const url = `/stiacn/declare/leader`
     return fetchGadget(url, 'PUT',params)
 }
 
 // 申报 - 核心技术
 export const savePatent = (params) => {
-    const url = `/stiacn-app/declare/patent`
+    const url = `/stiacn/declare/patent`
     return fetchGadget(url, 'PUT',params)
 }
 
 
 // 申报 - 投资方
 export const saveInvestor= (params) => {
-    const url = `/stiacn-app/declare/investor`
+    const url = `/stiacn/declare/investor`
     return fetchGadget(url, 'PUT',params)
 }
 
 // 申报 - 行业成长性
 export const saveIndustry= (params) => {
-    const url = `/stiacn-app/declare/industry`
+    const url = `/stiacn/declare/industry`
     return fetchGadget(url, 'PUT',params)
 }
 
 // 申报 - 提交
 export const commit = (id) => {
-    const url = `/stiacn-app/declare/commit?id=${id}`
+    const url = `/stiacn/declare/commit?id=${id}`
     return fetchGadget(url, 'PUT')
 }
 
 // 省市区
 export const fetchAreas = (pid) => {
-    const url = `/stiacn-app/pcd/get?pid=${pid}`
+    const url = `/stiacn/pcd/get?pid=${pid}`
     return fetchGadget(url, 'GET')
 }
 
 // 申报 - 删除
 export const deleteDeclare = (id) => {
-    const url = `/stiacn-app/declare/del?id=${id}`
+    const url = `/stiacn/declare/del?id=${id}`
     return fetchGadget(url, 'DELETE')
 }
 
 // 编辑申报
 export const getDeclareDetail = (id) => {
-    const url = `/stiacn-app/portrait/company?id=${id}`
+    const url = `/stiacn/portrait/company?id=${id}`
     return fetchGadget(url, 'GET')
 }

@@ -19,7 +19,6 @@ const InputCmt = (props) => {
       // 前一个
       Object.values(data).map((item) => {
         if (item.lineNo + "_1" == line) {
-          // amount = item.endingBalance;
           setAmount(item.endingBalance);
           return item.endingBalance;
         }
@@ -28,7 +27,6 @@ const InputCmt = (props) => {
       // 后一个
       Object.values(data).map((item) => {
         if (item.lineNo + "_0" == line) {
-          // amount = item.beginningBalance;
           setAmount(item.beginningBalance);
           return item.beginningBalance;
         }
@@ -67,7 +65,7 @@ const AssetTable = (props) => {
   // let [amount,setAmount] = useState(0);
 
   useEffect(() => {
-    console.log("监听数据变化", data);
+    console.log("子组件接收到的数据", data);
   }, [data]);
 
   return (

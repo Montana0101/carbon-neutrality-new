@@ -126,8 +126,11 @@ function Declare(props) {
   const history = useHistory();
 
   const [capitalModels, setCapitalModels] = useState({}); //资产负债表
+  const [flag,setFlag] = useState(false)
+  const [action,setAction] = useState(-1)
   
   const [obj, setObj] = useState({}); // 编辑时代入
+  const [key,setKey] = useState(null)
 
   // 表格展示所用数据
   let tArr = [];
@@ -141,18 +144,16 @@ function Declare(props) {
   useEffect(() => {
     document.getElementsByTagName("html")[0].style.overflowX = "hidden";
     document.getElementsByTagName("html")[0].style.overflowY = "scroll";
-
+    // setKey(Math.random())
     let {state} = props.location
     if (state && state.action ==1) {
-      // assetJson = {}
-      // profitJson = {}
-      // 编辑状态
-      // alert(1)
+      setAction(1)
       setCompanyId(state.id);
       localStorage.setItem("companyId", props.location.state.id);
     } else if(state && state.action ==0){
       // 新增数据
       // alert(0)
+      setAction(0)
       localStorage.removeItem("companyId")
     }
     window.addEventListener('popstate', routeChangeCB, false);
@@ -172,11 +173,10 @@ function Declare(props) {
   const _getDeclareDetail = async (id) => {
     const res = await getDeclareDetail(id);
 
-    // console.log(res)
     if (res && res.code == 2000) {
       let capitalModels = res.result.balanceSheet;      // 资产负债表
       let profitModels = res.result.profitStatement; // 利润表
-      // let cashModels = res.result.cashFlowModels; // 现金流量表
+      let cashModels = res.result.cashFlowStatement; // 现金流量表
       // setCapitalModels(capitalModels);
       !capitalModels.years && setYears(2022)
       delete capitalModels.companyId 
@@ -185,13 +185,14 @@ function Declare(props) {
 
       delete profitModels.companyId 
       delete profitModels.years
-
       profitJson = profitModels;
-      console.log("xxxxxxxxxxx", profitJson);
 
-      // profitJson = profitModels;
-      // cashJson = cashModels;
-      // 
+      delete cashModels.companyId 
+      delete cashModels.years
+      cashJson = cashModels
+      dispathTrigger("监听步骤222222222");
+      setFlag(true)
+
     }
   };
 
@@ -205,6 +206,14 @@ function Declare(props) {
 
   }, [companyId]);
 
+  useEffect(()=>{
+    // if (props.location.state.action == 1) {
+    //   // 编辑状态
+    //   _getDeclareDetail(companyId);
+
+    // }
+  },[])
+
   // 监听输入变化
   useEffect(() => {
     // console.log("asset_state输入变化", cash_state);
@@ -213,17 +222,18 @@ function Declare(props) {
 
   useEffect(() => {
     // console.log("asset_state输入变化", cash_state);
-    console.log("profit_state输入变化", profit_state);
+    // console.log("profit_state输入变化", profit_state);
   }, [profit_state]);
 
   useEffect(() => {
     // console.log("asset_state输入变化", cash_state);
-    console.log("cash_state输入变化", cash_state);
+    // console.log("cash_state输入变化", cash_state);
   }, [cash_state]);
 
   // 触发事件
   useEffect(() => {
-    dispathTrigger();
+    
+    flag && dispathTrigger('监听步骤1111111111');
   }, [assetEnter, profitEnter, cashEnter]);
 
   // 资产负债表封装订阅
@@ -285,7 +295,8 @@ function Declare(props) {
   };
 
   // 根据行进行事件订阅
-  const dispathTrigger = () => {
+  const dispathTrigger = (str) => {
+    console.log(str)
     let line;
     let no;
     if (tabInx == 0) {
@@ -298,7 +309,9 @@ function Declare(props) {
 
     no = line.length == 3 ? line.substr(0, 1) : line.substr(0, 2);
 
+  
     if (tabInx == 0) {
+      console.log("打印下assetJson",assetJson)
       Object.values(assetJson).map((item) => {
         if (item.lineNo == no) {
           assetDispatch(line, item.name);
@@ -356,7 +369,7 @@ function Declare(props) {
 
   return (
     <div className="declare_page" style={{
-  
+        // display:action==1 && (flag ? 'block' : 'none') 
     }}>
       <div
         style={{
@@ -384,9 +397,15 @@ function Declare(props) {
           <span
             style={{ color: "rgba(0,0,0,0.6)", cursor: "pointer" }}
             onClick={() => {
-              // window.reload();
-              // history.push('/common');
-              // window.location.href = 'common'
+              // window.location.reload();
+              // setTimeout(()=>{
+              //   history.push('/common');
+
+              // },500)
+              history.push('/common');
+              // window.location.reload();
+
+              // window.location.pathname = '/common'
             }}
           >
             个人中心
@@ -554,6 +573,7 @@ function Declare(props) {
               {/* 资产负债表 */}
               {tabInx == 0 && (
                 <AssetTable
+                  key={key}
                   onInput={(e) => setAssetEnter(e)}
                   data={asset_state}
                 />
