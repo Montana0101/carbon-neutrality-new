@@ -141,7 +141,7 @@
     "otherComprehensiveIncome": {
         "accumulatedAmount": 0,
         "currentAmount": 0,
-        "lineNo": 0,
+        "lineNo": 23,
         "name": "otherComprehensiveIncome"
     },
     "partProfitLoss": {

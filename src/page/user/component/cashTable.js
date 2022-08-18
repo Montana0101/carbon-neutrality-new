@@ -87,11 +87,11 @@ const CashTable = (props) => {
                 <td></td>
               ) : (
                 <td>
-                  <InputCmt event={onInput} line={item.lineNo + "_1"} data={data}/>
+                  <InputCmt event={onInput} line={item.lineNo + "_0"} data={data}/>
                 </td>
               )}
               {item.empty ? <td></td> : <td>
-                <InputCmt event={onInput} line={item.lineNo + "_0"} data={data}/>
+                <InputCmt event={onInput} line={item.lineNo + "_1"} data={data}/>
               </td>}
             </tr>
           );

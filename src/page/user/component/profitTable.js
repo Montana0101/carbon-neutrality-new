@@ -31,9 +31,7 @@ const InputCmt = (props) => {
     } else {
       // 后一个
       Object.values(data).map((item) => {
-
         if (item.lineNo + "_0" == line) {
-
           // amount = item.beginningBalance;
           setAmount(item.currentAmount);
           return item.currentAmount;
@@ -98,17 +96,18 @@ const ProfitTable = (props) => {
               <td>
                 <InputCmt
                   event={onInput}
-                  line={item.lineNo + "_1"}
+                  line={item.lineNo + "_0"}
                   data={data}
                 />
               </td>
               <td>
                 <InputCmt
                   event={onInput}
-                  line={item.lineNo + "_0"}
+                  line={item.lineNo + "_1"}
                   data={data}
                 />
               </td>
+          
             </tr>
           );
         })}

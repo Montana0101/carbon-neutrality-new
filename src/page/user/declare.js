@@ -222,18 +222,18 @@ function Declare(props) {
 
   useEffect(() => {
     // console.log("asset_state输入变化", cash_state);
-    // console.log("profit_state输入变化", profit_state);
+    console.log("profit_state输入变化", profit_state);
   }, [profit_state]);
 
   useEffect(() => {
     // console.log("asset_state输入变化", cash_state);
-    // console.log("cash_state输入变化", cash_state);
+    console.log("cash_state输入变化", cash_state);
   }, [cash_state]);
 
   // 触发事件
   useEffect(() => {
     
-    flag && dispathTrigger('监听步骤1111111111');
+   dispathTrigger();
   }, [assetEnter, profitEnter, cashEnter]);
 
   // 资产负债表封装订阅
@@ -260,15 +260,16 @@ function Declare(props) {
   const profitDispatch = (no, name) => {
     // 判断是累计还是当前，true为累计，false为当前
     let flag = no.substr(no.length - 1, 1) == 0 ? true : false;
+
     return profit_dispatch({
       type: "profitLine" + no,
       name: {
         [name]: {
-          accumulatedAmount: flag
+          accumulatedAmount: flag 
             ? profitEnter.value
-            : profit_state[name].accumulatedAmount || 0,
+            : profit_state[name].accumulatedAmount ,
           currentAmount: flag
-            ? profit_state[name].currentAmount || 0
+            ? profit_state[name].currentAmount 
             : profitEnter.value,
         },
       },
@@ -311,7 +312,7 @@ function Declare(props) {
 
   
     if (tabInx == 0) {
-      console.log("打印下assetJson",assetJson)
+      // console.log("打印下assetJson",assetJson)
       Object.values(assetJson).map((item) => {
         if (item.lineNo == no) {
           assetDispatch(line, item.name);
