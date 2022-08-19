@@ -207,7 +207,9 @@ function Others(props) {
 
   // 公司经营
   const save3 = async () => {
-    const res = await saveOperation(table3);
+    let _t = JSON.parse(JSON.stringify(table3));
+    _t.id = companyId ? companyId : null;
+    const res = await saveOperation(_t);
     if (res && res.code == 2000) {
       message.success("公司经营保存成功！");
     } else {
@@ -229,7 +231,6 @@ function Others(props) {
   const save5 = async () => {
     let _t = JSON.parse(JSON.stringify(table5));
     _t.id = companyId ? companyId : null;
-    console.log("的NSA数据库",table5)
     const res = await saveLeader(_t);
     if (res && res.code == 2000) {
       message.success("核心团队保存成功！");
@@ -317,8 +318,6 @@ function Others(props) {
     }
   };
 
-  useEffect(() => {}, [table2]);
-
   useEffect(() => {
     // 省市区
     _fetchAreas(0, 0);
@@ -359,6 +358,17 @@ function Others(props) {
         strategicPositioning: obj.strategicPositioning,
         strategicPlanning: obj.strategicPlanning,
       });
+    } else if (inx == 3) {
+      // 公司经营
+      let _obj = JSON.parse(JSON.stringify(table3))
+      _obj.mainBusiness = obj.mainBusiness;
+      _obj.businessModel = obj.businessModel;
+      if(obj.companyMarks && obj.companyMarks.length>0){
+        setMarks(Math.ceil(obj.companyMarks.length/6));
+        _obj.companyMarks = obj.companyMarks;
+      }
+      setTable3(_obj)
+
     } else if (inx == 4) {
       // 核心竞争力
       form.setFieldsValue({
@@ -367,12 +377,12 @@ function Others(props) {
     } else if (inx == 5) {
       // 领军人物
       let _obj = JSON.parse(JSON.stringify(table5));
-      if(obj.cpLeaders && obj.cpLeaders.length>0){
-        setLeaders(obj.cpLeaders.length)
+      if (obj.cpLeaders && obj.cpLeaders.length > 0) {
+        setLeaders(obj.cpLeaders.length);
         _obj.cpLeaders = obj.cpLeaders;
       }
-      if(obj.cpTeams && obj.cpTeams.length>0){
-        setTeams(obj.cpTeams.length)
+      if (obj.cpTeams && obj.cpTeams.length > 0) {
+        setTeams(obj.cpTeams.length);
         _obj.cpTeams = obj.cpTeams;
       }
       setTable5(_obj);
@@ -408,9 +418,9 @@ function Others(props) {
     initDataByEdit();
   }, [props.inx]);
 
-  useEffect(() => {
-    console.log("第八十九", table6);
-  }, [table6]);
+  useEffect(()=>{
+    console.log('监听公司经营数据变化',table3)
+  },[table3])
 
   const initRef = useRef();
 
@@ -434,18 +444,7 @@ function Others(props) {
           >
             <Row gutter={24}>
               <Col span={10}>
-                <Form.Item
-                  label={"企业名称"}
-                  name="companyName"
-                  rules={
-                    [
-                      // {
-                      //   required: true,
-                      //   message: "Input something!",
-                      // },
-                    ]
-                  }
-                >
+                <Form.Item label={"企业名称"} name="companyName">
                   <Input placeholder="请输入" />
                 </Form.Item>
               </Col>
@@ -706,14 +705,22 @@ function Others(props) {
                       maxLength={300}
                       style={{ width: "100%" }}
                       placeholder="请输入商业模式，不超过300个字"
+                      onChange={(e) => {
+                        let _obj = JSON.parse(JSON.stringify(table3));
+                        _obj.businessModel = e.target.value
+                        setTable3(_obj);
+                      }}
+                      defaultValue={
+                        table3.businessModel ? table3.businessModel :''
+                      }
                     />
                   </section>
                 </Form.Item>
               </Col>
 
               <Col span={12} offset={0}>
-                <Form.Item label={"主营业务"}>
-                  <section style={{ display: "flex" }} name="mainBusiness">
+                <Form.Item label={"主营业务"} name="mainBusiness">
+                  <section style={{ display: "flex" }}>
                     <span>&nbsp;</span> <span>&nbsp;</span>
                     <span>&nbsp;</span>
                     <Input.TextArea
@@ -721,6 +728,14 @@ function Others(props) {
                       maxLength={300}
                       style={{ width: "100%" }}
                       placeholder="请输入主营业务，不超过300个字"
+                      onChange={(e) => {
+                        let _obj = JSON.parse(JSON.stringify(table3));
+                        _obj.mainBusiness = e.target.value
+                        setTable3(_obj);
+                      }}
+                      defaultValue={
+                        table3.mainBusiness ? table3.mainBusiness :''
+                      }
                     />
                   </section>
                 </Form.Item>
@@ -746,19 +761,30 @@ function Others(props) {
                           style={{ marginRight: "0.1rem" }}
                           onChange={(e) => {
                             let _obj = JSON.parse(JSON.stringify(table3));
-                            _obj.companyMarks[index * 6].mark = e.target.value;
+                            _obj.companyMarks &&
+                              _obj.companyMarks[index * 6] &&
+                              (_obj.companyMarks[index * 6].mark =
+                                e.target.value);
                             setTable3(_obj);
                           }}
+                          defaultValue={
+                            table3.companyMarks && table3.companyMarks[index*6] & table3.companyMarks[index*6].mark 
+                          }
                         />
                         <Input
                           placeholder="请输入"
                           style={{ marginRight: "0.1rem" }}
                           onChange={(e) => {
                             let _obj = JSON.parse(JSON.stringify(table3));
-                            _obj.companyMarks[index * 6 + 1].mark =
-                              e.target.value;
-                            setTable3(_obj);
+                            _obj.companyMarks &&
+                              _obj.companyMarks[index * 6 + 1] &&
+                              (_obj.companyMarks[index * 6 + 1].mark =
+                                e.target.value);
+                                setTable3(_obj);
                           }}
+                          defaultValue={
+                            table3.companyMarks && table3.companyMarks[index*6+1] & table3.companyMarks[index*6+1].mark 
+                          }
                         />
                         <Input
                           placeholder="请输入"
@@ -1075,7 +1101,6 @@ function Others(props) {
               // let obj = form.getFieldsValue();
               // obj.id = companyId ? companyId : null;
               // setTable5(obj);
-              console.log();
             }}
           >
             <Row gutter={24}>
@@ -1103,31 +1128,49 @@ function Others(props) {
                         <Input
                           onChange={(e) => {
                             let _obj = JSON.parse(JSON.stringify(table5));
-                            _obj.cpLeaders[index] && (_obj.cpLeaders[index].leaderName = e.target.value);
+                            _obj.cpLeaders[index] &&
+                              (_obj.cpLeaders[index].leaderName =
+                                e.target.value);
                             setTable5(_obj);
-                            console.log("对巴萨就",_obj)
                           }}
                           placeholder="请输入姓名"
                           style={{ marginRight: "0.1rem", flex: 1 }}
+                          defaultValue={
+                            table5 &&
+                            table5.cpLeaders[index] &&
+                            table5.cpLeaders[index].leaderName
+                          }
                         />
                         <Input
                           placeholder="请输入职务"
                           style={{ marginRight: "0.1rem", flex: 1 }}
                           onChange={(e) => {
                             let _obj = JSON.parse(JSON.stringify(table5));
-                            _obj.cpLeaders && (_obj.cpLeaders[index].position = e.target.value);
+                            _obj.cpLeaders &&
+                              (_obj.cpLeaders[index].position = e.target.value);
                             setTable5(_obj);
                           }}
+                          defaultValue={
+                            table5 &&
+                            table5.cpLeaders[index] &&
+                            table5.cpLeaders[index].position
+                          }
                         />
                         <Input
                           placeholder="请输入领军人物描述"
                           style={{ marginRight: "0.1rem", flex: 4 }}
                           onChange={(e) => {
                             let _obj = JSON.parse(JSON.stringify(table5));
-                            _obj.cpLeaders && (_obj.cpLeaders[index].briefIntroduction =
-                              e.target.value);
+                            _obj.cpLeaders &&
+                              (_obj.cpLeaders[index].briefIntroduction =
+                                e.target.value);
                             setTable5(_obj);
                           }}
+                          defaultValue={
+                            table5 &&
+                            table5.cpLeaders[index] &&
+                            table5.cpLeaders[index].briefIntroduction
+                          }
                         />
                         {index === 0 ? (
                           <PlusCircleOutlined
@@ -1194,28 +1237,46 @@ function Others(props) {
                           style={{ marginRight: "0.1rem", flex: 1 }}
                           onChange={(e) => {
                             let _obj = JSON.parse(JSON.stringify(table5));
-                            _obj.cpTeams[index] && (_obj.cpTeams[index].memberName = e.target.value);
+                            _obj.cpTeams[index] &&
+                              (_obj.cpTeams[index].memberName = e.target.value);
                             setTable5(_obj);
                           }}
+                          defaultValue={
+                            table5 &&
+                            table5.cpTeams[index] &&
+                            table5.cpTeams[index].memberName
+                          }
                         />
                         <Input
                           placeholder="请输入职务"
                           style={{ marginRight: "0.1rem", flex: 1 }}
                           onChange={(e) => {
                             let _obj = JSON.parse(JSON.stringify(table5));
-                            _obj.cpTeams[index] && (_obj.cpTeams[index].position = e.target.value);
+                            _obj.cpTeams[index] &&
+                              (_obj.cpTeams[index].position = e.target.value);
                             setTable5(_obj);
                           }}
+                          defaultValue={
+                            table5 &&
+                            table5.cpTeams[index] &&
+                            table5.cpTeams[index].position
+                          }
                         />
                         <Input
                           placeholder="请输入描述"
                           style={{ marginRight: "0.1rem", flex: 4 }}
                           onChange={(e) => {
                             let _obj = JSON.parse(JSON.stringify(table5));
-                            _obj.cpTeams[index] && (_obj.cpTeams[index].briefIntroduction =
-                              e.target.value);
+                            _obj.cpTeams[index] &&
+                              (_obj.cpTeams[index].briefIntroduction =
+                                e.target.value);
                             setTable5(_obj);
                           }}
+                          defaultValue={
+                            table5 &&
+                            table5.cpTeams[index] &&
+                            table5.cpTeams[index].briefIntroduction
+                          }
                         />
                         {index === 0 ? (
                           <PlusCircleOutlined
@@ -1504,7 +1565,7 @@ function Others(props) {
                               table7.cpInvestors[index].investorAmount
                             }
                           />
-                          
+
                           {index === 0 ? (
                             <PlusCircleOutlined
                               onClick={() => {
