@@ -360,15 +360,15 @@ function Others(props) {
       });
     } else if (inx == 3) {
       // 公司经营
-      let _obj = JSON.parse(JSON.stringify(table3))
+      let _obj = JSON.parse(JSON.stringify(table3));
       _obj.mainBusiness = obj.mainBusiness;
       _obj.businessModel = obj.businessModel;
-      if(obj.companyMarks && obj.companyMarks.length>0){
-        setMarks(Math.ceil(obj.companyMarks.length/6));
+      if (obj.companyMarks && obj.companyMarks.length > 0) {
+        setMarks(Math.ceil(obj.companyMarks.length / 6));
         _obj.companyMarks = obj.companyMarks;
       }
-      setTable3(_obj)
-
+      console.log("打算把绝对不会撒啊撒", _obj);
+      setTable3(_obj);
     } else if (inx == 4) {
       // 核心竞争力
       form.setFieldsValue({
@@ -418,9 +418,9 @@ function Others(props) {
     initDataByEdit();
   }, [props.inx]);
 
-  useEffect(()=>{
-    console.log('监听公司经营数据变化',table3)
-  },[table3])
+  useEffect(() => {
+    console.log("监听公司经营数据变化", table3);
+  }, [table3]);
 
   const initRef = useRef();
 
@@ -707,11 +707,11 @@ function Others(props) {
                       placeholder="请输入商业模式，不超过300个字"
                       onChange={(e) => {
                         let _obj = JSON.parse(JSON.stringify(table3));
-                        _obj.businessModel = e.target.value
+                        _obj.businessModel = e.target.value;
                         setTable3(_obj);
                       }}
                       defaultValue={
-                        table3.businessModel ? table3.businessModel :''
+                        table3.businessModel ? table3.businessModel : ""
                       }
                     />
                   </section>
@@ -730,11 +730,11 @@ function Others(props) {
                       placeholder="请输入主营业务，不超过300个字"
                       onChange={(e) => {
                         let _obj = JSON.parse(JSON.stringify(table3));
-                        _obj.mainBusiness = e.target.value
+                        _obj.mainBusiness = e.target.value;
                         setTable3(_obj);
                       }}
                       defaultValue={
-                        table3.mainBusiness ? table3.mainBusiness :''
+                        table3.mainBusiness ? table3.mainBusiness : ""
                       }
                     />
                   </section>
@@ -768,7 +768,10 @@ function Others(props) {
                             setTable3(_obj);
                           }}
                           defaultValue={
-                            table3.companyMarks && table3.companyMarks[index*6] & table3.companyMarks[index*6].mark 
+                            (table3.companyMarks &&
+                              table3.companyMarks[index * 6] &&
+                              table3.companyMarks[index * 6].mark) ||
+                            ""
                           }
                         />
                         <Input
@@ -780,10 +783,13 @@ function Others(props) {
                               _obj.companyMarks[index * 6 + 1] &&
                               (_obj.companyMarks[index * 6 + 1].mark =
                                 e.target.value);
-                                setTable3(_obj);
+                            setTable3(_obj);
                           }}
                           defaultValue={
-                            table3.companyMarks && table3.companyMarks[index*6+1] & table3.companyMarks[index*6+1].mark 
+                            (table3.companyMarks &&
+                              table3.companyMarks[index * 6 + 1] &&
+                              table3.companyMarks[index * 6 + 1].mark) ||
+                            ""
                           }
                         />
                         <Input
@@ -795,6 +801,12 @@ function Others(props) {
                               e.target.value;
                             setTable3(_obj);
                           }}
+                          defaultValue={
+                            (table3.companyMarks &&
+                              table3.companyMarks[index * 6 + 2] &&
+                              table3.companyMarks[index * 6 + 2].mark) ||
+                            ""
+                          }
                         />
                         <Input
                           placeholder="请输入"
@@ -805,6 +817,12 @@ function Others(props) {
                               e.target.value;
                             setTable3(_obj);
                           }}
+                          defaultValue={
+                            (table3.companyMarks &&
+                              table3.companyMarks[index * 6 + 3] &&
+                              table3.companyMarks[index * 6 + 3].mark) ||
+                            ""
+                          }
                         />
                         <Input
                           placeholder="请输入"
@@ -815,6 +833,12 @@ function Others(props) {
                               e.target.value;
                             setTable3(_obj);
                           }}
+                          defaultValue={
+                            (table3.companyMarks &&
+                              table3.companyMarks[index * 6 + 4] &&
+                              table3.companyMarks[index * 6 + 4].mark) ||
+                            ""
+                          }
                         />
                         <Input
                           placeholder="请输入"
@@ -825,6 +849,12 @@ function Others(props) {
                               e.target.value;
                             setTable3(_obj);
                           }}
+                          defaultValue={
+                            (table3.companyMarks &&
+                              table3.companyMarks[index * 6 + 5] &&
+                              table3.companyMarks[index * 6 + 5].mark) ||
+                            ""
+                          }
                         />
                         {index === 0 ? (
                           <PlusCircleOutlined
