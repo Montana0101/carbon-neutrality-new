@@ -180,9 +180,9 @@ function Others(props) {
   const save1 = async () => {
     let _t1 = JSON.parse(JSON.stringify(table1));
     _t1.id = companyId ? companyId : null;
-    _t1.province = d1_id;
-    _t1.city = d2_id;
-    _t1.district = d3_id;
+    d1_id && (_t1.province = d1_id);
+    d2_id && (_t1.city = d2_id);
+    d3_id && (_t1.district = d3_id);
     delete _t1.regTime;
     if (rigsterTime) {
       _t1.regTime = rigsterTime;
@@ -333,20 +333,28 @@ function Others(props) {
         enterpriseAbbreviation: obj.enterpriseAbbreviation,
         regCapital: obj.regCapital,
         contactNumber: obj.contactNumber,
-        // regTime: moment(obj.regTime),
-        // stage:
-        //   stageEnum[obj.stage * 1 - 1] && stageEnum[obj.stage * 1 - 1].name,
         email: obj.email,
         financingScale: obj.financingScale,
         enterpriseValuation: obj.enterpriseValuation,
-        // industry:
-        //   industryEnum[obj.industry * 1] && industryEnum[obj.industry * 1].name,
         legalPersonName: obj.legalPersonName,
         website: obj.website,
         companyProfile: obj.companyProfile,
+        industry:obj.industry!=null && (industryEnum[obj.industry].name || null),
+        stage:obj.stage != null && (stageEnum[obj.stage-1].name || null),
       });
 
       let _obj = JSON.parse(JSON.stringify(table1));
+      _obj.companyName = obj.companyName
+      _obj.enterpriseAbbreviation=obj.enterpriseAbbreviation
+      _obj.regCapital=obj.regCapital
+      _obj.contactNumber=obj.contactNumber
+      _obj.email=obj.email
+      _obj.financingScale=obj.financingScale
+      _obj.enterpriseValuation=obj.enterpriseValuation
+      _obj.legalPersonName=obj.legalPersonName
+      _obj.website=obj.website
+      _obj.companyProfile=obj.companyProfile
+
       _obj.id = companyId ? companyId : null;
       _obj.stage = obj.stage;
       _obj.industry =obj.industry;
@@ -650,7 +658,6 @@ function Others(props) {
               <Col span={10}>
                 <Form.Item label={"所属行业"} name="industry">
                   <Select
-                    defaultValue=""
                     onChange={(e) => {
                       let _obj = JSON.parse(JSON.stringify(table1));
                       _obj.industry = e;
