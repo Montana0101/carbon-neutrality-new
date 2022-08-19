@@ -367,6 +367,20 @@ function Others(props) {
         setMarks(Math.ceil(obj.companyMarks.length / 6));
         _obj.companyMarks = obj.companyMarks;
       }
+      if(obj.cpCustomers && obj.cpCustomers.length >0){
+        setcpCustomers(obj.cpCustomers.length)
+        _obj.cpCustomers = obj.cpCustomers
+      }
+      if(obj.compositions && obj.compositions.length >0){
+        setCompositions(obj.compositions.length)
+        _obj.compositions = obj.compositions
+      }
+      
+      if(obj.cpSuppliers && obj.cpSuppliers.length >0){
+        setcpSuppliers(obj.cpSuppliers.length)
+        _obj.cpSuppliers = obj.cpSuppliers
+      }
+      
       console.log("打算把绝对不会撒啊撒", _obj);
       setTable3(_obj);
     } else if (inx == 4) {
@@ -466,6 +480,17 @@ function Others(props) {
                   >
                     <Select
                       style={{ flex: 1, marginRight: "0.1rem" }}
+                      // defaultValue={{
+                      //   value: table6.cpPatents[index].patentType || "",
+                      //   label: patentType[
+                      //     table6.cpPatents[index].patentType - 1
+                      //   ]
+                      //     ? patentType[
+                      //         table6.cpPatents[index].patentType - 1
+                      //       ].name
+                      //     : "",
+                      // }}
+                      // labelInValue
                       onChange={(e) => {
                         _fetchAreas(e, 1);
                         setD1_id(e);
@@ -557,6 +582,7 @@ function Others(props) {
                       setRigsterTime(str);
                       console.log("Dsabhjh ", str);
                     }}
+                    defaultValue={moment(obj.regTime ? obj.regTime : '')}
                     // picker="day"
                     locale={locale}
                   />
@@ -915,10 +941,13 @@ function Others(props) {
                           style={{ marginRight: "0.1rem" }}
                           onChange={(e) => {
                             let _obj = JSON.parse(JSON.stringify(table3));
-                            _obj.compositions[index].composition =
-                              e.target.value;
+                            _obj.compositions[index] && (_obj.compositions[index].composition =
+                              e.target.value);
                             setTable3(_obj);
                           }}
+                          defaultValue = {
+                            table3.compositions && table3.compositions[index].composition || ""
+                          }
                         />
                         {index === 0 ? (
                           <PlusCircleOutlined
@@ -974,20 +1003,26 @@ function Others(props) {
                           style={{ marginRight: "0.1rem" }}
                           onChange={(e) => {
                             let _obj = JSON.parse(JSON.stringify(table3));
-                            _obj.cpCustomers[index].customerName =
-                              e.target.value;
+                            _obj.cpCustomers[index] && (_obj.cpCustomers[index].customerName =
+                              e.target.value);
                             setTable3(_obj);
                           }}
+                          defaultValue = {
+                            table3.cpCustomers && table3.cpCustomers[index].customerName || ""
+                          }
                         />
                         <Input
                           placeholder="请输入占比"
                           style={{ marginRight: "0.1rem" }}
                           onChange={(e) => {
                             let _obj = JSON.parse(JSON.stringify(table3));
-                            _obj.cpCustomers[index].proportionSale =
-                              e.target.value;
+                            _obj.cpCustomers[index] && (_obj.cpCustomers[index].proportionSale =
+                              e.target.value);
                             setTable3(_obj);
                           }}
+                          defaultValue = {
+                            table3.cpCustomers && table3.cpCustomers[index].proportionSale || ""
+                          }
                         />
                         {index === 0 ? (
                           <PlusCircleOutlined
@@ -1041,20 +1076,26 @@ function Others(props) {
                           style={{ marginRight: "0.1rem" }}
                           onChange={(e) => {
                             let _obj = JSON.parse(JSON.stringify(table3));
-                            _obj.cpSuppliers[index].supplierName =
-                              e.target.value;
+                            _obj.cpSuppliers[index] && (_obj.cpSuppliers[index].supplierName =
+                              e.target.value);
                             setTable3(_obj);
                           }}
+                          defaultValue = {
+                            table3.cpSuppliers && table3.cpSuppliers[index].supplierName || ""
+                          }
                         />
                         <Input
                           placeholder="请输入占比"
                           style={{ marginRight: "0.1rem" }}
                           onChange={(e) => {
                             let _obj = JSON.parse(JSON.stringify(table3));
-                            _obj.cpSuppliers[index].purchaseProportion =
-                              e.target.value;
+                            _obj.cpSuppliers[index] && (_obj.cpSuppliers[index].purchaseProportion =
+                              e.target.value);
                             setTable3(_obj);
                           }}
+                          defaultValue = {
+                            table3.cpSuppliers && table3.cpSuppliers[index].purchaseProportion || ""
+                          }
                         />
                         {index === 0 ? (
                           <PlusCircleOutlined
