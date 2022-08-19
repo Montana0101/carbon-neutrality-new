@@ -334,13 +334,13 @@ function Others(props) {
         regCapital: obj.regCapital,
         contactNumber: obj.contactNumber,
         // regTime: moment(obj.regTime),
-        stage:
-          stageEnum[obj.stage * 1 - 1] && stageEnum[obj.stage * 1 - 1].name,
+        // stage:
+        //   stageEnum[obj.stage * 1 - 1] && stageEnum[obj.stage * 1 - 1].name,
         email: obj.email,
         financingScale: obj.financingScale,
         enterpriseValuation: obj.enterpriseValuation,
-        industry:
-          industryEnum[obj.industry * 1] && industryEnum[obj.industry * 1].name,
+        // industry:
+        //   industryEnum[obj.industry * 1] && industryEnum[obj.industry * 1].name,
         legalPersonName: obj.legalPersonName,
         website: obj.website,
         companyProfile: obj.companyProfile,
@@ -348,10 +348,13 @@ function Others(props) {
 
       let _obj = JSON.parse(JSON.stringify(table1));
       _obj.id = companyId ? companyId : null;
-      _obj.stage = stageEnum[obj.stage - 1] && stageEnum[obj.stage - 1].value;
-      _obj.industry =
-        industryEnum[obj.industry] && industryEnum[obj.industry].value;
+      _obj.stage = obj.stage;
+      _obj.industry =obj.industry;
+      _obj.province = obj.province;
+      _obj.city = obj.city;
+      _obj.district = obj.district;
       setTable1(_obj);
+      // console.log("")
     } else if (props.inx == 2) {
       // 公司战略
       form.setFieldsValue({
@@ -433,8 +436,8 @@ function Others(props) {
   }, [props.inx]);
 
   useEffect(() => {
-    console.log("监听公司经营数据变化", table3);
-  }, [table3]);
+    console.log("监听公司基本信息数据变化", table1);
+  }, [table1]);
 
   const initRef = useRef();
 
@@ -480,20 +483,17 @@ function Others(props) {
                   >
                     <Select
                       style={{ flex: 1, marginRight: "0.1rem" }}
-                      // defaultValue={{
-                      //   value: table6.cpPatents[index].patentType || "",
-                      //   label: patentType[
-                      //     table6.cpPatents[index].patentType - 1
-                      //   ]
-                      //     ? patentType[
-                      //         table6.cpPatents[index].patentType - 1
-                      //       ].name
-                      //     : "",
-                      // }}
-                      // labelInValue
+                      defaultValue={{
+                        value: obj.province || "",
+                        label: obj.provinceName || ""
+                      }}
+                      labelInValue
                       onChange={(e) => {
-                        _fetchAreas(e, 1);
-                        setD1_id(e);
+                        _fetchAreas(e.value, 1);
+                        setD1_id(e.value);
+                        let _obj = JSON.parse(JSON.stringify(table1))
+                        _obj.province = e.value 
+                        setTable1(_obj)
                       }}
                     >
                       {d1 &&
@@ -506,11 +506,18 @@ function Others(props) {
                         })}
                     </Select>
                     <Select
-                      defaultValue=""
+                       defaultValue={{
+                        value: obj.city || "",
+                        label: obj.cityName || ""
+                      }}
+                      labelInValue
                       style={{ flex: 1, marginRight: "0.1rem" }}
                       onChange={(e) => {
-                        _fetchAreas(e, 2);
-                        setD2_id(e);
+                        _fetchAreas(e.value, 2);
+                        setD2_id(e.value);
+                        let _obj = JSON.parse(JSON.stringify(table1))
+                        _obj.city = e.value 
+                        setTable1(_obj)
                       }}
                     >
                       {d2 &&
@@ -523,11 +530,18 @@ function Others(props) {
                         })}
                     </Select>
                     <Select
-                      defaultValue=""
+                    defaultValue={{
+                      value: obj.district || "",
+                      label: obj.districtName || ""
+                    }}
                       style={{ flex: 1, marginRight: "0rem" }}
                       onChange={(e) => {
-                        setD3_id(e);
+                        setD3_id(e.value);
+                        let _obj = JSON.parse(JSON.stringify(table1))
+                        _obj.district = e.value 
+                        setTable1(_obj)
                       }}
+                      labelInValue
                     >
                       {d3 &&
                         d3.map((item, index) => {
@@ -582,7 +596,7 @@ function Others(props) {
                       setRigsterTime(str);
                       console.log("Dsabhjh ", str);
                     }}
-                    defaultValue={moment(obj.regTime ? obj.regTime : '')}
+                    defaultValue={obj.regTime && moment(obj.regTime )}
                     // picker="day"
                     locale={locale}
                   />
@@ -597,6 +611,7 @@ function Others(props) {
                     onChange={(e) => {
                       let _obj = JSON.parse(JSON.stringify(table1));
                       _obj.stage = e;
+                      console.log("融资阶段",e)
                       setTable1(_obj);
                     }}
                   >
