@@ -16,7 +16,7 @@ const InputCmt = (props) => {
     if (line.substr(line.length - 1, 1) == 1) {
       // 前一个
       Object.values(data).map((item) => {
-        console.log("前一个item",item,line)
+        // console.log("前一个item",item,line)
         if (item.lineNo + "_1" == line) {
           setAmount(item.accumulatedAmount);
           return item.accumulatedAmount;

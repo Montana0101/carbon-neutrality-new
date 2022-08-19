@@ -65,7 +65,7 @@ const AssetTable = (props) => {
   // let [amount,setAmount] = useState(0);
 
   useEffect(() => {
-    console.log("子组件接收到的数据", data);
+    // console.log("子组件接收到的数据", data);
   }, [data]);
 
   return (

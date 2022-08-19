@@ -229,6 +229,7 @@ function Others(props) {
   const save5 = async () => {
     let _t = JSON.parse(JSON.stringify(table5));
     _t.id = companyId ? companyId : null;
+    console.log("的NSA数据库",table5)
     const res = await saveLeader(_t);
     if (res && res.code == 2000) {
       message.success("核心团队保存成功！");
@@ -363,6 +364,18 @@ function Others(props) {
       form.setFieldsValue({
         coreCompetitiveness: obj.coreCompetitiveness,
       });
+    } else if (inx == 5) {
+      // 领军人物
+      let _obj = JSON.parse(JSON.stringify(table5));
+      if(obj.cpLeaders && obj.cpLeaders.length>0){
+        setLeaders(obj.cpLeaders.length)
+        _obj.cpLeaders = obj.cpLeaders;
+      }
+      if(obj.cpTeams && obj.cpTeams.length>0){
+        setTeams(obj.cpTeams.length)
+        _obj.cpTeams = obj.cpTeams;
+      }
+      setTable5(_obj);
     } else if (inx == 6) {
       // 核心技术
       let _obj = JSON.parse(JSON.stringify(table6));
@@ -1090,8 +1103,9 @@ function Others(props) {
                         <Input
                           onChange={(e) => {
                             let _obj = JSON.parse(JSON.stringify(table5));
-                            _obj.cpLeaders[index].leaderName = e.target.value;
+                            _obj.cpLeaders[index] && (_obj.cpLeaders[index].leaderName = e.target.value);
                             setTable5(_obj);
+                            console.log("对巴萨就",_obj)
                           }}
                           placeholder="请输入姓名"
                           style={{ marginRight: "0.1rem", flex: 1 }}
@@ -1101,7 +1115,7 @@ function Others(props) {
                           style={{ marginRight: "0.1rem", flex: 1 }}
                           onChange={(e) => {
                             let _obj = JSON.parse(JSON.stringify(table5));
-                            _obj.cpLeaders[index].position = e.target.value;
+                            _obj.cpLeaders && (_obj.cpLeaders[index].position = e.target.value);
                             setTable5(_obj);
                           }}
                         />
@@ -1110,8 +1124,8 @@ function Others(props) {
                           style={{ marginRight: "0.1rem", flex: 4 }}
                           onChange={(e) => {
                             let _obj = JSON.parse(JSON.stringify(table5));
-                            _obj.cpLeaders[index].briefIntroduction =
-                              e.target.value;
+                            _obj.cpLeaders && (_obj.cpLeaders[index].briefIntroduction =
+                              e.target.value);
                             setTable5(_obj);
                           }}
                         />
@@ -1180,7 +1194,7 @@ function Others(props) {
                           style={{ marginRight: "0.1rem", flex: 1 }}
                           onChange={(e) => {
                             let _obj = JSON.parse(JSON.stringify(table5));
-                            _obj.cpTeams[index].memberName = e.target.value;
+                            _obj.cpTeams[index] && (_obj.cpTeams[index].memberName = e.target.value);
                             setTable5(_obj);
                           }}
                         />
@@ -1189,7 +1203,7 @@ function Others(props) {
                           style={{ marginRight: "0.1rem", flex: 1 }}
                           onChange={(e) => {
                             let _obj = JSON.parse(JSON.stringify(table5));
-                            _obj.cpTeams[index].position = e.target.value;
+                            _obj.cpTeams[index] && (_obj.cpTeams[index].position = e.target.value);
                             setTable5(_obj);
                           }}
                         />
@@ -1198,8 +1212,8 @@ function Others(props) {
                           style={{ marginRight: "0.1rem", flex: 4 }}
                           onChange={(e) => {
                             let _obj = JSON.parse(JSON.stringify(table5));
-                            _obj.cpTeams[index].briefIntroduction =
-                              e.target.value;
+                            _obj.cpTeams[index] && (_obj.cpTeams[index].briefIntroduction =
+                              e.target.value);
                             setTable5(_obj);
                           }}
                         />
@@ -1490,7 +1504,7 @@ function Others(props) {
                               table7.cpInvestors[index].investorAmount
                             }
                           />
-
+                          
                           {index === 0 ? (
                             <PlusCircleOutlined
                               onClick={() => {
