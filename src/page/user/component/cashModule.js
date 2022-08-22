@@ -18,7 +18,7 @@ const cash_reducer = (state, action) => {
 
 // 财务负债编辑状态
 export const CashModuleEdit = (props) => {
-  const { isSaveCash, companyId, year,cashJson } = props;
+  const { isSaveCash, companyId, year,cashJson,resetSaveButton } = props;
   const [cash_state, cash_dispatch] = useReducer(cash_reducer, cashJson);
   const [cashEnter, setCashEnter] = useState({ value: "", line: null });
 
@@ -81,6 +81,7 @@ export const CashModuleEdit = (props) => {
     } else {
       message.error("操作失败！");
     }
+    resetSaveButton()
   };
 
   return (
@@ -90,7 +91,7 @@ export const CashModuleEdit = (props) => {
 
 // 现金流量初始化状态
 export const CashModuleInit = (props) => {
-  const { isSaveCash, companyId, year ,updateId} = props;
+  const { isSaveCash, companyId, year ,updateId,resetSaveButton} = props;
   const [cash_state, cash_dispatch] = useReducer(cash_reducer, cashJson1);
   const [cashEnter, setCashEnter] = useState({ value: "", line: null });
 
@@ -158,6 +159,7 @@ export const CashModuleInit = (props) => {
     } else {
       message.error("操作失败！");
     }
+    resetSaveButton()
   };
 
   return (

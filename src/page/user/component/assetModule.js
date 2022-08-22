@@ -18,7 +18,7 @@ const asset_reducer = (state, action) => {
 
 // 财务负债编辑状态
 export const AssetModuleEdit = (props) => {
-  const { isSaveAsset, companyId, year,assetJson } = props;
+  const { isSaveAsset, companyId, year,assetJson,resetSaveButton } = props;
   const [asset_state, asset_dispatch] = useReducer(asset_reducer, assetJson);
   const [assetEnter, setAssetEnter] = useState({ value: "", line: null });
 
@@ -82,6 +82,7 @@ export const AssetModuleEdit = (props) => {
     } else {
       message.error("操作失败！");
     }
+    resetSaveButton()
   };
 
   return (
@@ -91,7 +92,7 @@ export const AssetModuleEdit = (props) => {
 
 // 财务负债初始化状态
 export const AssetModuleInit = (props) => {
-  const { isSaveAsset, companyId, year,updateId } = props;
+  const { isSaveAsset, companyId, year,updateId,resetSaveButton } = props;
   const [asset_state, asset_dispatch] = useReducer(asset_reducer, assetJson1);
   const [assetEnter, setAssetEnter] = useState({ value: "", line: null });
 
@@ -160,6 +161,7 @@ export const AssetModuleInit = (props) => {
     } else {
       message.error("操作失败！");
     }
+    resetSaveButton()
   };
 
   return (

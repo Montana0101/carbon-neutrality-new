@@ -155,6 +155,17 @@ function Declare(props) {
     setCompanyId(e)
   }
 
+  // 重置保存按钮
+  const resetSaveButton = () => {
+    if(tabInx==0){
+      setIsSaveAsset(false)
+    }else if(tabInx==1){
+      setIsSaveProfit(false)
+    }else if(tabInx==2){
+      setIsSaveCash(false)
+    }
+  }
+
   useEffect(() => {
     if (companyId && props.location.state && props.location.state.action == 1) {
       // 编辑状态
@@ -395,6 +406,7 @@ function Declare(props) {
                     isSaveAsset={isSaveAsset}
                     year={years}
                     assetJson={assetJson}
+                    resetSaveButton={resetSaveButton}
                   />
                 )}
 
@@ -404,6 +416,7 @@ function Declare(props) {
                     isSaveAsset={isSaveAsset}
                     year={years}
                     updateId = {updateCompanyId}
+                    resetSaveButton={resetSaveButton}
                   />
                 )}
 
@@ -414,6 +427,7 @@ function Declare(props) {
                     isSaveProfit={isSaveProfit}
                     year={years}
                     profitJson={profitJson}
+                    resetSaveButton = {resetSaveButton}
                   />
                 )}
 
@@ -423,22 +437,17 @@ function Declare(props) {
                     isSaveProfit={isSaveProfit}
                     year={years}
                     updateId = {updateCompanyId}
+                    resetSaveButton = {resetSaveButton}
                   />
                 )}
 
-                {/* 现金流量表 */}
-                {/* {tabInx == 2 && (
-                    <CashTable
-                      onInput={(e) => setCashEnter(e)}
-                      data={cash_state}
-                    />
-                  )} */}
                 {tabInx == 2 && flagCashEdit && (
                   <CashModuleEdit
                     companyId={companyId}
                     isSaveCash={isSaveCash}
                     year={years}
                     cashJson={cashJson}
+                    resetSaveButton={resetSaveButton}
                   />
                 )}
 
@@ -448,6 +457,7 @@ function Declare(props) {
                     isSaveCash={isSaveCash}
                     year={years}
                     updateId = {updateCompanyId}
+                    resetSaveButton={resetSaveButton}
                   />
                 )}
 
