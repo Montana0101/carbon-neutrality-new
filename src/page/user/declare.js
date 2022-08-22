@@ -1,43 +1,27 @@
-import { useState, useEffect, useReducer, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { withRouter, useHistory } from "react-router-dom";
 import {
-  putDeclareBalance,
-  putDeclareProfit,
-  putDeclareCash,
   getDeclareDetail,
 } from "../../apis/index";
 import { ThemeColor, CutLine } from "../../lib/const";
 import {
-  Tabs,
-  Radio,
-  Col,
-  Row,
-  Form,
-  Input,
-  Table,
-  message,
   DatePicker,
-  Popconfirm,
-  InputNumber,
   Upload,
   Button,
 } from "antd";
 import "./declare.less";
 import { ButtonCmt } from "../../component/button";
-import AssetTable from "./component/assetTable";
-import ProfitTable from "./component/profitTable";
-import CashTable from "./component/cashTable";
 import "moment/locale/zh-cn";
 import locale from "antd/es/date-picker/locale/zh_CN";
 import { UploadOutlined } from "@ant-design/icons";
 import Others from "./others"; //其他模块
 import moment from "moment";
-import {AssetModuleInit,AssetModuleEdit} from "./component/assetModule"
-import {ProfitModuleEdit,ProfitModuleInit} from "./component/profitModule"
+import { AssetModuleInit, AssetModuleEdit } from "./component/assetModule";
+import { ProfitModuleEdit, ProfitModuleInit } from "./component/profitModule";
+import { CashModuleEdit, CashModuleInit } from "./component/cashModule";
 
 const defaultColor = "rgba(0,0,0,0.3)";
 var assetJson = require("./json/asset.json"); //资产负债json
-var assetJson1 = require("./json/asset.json"); //资产负债json
 var profitJson = require("./json/profit.json"); // 利润表json
 var cashJson = require("./json/cash.json");
 
@@ -95,46 +79,16 @@ const UpdateCmt = () => {
 };
 
 
-// 利润表reducer
-const profit_reducer = (state, action) => {
-  const { name } = action;
-  return { ...state, ...name };
-};
-
-// 现金流量表reducer
-const cash_reducer = (state, action) => {
-  const { name } = action;
-  return { ...state, ...name };
-};
-
-
 // 财务负债编辑状态
 
 function Declare(props) {
   const [tabInx, setTabInx] = useState(0);
   const [inx, setInx] = useState(0);
-  const [assetEnter, setAssetEnter] = useState({ value: "", line: null });
-  // const [asset_state, asset_dispatch] = useReducer(asset_reducer, assetJson); // 资产负债表订阅
-  const [profitEnter, setProfitEnter] = useState({ value: "", line: null });
-  const [profit_state, profit_dispatch] = useReducer(
-    profit_reducer,
-    profitJson
-  ); // 利润表订阅
-  const [cashEnter, setCashEnter] = useState({ value: "", line: null });
-  const [cash_state, cash_dispatch] = useReducer(cash_reducer, cashJson); // 现金流量表订阅
+
   const [companyId, setCompanyId] = useState(null); //公司id
   const [years, setYears] = useState(null); // 当前年份
   const history = useHistory();
-
-  const [capitalModels, setCapitalModels] = useState({}); //资产负债表
-  // const [flag, setFlag] = useState(false);
-  const [action, setAction] = useState(-1);
-
   const [obj, setObj] = useState({}); // 编辑所有数据
-  const [key, setKey] = useState(null);
-  const [burn, setBurn] = useState(false); //卸载组件
-
-  const [flag, setFlag] = useState(false);
 
   const [flagAssetEdit, setFlagAssetEdit] = useState(false); // 财务报表编辑渲染判断
   const [flagAssetNew, setFlagAssetNew] = useState(false); // 财务报表新增渲染判断
@@ -143,6 +97,10 @@ function Declare(props) {
   const [flagProfitEdit, setFlagProfitEdit] = useState(false); // 利润表编辑渲染判断
   const [flagProfitNew, setFlagProfitNew] = useState(false); // 利润表新增渲染判断
   const [isSaveProfit, setIsSaveProfit] = useState(false); // 保存利润表
+
+  const [flagCashEdit, setFlagCashEdit] = useState(false); // 现金表编辑渲染判断
+  const [flagCashNew, setFlagCashNew] = useState(false); // 现金表新增渲染判断
+  const [isSaveCash, setIsSaveCash] = useState(false); // 保存现金表
 
   var date = new Date();
   var y = date.getFullYear();
@@ -158,16 +116,13 @@ function Declare(props) {
   useEffect(() => {
     document.getElementsByTagName("html")[0].style.overflowX = "hidden";
     document.getElementsByTagName("html")[0].style.overflowY = "scroll";
-    // setKey(Math.random())
+
     let { state } = props.location;
     if (state && state.action == 1) {
-      setAction(1);
       setCompanyId(state.id);
       localStorage.setItem("companyId", props.location.state.id);
     } else if (state && state.action == 0) {
       // 新增数据
-      // alert(0)
-      setAction(0);
       localStorage.removeItem("companyId");
     }
   }, []);
@@ -197,6 +152,7 @@ function Declare(props) {
 
       setFlagAssetEdit(true);
       setFlagProfitEdit(true);
+      setFlagCashEdit(true);
       setObj(res.result);
     }
   };
@@ -209,7 +165,6 @@ function Declare(props) {
   }, [companyId]);
 
   useEffect(() => {
-    setFlag(true);
     if (props.location.state && props.location.state.action == 1) {
       // 编辑状态
       _getDeclareDetail(companyId);
@@ -217,132 +172,13 @@ function Declare(props) {
       // 新增财务报表按钮
       setFlagAssetNew(true);
       setFlagProfitNew(true);
+      setFlagCashNew(true);
     }
   }, []);
 
-  // 触发事件
-  useEffect(() => {
-    dispathTrigger("assetEnter 11111111输入变化监听");
-    console.log("检测是否触发了assetEnter");
-  }, [assetEnter, profitEnter, cashEnter]);
-
-  // 保存资产负债表
-  const saveDeclareBalance = async () => {
-    if (!years) {
-      // message.warn("请选择年份！");
-      setYears(y);
-    }
-    let res;
-    // 资产负债表
-    if (tabInx == 0) {
-      // let params = JSON.parse(JSON.stringify(asset_state));
-      // params.years = years;
-      // params.companyId = companyId;
-      // res = await putDeclareBalance(params);
-    } else if (tabInx == 1) {
-      let params = JSON.parse(JSON.stringify(profit_state));
-      params.years = years;
-      params.companyId = companyId;
-      res = await putDeclareProfit(params);
-    } else if (tabInx == 2) {
-      let params = JSON.parse(JSON.stringify(cash_state));
-      params.years = years;
-      params.companyId = companyId;
-      res = await putDeclareCash(params);
-    }
-
-    if (res && res.code == 2000) {
-      if (res.result) {
-        setCompanyId(res.result);
-        message.success("操作成功！");
-        localStorage.setItem("companyId", res.result);
-      }
-    } else {
-      message.error("操作失败！");
-    }
-  };
-
-
-  // // 利润表封装订阅
-  // const profitDispatch = (no, name) => {
-  //   // 判断是累计还是当前，true为累计，false为当前
-  //   let flag = no.substr(no.length - 1, 1) == 0 ? true : false;
-
-  //   return profit_dispatch({
-  //     type: "profitLine" + no,
-  //     name: {
-  //       [name]: {
-  //         currentAmount: flag
-  //           ? profitEnter.value
-  //           : profit_state[name].currentAmount || 0,
-  //         accumulatedAmount: flag
-  //           ? profit_state[name].accumulatedAmount || 0
-  //           : profitEnter.value,
-  //       },
-  //     },
-  //   });
-  // };
-
-  // 现金流量表封装订阅
-  const cashDispatch = (no, name) => {
-    // 判断是累计还是当前，true为累计，false为当前
-    let flag = no.substr(no.length - 1, 1) == 0 ? true : false;
-    return cash_dispatch({
-      type: "cashLine" + no,
-      name: {
-        [name]: {
-          currentAmount: flag
-            ? cashEnter.value
-            : cash_state[name].currentAmount || 0,
-          accumulatedAmount: flag
-            ? cash_state[name].accumulatedAmount || 0
-            : cashEnter.value,
-        },
-      },
-    });
-  };
-
-  // 根据行进行事件订阅
-  const dispathTrigger = (str, json) => {
-    let line;
-    let no;
-    if (tabInx == 0) {
-      line = assetEnter.line || "";
-    } else if (tabInx == 1) {
-      line = profitEnter.line || "";
-    } else if (tabInx == 2) {
-      line = cashEnter.line || "";
-    }
-
-    no = line.length == 3 ? line.substr(0, 1) : line.substr(0, 2);
-
-    if (tabInx == 0) {
-      // console.log(str, assetJson);
-      // setFlag(true);
-      // Object.values(assetJson).map((item) => {
-      //   if (item.lineNo == no) {
-      //     assetDispatch(line, item.name);
-      //   }
-      // });
-    } else if (tabInx == 1) {
-      // Object.values(profitJson).map((item) => {
-      //   if (item.lineNo == no) {
-      //     profitDispatch(line, item.name);
-      //   }
-      // });
-    } else if (tabInx == 2) {
-      // Object.values(cashJson).map((item) => {
-      //   if (item.lineNo == no) {
-      //     cashDispatch(line, item.name);
-      //   }
-      // });
-    }
-    setFlag(false);
-  };
 
   return (
     <>
-      {!flag && (
         <div className="declare_page">
           <div
             style={{
@@ -574,12 +410,6 @@ function Declare(props) {
                   )}
 
                   {/* 利润表 */}
-                  {/* {tabInx == 1 && (
-                    <ProfitTable
-                      onInput={(e) => setProfitEnter(e)}
-                      data={profit_state}
-                    />
-                  )} */}
                   {tabInx == 1 && flagProfitEdit && (
                     <ProfitModuleEdit
                       companyId={companyId}
@@ -598,12 +428,29 @@ function Declare(props) {
                   )}
 
                   {/* 现金流量表 */}
-                  {tabInx == 2 && (
+                  {/* {tabInx == 2 && (
                     <CashTable
                       onInput={(e) => setCashEnter(e)}
                       data={cash_state}
                     />
+                  )} */}
+                  {tabInx == 2 && flagCashEdit && (
+                    <CashModuleEdit
+                      companyId={companyId}
+                      isSaveCash={isSaveCash}
+                      year={years}
+                      cashJson={cashJson}
+                    />
                   )}
+
+                  {tabInx == 2 && flagCashNew && (
+                    <CashModuleInit
+                      companyId={companyId}
+                      isSaveCash={isSaveCash}
+                      year={years}
+                    />
+                  )}
+
                   <p
                     style={{
                       height: "1.4rem",
@@ -635,8 +482,10 @@ function Declare(props) {
                         // saveDeclareBalance();
                         if (tabInx == 0) {
                           setIsSaveAsset(true);
-                        }else if(tabInx==1){
-                          setIsSaveProfit(true)
+                        } else if (tabInx == 1) {
+                          setIsSaveProfit(true);
+                        }else if (tabInx == 2) {
+                          setIsSaveCash(true);
                         }
                       }}
                     >
@@ -666,7 +515,6 @@ function Declare(props) {
             </section>
           </div>
         </div>
-      )}{" "}
     </>
   );
 }

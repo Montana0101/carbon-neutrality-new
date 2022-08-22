@@ -1,6 +1,6 @@
 import { useState, useEffect, useReducer } from "react";
 import {
-  putDeclareBalance,
+  putDeclareCash,
 } from "../../../apis/index";
 import {
   message,
@@ -40,84 +40,7 @@ export const CashModuleEdit = (props) => {
 
     Object.values(cashJson).map((item) => {
       if (item.lineNo == no) {
-        cashDispatch(line, item.name);
-      }
-    });
-  };
-
-  // 资产负债表封装订阅
-  const cashDispatch = (no, name) => {
-    // 判断是期末还是年初，true为年初，false为期末
-    let flag = no.substr(no.length - 1, 1) == 0 ? true : false;
-    return cash_dispatch({
-      type: "assetLine" + no,
-      name: {
-        [name]: {
-          beginningBalance: flag
-            ? cashEnter.value
-            : cash_state[name].beginningBalance || 0,
-          endingBalance: flag
-            ? cash_state[name].endingBalance || 0
-            : cashEnter.value,
-          // lineNo:cash_state[name].lineNo
-        },
-      },
-    });
-  };
-
-  // 保存资产负债表
-  const saveDeclareBalance = async () => {
-    let res;
-    let params = JSON.parse(JSON.stringify(cash_state));
-    params.years = year;
-    params.companyId = companyId;
-    res = await putDeclareBalance(params);
-
-    if (res && res.code == 2000) {
-      if (res.result) {
-        // setCompanyId(res.result);
-        message.success("操作成功！");
-        // localStorage.setItem("companyId", res.result);
-      }
-    } else {
-      message.error("操作失败！");
-    }
-  };
-
-  return (
-    <>{<CashTable onInput={(e) => setCashEnter(e)} data={cash_state} />}</>
-  );
-};
-
-// 财务负债初始化状态
-export const AssetModuleInit = (props) => {
-  const { isSaveCash, companyId, year } = props;
-  const [cash_state, cash_dispatch] = useReducer(cash_reducer, cashJson1);
-  const [cashEnter, setCashEnter] = useState({ value: "", line: null });
-
-  useEffect(() => {
-    dispathTrigger();
-    // console.log("检测是否触发了cashEnter")
-  }, [cashEnter]);
-
-  useEffect(() => {
-    if (isSaveCash) {
-      saveDeclareBalance();
-    }
-  }, [isSaveCash]);
-
-  useEffect(() => {
-    console.log("新增财务报表初始化", cashJson1);
-  }, []);
-
-  // 根据行进行事件订阅
-  const dispathTrigger = (str, json) => {
-    let line = cashEnter.line || "";
-    let no = line.length == 3 ? line.substr(0, 1) : line.substr(0, 2);
-
-    Object.values(cashJson).map((item) => {
-      if (item.lineNo == no) {
-        cashDispatch(line, item.name);
+       cashDispatch(line, item.name);
       }
     });
   };
@@ -147,7 +70,83 @@ export const AssetModuleInit = (props) => {
     let params = JSON.parse(JSON.stringify(cash_state));
     params.years = year;
     params.companyId = companyId;
-    res = await putDeclareBalance(params);
+    res = await putDeclareCash(params);
+
+    if (res && res.code == 2000) {
+      if (res.result) {
+        // setCompanyId(res.result);
+        message.success("操作成功！");
+        // localStorage.setItem("companyId", res.result);
+      }
+    } else {
+      message.error("操作失败！");
+    }
+  };
+
+  return (
+    <>{<CashTable onInput={(e) => setCashEnter(e)} data={cash_state} />}</>
+  );
+};
+
+// 现金流量初始化状态
+export const CashModuleInit = (props) => {
+  const { isSaveCash, companyId, year } = props;
+  const [cash_state, cash_dispatch] = useReducer(cash_reducer, cashJson1);
+  const [cashEnter, setCashEnter] = useState({ value: "", line: null });
+
+  useEffect(() => {
+    dispathTrigger();
+    // console.log("检测是否触发了cashEnter")
+  }, [cashEnter]);
+
+  useEffect(() => {
+    if (isSaveCash) {
+      saveDeclareBalance();
+    }
+  }, [isSaveCash]);
+
+  useEffect(() => {
+    console.log("新增财务报表初始化", cashJson1);
+  }, []);
+
+  // 根据行进行事件订阅
+  const dispathTrigger = (str, json) => {
+    let line = cashEnter.line || "";
+    let no = line.length == 3 ? line.substr(0, 1) : line.substr(0, 2);
+
+    Object.values(cashJson).map((item) => {
+      if (item.lineNo == no) {
+       cashDispatch(line, item.name);
+      }
+    });
+  };
+
+ // 现金流量表封装订阅
+ const cashDispatch = (no, name) => {
+    // 判断是累计还是当前，true为累计，false为当前
+    let flag = no.substr(no.length - 1, 1) == 0 ? true : false;
+    return cash_dispatch({
+      type: "cashLine" + no,
+      name: {
+        [name]: {
+          currentAmount: flag
+            ? cashEnter.value
+            : cash_state[name].currentAmount || 0,
+          accumulatedAmount: flag
+            ? cash_state[name].accumulatedAmount || 0
+            : cashEnter.value,
+        },
+      },
+    });
+  };
+  
+  // 保存资产负债表
+  const saveDeclareBalance = async () => {
+    let res;
+    let params = JSON.parse(JSON.stringify(cash_state));
+    params.years = year;
+    params.companyId = companyId;
+    res = await putDeclareCash(params);
 
     if (res && res.code == 2000) {
       if (res.result) {
