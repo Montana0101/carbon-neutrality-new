@@ -694,6 +694,7 @@ function CommonUser(props) {
             ) : (
               <div
                 onClick={() => {
+                  localStorage.removeItem("companyId")
                   history.push("/declare", { action: 0 });
                 }}
               >

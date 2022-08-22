@@ -109,6 +109,90 @@ const cash_reducer = (state, action) => {
   return { ...state, ...name };
 };
 
+const AssetModule = (props) => {
+  const { assetJson1, isSubmit,companyId} = props;
+  const [asset_state, asset_dispatch] = useReducer(asset_reducer, assetJson);
+  const [assetEnter, setAssetEnter] = useState({ value: "", line: null });
+
+  useEffect(() => {
+    dispathTrigger("assetEnter22222222222 输入变化监听");
+    // console.log("检测是否触发了assetEnter")
+  }, [assetEnter]);
+
+  useEffect(() => {
+    console.log("接收到的json数据", assetJson1);
+  }, [assetJson1]);
+
+  useEffect(() => {
+    console.log("不打算举报asset_state", asset_state);
+  }, [asset_state]);
+
+  useEffect(() => {
+    if (isSubmit) {
+      console.log("可以保存");
+      saveDeclareBalance()
+    }else{
+      console.log("不能保存")
+    }
+  }, [isSubmit]);
+
+  // 根据行进行事件订阅
+  const dispathTrigger = (str, json) => {
+    let line = assetEnter.line || "";
+    let no = line.length == 3 ? line.substr(0, 1) : line.substr(0, 2);
+
+    Object.values(assetJson).map((item) => {
+      if (item.lineNo == no) {
+        assetDispatch(line, item.name);
+      }
+    });
+  };
+
+  // 资产负债表封装订阅
+  const assetDispatch = (no, name) => {
+    // 判断是期末还是年初，true为年初，false为期末
+    let flag = no.substr(no.length - 1, 1) == 0 ? true : false;
+    // console.log("Bdhas ",no,name)
+    return asset_dispatch({
+      type: "assetLine" + no,
+      name: {
+        [name]: {
+          beginningBalance: flag
+            ? assetEnter.value
+            : asset_state[name].beginningBalance || 0,
+          endingBalance: flag
+            ? asset_state[name].endingBalance || 0
+            : assetEnter.value,
+          // lineNo:asset_state[name].lineNo
+        },
+      },
+    });
+  };
+
+  // 保存资产负债表
+  const saveDeclareBalance = async () => {
+    let res;
+    let params = JSON.parse(JSON.stringify(asset_state));
+    // params.years = years;
+    params.companyId = companyId;
+    res = await putDeclareBalance(params);
+
+    if (res && res.code == 2000) {
+      if (res.result) {
+        // setCompanyId(res.result);
+        message.success("操作成功！");
+        // localStorage.setItem("companyId", res.result);
+      }
+    } else {
+      message.error("操作失败！");
+    }
+  };
+
+  return (
+    <>{<AssetTable onInput={(e) => setAssetEnter(e)} data={asset_state} />}</>
+  );
+};
+
 function Declare(props) {
   // const [_flag,setFlag] = useState(true)
   const [tabInx, setTabInx] = useState(0);
@@ -135,6 +219,12 @@ function Declare(props) {
   const [burn, setBurn] = useState(false); //卸载组件
 
   const [flag, setFlag] = useState(false);
+  const [flag1, setFlag1] = useState(false);
+  const [isSave1, setIsSave1] = useState(false);
+  const [isSubmit, setIsSubmit] = useState(false); // 保存财务报表
+
+  const [assetJson1, setAssetJson1] = useState({});
+
   var date = new Date();
   var y = date.getFullYear();
   // 表格展示所用数据
@@ -187,9 +277,11 @@ function Declare(props) {
       // dispathTrigger("请求响应成功后的事件订阅");
       Object.values(assetJson).map((item) => {
         // if (item.lineNo == no) {
-          // assetDispatch(item.lineNo, item.name);
+        // assetDispatch(item.lineNo, item.name);
         // }
       });
+      setFlag1(true);
+      setAssetJson1(assetJson);
       setObj(res.result);
     }
   };
@@ -202,7 +294,7 @@ function Declare(props) {
   }, [companyId]);
 
   useEffect(() => {
-    setFlag(true)
+    setFlag(true);
     if (props.location.state && props.location.state.action == 1) {
       // 编辑状态
       _getDeclareDetail(companyId);
@@ -211,7 +303,7 @@ function Declare(props) {
 
   // 监听输入变化
   useEffect(() => {
-    console.log("asset_state输入变化", asset_state);
+    console.log("asset_state输入变化111", asset_state);
   }, [asset_state]);
 
   useEffect(() => {
@@ -224,9 +316,50 @@ function Declare(props) {
 
   // 触发事件
   useEffect(() => {
-    dispathTrigger("assetEnter 输入变化监听");
+    dispathTrigger("assetEnter 11111111输入变化监听");
     // console.log("检测是否触发了assetEnter")
   }, [assetEnter, profitEnter, cashEnter]);
+
+  useEffect(() => {
+    if (flag1) {
+    }
+  }, [flag1]);
+
+  // 保存资产负债表
+  const saveDeclareBalance = async () => {
+    if (!years) {
+      // message.warn("请选择年份！");
+      setYears(y);
+    }
+    let res;
+    // 资产负债表
+    if (tabInx == 0) {
+      let params = JSON.parse(JSON.stringify(asset_state));
+      params.years = years;
+      params.companyId = companyId;
+      res = await putDeclareBalance(params);
+    } else if (tabInx == 1) {
+      let params = JSON.parse(JSON.stringify(profit_state));
+      params.years = years;
+      params.companyId = companyId;
+      res = await putDeclareProfit(params);
+    } else if (tabInx == 2) {
+      let params = JSON.parse(JSON.stringify(cash_state));
+      params.years = years;
+      params.companyId = companyId;
+      res = await putDeclareCash(params);
+    }
+
+    if (res && res.code == 2000) {
+      if (res.result) {
+        setCompanyId(res.result);
+        message.success("操作成功！");
+        localStorage.setItem("companyId", res.result);
+      }
+    } else {
+      message.error("操作失败！");
+    }
+  };
 
   // 资产负债表封装订阅
   const assetDispatch = (no, name) => {
@@ -289,7 +422,7 @@ function Declare(props) {
   };
 
   // 根据行进行事件订阅
-  const dispathTrigger = (str,json) => {
+  const dispathTrigger = (str, json) => {
     let line;
     let no;
     if (tabInx == 0) {
@@ -323,340 +456,311 @@ function Declare(props) {
         }
       });
     }
-    setFlag(false)
-  };
-
-  // 保存资产负债表
-  const saveDeclareBalance = async () => {
-    if (!years) {
-      // message.warn("请选择年份！");
-      setYears(y);
-    }
-    let res;
-    // 资产负债表
-    if (tabInx == 0) {
-      let params = JSON.parse(JSON.stringify(asset_state));
-      params.years = years;
-      params.companyId = companyId;
-      res = await putDeclareBalance(params);
-    } else if (tabInx == 1) {
-      let params = JSON.parse(JSON.stringify(profit_state));
-      params.years = years;
-      params.companyId = companyId;
-      res = await putDeclareProfit(params);
-    } else if (tabInx == 2) {
-      let params = JSON.parse(JSON.stringify(cash_state));
-      params.years = years;
-      params.companyId = companyId;
-      res = await putDeclareCash(params);
-    }
-
-    if (res && res.code == 2000) {
-      if (res.result) {
-        setCompanyId(res.result);
-        message.success("操作成功！");
-        localStorage.setItem("companyId", res.result);
-      }
-    } else {
-      message.error("操作失败！");
-    }
+    setFlag(false);
   };
 
   return (
     <>
-      {!flag && <div className="declare_page">
-        <div
-          style={{
-            border: CutLine,
-            padding: "0 0.5rem",
-            borderRight: "none",
-            borderLeft: "none",
-          }}
-        >
-          <h3
+      {!flag && (
+        <div className="declare_page">
+          <div
             style={{
-              borderLeft: CutLine,
-              borderRight: CutLine,
+              border: CutLine,
+              padding: "0 0.5rem",
+              borderRight: "none",
+              borderLeft: "none",
             }}
           >
-            <span
-              style={{ color: "rgba(0,0,0,0.6)", cursor: "pointer" }}
-              onClick={() => {
-                window.location.href = "/";
+            <h3
+              style={{
+                borderLeft: CutLine,
+                borderRight: CutLine,
               }}
             >
-              首页
-            </span>
-            <span style={{ margin: "0 0.1rem" }}>/</span>
-            <span
-              style={{ color: "rgba(0,0,0,0.6)", cursor: "pointer" }}
-              onClick={() => {
-                // window.location.reload();
-                // setTimeout(()=>{
-                //   history.push('/common');
-
-                // },500)
-                // history.replace("/common");
-                setTimeout(() => {
+              <span
+                style={{ color: "rgba(0,0,0,0.6)", cursor: "pointer" }}
+                onClick={() => {
+                  window.location.href = "/";
+                }}
+              >
+                首页
+              </span>
+              <span style={{ margin: "0 0.1rem" }}>/</span>
+              <span
+                style={{ color: "rgba(0,0,0,0.6)", cursor: "pointer" }}
+                onClick={() => {
                   // window.location.reload();
-                  history.replace("/common");
-                }, 100);
-                // window.location.reload();
+                  // setTimeout(()=>{
+                  //   history.push('/common');
 
-                // window.location.pathname = '/common'
-              }}
-            >
-              个人中心
-            </span>
-            <span style={{ margin: "0 0.1rem" }}>/</span>
-            <span>企业申报</span>
-          </h3>
-        </div>
+                  // },500)
+                  // history.replace("/common");
+                  setTimeout(() => {
+                    // window.location.reload();
+                    history.replace("/common");
+                  }, 100);
+                  // window.location.reload();
 
-        <div
-          style={{
-            border: CutLine,
-            padding: "0 0.5rem",
-            borderRight: "none",
-            borderLeft: "none",
-            borderTop: "none",
-            boxSizing: "border-box",
-          }}
-        >
-          <section
+                  // window.location.pathname = '/common'
+                }}
+              >
+                个人中心
+              </span>
+              <span style={{ margin: "0 0.1rem" }}>/</span>
+              <span>企业申报</span>
+            </h3>
+          </div>
+
+          <div
             style={{
-              fontSize: "0.12rem",
-              fontWeight: "400",
-              display: "flex",
-              margin: 0,
-              padding: "0 0.3rem",
-              height: "0.7rem",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              borderLeft: CutLine,
-              borderRight: CutLine,
+              border: CutLine,
+              padding: "0 0.5rem",
+              borderRight: "none",
+              borderLeft: "none",
+              borderTop: "none",
               boxSizing: "border-box",
             }}
           >
-            <ul
+            <section
               style={{
-                width: "100%",
-                height: "100%",
+                fontSize: "0.12rem",
+                fontWeight: "400",
                 display: "flex",
-                justifyContent: "space-between",
                 margin: 0,
-                padding: 0,
+                padding: "0 0.3rem",
+                height: "0.7rem",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                borderLeft: CutLine,
+                borderRight: CutLine,
+                boxSizing: "border-box",
               }}
             >
-              {titles.map((item, index) => {
-                return (
-                  <li
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => {
-                      setInx(index);
-                    }}
-                    key={index}
-                  >
-                    <div
+              <ul
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  margin: 0,
+                  padding: 0,
+                }}
+              >
+                {titles.map((item, index) => {
+                  return (
+                    <li
                       style={{
-                        height: "0.18rem",
-                        width: "0.18rem",
                         display: "flex",
-                        justifyContent: "center",
                         alignItems: "center",
-                        fontSize: "0.12rem",
-                        borderRadius: "50%",
-                        border:
-                          inx == index
-                            ? "none"
-                            : `0.01rem solid ${defaultColor}`,
-                        marginRight: "0.05rem",
-                        color: inx == index ? "white" : defaultColor,
-                        background: inx == index ? ThemeColor : "white",
+                        cursor: "pointer",
                       }}
-                    >
-                      {index + 1}
-                    </div>
-                    <span
-                      style={{
-                        fontSize: "0.14rem",
-                        color: inx == index ? "black" : defaultColor,
-                        fontWeight: inx == index ? 600 : 400,
+                      onClick={() => {
+                        setInx(index);
                       }}
+                      key={index}
                     >
-                      {item}
-                    </span>
-                  </li>
-                );
-              })}
-            </ul>
-          </section>
-        </div>
+                      <div
+                        style={{
+                          height: "0.18rem",
+                          width: "0.18rem",
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          fontSize: "0.12rem",
+                          borderRadius: "50%",
+                          border:
+                            inx == index
+                              ? "none"
+                              : `0.01rem solid ${defaultColor}`,
+                          marginRight: "0.05rem",
+                          color: inx == index ? "white" : defaultColor,
+                          background: inx == index ? ThemeColor : "white",
+                        }}
+                      >
+                        {index + 1}
+                      </div>
+                      <span
+                        style={{
+                          fontSize: "0.14rem",
+                          color: inx == index ? "black" : defaultColor,
+                          fontWeight: inx == index ? 600 : 400,
+                        }}
+                      >
+                        {item}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
+          </div>
 
-        <div
-          style={{
-            border: "none",
-            padding: "0 0.5rem",
-            borderRight: "none",
-            borderLeft: "none",
-            // borderTop: "none"
-          }}
-        >
-          <section
+          <div
             style={{
-              fontSize: "0.12rem",
-              fontWeight: "400",
-              display: "flex",
-              margin: 0,
-              padding: "0 0.3rem",
-              // height: "0.7rem",
-              alignItems: "center",
-              justifyContent: "space-between",
-              border: CutLine,
-              borderTop: "none",
-              borderBottom: "none",
+              border: "none",
+              padding: "0 0.5rem",
+              borderRight: "none",
+              borderLeft: "none",
+              // borderTop: "none"
             }}
           >
-            {/* 1 - 财务报表 */}
-            {inx == 0 && (
-              <div className="active_1">
-                <section>
-                  <div className="tabs">
-                    {["资产负债表", "利润表", "现金流量表"].map(
-                      (item, index) => {
-                        return (
-                          <span
-                            key={index}
-                            style={{
-                              color: tabInx == index ? ThemeColor : "black",
-                              borderBottom:
-                                tabInx == index
-                                  ? `0.02rem solid ${ThemeColor}`
-                                  : defaultColor,
-                            }}
-                            onClick={() => setTabInx(index)}
-                          >
-                            {item}
-                          </span>
-                        );
-                      }
-                    )}
-                  </div>
-                  <div className="_right">
-                    <div>
-                      <span style={{ fontWeight: "bold" }}>选择年份：</span>
-
-                      <DatePicker
-                        onChange={(moment, str) => {
-                          setYears(str);
-                        }}
-                        defaultValue={
-                          years ? moment(years) : moment(y.toString())
+            <section
+              style={{
+                fontSize: "0.12rem",
+                fontWeight: "400",
+                display: "flex",
+                margin: 0,
+                padding: "0 0.3rem",
+                // height: "0.7rem",
+                alignItems: "center",
+                justifyContent: "space-between",
+                border: CutLine,
+                borderTop: "none",
+                borderBottom: "none",
+              }}
+            >
+              {/* 1 - 财务报表 */}
+              {inx == 0 && (
+                <div className="active_1">
+                  <section>
+                    <div className="tabs">
+                      {["资产负债表", "利润表", "现金流量表"].map(
+                        (item, index) => {
+                          return (
+                            <span
+                              key={index}
+                              style={{
+                                color: tabInx == index ? ThemeColor : "black",
+                                borderBottom:
+                                  tabInx == index
+                                    ? `0.02rem solid ${ThemeColor}`
+                                    : defaultColor,
+                              }}
+                              onClick={() => setTabInx(index)}
+                            >
+                              {item}
+                            </span>
+                          );
                         }
-                        // showTime={{ defaultValue: 2022}}
-                        picker="year"
-                        locale={locale}
-                      />
+                      )}
                     </div>
+                    <div className="_right">
+                      <div>
+                        <span style={{ fontWeight: "bold" }}>选择年份：</span>
 
+                        <DatePicker
+                          onChange={(moment, str) => {
+                            setYears(str);
+                          }}
+                          defaultValue={
+                            years ? moment(years) : moment(y.toString())
+                          }
+                          // showTime={{ defaultValue: 2022}}
+                          picker="year"
+                          locale={locale}
+                        />
+                      </div>
+
+                      <div
+                        style={{
+                          border: "0px solid red",
+                          marginLeft: "0.5rem",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        <span>上传报表：</span>
+                        <UpdateCmt />{" "}
+                      </div>
+                    </div>
+                  </section>
+                  {/* 资产负债表 */}
+                  {tabInx == 0 && flag1 && (
+                    <AssetModule
+                      companyId={companyId}
+                      isSave1={isSave1}
+                      assetJson1={assetJson1}
+                      isSubmit={isSubmit}
+                    />
+                  )}
+
+                  {/* 利润表 */}
+                  {tabInx == 1 && (
+                    <ProfitTable
+                      onInput={(e) => setProfitEnter(e)}
+                      data={profit_state}
+                    />
+                  )}
+
+                  {/* 现金流量表 */}
+                  {tabInx == 2 && (
+                    <CashTable
+                      onInput={(e) => setCashEnter(e)}
+                      data={cash_state}
+                    />
+                  )}
+                  <p
+                    style={{
+                      height: "1.4rem",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
                     <div
-                      style={{
-                        border: "0px solid red",
-                        marginLeft: "0.5rem",
-                        fontWeight: "bold",
+                      style={{ marginRight: "0.3rem" }}
+                      onClick={() => {
+                        if (tabInx < 2) {
+                          setTabInx(tabInx + 1);
+                        } else {
+                          setInx(1);
+                        }
                       }}
                     >
-                      <span>上传报表：</span>
-                      <UpdateCmt />{" "}
+                      <ButtonCmt
+                        bg={ThemeColor}
+                        w="0.8rem"
+                        color="white"
+                        t="下一步"
+                        h="0.4rem"
+                      />
                     </div>
-                  </div>
-                </section>
-                {/* 资产负债表 */}
-                {tabInx == 0 && (
-                  <AssetTable
-                    onInput={(e) => setAssetEnter(e)}
-                    data={asset_state}
-                  />
-                )}
+                    <div
+                      onClick={() => {
+                        // saveDeclareBalance();
+                        if (tabInx == 0) {
+                          setIsSubmit(true);
+                        }
+                      }}
+                    >
+                      <ButtonCmt
+                        bg="#51AA95"
+                        w="0.8rem"
+                        color="white"
+                        t="保存"
+                        h="0.4rem"
+                      />
+                    </div>
+                  </p>
+                </div>
+              )}
 
-                {/* 利润表 */}
-                {tabInx == 1 && (
-                  <ProfitTable
-                    onInput={(e) => setProfitEnter(e)}
-                    data={profit_state}
-                  />
-                )}
-
-                {/* 现金流量表 */}
-                {tabInx == 2 && (
-                  <CashTable
-                    onInput={(e) => setCashEnter(e)}
-                    data={cash_state}
-                  />
-                )}
-                <p
-                  style={{
-                    height: "1.4rem",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
+              {/* 其他模块 */}
+              {inx != 0 && (
+                <Others
+                  setInx={(e) => {
+                    setInx(e);
                   }}
-                >
-                  <div
-                    style={{ marginRight: "0.3rem" }}
-                    onClick={() => {
-                      if (tabInx < 2) {
-                        setTabInx(tabInx + 1);
-                      } else {
-                        setInx(1);
-                      }
-                    }}
-                  >
-                    <ButtonCmt
-                      bg={ThemeColor}
-                      w="0.8rem"
-                      color="white"
-                      t="下一步"
-                      h="0.4rem"
-                    />
-                  </div>
-                  <div
-                    onClick={() => {
-                      saveDeclareBalance();
-                    }}
-                  >
-                    <ButtonCmt
-                      bg="#51AA95"
-                      w="0.8rem"
-                      color="white"
-                      t="保存"
-                      h="0.4rem"
-                    />
-                  </div>
-                </p>
-              </div>
-            )}
-
-            {/* 其他模块 */}
-            {inx != 0 && (
-              <Others
-                setInx={(e) => {
-                  setInx(e);
-                }}
-                inx={inx}
-                companyId={companyId}
-                obj={obj}
-              />
-            )}
-          </section>
+                  inx={inx}
+                  companyId={companyId}
+                  obj={obj}
+                />
+              )}
+            </section>
+          </div>
         </div>
-      </div>
-   } </>
+      )}{" "}
+    </>
   );
 }
 
