@@ -91,7 +91,7 @@ export const AssetModuleEdit = (props) => {
 
 // 财务负债初始化状态
 export const AssetModuleInit = (props) => {
-  const { isSaveAsset, companyId, year } = props;
+  const { isSaveAsset, companyId, year,updateId } = props;
   const [asset_state, asset_dispatch] = useReducer(asset_reducer, assetJson1);
   const [assetEnter, setAssetEnter] = useState({ value: "", line: null });
 
@@ -154,7 +154,8 @@ export const AssetModuleInit = (props) => {
       if (res.result) {
         // setCompanyId(res.result);
         message.success("操作成功！");
-        // localStorage.setItem("companyId", res.result);
+        localStorage.setItem("companyId", res.result);
+        updateId(res.result)
       }
     } else {
       message.error("操作失败！");

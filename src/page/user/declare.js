@@ -1,14 +1,8 @@
 import { useState, useEffect } from "react";
 import { withRouter, useHistory } from "react-router-dom";
-import {
-  getDeclareDetail,
-} from "../../apis/index";
+import { getDeclareDetail } from "../../apis/index";
 import { ThemeColor, CutLine } from "../../lib/const";
-import {
-  DatePicker,
-  Upload,
-  Button,
-} from "antd";
+import { DatePicker, Upload, Button } from "antd";
 import "./declare.less";
 import { ButtonCmt } from "../../component/button";
 import "moment/locale/zh-cn";
@@ -78,7 +72,6 @@ const UpdateCmt = () => {
   );
 };
 
-
 // 财务负债编辑状态
 
 function Declare(props) {
@@ -118,6 +111,7 @@ function Declare(props) {
     document.getElementsByTagName("html")[0].style.overflowY = "scroll";
 
     let { state } = props.location;
+
     if (state && state.action == 1) {
       setCompanyId(state.id);
       localStorage.setItem("companyId", props.location.state.id);
@@ -135,7 +129,7 @@ function Declare(props) {
       let capitalModels = res.result.balanceSheet; // 资产负债表
       let profitModels = res.result.profitStatement; // 利润表
       let cashModels = res.result.cashFlowStatement; // 现金流量表
-      // setCapitalModels(capitalModels);
+
       capitalModels.years && setYears(capitalModels.years);
       delete capitalModels.companyId;
       delete capitalModels.years;
@@ -148,7 +142,6 @@ function Declare(props) {
       delete cashModels.companyId;
       delete cashModels.years;
       cashJson = cashModels;
-      // dispathTrigger("请求响应成功后的事件订阅");
 
       setFlagAssetEdit(true);
       setFlagProfitEdit(true);
@@ -156,6 +149,11 @@ function Declare(props) {
       setObj(res.result);
     }
   };
+
+  // 更新companyId
+  const updateCompanyId = (e) => {
+    setCompanyId(e)
+  }
 
   useEffect(() => {
     if (companyId && props.location.state && props.location.state.action == 1) {
@@ -176,345 +174,347 @@ function Declare(props) {
     }
   }, []);
 
-
   return (
     <>
-        <div className="declare_page">
-          <div
+      <div className="declare_page">
+        <div
+          style={{
+            border: CutLine,
+            padding: "0 0.5rem",
+            borderRight: "none",
+            borderLeft: "none",
+          }}
+        >
+          <h3
             style={{
-              border: CutLine,
-              padding: "0 0.5rem",
-              borderRight: "none",
-              borderLeft: "none",
+              borderLeft: CutLine,
+              borderRight: CutLine,
             }}
           >
-            <h3
-              style={{
-                borderLeft: CutLine,
-                borderRight: CutLine,
+            <span
+              style={{ color: "rgba(0,0,0,0.6)", cursor: "pointer" }}
+              onClick={() => {
+                window.location.href = "/";
               }}
             >
-              <span
-                style={{ color: "rgba(0,0,0,0.6)", cursor: "pointer" }}
-                onClick={() => {
-                  window.location.href = "/";
-                }}
-              >
-                首页
-              </span>
-              <span style={{ margin: "0 0.1rem" }}>/</span>
-              <span
-                style={{ color: "rgba(0,0,0,0.6)", cursor: "pointer" }}
-                onClick={() => {
+              首页
+            </span>
+            <span style={{ margin: "0 0.1rem" }}>/</span>
+            <span
+              style={{ color: "rgba(0,0,0,0.6)", cursor: "pointer" }}
+              onClick={() => {
+                // window.location.reload();
+                // setTimeout(()=>{
+                //   history.push('/common');
+
+                // },500)
+                // history.replace("/common");
+                setTimeout(() => {
                   // window.location.reload();
-                  // setTimeout(()=>{
-                  //   history.push('/common');
+                  history.replace("/common");
+                }, 100);
+                // window.location.reload();
 
-                  // },500)
-                  // history.replace("/common");
-                  setTimeout(() => {
-                    // window.location.reload();
-                    history.replace("/common");
-                  }, 100);
-                  // window.location.reload();
+                // window.location.pathname = '/common'
+              }}
+            >
+              个人中心
+            </span>
+            <span style={{ margin: "0 0.1rem" }}>/</span>
+            <span>企业申报</span>
+          </h3>
+        </div>
 
-                  // window.location.pathname = '/common'
-                }}
-              >
-                个人中心
-              </span>
-              <span style={{ margin: "0 0.1rem" }}>/</span>
-              <span>企业申报</span>
-            </h3>
-          </div>
-
-          <div
+        <div
+          style={{
+            border: CutLine,
+            padding: "0 0.5rem",
+            borderRight: "none",
+            borderLeft: "none",
+            borderTop: "none",
+            boxSizing: "border-box",
+          }}
+        >
+          <section
             style={{
-              border: CutLine,
-              padding: "0 0.5rem",
-              borderRight: "none",
-              borderLeft: "none",
-              borderTop: "none",
+              fontSize: "0.12rem",
+              fontWeight: "400",
+              display: "flex",
+              margin: 0,
+              padding: "0 0.3rem",
+              height: "0.7rem",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              borderLeft: CutLine,
+              borderRight: CutLine,
               boxSizing: "border-box",
             }}
           >
-            <section
+            <ul
               style={{
-                fontSize: "0.12rem",
-                fontWeight: "400",
+                width: "100%",
+                height: "100%",
                 display: "flex",
+                justifyContent: "space-between",
                 margin: 0,
-                padding: "0 0.3rem",
-                height: "0.7rem",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                borderLeft: CutLine,
-                borderRight: CutLine,
-                boxSizing: "border-box",
+                padding: 0,
               }}
             >
-              <ul
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  margin: 0,
-                  padding: 0,
-                }}
-              >
-                {titles.map((item, index) => {
-                  return (
-                    <li
+              {titles.map((item, index) => {
+                return (
+                  <li
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      setInx(index);
+                    }}
+                    key={index}
+                  >
+                    <div
                       style={{
+                        height: "0.18rem",
+                        width: "0.18rem",
                         display: "flex",
+                        justifyContent: "center",
                         alignItems: "center",
-                        cursor: "pointer",
+                        fontSize: "0.12rem",
+                        borderRadius: "50%",
+                        border:
+                          inx == index
+                            ? "none"
+                            : `0.01rem solid ${defaultColor}`,
+                        marginRight: "0.05rem",
+                        color: inx == index ? "white" : defaultColor,
+                        background: inx == index ? ThemeColor : "white",
                       }}
-                      onClick={() => {
-                        setInx(index);
-                      }}
-                      key={index}
                     >
-                      <div
-                        style={{
-                          height: "0.18rem",
-                          width: "0.18rem",
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          fontSize: "0.12rem",
-                          borderRadius: "50%",
-                          border:
-                            inx == index
-                              ? "none"
-                              : `0.01rem solid ${defaultColor}`,
-                          marginRight: "0.05rem",
-                          color: inx == index ? "white" : defaultColor,
-                          background: inx == index ? ThemeColor : "white",
-                        }}
-                      >
-                        {index + 1}
-                      </div>
-                      <span
-                        style={{
-                          fontSize: "0.14rem",
-                          color: inx == index ? "black" : defaultColor,
-                          fontWeight: inx == index ? 600 : 400,
-                        }}
-                      >
-                        {item}
-                      </span>
-                    </li>
-                  );
-                })}
-              </ul>
-            </section>
-          </div>
+                      {index + 1}
+                    </div>
+                    <span
+                      style={{
+                        fontSize: "0.14rem",
+                        color: inx == index ? "black" : defaultColor,
+                        fontWeight: inx == index ? 600 : 400,
+                      }}
+                    >
+                      {item}
+                    </span>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+        </div>
 
-          <div
+        <div
+          style={{
+            border: "none",
+            padding: "0 0.5rem",
+            borderRight: "none",
+            borderLeft: "none",
+            // borderTop: "none"
+          }}
+        >
+          <section
             style={{
-              border: "none",
-              padding: "0 0.5rem",
-              borderRight: "none",
-              borderLeft: "none",
-              // borderTop: "none"
+              fontSize: "0.12rem",
+              fontWeight: "400",
+              display: "flex",
+              margin: 0,
+              padding: "0 0.3rem",
+              // height: "0.7rem",
+              alignItems: "center",
+              justifyContent: "space-between",
+              border: CutLine,
+              borderTop: "none",
+              borderBottom: "none",
             }}
           >
-            <section
-              style={{
-                fontSize: "0.12rem",
-                fontWeight: "400",
-                display: "flex",
-                margin: 0,
-                padding: "0 0.3rem",
-                // height: "0.7rem",
-                alignItems: "center",
-                justifyContent: "space-between",
-                border: CutLine,
-                borderTop: "none",
-                borderBottom: "none",
-              }}
-            >
-              {/* 1 - 财务报表 */}
-              {inx == 0 && (
-                <div className="active_1">
-                  <section>
-                    <div className="tabs">
-                      {["资产负债表", "利润表", "现金流量表"].map(
-                        (item, index) => {
-                          return (
-                            <span
-                              key={index}
-                              style={{
-                                color: tabInx == index ? ThemeColor : "black",
-                                borderBottom:
-                                  tabInx == index
-                                    ? `0.02rem solid ${ThemeColor}`
-                                    : defaultColor,
-                              }}
-                              onClick={() => setTabInx(index)}
-                            >
-                              {item}
-                            </span>
-                          );
-                        }
-                      )}
-                    </div>
-                    <div className="_right">
-                      <div>
-                        <span style={{ fontWeight: "bold" }}>选择年份：</span>
+            {/* 1 - 财务报表 */}
+            {inx == 0 && (
+              <div className="active_1">
+                <section>
+                  <div className="tabs">
+                    {["资产负债表", "利润表", "现金流量表"].map(
+                      (item, index) => {
+                        return (
+                          <span
+                            key={index}
+                            style={{
+                              color: tabInx == index ? ThemeColor : "black",
+                              borderBottom:
+                                tabInx == index
+                                  ? `0.02rem solid ${ThemeColor}`
+                                  : defaultColor,
+                            }}
+                            onClick={() => setTabInx(index)}
+                          >
+                            {item}
+                          </span>
+                        );
+                      }
+                    )}
+                  </div>
+                  <div className="_right">
+                    <div>
+                      <span style={{ fontWeight: "bold" }}>选择年份：</span>
 
-                        <DatePicker
-                          onChange={(moment, str) => {
-                            setYears(str);
-                          }}
-                          defaultValue={
-                            years ? moment(years) : moment(y.toString())
-                          }
-                          // showTime={{ defaultValue: 2022}}
-                          picker="year"
-                          locale={locale}
-                        />
-                      </div>
-
-                      <div
-                        style={{
-                          border: "0px solid red",
-                          marginLeft: "0.5rem",
-                          fontWeight: "bold",
+                      <DatePicker
+                        onChange={(moment, str) => {
+                          setYears(str);
                         }}
-                      >
-                        <span>上传报表：</span>
-                        <UpdateCmt />{" "}
-                      </div>
+                        defaultValue={
+                          years ? moment(years) : moment(y.toString())
+                        }
+                        // showTime={{ defaultValue: 2022}}
+                        picker="year"
+                        locale={locale}
+                      />
                     </div>
-                  </section>
-                  {/* 资产负债表 */}
-                  {tabInx == 0 && flagAssetEdit && (
-                    <AssetModuleEdit
-                      companyId={companyId}
-                      isSaveAsset={isSaveAsset}
-                      year={years}
-                      assetJson={assetJson}
-                    />
-                  )}
 
-                  {tabInx == 0 && flagAssetNew && (
-                    <AssetModuleInit
-                      companyId={companyId}
-                      isSaveAsset={isSaveAsset}
-                      year={years}
-                    />
-                  )}
+                    <div
+                      style={{
+                        border: "0px solid red",
+                        marginLeft: "0.5rem",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      <span>上传报表：</span>
+                      <UpdateCmt />{" "}
+                    </div>
+                  </div>
+                </section>
+                {/* 资产负债表 */}
+                {tabInx == 0 && flagAssetEdit && (
+                  <AssetModuleEdit
+                    companyId={companyId}
+                    isSaveAsset={isSaveAsset}
+                    year={years}
+                    assetJson={assetJson}
+                  />
+                )}
 
-                  {/* 利润表 */}
-                  {tabInx == 1 && flagProfitEdit && (
-                    <ProfitModuleEdit
-                      companyId={companyId}
-                      isSaveProfit={isSaveProfit}
-                      year={years}
-                      profitJson={profitJson}
-                    />
-                  )}
+                {tabInx == 0 && flagAssetNew && (
+                  <AssetModuleInit
+                    companyId={companyId}
+                    isSaveAsset={isSaveAsset}
+                    year={years}
+                    updateId = {updateCompanyId}
+                  />
+                )}
 
-                  {tabInx == 1 && flagProfitNew && (
-                    <ProfitModuleInit
-                      companyId={companyId}
-                      isSaveProfit={isSaveProfit}
-                      year={years}
-                    />
-                  )}
+                {/* 利润表 */}
+                {tabInx == 1 && flagProfitEdit && (
+                  <ProfitModuleEdit
+                    companyId={companyId}
+                    isSaveProfit={isSaveProfit}
+                    year={years}
+                    profitJson={profitJson}
+                  />
+                )}
 
-                  {/* 现金流量表 */}
-                  {/* {tabInx == 2 && (
+                {tabInx == 1 && flagProfitNew && (
+                  <ProfitModuleInit
+                    companyId={companyId}
+                    isSaveProfit={isSaveProfit}
+                    year={years}
+                    updateId = {updateCompanyId}
+                  />
+                )}
+
+                {/* 现金流量表 */}
+                {/* {tabInx == 2 && (
                     <CashTable
                       onInput={(e) => setCashEnter(e)}
                       data={cash_state}
                     />
                   )} */}
-                  {tabInx == 2 && flagCashEdit && (
-                    <CashModuleEdit
-                      companyId={companyId}
-                      isSaveCash={isSaveCash}
-                      year={years}
-                      cashJson={cashJson}
-                    />
-                  )}
+                {tabInx == 2 && flagCashEdit && (
+                  <CashModuleEdit
+                    companyId={companyId}
+                    isSaveCash={isSaveCash}
+                    year={years}
+                    cashJson={cashJson}
+                  />
+                )}
 
-                  {tabInx == 2 && flagCashNew && (
-                    <CashModuleInit
-                      companyId={companyId}
-                      isSaveCash={isSaveCash}
-                      year={years}
-                    />
-                  )}
+                {tabInx == 2 && flagCashNew && (
+                  <CashModuleInit
+                    companyId={companyId}
+                    isSaveCash={isSaveCash}
+                    year={years}
+                    updateId = {updateCompanyId}
+                  />
+                )}
 
-                  <p
-                    style={{
-                      height: "1.4rem",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
+                <p
+                  style={{
+                    height: "1.4rem",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <div
+                    style={{ marginRight: "0.3rem" }}
+                    onClick={() => {
+                      if (tabInx < 2) {
+                        setTabInx(tabInx + 1);
+                      } else {
+                        setInx(1);
+                      }
                     }}
                   >
-                    <div
-                      style={{ marginRight: "0.3rem" }}
-                      onClick={() => {
-                        if (tabInx < 2) {
-                          setTabInx(tabInx + 1);
-                        } else {
-                          setInx(1);
-                        }
-                      }}
-                    >
-                      <ButtonCmt
-                        bg={ThemeColor}
-                        w="0.8rem"
-                        color="white"
-                        t="下一步"
-                        h="0.4rem"
-                      />
-                    </div>
-                    <div
-                      onClick={() => {
-                        // saveDeclareBalance();
-                        if (tabInx == 0) {
-                          setIsSaveAsset(true);
-                        } else if (tabInx == 1) {
-                          setIsSaveProfit(true);
-                        }else if (tabInx == 2) {
-                          setIsSaveCash(true);
-                        }
-                      }}
-                    >
-                      <ButtonCmt
-                        bg="#51AA95"
-                        w="0.8rem"
-                        color="white"
-                        t="保存"
-                        h="0.4rem"
-                      />
-                    </div>
-                  </p>
-                </div>
-              )}
+                    <ButtonCmt
+                      bg={ThemeColor}
+                      w="0.8rem"
+                      color="white"
+                      t="下一步"
+                      h="0.4rem"
+                    />
+                  </div>
+                  <div
+                    onClick={() => {
+                      // saveDeclareBalance();
+                      if (tabInx == 0) {
+                        setIsSaveAsset(true);
+                      } else if (tabInx == 1) {
+                        setIsSaveProfit(true);
+                      } else if (tabInx == 2) {
+                        setIsSaveCash(true);
+                      }
+                    }}
+                  >
+                    <ButtonCmt
+                      bg="#51AA95"
+                      w="0.8rem"
+                      color="white"
+                      t="保存"
+                      h="0.4rem"
+                    />
+                  </div>
+                </p>
+              </div>
+            )}
 
-              {/* 其他模块 */}
-              {inx != 0 && (
-                <Others
-                  setInx={(e) => {
-                    setInx(e);
-                  }}
-                  inx={inx}
-                  companyId={companyId}
-                  obj={obj}
-                />
-              )}
-            </section>
-          </div>
+            {/* 其他模块 */}
+            {inx != 0 && (
+              <Others
+                setInx={(e) => {
+                  setInx(e);
+                }}
+                inx={inx}
+                companyId={companyId}
+                obj={obj}
+              />
+            )}
+          </section>
         </div>
+      </div>
     </>
   );
 }

@@ -93,7 +93,7 @@ export const ProfitModuleEdit = (props) => {
 
 // 利润表新增时
 export const ProfitModuleInit = (props) => {
-  const { isSaveProfit, companyId, year } = props;
+  const { isSaveProfit, companyId, year ,updateId } = props;
   const [profit_state, profit_dispatch] = useReducer(
     profit_reducer,
     profitJson1
@@ -156,7 +156,8 @@ export const ProfitModuleInit = (props) => {
       if (res.result) {
         // setCompanyId(res.result);
         message.success("操作成功！");
-        // localStorage.setItem("companyId", res.result);
+        localStorage.setItem("companyId", res.result);
+        updateId(res.result);
       }
     } else {
       message.error("操作失败！");

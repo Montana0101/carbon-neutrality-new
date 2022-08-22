@@ -90,7 +90,7 @@ export const CashModuleEdit = (props) => {
 
 // 现金流量初始化状态
 export const CashModuleInit = (props) => {
-  const { isSaveCash, companyId, year } = props;
+  const { isSaveCash, companyId, year ,updateId} = props;
   const [cash_state, cash_dispatch] = useReducer(cash_reducer, cashJson1);
   const [cashEnter, setCashEnter] = useState({ value: "", line: null });
 
@@ -152,7 +152,8 @@ export const CashModuleInit = (props) => {
       if (res.result) {
         // setCompanyId(res.result);
         message.success("操作成功！");
-        // localStorage.setItem("companyId", res.result);
+        localStorage.setItem("companyId", res.result);
+        updateId(res.result)
       }
     } else {
       message.error("操作失败！");
