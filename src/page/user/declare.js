@@ -32,7 +32,8 @@ import locale from "antd/es/date-picker/locale/zh_CN";
 import { UploadOutlined } from "@ant-design/icons";
 import Others from "./others"; //其他模块
 import moment from "moment";
-
+import {AssetModuleInit,AssetModuleEdit} from "./component/assetModule"
+import {ProfitModuleEdit,ProfitModuleInit} from "./component/profitModule"
 const defaultColor = "rgba(0,0,0,0.3)";
 var assetJson = require("./json/asset.json"); //资产负债json
 var assetJson1 = require("./json/asset.json"); //资产负债json
@@ -116,155 +117,8 @@ const cash_reducer = (state, action) => {
   return { ...state, ...name };
 };
 
+
 // 财务负债编辑状态
-const AssetModuleEdit = (props) => {
-  const { isSaveAsset, companyId } = props;
-  const [asset_state, asset_dispatch] = useReducer(asset_reducer, assetJson);
-  const [assetEnter, setAssetEnter] = useState({ value: "", line: null });
-
-  useEffect(() => {
-    dispathTrigger();
-    // console.log("检测是否触发了assetEnter")
-  }, [assetEnter]);
-
-  useEffect(() => {
-    if (isSaveAsset) {
-      saveDeclareBalance();
-    }
-  }, [isSaveAsset]);
-
-  // 根据行进行事件订阅
-  const dispathTrigger = (str, json) => {
-    let line = assetEnter.line || "";
-    let no = line.length == 3 ? line.substr(0, 1) : line.substr(0, 2);
-
-    Object.values(assetJson).map((item) => {
-      if (item.lineNo == no) {
-        assetDispatch(line, item.name);
-      }
-    });
-  };
-
-  // 资产负债表封装订阅
-  const assetDispatch = (no, name) => {
-    // 判断是期末还是年初，true为年初，false为期末
-    let flag = no.substr(no.length - 1, 1) == 0 ? true : false;
-    return asset_dispatch({
-      type: "assetLine" + no,
-      name: {
-        [name]: {
-          beginningBalance: flag
-            ? assetEnter.value
-            : asset_state[name].beginningBalance || 0,
-          endingBalance: flag
-            ? asset_state[name].endingBalance || 0
-            : assetEnter.value,
-          // lineNo:asset_state[name].lineNo
-        },
-      },
-    });
-  };
-
-  // 保存资产负债表
-  const saveDeclareBalance = async () => {
-    let res;
-    let params = JSON.parse(JSON.stringify(asset_state));
-    // params.years = years;
-    params.companyId = companyId;
-    res = await putDeclareBalance(params);
-
-    if (res && res.code == 2000) {
-      if (res.result) {
-        // setCompanyId(res.result);
-        message.success("操作成功！");
-        // localStorage.setItem("companyId", res.result);
-      }
-    } else {
-      message.error("操作失败！");
-    }
-  };
-
-  return (
-    <>{<AssetTable onInput={(e) => setAssetEnter(e)} data={asset_state} />}</>
-  );
-};
-
-// 财务负债初始化状态
-const AssetModuleInit = (props) => {
-  const { isSaveAsset, companyId } = props;
-  const [asset_state1, asset_dispatch] = useReducer(asset_reducer1, assetJson1);
-  const [assetEnter, setAssetEnter] = useState({ value: "", line: null });
-
-  useEffect(() => {
-    dispathTrigger("assetEnter22222222222 输入变化监听");
-    // console.log("检测是否触发了assetEnter")
-  }, [assetEnter]);
-
-  useEffect(() => {
-    if (isSaveAsset) {
-      saveDeclareBalance();
-    }
-  }, [isSaveAsset]);
-
-  useEffect(() => {
-    console.log("新增财务报表初始化", assetJson1);
-  }, []);
-
-  // 根据行进行事件订阅
-  const dispathTrigger = (str, json) => {
-    let line = assetEnter.line || "";
-    let no = line.length == 3 ? line.substr(0, 1) : line.substr(0, 2);
-
-    Object.values(assetJson).map((item) => {
-      if (item.lineNo == no) {
-        assetDispatch(line, item.name);
-      }
-    });
-  };
-
-  // 资产负债表封装订阅
-  const assetDispatch = (no, name) => {
-    // 判断是期末还是年初，true为年初，false为期末
-    let flag = no.substr(no.length - 1, 1) == 0 ? true : false;
-    return asset_dispatch({
-      type: "assetLine" + no,
-      name: {
-        [name]: {
-          beginningBalance: flag
-            ? assetEnter.value
-            : asset_state1[name].beginningBalance || 0,
-          endingBalance: flag
-            ? asset_state1[name].endingBalance || 0
-            : assetEnter.value,
-          // lineNo:asset_state1[name].lineNo
-        },
-      },
-    });
-  };
-
-  // 保存资产负债表
-  const saveDeclareBalance = async () => {
-    let res;
-    let params = JSON.parse(JSON.stringify(asset_state1));
-    // params.years = years;
-    params.companyId = companyId;
-    res = await putDeclareBalance(params);
-
-    if (res && res.code == 2000) {
-      if (res.result) {
-        // setCompanyId(res.result);
-        message.success("操作成功！");
-        // localStorage.setItem("companyId", res.result);
-      }
-    } else {
-      message.error("操作失败！");
-    }
-  };
-
-  return (
-    <>{<AssetTable onInput={(e) => setAssetEnter(e)} data={asset_state1} />}</>
-  );
-};
 
 function Declare(props) {
   const [tabInx, setTabInx] = useState(0);
@@ -296,6 +150,9 @@ function Declare(props) {
   const [flagAssetNew, setFlagAssetNew] = useState(false); // 财务报表新增渲染判断
   const [isSaveAsset, setIsSaveAsset] = useState(false); // 保存财务报表
 
+  const [flagProfitEdit, setFlagProfitEdit] = useState(false); // 利润表编辑渲染判断
+  const [flagProfitNew, setFlagProfitNew] = useState(false); // 利润表新增渲染判断
+  const [isSaveProfit, setIsSaveProfit] = useState(false); // 保存利润表
 
   var date = new Date();
   var y = date.getFullYear();
@@ -349,6 +206,7 @@ function Declare(props) {
       // dispathTrigger("请求响应成功后的事件订阅");
 
       setFlagAssetEdit(true);
+      setFlagProfitEdit(true);
       setObj(res.result);
     }
   };
@@ -368,30 +226,14 @@ function Declare(props) {
     } else {
       // 新增财务报表按钮
       setFlagAssetNew(true);
+      setFlagProfitNew(true);
     }
   }, []);
-
-  useEffect(() => {
-    console.log("打印下flagAssetEdit正负极", flagAssetEdit);
-  }, [flagAssetEdit]);
-
-  // 监听输入变化
-  // useEffect(() => {
-  //   console.log("asset_state输入变化111", asset_state);
-  // }, [asset_state]);
-
-  useEffect(() => {
-    // console.log("profit_state输入变化", profit_state);
-  }, [profit_state]);
-
-  useEffect(() => {
-    // console.log("cash_state输入变化", cash_state);
-  }, [cash_state]);
 
   // 触发事件
   useEffect(() => {
     dispathTrigger("assetEnter 11111111输入变化监听");
-    // console.log("检测是否触发了assetEnter")
+    console.log("检测是否触发了assetEnter");
   }, [assetEnter, profitEnter, cashEnter]);
 
   // 保存资产负债表
@@ -430,46 +272,26 @@ function Declare(props) {
     }
   };
 
-  // 资产负债表封装订阅
-  const assetDispatch = (no, name) => {
-    // 判断是期末还是年初，true为年初，false为期末
-    // let flag = no.substr(no.length - 1, 1) == 0 ? true : false;
-    // console.log("Bdhas ",no,name)
-    // return asset_dispatch({
-    //   type: "assetLine" + no,
-    //   name: {
-    //     [name]: {
-    //       beginningBalance: flag
-    //         ? assetEnter.value
-    //         : asset_state[name].beginningBalance || 0,
-    //       endingBalance: flag
-    //         ? asset_state[name].endingBalance || 0
-    //         : assetEnter.value,
-    //       // lineNo:asset_state[name].lineNo
-    //     },
-    //   },
-    // });
-  };
 
-  // 利润表封装订阅
-  const profitDispatch = (no, name) => {
-    // 判断是累计还是当前，true为累计，false为当前
-    let flag = no.substr(no.length - 1, 1) == 0 ? true : false;
+  // // 利润表封装订阅
+  // const profitDispatch = (no, name) => {
+  //   // 判断是累计还是当前，true为累计，false为当前
+  //   let flag = no.substr(no.length - 1, 1) == 0 ? true : false;
 
-    return profit_dispatch({
-      type: "profitLine" + no,
-      name: {
-        [name]: {
-          currentAmount: flag
-            ? profitEnter.value
-            : profit_state[name].currentAmount || 0,
-          accumulatedAmount: flag
-            ? profit_state[name].accumulatedAmount || 0
-            : profitEnter.value,
-        },
-      },
-    });
-  };
+  //   return profit_dispatch({
+  //     type: "profitLine" + no,
+  //     name: {
+  //       [name]: {
+  //         currentAmount: flag
+  //           ? profitEnter.value
+  //           : profit_state[name].currentAmount || 0,
+  //         accumulatedAmount: flag
+  //           ? profit_state[name].accumulatedAmount || 0
+  //           : profitEnter.value,
+  //       },
+  //     },
+  //   });
+  // };
 
   // 现金流量表封装订阅
   const cashDispatch = (no, name) => {
@@ -747,24 +569,40 @@ function Declare(props) {
                   {tabInx == 0 && flagAssetEdit && (
                     <AssetModuleEdit
                       companyId={companyId}
-                      // assetJson1={assetJson1}
                       isSaveAsset={isSaveAsset}
+                      year={years}
+                      assetJson={assetJson}
                     />
                   )}
 
                   {tabInx == 0 && flagAssetNew && (
                     <AssetModuleInit
                       companyId={companyId}
-                      // assetJson1={assetJson1}
                       isSaveAsset={isSaveAsset}
+                      year={years}
                     />
                   )}
 
                   {/* 利润表 */}
-                  {tabInx == 1 && (
+                  {/* {tabInx == 1 && (
                     <ProfitTable
                       onInput={(e) => setProfitEnter(e)}
                       data={profit_state}
+                    />
+                  )} */}
+                  {tabInx == 1 && flagProfitEdit && (
+                    <ProfitModuleEdit
+                      companyId={companyId}
+                      isSaveProfit={isSaveProfit}
+                      year={years}
+                    />
+                  )}
+
+                  {tabInx == 1 && flagProfitNew && (
+                    <ProfitModuleInit
+                      companyId={companyId}
+                      isSaveProfit={isSaveProfit}
+                      year={years}
                     />
                   )}
 
