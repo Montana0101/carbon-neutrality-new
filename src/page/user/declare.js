@@ -35,6 +35,7 @@ import moment from "moment";
 
 const defaultColor = "rgba(0,0,0,0.3)";
 var assetJson = require("./json/asset.json"); //资产负债json
+var assetJson1 = require("./json/asset.json"); //资产负债json
 var profitJson = require("./json/profit.json"); // 利润表json
 var cashJson = require("./json/cash.json");
 
@@ -97,6 +98,12 @@ const asset_reducer = (state, action) => {
   return { ...state, ...name };
 };
 
+// 资产负债表reducer
+const asset_reducer1 = (state, action) => {
+  const { name } = action;
+  return { ...state, ...name };
+};
+
 // 利润表reducer
 const profit_reducer = (state, action) => {
   const { name } = action;
@@ -109,32 +116,22 @@ const cash_reducer = (state, action) => {
   return { ...state, ...name };
 };
 
-const AssetModule = (props) => {
-  const { assetJson1, isSubmit,companyId} = props;
+// 财务负债编辑状态
+const AssetModuleEdit = (props) => {
+  const { isSaveAsset, companyId } = props;
   const [asset_state, asset_dispatch] = useReducer(asset_reducer, assetJson);
   const [assetEnter, setAssetEnter] = useState({ value: "", line: null });
 
   useEffect(() => {
-    dispathTrigger("assetEnter22222222222 输入变化监听");
+    dispathTrigger();
     // console.log("检测是否触发了assetEnter")
   }, [assetEnter]);
 
   useEffect(() => {
-    console.log("接收到的json数据", assetJson1);
-  }, [assetJson1]);
-
-  useEffect(() => {
-    console.log("不打算举报asset_state", asset_state);
-  }, [asset_state]);
-
-  useEffect(() => {
-    if (isSubmit) {
-      console.log("可以保存");
-      saveDeclareBalance()
-    }else{
-      console.log("不能保存")
+    if (isSaveAsset) {
+      saveDeclareBalance();
     }
-  }, [isSubmit]);
+  }, [isSaveAsset]);
 
   // 根据行进行事件订阅
   const dispathTrigger = (str, json) => {
@@ -152,7 +149,6 @@ const AssetModule = (props) => {
   const assetDispatch = (no, name) => {
     // 判断是期末还是年初，true为年初，false为期末
     let flag = no.substr(no.length - 1, 1) == 0 ? true : false;
-    // console.log("Bdhas ",no,name)
     return asset_dispatch({
       type: "assetLine" + no,
       name: {
@@ -193,12 +189,88 @@ const AssetModule = (props) => {
   );
 };
 
+// 财务负债初始化状态
+const AssetModuleInit = (props) => {
+  const { isSaveAsset, companyId } = props;
+  const [asset_state1, asset_dispatch] = useReducer(asset_reducer1, assetJson1);
+  const [assetEnter, setAssetEnter] = useState({ value: "", line: null });
+
+  useEffect(() => {
+    dispathTrigger("assetEnter22222222222 输入变化监听");
+    // console.log("检测是否触发了assetEnter")
+  }, [assetEnter]);
+
+  useEffect(() => {
+    if (isSaveAsset) {
+      saveDeclareBalance();
+    }
+  }, [isSaveAsset]);
+
+  useEffect(() => {
+    console.log("新增财务报表初始化", assetJson1);
+  }, []);
+
+  // 根据行进行事件订阅
+  const dispathTrigger = (str, json) => {
+    let line = assetEnter.line || "";
+    let no = line.length == 3 ? line.substr(0, 1) : line.substr(0, 2);
+
+    Object.values(assetJson).map((item) => {
+      if (item.lineNo == no) {
+        assetDispatch(line, item.name);
+      }
+    });
+  };
+
+  // 资产负债表封装订阅
+  const assetDispatch = (no, name) => {
+    // 判断是期末还是年初，true为年初，false为期末
+    let flag = no.substr(no.length - 1, 1) == 0 ? true : false;
+    return asset_dispatch({
+      type: "assetLine" + no,
+      name: {
+        [name]: {
+          beginningBalance: flag
+            ? assetEnter.value
+            : asset_state1[name].beginningBalance || 0,
+          endingBalance: flag
+            ? asset_state1[name].endingBalance || 0
+            : assetEnter.value,
+          // lineNo:asset_state1[name].lineNo
+        },
+      },
+    });
+  };
+
+  // 保存资产负债表
+  const saveDeclareBalance = async () => {
+    let res;
+    let params = JSON.parse(JSON.stringify(asset_state1));
+    // params.years = years;
+    params.companyId = companyId;
+    res = await putDeclareBalance(params);
+
+    if (res && res.code == 2000) {
+      if (res.result) {
+        // setCompanyId(res.result);
+        message.success("操作成功！");
+        // localStorage.setItem("companyId", res.result);
+      }
+    } else {
+      message.error("操作失败！");
+    }
+  };
+
+  return (
+    <>{<AssetTable onInput={(e) => setAssetEnter(e)} data={asset_state1} />}</>
+  );
+};
+
 function Declare(props) {
-  // const [_flag,setFlag] = useState(true)
   const [tabInx, setTabInx] = useState(0);
   const [inx, setInx] = useState(0);
   const [assetEnter, setAssetEnter] = useState({ value: "", line: null });
-  const [asset_state, asset_dispatch] = useReducer(asset_reducer, assetJson); // 资产负债表订阅
+  // const [asset_state, asset_dispatch] = useReducer(asset_reducer, assetJson); // 资产负债表订阅
   const [profitEnter, setProfitEnter] = useState({ value: "", line: null });
   const [profit_state, profit_dispatch] = useReducer(
     profit_reducer,
@@ -219,11 +291,11 @@ function Declare(props) {
   const [burn, setBurn] = useState(false); //卸载组件
 
   const [flag, setFlag] = useState(false);
-  const [flag1, setFlag1] = useState(false);
-  const [isSave1, setIsSave1] = useState(false);
-  const [isSubmit, setIsSubmit] = useState(false); // 保存财务报表
 
-  const [assetJson1, setAssetJson1] = useState({});
+  const [flagAssetEdit, setFlagAssetEdit] = useState(false); // 财务报表编辑渲染判断
+  const [flagAssetNew, setFlagAssetNew] = useState(false); // 财务报表新增渲染判断
+  const [isSaveAsset, setIsSaveAsset] = useState(false); // 保存财务报表
+
 
   var date = new Date();
   var y = date.getFullYear();
@@ -275,13 +347,8 @@ function Declare(props) {
       delete cashModels.years;
       cashJson = cashModels;
       // dispathTrigger("请求响应成功后的事件订阅");
-      Object.values(assetJson).map((item) => {
-        // if (item.lineNo == no) {
-        // assetDispatch(item.lineNo, item.name);
-        // }
-      });
-      setFlag1(true);
-      setAssetJson1(assetJson);
+
+      setFlagAssetEdit(true);
       setObj(res.result);
     }
   };
@@ -298,13 +365,20 @@ function Declare(props) {
     if (props.location.state && props.location.state.action == 1) {
       // 编辑状态
       _getDeclareDetail(companyId);
+    } else {
+      // 新增财务报表按钮
+      setFlagAssetNew(true);
     }
   }, []);
 
-  // 监听输入变化
   useEffect(() => {
-    console.log("asset_state输入变化111", asset_state);
-  }, [asset_state]);
+    console.log("打印下flagAssetEdit正负极", flagAssetEdit);
+  }, [flagAssetEdit]);
+
+  // 监听输入变化
+  // useEffect(() => {
+  //   console.log("asset_state输入变化111", asset_state);
+  // }, [asset_state]);
 
   useEffect(() => {
     // console.log("profit_state输入变化", profit_state);
@@ -320,11 +394,6 @@ function Declare(props) {
     // console.log("检测是否触发了assetEnter")
   }, [assetEnter, profitEnter, cashEnter]);
 
-  useEffect(() => {
-    if (flag1) {
-    }
-  }, [flag1]);
-
   // 保存资产负债表
   const saveDeclareBalance = async () => {
     if (!years) {
@@ -334,10 +403,10 @@ function Declare(props) {
     let res;
     // 资产负债表
     if (tabInx == 0) {
-      let params = JSON.parse(JSON.stringify(asset_state));
-      params.years = years;
-      params.companyId = companyId;
-      res = await putDeclareBalance(params);
+      // let params = JSON.parse(JSON.stringify(asset_state));
+      // params.years = years;
+      // params.companyId = companyId;
+      // res = await putDeclareBalance(params);
     } else if (tabInx == 1) {
       let params = JSON.parse(JSON.stringify(profit_state));
       params.years = years;
@@ -364,22 +433,22 @@ function Declare(props) {
   // 资产负债表封装订阅
   const assetDispatch = (no, name) => {
     // 判断是期末还是年初，true为年初，false为期末
-    let flag = no.substr(no.length - 1, 1) == 0 ? true : false;
+    // let flag = no.substr(no.length - 1, 1) == 0 ? true : false;
     // console.log("Bdhas ",no,name)
-    return asset_dispatch({
-      type: "assetLine" + no,
-      name: {
-        [name]: {
-          beginningBalance: flag
-            ? assetEnter.value
-            : asset_state[name].beginningBalance || 0,
-          endingBalance: flag
-            ? asset_state[name].endingBalance || 0
-            : assetEnter.value,
-          // lineNo:asset_state[name].lineNo
-        },
-      },
-    });
+    // return asset_dispatch({
+    //   type: "assetLine" + no,
+    //   name: {
+    //     [name]: {
+    //       beginningBalance: flag
+    //         ? assetEnter.value
+    //         : asset_state[name].beginningBalance || 0,
+    //       endingBalance: flag
+    //         ? asset_state[name].endingBalance || 0
+    //         : assetEnter.value,
+    //       // lineNo:asset_state[name].lineNo
+    //     },
+    //   },
+    // });
   };
 
   // 利润表封装订阅
@@ -437,12 +506,12 @@ function Declare(props) {
 
     if (tabInx == 0) {
       // console.log(str, assetJson);
-      setFlag(true);
-      Object.values(assetJson).map((item) => {
-        if (item.lineNo == no) {
-          assetDispatch(line, item.name);
-        }
-      });
+      // setFlag(true);
+      // Object.values(assetJson).map((item) => {
+      //   if (item.lineNo == no) {
+      //     assetDispatch(line, item.name);
+      //   }
+      // });
     } else if (tabInx == 1) {
       Object.values(profitJson).map((item) => {
         if (item.lineNo == no) {
@@ -675,12 +744,19 @@ function Declare(props) {
                     </div>
                   </section>
                   {/* 资产负债表 */}
-                  {tabInx == 0 && flag1 && (
-                    <AssetModule
+                  {tabInx == 0 && flagAssetEdit && (
+                    <AssetModuleEdit
                       companyId={companyId}
-                      isSave1={isSave1}
-                      assetJson1={assetJson1}
-                      isSubmit={isSubmit}
+                      // assetJson1={assetJson1}
+                      isSaveAsset={isSaveAsset}
+                    />
+                  )}
+
+                  {tabInx == 0 && flagAssetNew && (
+                    <AssetModuleInit
+                      companyId={companyId}
+                      // assetJson1={assetJson1}
+                      isSaveAsset={isSaveAsset}
                     />
                   )}
 
@@ -729,7 +805,7 @@ function Declare(props) {
                       onClick={() => {
                         // saveDeclareBalance();
                         if (tabInx == 0) {
-                          setIsSubmit(true);
+                          setIsSaveAsset(true);
                         }
                       }}
                     >
