@@ -6,7 +6,8 @@ import {
   readMessage,
   attentionList,
   attentionInfo,
-  myDeclare,deleteDeclare
+  myDeclare,
+  deleteDeclare,
 } from "../../apis/index";
 import { ThemeColor, CutLine } from "../../lib/const";
 import { ExclamationCircleFilled } from "@ant-design/icons";
@@ -127,7 +128,7 @@ function CommonUser(props) {
   const [total, setTotal] = useState(0);
 
   const [page, setPage] = useState(1); // 页码
-  const [limit,setLimit] = useState(10);
+  const [limit, setLimit] = useState(10);
   const [companyName, setCompanyName] = useState("");
   const [status, setStatus] = useState("");
   // const [data, setData] = useState([]) // 饼图数据
@@ -248,29 +249,44 @@ function CommonUser(props) {
 
   // 删除申报记录
   const _deleteRecord = async (id) => {
-    const res = await deleteDeclare(id)
+    const res = await deleteDeclare(id);
     if (res && res.code === 2000) {
       message.success("删除成功");
-      _declareList()
+      _declareList();
     } else {
       message.error("删除失败");
     }
-  }
+  };
 
   // 申报模型
   const columns_d = [
     {
       title: "序号",
       render: (text, record, index) => {
-        return <span>{(page-1)*limit + (index + 1)}</span>;
+        return <span>{(page - 1) * limit + (index + 1)}</span>;
       },
     },
     {
       title: "状态",
       render: (text, record, index) => {
-        return <span style={{
-          color: record.declareStatus ==0 ? "#EFA71C" : (record.declareStatus ==1 ? "#5163AA" : ThemeColor)
-        }}>{record.declareStatus ==0 ? "正在编辑" : (record.declareStatus ==1 ? "待审核" : "已审核 " + record.score)}</span>;
+        return (
+          <span
+            style={{
+              color:
+                record.declareStatus == 0
+                  ? "#EFA71C"
+                  : record.declareStatus == 1
+                  ? "#5163AA"
+                  : ThemeColor,
+            }}
+          >
+            {record.declareStatus == 0
+              ? "正在编辑"
+              : record.declareStatus == 1
+              ? "待审核"
+              : "已审核 " + record.score}
+          </span>
+        );
       },
     },
     {
@@ -291,26 +307,31 @@ function CommonUser(props) {
       render: (text, record) => {
         return (
           <div style={{ display: "flex", justifyContent: "space-around" }}>
-            <div style={{ marginBottom: "0.05rem" }} onClick={
-              ()=>{
-                // _editDeclare([record.id]);
-                history.push("declare",{id:record.id,action:1})
-              }
-            }>
-              {ButtonCmt(ThemeColor, "white", "编辑")}
-            </div>
             <div
+              style={{ marginBottom: "0.05rem" }}
               onClick={() => {
-                _deleteRecord([record.id]);
+                // _editDeclare([record.id]);
+                history.push("declare", { id: record.id, action: 1 });
               }}
             >
-              {ButtonCmt("#FD867F", "white", "删除")}
+              {ButtonCmt(ThemeColor, "white", "编辑")}
+            </div>
+            <div>
+              <Popconfirm
+                title="确认删除该条申报吗？"
+                onConfirm={()=>{ _deleteRecord([record.id]);}}
+                // onCancel={cancel}
+                okText="确认"
+                cancelText="取消"
+              >
+                {ButtonCmt("#FD867F", "white", "删除")}
+              </Popconfirm>
             </div>
           </div>
         );
       },
     },
-  ]
+  ];
 
   // 关注模型
   const columns = [
@@ -507,7 +528,7 @@ function CommonUser(props) {
                   }}
                 >
                   <span style={{ fontSize: "0.2rem" }}>
-                    {attention ? attention.current : 0}
+                    {attention.current ? attention.current : 0}
                   </span>
                   <span style={{ fontSize: "0.12rem", marginTop: "0.03rem" }}>
                     个
@@ -539,7 +560,7 @@ function CommonUser(props) {
                   }}
                 >
                   <span style={{ fontSize: "0.2rem" }}>
-                    {attention ? attention.total : 0}
+                    {attention.total ? attention.total : 0}
                   </span>
                   <span style={{ fontSize: "0.12rem", marginTop: "0.03rem" }}>
                     个
@@ -571,7 +592,7 @@ function CommonUser(props) {
         >
           <TabPane tab="我的申报" key="1"></TabPane>
           <TabPane tab="我的关注" key="2">
-            <section style={{ padding: "0.2rem 0.3rem",paddingTop:"0.3rem" }}>
+            <section style={{ padding: "0.2rem 0.3rem", paddingTop: "0.3rem" }}>
               <Form>
                 <Row>
                   <Col span={11}>
@@ -673,7 +694,7 @@ function CommonUser(props) {
             ) : (
               <div
                 onClick={() => {
-                  history.push("/declare",{action:0});
+                  history.push("/declare", { action: 0 });
                 }}
               >
                 {ButtonCmt(ThemeColor, "white", "+ 添加申报", "1rem")}
@@ -690,7 +711,7 @@ function CommonUser(props) {
           fontWeight: "400",
           display: "flex",
           margin: "0 0.5rem",
-          padding: tabInx==1 ? "0 0.3rem" : "0.3rem",
+          padding: tabInx == 1 ? "0 0.3rem" : "0.3rem",
           alignItems: "center",
           justifyContent: "flex-start",
           flexDirection: "column",
