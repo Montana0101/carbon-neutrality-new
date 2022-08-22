@@ -3,6 +3,7 @@ import { putDeclareProfit } from "../../../apis/index";
 import { message } from "antd";
 // import "./declare.less";
 import ProfitTable from "./profitTable";
+
 var profitJson = require("../json/profit.json"); //资产负债json
 var profitJson1 = require("../json/profit.json"); //资产负债json
 

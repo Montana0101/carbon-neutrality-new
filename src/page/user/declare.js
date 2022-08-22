@@ -34,6 +34,7 @@ import Others from "./others"; //其他模块
 import moment from "moment";
 import {AssetModuleInit,AssetModuleEdit} from "./component/assetModule"
 import {ProfitModuleEdit,ProfitModuleInit} from "./component/profitModule"
+
 const defaultColor = "rgba(0,0,0,0.3)";
 var assetJson = require("./json/asset.json"); //资产负债json
 var assetJson1 = require("./json/asset.json"); //资产负债json
@@ -93,17 +94,6 @@ const UpdateCmt = () => {
   );
 };
 
-// 资产负债表reducer
-const asset_reducer = (state, action) => {
-  const { name } = action;
-  return { ...state, ...name };
-};
-
-// 资产负债表reducer
-const asset_reducer1 = (state, action) => {
-  const { name } = action;
-  return { ...state, ...name };
-};
 
 // 利润表reducer
 const profit_reducer = (state, action) => {
@@ -335,17 +325,17 @@ function Declare(props) {
       //   }
       // });
     } else if (tabInx == 1) {
-      Object.values(profitJson).map((item) => {
-        if (item.lineNo == no) {
-          profitDispatch(line, item.name);
-        }
-      });
+      // Object.values(profitJson).map((item) => {
+      //   if (item.lineNo == no) {
+      //     profitDispatch(line, item.name);
+      //   }
+      // });
     } else if (tabInx == 2) {
-      Object.values(cashJson).map((item) => {
-        if (item.lineNo == no) {
-          cashDispatch(line, item.name);
-        }
-      });
+      // Object.values(cashJson).map((item) => {
+      //   if (item.lineNo == no) {
+      //     cashDispatch(line, item.name);
+      //   }
+      // });
     }
     setFlag(false);
   };
@@ -595,6 +585,7 @@ function Declare(props) {
                       companyId={companyId}
                       isSaveProfit={isSaveProfit}
                       year={years}
+                      profitJson={profitJson}
                     />
                   )}
 
@@ -644,6 +635,8 @@ function Declare(props) {
                         // saveDeclareBalance();
                         if (tabInx == 0) {
                           setIsSaveAsset(true);
+                        }else if(tabInx==1){
+                          setIsSaveProfit(true)
                         }
                       }}
                     >
