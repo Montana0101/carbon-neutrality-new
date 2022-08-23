@@ -362,7 +362,6 @@ function Others(props) {
       _obj.city = obj.city;
       _obj.district = obj.district;
       setTable1(_obj);
-      // console.log("")
     } else if (props.inx == 2) {
       // 公司战略
       form.setFieldsValue({
@@ -371,6 +370,10 @@ function Others(props) {
       });
     } else if (inx == 3) {
       // 公司经营
+      form.setFieldsValue({
+        businessModel: obj.businessModel,  //商业模式
+        mainBusiness: obj.mainBusiness,   //主营业务
+      });
       let _obj = JSON.parse(JSON.stringify(table3));
       _obj.mainBusiness = obj.mainBusiness;
       _obj.businessModel = obj.businessModel;
@@ -444,8 +447,12 @@ function Others(props) {
   }, [props.inx]);
 
   useEffect(() => {
-    console.log("监听公司基本信息数据变化", table1);
+    console.log("监听基本信息---->", table1);
   }, [table1]);
+
+  useEffect(() => {
+    console.log("监听公司经营---->", table3);
+  }, [table3]);
 
   const initRef = useRef();
 
@@ -741,14 +748,17 @@ function Others(props) {
             name="advanced_search"
             className="ant-advanced-search-form"
             onFinish={onFinish}
+            onChange={(e) => {
+              let obj = form.getFieldsValue();
+              console.log("监听下书",obj)
+              // obj.id = companyId ? companyId : null;
+              // setTable3(obj);
+            }}
           >
             <Row gutter={24}>
               <Col span={12}>
                 <Form.Item label={"商业模式"} name="businessModel">
-                  <section style={{ display: "flex" }}>
-                    <span>&nbsp;</span> <span>&nbsp;</span>
-                    <span>&nbsp;</span>
-                    <Input.TextArea
+                <Input.TextArea
                       showCount
                       maxLength={300}
                       style={{ width: "100%" }}
@@ -758,11 +768,7 @@ function Others(props) {
                         _obj.businessModel = e.target.value;
                         setTable3(_obj);
                       }}
-                      defaultValue={
-                        table3.businessModel ? table3.businessModel : ""
-                      }
                     />
-                  </section>
                 </Form.Item>
               </Col>
 
@@ -781,9 +787,6 @@ function Others(props) {
                         _obj.mainBusiness = e.target.value;
                         setTable3(_obj);
                       }}
-                      defaultValue={
-                        table3.mainBusiness ? table3.mainBusiness : ""
-                      }
                     />
                   </section>
                 </Form.Item>

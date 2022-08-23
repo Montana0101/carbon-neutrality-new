@@ -1,10 +1,6 @@
 import { useState, useEffect, useReducer } from "react";
-import {
-  putDeclareBalance,
-} from "../../../apis/index";
-import {
-  message,
-} from "antd";
+import { putDeclareBalance } from "../../../apis/index";
+import { message } from "antd";
 // import "./declare.less";
 import AssetTable from "./assetTable";
 var assetJson = require("../json/asset.json"); //资产负债json
@@ -18,13 +14,13 @@ const asset_reducer = (state, action) => {
 
 // 财务负债编辑状态
 export const AssetModuleEdit = (props) => {
-  const { isSaveAsset, companyId, year,assetJson,resetSaveButton } = props;
+  const { isSaveAsset, companyId, year, assetJson, resetSaveButton } = props;
   const [asset_state, asset_dispatch] = useReducer(asset_reducer, assetJson);
   const [assetEnter, setAssetEnter] = useState({ value: "", line: null });
 
   useEffect(() => {
     dispathTrigger();
-    // console.log("检测是否触发了assetEnter")
+    console.log("检测是否触发了assetEnter", asset_state);
   }, [assetEnter]);
 
   useEffect(() => {
@@ -55,9 +51,9 @@ export const AssetModuleEdit = (props) => {
         [name]: {
           beginningBalance: flag
             ? assetEnter.value
-            : asset_state[name].beginningBalance || 0,
+            : asset_state[name].beginningBalance,
           endingBalance: flag
-            ? asset_state[name].endingBalance || 0
+            ? asset_state[name].endingBalance
             : assetEnter.value,
           // lineNo:asset_state[name].lineNo
         },
@@ -65,8 +61,31 @@ export const AssetModuleEdit = (props) => {
     });
   };
 
+  // 判断是否为空
+  const _isEmpty = () => {
+    var _flag = true;
+    let _obj = JSON.parse(JSON.stringify(asset_state));
+    delete _obj.companyId;
+    delete _obj.years;
+
+    Object.values(_obj).map((item, index) => {
+      if (item.beginningBalance == null) {
+        _flag = false;
+      }
+      if (item.endingBalance == null) {
+        _flag = false;
+      }
+    });
+    return _flag;
+  };
+
   // 保存资产负债表
   const saveDeclareBalance = async () => {
+    if (!_isEmpty()) {
+      message.warn("每一项都必填");
+      resetSaveButton();
+      return;
+    }
     let res;
     let params = JSON.parse(JSON.stringify(asset_state));
     params.years = year;
@@ -82,7 +101,7 @@ export const AssetModuleEdit = (props) => {
     } else {
       message.error("操作失败！");
     }
-    resetSaveButton()
+    resetSaveButton();
   };
 
   return (
@@ -92,7 +111,7 @@ export const AssetModuleEdit = (props) => {
 
 // 财务负债初始化状态
 export const AssetModuleInit = (props) => {
-  const { isSaveAsset, companyId, year,updateId,resetSaveButton } = props;
+  const { isSaveAsset, companyId, year, updateId, resetSaveButton } = props;
   const [asset_state, asset_dispatch] = useReducer(asset_reducer, assetJson1);
   const [assetEnter, setAssetEnter] = useState({ value: "", line: null });
 
@@ -107,9 +126,23 @@ export const AssetModuleInit = (props) => {
     }
   }, [isSaveAsset]);
 
-  useEffect(() => {
-    console.log("新增财务报表初始化", assetJson1);
-  }, []);
+  // 判断是否为空
+  const _isEmpty = () => {
+    var _flag = true;
+    let _obj = JSON.parse(JSON.stringify(asset_state));
+    delete _obj.companyId;
+    delete _obj.years;
+
+    Object.values(_obj).map((item, index) => {
+      if (item.beginningBalance == null) {
+        _flag = false;
+      }
+      if (item.endingBalance == null) {
+        _flag = false;
+      }
+    });
+    return _flag;
+  };
 
   // 根据行进行事件订阅
   const dispathTrigger = (str, json) => {
@@ -133,9 +166,9 @@ export const AssetModuleInit = (props) => {
         [name]: {
           beginningBalance: flag
             ? assetEnter.value
-            : asset_state[name].beginningBalance || 0,
+            : asset_state[name].beginningBalance,
           endingBalance: flag
-            ? asset_state[name].endingBalance || 0
+            ? asset_state[name].endingBalance
             : assetEnter.value,
           // lineNo:asset_state[name].lineNo
         },
@@ -145,6 +178,11 @@ export const AssetModuleInit = (props) => {
 
   // 保存资产负债表
   const saveDeclareBalance = async () => {
+    if (!_isEmpty()) {
+      message.warn("每一项都必填");
+      resetSaveButton();
+      return;
+    }
     let res;
     let params = JSON.parse(JSON.stringify(asset_state));
     params.years = year;
@@ -156,17 +194,15 @@ export const AssetModuleInit = (props) => {
         // setCompanyId(res.result);
         message.success("操作成功！");
         localStorage.setItem("companyId", res.result);
-        updateId(res.result)
+        updateId(res.result);
       }
     } else {
       message.error("操作失败！");
     }
-    resetSaveButton()
+    resetSaveButton();
   };
 
   return (
     <>{<AssetTable onInput={(e) => setAssetEnter(e)} data={asset_state} />}</>
   );
 };
-
-

@@ -42,17 +42,17 @@ const InputCmt = (props) => {
           controls={false}
           defaultValue={amount}
           onChange={(e) => {
-            e != undefined && props.event({ value: e, line: line });
+            props.event({ value: e, line: line });
           }}
         />
       )}
 
-      {(amount == 0 || amount==null) && (
+      {(amount == 0 || amount == null) && (
         <InputNumber
           bordered={false}
           controls={false}
           onChange={(e) => {
-            e != undefined && props.event({ value: e, line: line });
+          props.event({ value: e, line: line });
           }}
         />
       )}

@@ -796,9 +796,7 @@ export default function Home(props) {
         </ul>
       </div>
 
-      {/* 分割区域 */}
-
-      {/* 聚焦行业 */}
+      {/* 业务范围 */}
       <div
         style={{ borderTop: CutLine, padding: "0 0.5rem" }}
         className="news_area"
@@ -927,6 +925,20 @@ export default function Home(props) {
           </section>
         </h3>
       </div>
+      <p
+        style={{
+          height: "0.5rem",
+          fontSize: "0.12rem",
+          color: "rgba(0,0,0,0.6)",
+          display:"flex",
+          justifyContent:"right",
+          padding:"0 0.5rem",
+          alignItems:"center"
+        }}
+      >
+        <span>访问量：</span>
+        <span>311</span>
+      </p>
     </div>
   );
 }

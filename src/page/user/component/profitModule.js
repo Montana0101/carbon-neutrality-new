@@ -15,7 +15,7 @@ const profit_reducer = (state, action) => {
 
 // 利润表编辑时
 export const ProfitModuleEdit = (props) => {
-  const { isSaveProfit, companyId, year, profitJson,resetSaveButton } = props;
+  const { isSaveProfit, companyId, year, profitJson, resetSaveButton } = props;
   const [profit_state, profit_dispatch] = useReducer(
     profit_reducer,
     profitJson
@@ -56,17 +56,40 @@ export const ProfitModuleEdit = (props) => {
         [name]: {
           currentAmount: flag
             ? profitEnter.value
-            : profit_state[name].currentAmount || 0,
+            : profit_state[name].currentAmount,
           accumulatedAmount: flag
-            ? profit_state[name].accumulatedAmount || 0
+            ? profit_state[name].accumulatedAmount
             : profitEnter.value,
         },
       },
     });
   };
 
+  // 判断是否为空
+  const _isEmpty = () => {
+    var _flag = true;
+    let _obj = JSON.parse(JSON.stringify(profit_state))
+    delete _obj.companyId
+    delete _obj.years 
+
+    Object.values(_obj).map((item, index) => {
+      if (item.accumulatedAmount == null) {
+        _flag = false;
+      }
+      if (item.currentAmount == null) {
+        _flag = false;
+      }
+    });
+    return _flag;
+  };
+
   // 保存资产负债表
   const saveDeclareBalance = async () => {
+    if (!_isEmpty()) {
+      message.warn("每一项都必填");
+      resetSaveButton();
+      return;
+    }
     let res;
     let params = JSON.parse(JSON.stringify(profit_state));
     params.years = year;
@@ -82,7 +105,7 @@ export const ProfitModuleEdit = (props) => {
     } else {
       message.error("操作失败！");
     }
-    resetSaveButton()
+    resetSaveButton();
   };
 
   return (
@@ -94,7 +117,7 @@ export const ProfitModuleEdit = (props) => {
 
 // 利润表新增时
 export const ProfitModuleInit = (props) => {
-  const { isSaveProfit, companyId, year ,updateId,resetSaveButton} = props;
+  const { isSaveProfit, companyId, year, updateId, resetSaveButton } = props;
   const [profit_state, profit_dispatch] = useReducer(
     profit_reducer,
     profitJson1
@@ -136,17 +159,40 @@ export const ProfitModuleInit = (props) => {
         [name]: {
           currentAmount: flag
             ? profitEnter.value
-            : profit_state[name].currentAmount || 0,
+            : profit_state[name].currentAmount,
           accumulatedAmount: flag
-            ? profit_state[name].accumulatedAmount || 0
+            ? profit_state[name].accumulatedAmount
             : profitEnter.value,
         },
       },
     });
   };
+  // 判断是否为空
+  const _isEmpty = () => {
+    var _flag = true;
+    let _obj = JSON.parse(JSON.stringify(profit_state))
+    delete _obj.companyId
+    delete _obj.years 
+
+    Object.values(_obj).map((item, index) => {
+      if (item.accumulatedAmount == null) {
+        _flag = false;
+      }
+      if (item.currentAmount == null) {
+        _flag = false;
+      }
+    });
+    return _flag;
+  };
 
   // 保存资产负债表
   const saveDeclareBalance = async () => {
+    console.log(profit_state)
+    if (!_isEmpty()) {
+      message.warn("每一项都必填");
+      resetSaveButton();
+      return;
+    }
     let res;
     let params = JSON.parse(JSON.stringify(profit_state));
     params.years = year;
@@ -163,7 +209,7 @@ export const ProfitModuleInit = (props) => {
     } else {
       message.error("操作失败！");
     }
-    resetSaveButton()
+    resetSaveButton();
   };
 
   return (

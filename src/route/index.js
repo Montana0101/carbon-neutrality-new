@@ -43,7 +43,7 @@ const Routers = () => {
         <Route path="/admin" exact component={Admin} />
         <Route path="/common" exact component={CommonUser} />
         <Route path="/contact" exact component={ContactUs} />
-        <Route path="/about" exact component={AboutLeague} />
+        <Route path="/about" exact component={AboutLeague} />  
         <Route path="/council" exact component={Council} />
         <Route path="/dynamic" exact component={Dynamic} />
         <Route path="/scope" exact component={Scope} />

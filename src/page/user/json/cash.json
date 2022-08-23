@@ -1,211 +1,211 @@
 {
     "servicesCash":{
-        "accumulatedAmount":0,
-        "currentAmount":0,
+        "accumulatedAmount":null,
+        "currentAmount":null,
         "lineNo":1,
         "name":"servicesCash"
     },
     "refundsTaxes":{
-        "accumulatedAmount":0,
-        "currentAmount":0,
+        "accumulatedAmount":null,
+        "currentAmount":null,
         "lineNo":2,
         "name":"refundsTaxes"
     },
     "operatingActivitiesCash":{
-        "accumulatedAmount":0,
-        "currentAmount":0,
+        "accumulatedAmount":null,
+        "currentAmount":null,
         "lineNo":3,
         "name":"operatingActivitiesCash"
     },
     "operatingSubtotal":{
-        "accumulatedAmount":0,
-        "currentAmount":0,
+        "accumulatedAmount":null,
+        "currentAmount":null,
         "lineNo":4,
         "name":"operatingSubtotal"
     },
     "purchasingGoodsCash":{
-        "accumulatedAmount":0,
-        "currentAmount":0,
+        "accumulatedAmount":null,
+        "currentAmount":null,
         "lineNo":5,
         "name":"purchasingGoodsCash"
     },
     "employeesCash":{
-        "accumulatedAmount":0,
-        "currentAmount":0,
+        "accumulatedAmount":null,
+        "currentAmount":null,
         "lineNo":6,
         "name":"employeesCash"
     },
     "taxesPaid":{
-        "accumulatedAmount":0,
-        "currentAmount":0,
+        "accumulatedAmount":null,
+        "currentAmount":null,
         "lineNo":7,
         "name":"taxesPaid"
     },
     "otherOperatingActivities":{
-        "accumulatedAmount":0,
-        "currentAmount":0,
+        "accumulatedAmount":null,
+        "currentAmount":null,
         "lineNo":8,
         "name":"otherOperatingActivities"
     },
     "operatingActivitiesSubtotal":{
-        "accumulatedAmount":0,
-        "currentAmount":0,
+        "accumulatedAmount":null,
+        "currentAmount":null,
         "lineNo":9,
         "name":"operatingActivitiesSubtotal"
     },
     "netOperatingActivities":{
-        "accumulatedAmount":0,
-        "currentAmount":0,
+        "accumulatedAmount":null,
+        "currentAmount":null,
         "lineNo":10,
         "name":"netOperatingActivities"
     },
     "receivedInvestmentRecovery":{
-        "accumulatedAmount":0,
-        "currentAmount":0,
+        "accumulatedAmount":null,
+        "currentAmount":null,
         "lineNo":11,
         "name":"receivedInvestmentRecovery"
     },
     "investmentIncome":{
-        "accumulatedAmount":0,
-        "currentAmount":0,
+        "accumulatedAmount":null,
+        "currentAmount":null,
         "lineNo":12,
         "name":"investmentIncome"
     },
     "netCashDisposalAssets":{
-        "accumulatedAmount":0,
-        "currentAmount":0,
+        "accumulatedAmount":null,
+        "currentAmount":null,
         "lineNo":13,
         "name":"netCashDisposalAssets"
     },
     "netCashFromBusiness":{
-        "accumulatedAmount":0,
-        "currentAmount":0,
+        "accumulatedAmount":null,
+        "currentAmount":null,
         "lineNo":14,
         "name":"netCashFromBusiness"
     },
     "otherInvestmentActivities":{
-        "accumulatedAmount":0,
-        "currentAmount":0,
+        "accumulatedAmount":null,
+        "currentAmount":null,
         "lineNo":15,
         "name":"otherInvestmentActivities"
     },
     "subtotalInvestmentActivities":{
-        "accumulatedAmount":0,
-        "currentAmount":0,
+        "accumulatedAmount":null,
+        "currentAmount":null,
         "lineNo":16,
         "name":"subtotalInvestmentActivities"
     },
     "cashPaidAssets":{
-        "accumulatedAmount":0,
-        "currentAmount":0,
+        "accumulatedAmount":null,
+        "currentAmount":null,
         "lineNo":17,
         "name":"cashPaidAssets"
     },
     "investmentCash":{
-        "accumulatedAmount":0,
-        "currentAmount":0,
+        "accumulatedAmount":null,
+        "currentAmount":null,
         "lineNo":18,
         "name":"investmentCash"
     },
     "netCashFromSubsidiaries":{
-        "accumulatedAmount":0,
-        "currentAmount":0,
+        "accumulatedAmount":null,
+        "currentAmount":null,
         "lineNo":19,
         "name":"netCashFromSubsidiaries"
     },
     "cashPaidOtherInvestment":{
-        "accumulatedAmount":0,
-        "currentAmount":0,
+        "accumulatedAmount":null,
+        "currentAmount":null,
         "lineNo":20,
         "name":"cashPaidOtherInvestment"
     },
     "subtotalOutflowFromInvestment":{
-        "accumulatedAmount":0,
-        "currentAmount":0,
+        "accumulatedAmount":null,
+        "currentAmount":null,
         "lineNo":21,
         "name":"subtotalOutflowFromInvestment"
     },
     "netCashFromInvesting":{
-        "accumulatedAmount":0,
-        "currentAmount":0,
+        "accumulatedAmount":null,
+        "currentAmount":null,
         "lineNo":22,
         "name":"netCashFromInvesting"
     },
     "investmentAbsorptionCash":{
-        "accumulatedAmount":0,
-        "currentAmount":0,
+        "accumulatedAmount":null,
+        "currentAmount":null,
         "lineNo":23,
         "name":"investmentAbsorptionCash"
     },
     "borrowingCash":{
-        "accumulatedAmount":0,
-        "currentAmount":0,
+        "accumulatedAmount":null,
+        "currentAmount":null,
         "lineNo":24,
         "name":"borrowingCash"
     },
     "otherCashRelatedFinancing":{
-        "accumulatedAmount":0,
-        "currentAmount":0,
+        "accumulatedAmount":null,
+        "currentAmount":null,
         "lineNo":25,
         "name":"otherCashRelatedFinancing"
     },
     "subtotalCashInflowFromFinancing":{
-        "accumulatedAmount":0,
-        "currentAmount":0,
+        "accumulatedAmount":null,
+        "currentAmount":null,
         "lineNo":26,
         "name":"subtotalCashInflowFromFinancing"
     },
     "debtRepaymentPaid":{
-        "accumulatedAmount":0,
-        "currentAmount":0,
+        "accumulatedAmount":null,
+        "currentAmount":null,
         "lineNo":27,
         "name":"debtRepaymentPaid"
     },
     "distributionPaid":{
-        "accumulatedAmount":0,
-        "currentAmount":0,
+        "accumulatedAmount":null,
+        "currentAmount":null,
         "lineNo":28,
         "name":"distributionPaid"
     },
     "financingActivitiesPaid":{
-        "accumulatedAmount":0,
-        "currentAmount":0,
+        "accumulatedAmount":null,
+        "currentAmount":null,
         "lineNo":29,
         "name":"financingActivitiesPaid"
     },
     "subtotalOutflowFromFinancing":{
-        "accumulatedAmount":0,
-        "currentAmount":0,
+        "accumulatedAmount":null,
+        "currentAmount":null,
         "lineNo":30,
         "name":"subtotalOutflowFromFinancing"
     },
     "netCashFromFinancing":{
-        "accumulatedAmount":0,
-        "currentAmount":0,
+        "accumulatedAmount":null,
+        "currentAmount":null,
         "lineNo":31,
         "name":"netCashFromFinancing"
     },
     "effectRateOnEquivalents":{
-        "accumulatedAmount":0,
-        "currentAmount":0,
+        "accumulatedAmount":null,
+        "currentAmount":null,
         "lineNo":32,
         "name":"EffectRateOnEquivalents"
     },
     "netIncreaseInequivalents":{
-        "accumulatedAmount":0,
-        "currentAmount":0,
+        "accumulatedAmount":null,
+        "currentAmount":null,
         "lineNo":33,
         "name":"netIncreaseInequivalents"
     },
     "cashEquivalentsAtbeginning":{
-        "accumulatedAmount":0,
-        "currentAmount":0,
+        "accumulatedAmount":null,
+        "currentAmount":null,
         "lineNo":34,
         "name":"cashEquivalentsAtbeginning"
     },
     "cashEquivalentsAtend":{
-        "accumulatedAmount":0,
-        "currentAmount":0,
+        "accumulatedAmount":null,
+        "currentAmount":null,
         "lineNo":35,
         "name":"cashEquivalentsAtend"
     }

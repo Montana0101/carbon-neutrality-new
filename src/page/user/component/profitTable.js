@@ -45,7 +45,7 @@ const InputCmt = (props) => {
         controls={false}
         defaultValue={amount}
         onChange={(e) => {
-          e != undefined && props.event({ value: e, line: line });
+           props.event({ value: e, line: line });
         }}
       />
     )}
@@ -55,7 +55,7 @@ const InputCmt = (props) => {
         bordered={false}
         controls={false}
         onChange={(e) => {
-          e != undefined && props.event({ value: e, line: line });
+           props.event({ value: e, line: line });
         }}
       />
     )}

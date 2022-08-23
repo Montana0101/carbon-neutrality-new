@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { withRouter, useHistory } from "react-router-dom";
 import { getDeclareDetail } from "../../apis/index";
 import { ThemeColor, CutLine } from "../../lib/const";
-import { DatePicker, Upload, Button,message} from "antd";
+import { DatePicker, Upload, Button, message } from "antd";
 import "./declare.less";
 import { ButtonCmt } from "../../component/button";
 import "moment/locale/zh-cn";
@@ -34,32 +34,30 @@ const titles = [
 
 // 上传报表
 const UpdateCmt = () => {
-
-
   const props = {
-    name: 'file',
-    action: 'https://api.stiacn.com/stiacn-app/oss/fileUpload',
+    name: "file",
+    action: "https://api.stiacn.com/stiacn-app/oss/fileUpload",
     headers: {
       // authorization: 'authorization-text',
     },
-    data:{
-      description:"",
+    data: {
+      description: "",
     },
-    method:"POST",
+    method: "POST",
     onChange(info) {
-      console.log("打印下数据",info)
-      if (info.file.status !== 'uploading') {
+      // console.log("打印下数据", info);
+      if (info.file.status !== "uploading") {
         console.log(info.file, info.fileList);
       }
-  
-      if (info.file.status === 'done') {
+
+      if (info.file.status === "done") {
         message.success(`${info.file.name} 上传成功`);
-      } else if (info.file.status === 'error') {
+      } else if (info.file.status === "error") {
         message.error(`${info.file.name} 上传失败`);
       }
     },
   };
-  
+
   return (
     <Upload {...props}>
       <Button icon={<UploadOutlined />}></Button>
@@ -68,7 +66,6 @@ const UpdateCmt = () => {
 };
 
 // 财务负债编辑状态
-
 function Declare(props) {
   const [tabInx, setTabInx] = useState(0);
   const [inx, setInx] = useState(0);
@@ -116,6 +113,7 @@ function Declare(props) {
     }
   }, []);
 
+
   // 编辑时-获取数据详情
   const _getDeclareDetail = async (id) => {
     const res = await getDeclareDetail(id);
@@ -147,19 +145,19 @@ function Declare(props) {
 
   // 更新companyId
   const updateCompanyId = (e) => {
-    setCompanyId(e)
-  }
+    setCompanyId(e);
+  };
 
   // 重置保存按钮
   const resetSaveButton = () => {
-    if(tabInx==0){
-      setIsSaveAsset(false)
-    }else if(tabInx==1){
-      setIsSaveProfit(false)
-    }else if(tabInx==2){
-      setIsSaveCash(false)
+    if (tabInx == 0) {
+      setIsSaveAsset(false);
+    } else if (tabInx == 1) {
+      setIsSaveProfit(false);
+    } else if (tabInx == 2) {
+      setIsSaveCash(false);
     }
-  }
+  };
 
   useEffect(() => {
     if (companyId && props.location.state && props.location.state.action == 1) {
@@ -410,7 +408,7 @@ function Declare(props) {
                     companyId={companyId}
                     isSaveAsset={isSaveAsset}
                     year={years}
-                    updateId = {updateCompanyId}
+                    updateId={updateCompanyId}
                     resetSaveButton={resetSaveButton}
                   />
                 )}
@@ -422,7 +420,7 @@ function Declare(props) {
                     isSaveProfit={isSaveProfit}
                     year={years}
                     profitJson={profitJson}
-                    resetSaveButton = {resetSaveButton}
+                    resetSaveButton={resetSaveButton}
                   />
                 )}
 
@@ -431,8 +429,8 @@ function Declare(props) {
                     companyId={companyId}
                     isSaveProfit={isSaveProfit}
                     year={years}
-                    updateId = {updateCompanyId}
-                    resetSaveButton = {resetSaveButton}
+                    updateId={updateCompanyId}
+                    resetSaveButton={resetSaveButton}
                   />
                 )}
 
@@ -451,7 +449,7 @@ function Declare(props) {
                     companyId={companyId}
                     isSaveCash={isSaveCash}
                     year={years}
-                    updateId = {updateCompanyId}
+                    updateId={updateCompanyId}
                     resetSaveButton={resetSaveButton}
                   />
                 )}

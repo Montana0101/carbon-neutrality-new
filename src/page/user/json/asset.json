@@ -1,373 +1,373 @@
 {
     "accountsPayable": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 35,
         "name": "accountsPayable"   
     },
     "accountsReceivable": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 4,
         "name": "accountsReceivable"
     },
     "advancesReceived": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 36,
         "name": "advancesReceived"
     },
     "availableSaleFinancialAssets": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 13,
         "name": "availableSaleFinancialAssets"
     },
     "biologicalAssets": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 22,
         "name": "biologicalAssets"
     },
     "bondsPayable": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 46,
         "name": "bondsPayable"
     },
     "capital": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 56,
         "name": "capital"
     },
     "constructionInProgress": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 19,
         "name": "constructionInProgress"
     },
     "currentAssets": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 10,
         "name": "currentAssets"
     },
     "currentProfitLoss": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 33,
         "name": "currentProfitLoss"
     },
     "deferredIncome": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 50,
         "name": "deferredIncome"
     },
     "deferredTaxAssets": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 28,
         "name": "deferredTaxAssets"
     },
     "deferredTaxLiability": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 51,
         "name": "deferredTaxLiability"
     },
     "developmentExpenditure": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 25,
         "name": "developmentExpenditure"
     },
     "dividendsPayable": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 40,
         "name": "dividendsPayable"
     },
     "dividendsReceivable": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 7,
         "name": "dividendsReceivable"
     },
     "engineeringMaterials": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 20,
         "name": "engineeringMaterials"
     },
     "estimatedLiabilities": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 49,
         "name": "estimatedLiabilities"
     },
     "financialAssets": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 2,
         "name": "financialAssets"
     },
     "fixedAssets": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 18,
         "name": "fixedAssets"
     },
     "goodWill": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 26,
         "name": "goodWill"
     },
     "heldInvestment": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 14,
         "name": "heldInvestment"
     },
     "intangibleAssets": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 24,
         "name": "intangibleAssets"
     },
     "interestPayable": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 39,
         "name": "interestPayable"
     },
     "interestReceivable": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 6,
         "name": "interestReceivable"
     },
     "investmentRealEstate": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 17,
         "name": "investmentRealEstate"
     },
     "lessTreasuryShares": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 57,
         "name": "lessTreasuryShares"
     },
     "liquidationFixedAssets": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 21,
         "name": "liquidationFixedAssets"
     },
     "longTermInvestment": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 16,
         "name": "longTermInvestment"
     },
     "longTermLoan": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 45,
         "name": "longTermLoan"
     },
     "longTermPayables": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 47,
         "name": "longTermPayables"
     },
     "longTermReceivables": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 15,
         "name": "longTermReceivables"
     },
     "longTermUnamortizedExpenses": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 27,
         "name": "longTermUnamortizedExpenses"
     },
     "monetaryFund": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 1,
         "name": "monetaryFund"
     },
     "nonCurrentLiabilitiesWithinOne": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 42,
         "name": "nonCurrentLiabilitiesWithinOne"
     },
     "notesPayable": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 34,
         "name": "notesPayable"
     },
     "notesReceivable": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 3,
         "name": "notesReceivable"
     },
     "oilGasAssets": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
-        "lineNo": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
+        "lineNo": 23,
         "name": "oilGasAssets"
     },
     "otherAssets": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 11,
         "name": "otherAssets"
     },
     "otherComprehensiveIncome": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 58,
         "name": "otherComprehensiveIncome"
     },
     "otherCurrentLiabilities": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 43,
         "name": "otherCurrentLiabilities"
     },
     "otherNonCurrentAssets": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 29,
         "name": "otherNonCurrentAssets"
     },
     "otherNonCurrentLiabilities": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 52,
         "name": "otherNonCurrentLiabilities"
     },
     "otherPayables": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 41,
         "name": "otherPayables"
     },
     "otherReceivables": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 8,
         "name": "otherReceivables"
     },
     "paidInCapital": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 55,
         "name": "paidInCapital"
     },
     "payrollPayable": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 37,
         "name": "payrollPayable"
     },
     "prepayments": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 5,
         "name": "prepayments"
     },
     "shortTermBorrowings": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 32,
         "name": "shortTermBorrowings"
     },
     "specialPayables": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 48,
         "name": "specialPayables"
     },
     "stock": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 9,
         "name": "stock"
     },
     "surplusReserve": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 59,
         "name": "surplusReserve"
     },
     "taxesPayable": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 38,
         "name": "taxesPayable"
     },
     "totalAssets": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 31,
         "name": "totalAssets"
     },
     "totalCurrentAssets": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 12,
         "name": "totalCurrentAssets"
     },
     "totalCurrentLiabilities": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 44,
         "name": "totalCurrentLiabilities"
     },
     "totalLiabilities": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 54,
         "name": "totalLiabilities"
     },
     "totalLiabilitiesEquity": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 62,
         "name": "totalLiabilitiesEquity"
     },
     "totalNonCurrentAssets": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 30,
         "name": "totalNonCurrentAssets"
     },
     "totalNonCurrentLiabilities": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 53,
         "name": "totalNonCurrentLiabilities"
     },
     "totalOwnersEquity": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 61,
         "name": "totalOwnersEquity"
     },
     "undistributedProfits": {
-        "beginningBalance": 0,
-        "endingBalance": 0,
+        "beginningBalance": null,
+        "endingBalance": null,
         "lineNo": 60,
         "name": "undistributedProfits"
     }
