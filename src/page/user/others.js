@@ -1042,9 +1042,9 @@ function Others(props) {
                             setTable3(_obj);
                           }}
                           defaultValue={
-                            (table3.companyMarks &&
-                              table3.companyMarks[index * 6] &&
-                              table3.companyMarks[index * 6].mark) ||
+                            (obj.companyMarks &&
+                              obj.companyMarks[index * 6] &&
+                              obj.companyMarks[index * 6].mark) ||
                             ""
                           }
                         />
@@ -1060,9 +1060,9 @@ function Others(props) {
                             setTable3(_obj);
                           }}
                           defaultValue={
-                            (table3.companyMarks &&
-                              table3.companyMarks[index * 6 + 1] &&
-                              table3.companyMarks[index * 6 + 1].mark) ||
+                            (obj.companyMarks &&
+                              obj.companyMarks[index * 6 + 1] &&
+                              obj.companyMarks[index * 6 + 1].mark) ||
                             ""
                           }
                         />
@@ -1076,9 +1076,9 @@ function Others(props) {
                             setTable3(_obj);
                           }}
                           defaultValue={
-                            (table3.companyMarks &&
-                              table3.companyMarks[index * 6 + 2] &&
-                              table3.companyMarks[index * 6 + 2].mark) ||
+                            (obj.companyMarks &&
+                              obj.companyMarks[index * 6 + 2] &&
+                              obj.companyMarks[index * 6 + 2].mark) ||
                             ""
                           }
                         />
@@ -1092,9 +1092,9 @@ function Others(props) {
                             setTable3(_obj);
                           }}
                           defaultValue={
-                            (table3.companyMarks &&
-                              table3.companyMarks[index * 6 + 3] &&
-                              table3.companyMarks[index * 6 + 3].mark) ||
+                            (obj.companyMarks &&
+                              obj.companyMarks[index * 6 + 3] &&
+                              obj.companyMarks[index * 6 + 3].mark) ||
                             ""
                           }
                         />
@@ -1108,9 +1108,9 @@ function Others(props) {
                             setTable3(_obj);
                           }}
                           defaultValue={
-                            (table3.companyMarks &&
-                              table3.companyMarks[index * 6 + 4] &&
-                              table3.companyMarks[index * 6 + 4].mark) ||
+                            (obj.companyMarks &&
+                              obj.companyMarks[index * 6 + 4] &&
+                              obj.companyMarks[index * 6 + 4].mark) ||
                             ""
                           }
                         />
@@ -1124,9 +1124,9 @@ function Others(props) {
                             setTable3(_obj);
                           }}
                           defaultValue={
-                            (table3.companyMarks &&
-                              table3.companyMarks[index * 6 + 5] &&
-                              table3.companyMarks[index * 6 + 5].mark) ||
+                            (obj.companyMarks &&
+                              obj.companyMarks[index * 6 + 5] &&
+                              obj.companyMarks[index * 6 + 5].mark) ||
                             ""
                           }
                         />
@@ -1195,8 +1195,8 @@ function Others(props) {
                             setTable3(_obj);
                           }}
                           defaultValue={
-                            (table3.compositions &&
-                              table3.compositions[index].composition) ||
+                            (obj.compositions &&
+                              obj.compositions[index].composition) ||
                             ""
                           }
                         />
@@ -1260,8 +1260,8 @@ function Others(props) {
                             setTable3(_obj);
                           }}
                           defaultValue={
-                            (table3.cpCustomers &&
-                              table3.cpCustomers[index].customerName) ||
+                            (obj.cpCustomers &&
+                              obj.cpCustomers[index].customerName) ||
                             ""
                           }
                         />
@@ -1276,8 +1276,8 @@ function Others(props) {
                             setTable3(_obj);
                           }}
                           defaultValue={
-                            (table3.cpCustomers &&
-                              table3.cpCustomers[index].proportionSale) ||
+                            (obj.cpCustomers &&
+                              obj.cpCustomers[index].proportionSale) ||
                             ""
                           }
                         />
@@ -1339,8 +1339,8 @@ function Others(props) {
                             setTable3(_obj);
                           }}
                           defaultValue={
-                            (table3.cpSuppliers &&
-                              table3.cpSuppliers[index].supplierName) ||
+                            (obj.cpSuppliers &&
+                              obj.cpSuppliers[index].supplierName) ||
                             ""
                           }
                         />
@@ -1355,8 +1355,8 @@ function Others(props) {
                             setTable3(_obj);
                           }}
                           defaultValue={
-                            (table3.cpSuppliers &&
-                              table3.cpSuppliers[index].purchaseProportion) ||
+                            (obj.cpSuppliers &&
+                              obj.cpSuppliers[index].purchaseProportion) ||
                             ""
                           }
                         />
@@ -1470,9 +1470,9 @@ function Others(props) {
                           placeholder="请输入姓名"
                           style={{ marginRight: "0.1rem", flex: 1 }}
                           defaultValue={
-                            table5 &&
-                            table5.cpLeaders[index] &&
-                            table5.cpLeaders[index].leaderName
+                            obj &&
+                            obj.cpLeaders[index] &&
+                            obj.cpLeaders[index].leaderName
                           }
                         />
                         <Input
@@ -1485,9 +1485,9 @@ function Others(props) {
                             setTable5(_obj);
                           }}
                           defaultValue={
-                            table5 &&
-                            table5.cpLeaders[index] &&
-                            table5.cpLeaders[index].position
+                            obj &&
+                            obj.cpLeaders[index] &&
+                            obj.cpLeaders[index].position
                           }
                         />
                         <Input
@@ -1501,9 +1501,9 @@ function Others(props) {
                             setTable5(_obj);
                           }}
                           defaultValue={
-                            table5 &&
-                            table5.cpLeaders[index] &&
-                            table5.cpLeaders[index].briefIntroduction
+                            obj &&
+                            obj.cpLeaders[index] &&
+                            obj.cpLeaders[index].briefIntroduction
                           }
                         />
                         {index === 0 ? (
@@ -1576,9 +1576,9 @@ function Others(props) {
                             setTable5(_obj);
                           }}
                           defaultValue={
-                            table5 &&
-                            table5.cpTeams[index] &&
-                            table5.cpTeams[index].memberName
+                            obj &&
+                            obj.cpTeams[index] &&
+                            obj.cpTeams[index].memberName
                           }
                         />
                         <Input
@@ -1591,9 +1591,9 @@ function Others(props) {
                             setTable5(_obj);
                           }}
                           defaultValue={
-                            table5 &&
-                            table5.cpTeams[index] &&
-                            table5.cpTeams[index].position
+                            obj &&
+                            obj.cpTeams[index] &&
+                            obj.cpTeams[index].position
                           }
                         />
                         <Input
@@ -1607,9 +1607,9 @@ function Others(props) {
                             setTable5(_obj);
                           }}
                           defaultValue={
-                            table5 &&
-                            table5.cpTeams[index] &&
-                            table5.cpTeams[index].briefIntroduction
+                            obj &&
+                            obj.cpTeams[index] &&
+                            obj.cpTeams[index].briefIntroduction
                           }
                         />
                         {index === 0 ? (
@@ -1708,9 +1708,9 @@ function Others(props) {
                               setTable6(_obj);
                             }}
                             defaultValue={
-                              table6 &&
-                              table6.cpPatents[index] &&
-                              table6.cpPatents[index].patentName
+                              obj &&
+                              obj.cpPatents[index] &&
+                              obj.cpPatents[index].patentName
                             }
                           />
                           <Select

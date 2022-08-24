@@ -202,6 +202,11 @@ function Declare(props) {
     }
   }, [companyId]);
 
+  useEffect(()=>{
+    // 刷新下最近状态
+    _getDeclareDetail(companyId);
+  },[inx])
+
   return (
     <>
       <div className="declare_page">
