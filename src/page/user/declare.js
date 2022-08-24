@@ -65,6 +65,8 @@ const UpdateCmt = () => {
   );
 };
 
+var _bool = null
+
 // 财务负债编辑状态
 function Declare(props) {
   const [tabInx, setTabInx] = useState(0);
@@ -175,12 +177,23 @@ function Declare(props) {
       if (tabInx < 2) {
         setTabInx(tabInx + 1);
         setAllow(false)
-      } else {
-        // setInx(1);
+      }else{
+        if(_bool==0){
+          setTabInx(tabInx-1)
+        }
+        if(_bool==1){
+          setInx(1)
+        }
       }
-    
     }
+    console.log('allow changing',allow)
   }, [allow]);
+
+  useEffect(()=>{
+    setAllow(false)
+    
+  },[tabInx])
+
 
   // 重置保存按钮
   const resetSaveButton = () => {
@@ -385,6 +398,7 @@ function Declare(props) {
                                   : defaultColor,
                             }}
                             onClick={() => {
+                              _bool = 0
                               if (tabInx == 0) {
                                 setIsSaveAsset(true);
                               } else if (tabInx == 1) {
@@ -395,8 +409,8 @@ function Declare(props) {
                               if(allow){
                                 setTabInx(index)
                               }
-                              console.log("打印下当前 allow",allow)
-                              console.log('打印下当前tabinx',tabInx)
+                              console.log("子表切换 allow",allow)
+                              console.log('子表切换 tabinx',tabInx)
                             }}
                           >
                             {item}
@@ -514,18 +528,15 @@ function Declare(props) {
                     <div
                       style={{ marginRight: "0.3rem" }}
                       onClick={() => {
+                        // console.log('下一步 当前tabInx',tabInx)
+                        // console.log("下一步 当前allow",allow)
+                        _bool=1
                         if (tabInx == 0) {
                           setIsSaveAsset(true);
                         } else if (tabInx == 1) {
                           setIsSaveProfit(true);
                         } else if (tabInx == 2) {
                           setIsSaveCash(true);
-                        }
-                        
-                        if(allow){
-                          if(tabInx==2){
-                            setInx(1)
-                          }
                         }
                       }}
                     >

@@ -187,7 +187,7 @@ function Others(props) {
   const [table7, setTable7] = useState({
     cpInvestors: [cpInvestorsItem],
   }); // 投资方
-  const [table8, setTable8] = useState({industryIntroduction:""}); // 行业成长性
+  const [table8, setTable8] = useState({ industryIntroduction: "" }); // 行业成长性
 
   const onFinish = (values) => {
     // console.log("Received values of form: ", values);
@@ -379,13 +379,14 @@ function Others(props) {
     if (
       _t.cpPatents[0].abstracts == "" ||
       _t.cpPatents[0].patentName == "" ||
-      _t.cpPatents[0].patentStatus == "" || _t.cpPatents[0].patentType == ""
+      _t.cpPatents[0].patentStatus == "" ||
+      _t.cpPatents[0].patentType == ""
     ) {
       message.warn("请完善核心技术！");
       setFlag6(false);
       return;
     }
-    if(!_t.coreTechnology){
+    if (!_t.coreTechnology) {
       message.warn("请完善核心技术！");
       setFlag6(false);
       return;
@@ -407,20 +408,23 @@ function Others(props) {
   // 投资方
   const save7 = async () => {
     let _t = JSON.parse(JSON.stringify(table7));
-  //   cpInvestors: {
-  //     investorAmount: any;
-  //     investorName: any;
-  //     investorRounds: any;
-  // }[];
-  if (
-    _t.cpInvestors[0].investorAmount == "" || _t.cpInvestors[0].investorAmount == null ||
-    _t.cpInvestors[0].investorName == "" || _t.cpInvestors[0].investorName == null ||
-    _t.cpInvestors[0].investorRounds == "" || _t.cpInvestors[0].investorRounds == null 
-  ) {
-    message.warn("请完善投资方！");
-    setFlag7(false);
-    return;
-  }
+    //   cpInvestors: {
+    //     investorAmount: any;
+    //     investorName: any;
+    //     investorRounds: any;
+    // }[];
+    if (
+      _t.cpInvestors[0].investorAmount == "" ||
+      _t.cpInvestors[0].investorAmount == null ||
+      _t.cpInvestors[0].investorName == "" ||
+      _t.cpInvestors[0].investorName == null ||
+      _t.cpInvestors[0].investorRounds == "" ||
+      _t.cpInvestors[0].investorRounds == null
+    ) {
+      message.warn("请完善投资方！");
+      setFlag7(false);
+      return;
+    }
     _t.id = companyId ? companyId : null;
     const res = await saveInvestor(_t);
 
@@ -438,19 +442,19 @@ function Others(props) {
   // 行业成长性
   const save8 = async () => {
     let _t = JSON.parse(JSON.stringify(table8));
-    if(_t.industryIntroduction == "" || _t.industryIntroduction==null){
-      setFlag8(false)
-      return 
+    if (_t.industryIntroduction == "" || _t.industryIntroduction == null) {
+      setFlag8(false);
+      return;
     }
     const res = await saveIndustry(table8);
     if (res && res.code == 2000) {
       message.success("行业成长性保存成功！");
-      setFlag8(true)
+      setFlag8(true);
       updateId(res.result);
       localStorage.setItem("companyId", res.result);
     } else {
       message.error("行业成长性保存失败！");
-      setFlag8(false)
+      setFlag8(false);
     }
   };
 
@@ -521,17 +525,17 @@ function Others(props) {
     } else if (flag5) {
       props.setInx(6);
       setFlag5(false);
-    }else if (flag6) {
+    } else if (flag6) {
       props.setInx(7);
       setFlag6(false);
-    }else if (flag7) {
+    } else if (flag7) {
       props.setInx(8);
       setFlag7(false);
-    }else if (flag8) {
+    } else if (flag8) {
       props.setInx(9);
       setFlag8(false);
     }
-  }, [flag1, flag2, flag3, flag4, flag5,flag6,flag7,flag8]);
+  }, [flag1, flag2, flag3, flag4, flag5, flag6, flag7, flag8]);
 
   // 编辑状态初始化数据
   const initDataByEdit = () => {
@@ -1196,6 +1200,7 @@ function Others(props) {
                           }}
                           defaultValue={
                             (obj.compositions &&
+                              obj.compositions[index] &&
                               obj.compositions[index].composition) ||
                             ""
                           }
@@ -1261,6 +1266,7 @@ function Others(props) {
                           }}
                           defaultValue={
                             (obj.cpCustomers &&
+                              obj.cpCustomers[index] &&
                               obj.cpCustomers[index].customerName) ||
                             ""
                           }
@@ -1277,6 +1283,7 @@ function Others(props) {
                           }}
                           defaultValue={
                             (obj.cpCustomers &&
+                              obj.cpCustomers[index] &&
                               obj.cpCustomers[index].proportionSale) ||
                             ""
                           }
@@ -1340,6 +1347,7 @@ function Others(props) {
                           }}
                           defaultValue={
                             (obj.cpSuppliers &&
+                              obj.cpSuppliers[index] &&
                               obj.cpSuppliers[index].supplierName) ||
                             ""
                           }
@@ -1356,6 +1364,7 @@ function Others(props) {
                           }}
                           defaultValue={
                             (obj.cpSuppliers &&
+                              obj.cpSuppliers[index] &&
                               obj.cpSuppliers[index].purchaseProportion) ||
                             ""
                           }
@@ -1470,7 +1479,7 @@ function Others(props) {
                           placeholder="请输入姓名"
                           style={{ marginRight: "0.1rem", flex: 1 }}
                           defaultValue={
-                            obj &&
+                            obj.cpLeaders &&
                             obj.cpLeaders[index] &&
                             obj.cpLeaders[index].leaderName
                           }
@@ -1485,7 +1494,7 @@ function Others(props) {
                             setTable5(_obj);
                           }}
                           defaultValue={
-                            obj &&
+                            obj.cpLeaders &&
                             obj.cpLeaders[index] &&
                             obj.cpLeaders[index].position
                           }
@@ -1501,7 +1510,7 @@ function Others(props) {
                             setTable5(_obj);
                           }}
                           defaultValue={
-                            obj &&
+                            obj.cpLeaders &&
                             obj.cpLeaders[index] &&
                             obj.cpLeaders[index].briefIntroduction
                           }
@@ -1576,7 +1585,7 @@ function Others(props) {
                             setTable5(_obj);
                           }}
                           defaultValue={
-                            obj &&
+                            obj.cpTeams &&
                             obj.cpTeams[index] &&
                             obj.cpTeams[index].memberName
                           }
@@ -1591,7 +1600,7 @@ function Others(props) {
                             setTable5(_obj);
                           }}
                           defaultValue={
-                            obj &&
+                            obj.cpTeams &&
                             obj.cpTeams[index] &&
                             obj.cpTeams[index].position
                           }
@@ -1607,7 +1616,7 @@ function Others(props) {
                             setTable5(_obj);
                           }}
                           defaultValue={
-                            obj &&
+                            obj.cpTeams &&
                             obj.cpTeams[index] &&
                             obj.cpTeams[index].briefIntroduction
                           }
@@ -1708,14 +1717,14 @@ function Others(props) {
                               setTable6(_obj);
                             }}
                             defaultValue={
-                              obj &&
+                              obj.cpPatents && 
                               obj.cpPatents[index] &&
                               obj.cpPatents[index].patentName
                             }
                           />
                           <Select
                             defaultValue={{
-                              value: obj.cpPatents[index].patentType || "",
+                              value: obj.cpPatents && obj.cpPatents[index] && obj.cpPatents[index].patentType || "",
                               label: patentType[
                                 obj.cpPatents[index].patentType - 1
                               ]
@@ -1811,7 +1820,7 @@ function Others(props) {
                               setTable6(_obj);
                             }}
                             defaultValue={
-                              obj &&
+                              obj.cpPatents &&
                               obj.cpPatents[index] &&
                               obj.cpPatents[index].abstracts
                             }
@@ -1863,7 +1872,7 @@ function Others(props) {
                               setTable7(_obj);
                             }}
                             defaultValue={
-                              obj &&
+                              obj.cpInvestors &&
                               obj.cpInvestors[index] &&
                               obj.cpInvestors[index].investorName
                             }
@@ -1879,7 +1888,7 @@ function Others(props) {
                               setTable7(_obj);
                             }}
                             defaultValue={
-                              obj &&
+                              obj.cpInvestors &&
                               obj.cpInvestors[index] &&
                               obj.cpInvestors[index].investorRounds
                             }
@@ -1894,7 +1903,7 @@ function Others(props) {
                               setTable7(_obj);
                             }}
                             defaultValue={
-                              obj &&
+                              obj.cpInvestors &&
                               obj.cpInvestors[index] &&
                               obj.cpInvestors[index].investorAmount
                             }
