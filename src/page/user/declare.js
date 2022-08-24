@@ -174,9 +174,11 @@ function Declare(props) {
     if (allow) {
       if (tabInx < 2) {
         setTabInx(tabInx + 1);
+        setAllow(false)
       } else {
-        setInx(1);
+        // setInx(1);
       }
+    
     }
   }, [allow]);
 
@@ -390,6 +392,8 @@ function Declare(props) {
                               if(allow){
                                 setTabInx(index)
                               }
+                              console.log("打印下当前 allow",allow)
+                              console.log('打印下当前tabinx',tabInx)
                             }}
                           >
                             {item}
