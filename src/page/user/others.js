@@ -92,7 +92,7 @@ const layout = {
 };
 
 function Others(props) {
-  const { inx, companyId, obj } = props;
+  const { inx, companyId, obj, updateId } = props;
   const history = useHistory();
   const [form] = Form.useForm();
   const [d1, setD1] = useState([]); //省
@@ -102,7 +102,14 @@ function Others(props) {
   const [d3, setD3] = useState([]); //区
   const [d3_id, setD3_id] = useState(null);
 
-  const [flag1,setFlag1] = useState(false); // 校验基本信息表是否完成
+  const [flag1, setFlag1] = useState(false); // 校验基本信息表是否完成
+  const [flag2, setFlag2] = useState(false); //
+  const [flag3, setFlag3] = useState(false); //
+  const [flag4, setFlag4] = useState(false); //
+  const [flag5, setFlag5] = useState(false); //
+  const [flag6, setFlag6] = useState(false); //
+  const [flag7, setFlag7] = useState(false); //
+  const [flag8, setFlag8] = useState(false); //
 
   const [leaders, setLeaders] = useState(1); // 领军人物
   const [teams, setTeams] = useState(1); // 核心团队
@@ -116,7 +123,24 @@ function Others(props) {
   const [checked, setChecked] = useState(false);
   const [rigsterTime, setRigsterTime] = useState(null);
 
-  const [table1, setTable1] = useState({}); // 基本信息表
+  const [table1, setTable1] = useState({
+    city: null,
+    companyName: null,
+    companyProfile: null,
+    contactNumber: null,
+    district: null,
+    email: null,
+    enterpriseAbbreviation: null,
+    enterpriseValuation: null,
+    financingScale: null,
+    id: null,
+    industry: null,
+    legalPersonName: null,
+    province: null,
+    regCapital: null,
+    stage: null,
+    website: null,
+  }); // 基本信息表
   const [table2, setTable2] = useState({}); // 公司战略
   const [table3, setTable3] = useState({
     businessModel: "",
@@ -178,23 +202,52 @@ function Others(props) {
     }
   };
 
+  // 校验字段是否全部填写了
+  const verifyFull = (data) => {
+    let _data = JSON.parse(JSON.stringify(data));
+    let _flag = true;
+    console.log("打印下基本信息表 --> 提交前", data);
+    delete _data.id;
+    delete data.id;
+    Object.values(_data).map((item) => {
+      if (item == null) {
+        _flag = false;
+      }
+      if (item == "null") {
+        console.log('中')
+        _flag = false;
+      }
+      // if(typeof(item) == 'undefined'){
+      //   _flag = false;
+      // }
+    });
+    for (let key in data) {
+      console.log("打印下大撒把哈桑大", data[key]);
+      if (typeof data[key] == "undefined") {
+        _flag = false;
+      }
+    }
+    return _flag;
+  };
+
   // 保存基本信息
   const save1 = async () => {
-    let _data = JSON.parse(JSON.stringify(table1))
-    let _flag = true
-    console.log("打印下基本信息表 --> 提交前",table1)
-    delete _data.id
-    Object.values(_data).map(item=>{
-      console.log(item)
-      if(item == null){
-        _flag = false
-      }
-    })
-    if(!_flag) {
-      message.warn("所有字段都必填！")
-      return
+    // let _data = JSON.parse(JSON.stringify(table1))
+    // let _flag = true
+    // console.log("打印下基本信息表 --> 提交前",table1)
+    // delete _data.id
+    // Object.values(_data).map(item=>{
+    //   console.log(item)
+    //   if(item == null){
+    //     _flag = false
+    //   }
+    // })
+    if (!verifyFull(table1)) {
+      message.warn("请完善基本信息！");
+      setFlag1(false);
+      return;
     }
-    // console.log('打印下_flag',_flag)
+
     let _t1 = JSON.parse(JSON.stringify(table1));
     _t1.id = companyId ? companyId : null;
     d1_id && (_t1.province = d1_id);
@@ -207,20 +260,31 @@ function Others(props) {
     const res = await saveBaseInfo(_t1);
     if (res && res.code == 2000) {
       message.success("基本信息保存成功！");
-      setFlag1(true)
+      setFlag1(true);
+      updateId(res.result);
+      localStorage.setItem("companyId", res.result);
     } else {
       message.error("基本信息保存失败！");
-      setFlag1(false)
+      setFlag1(false);
     }
   };
 
   // 公司战略
   const save2 = async () => {
+    if (!verifyFull(table2)) {
+      message.warn("请完善公司战略！");
+      setFlag2(false);
+      return;
+    }
     const res = await saveStrategic(table2);
     if (res && res.code == 2000) {
       message.success("公司战略保存成功！");
+      updateId(res.result);
+      localStorage.setItem("companyId", res.result);
+      setFlag2(true);
     } else {
       message.error("公司战略保存失败！");
+      setFlag2(false);
     }
   };
 
@@ -342,6 +406,17 @@ function Others(props) {
     _fetchAreas(0, 0);
   }, []);
 
+  // 监听是否完成了表单填写 -> 进入下一步
+  useEffect(() => {
+    if (flag1) {
+      props.setInx(2);
+      setFlag1(false);
+    } else if (flag2) {
+      props.setInx(3);
+      setFlag2(false);
+    }
+  }, [flag1, flag2]);
+
   // 编辑状态初始化数据
   const initDataByEdit = () => {
     let { inx } = props;
@@ -358,25 +433,26 @@ function Others(props) {
         legalPersonName: obj.legalPersonName,
         website: obj.website,
         companyProfile: obj.companyProfile,
-        industry:obj.industry!=null && (industryEnum[obj.industry].name || null),
-        stage:obj.stage != null && (stageEnum[obj.stage-1].name || null),
+        // industry:
+        //   obj.industry,
+        // stage: obj.stage,
       });
 
       let _obj = JSON.parse(JSON.stringify(table1));
-      _obj.companyName = obj.companyName || null
-      _obj.enterpriseAbbreviation=obj.enterpriseAbbreviation || null
-      _obj.regCapital=obj.regCapital || null
-      _obj.contactNumber=obj.contactNumber || null
-      _obj.email=obj.email || null
-      _obj.financingScale=obj.financingScale || null
-      _obj.enterpriseValuation=obj.enterpriseValuation || null
-      _obj.legalPersonName=obj.legalPersonName || null
-      _obj.website=obj.website || null
-      _obj.companyProfile=obj.companyProfile || null
+      _obj.companyName = obj.companyName || null;
+      _obj.enterpriseAbbreviation = obj.enterpriseAbbreviation || null;
+      _obj.regCapital = obj.regCapital || null;
+      _obj.contactNumber = obj.contactNumber || null;
+      _obj.email = obj.email || null;
+      _obj.financingScale = obj.financingScale || null;
+      _obj.enterpriseValuation = obj.enterpriseValuation || null;
+      _obj.legalPersonName = obj.legalPersonName || null;
+      _obj.website = obj.website || null;
+      _obj.companyProfile = obj.companyProfile || null;
 
       _obj.id = companyId ? companyId : null;
       _obj.stage = obj.stage || null;
-      _obj.industry =obj.industry  || null;
+      _obj.industry = obj.industry || null;
       _obj.province = obj.province || null;
       _obj.city = obj.city || null;
       _obj.district = obj.district || null;
@@ -390,8 +466,8 @@ function Others(props) {
     } else if (inx == 3) {
       // 公司经营
       form.setFieldsValue({
-        businessModel: obj.businessModel,  //商业模式
-        mainBusiness: obj.mainBusiness,   //主营业务
+        businessModel: obj.businessModel, //商业模式
+        mainBusiness: obj.mainBusiness, //主营业务
       });
       let _obj = JSON.parse(JSON.stringify(table3));
       _obj.mainBusiness = obj.mainBusiness;
@@ -400,20 +476,20 @@ function Others(props) {
         setMarks(Math.ceil(obj.companyMarks.length / 6));
         _obj.companyMarks = obj.companyMarks;
       }
-      if(obj.cpCustomers && obj.cpCustomers.length >0){
-        setcpCustomers(obj.cpCustomers.length)
-        _obj.cpCustomers = obj.cpCustomers
+      if (obj.cpCustomers && obj.cpCustomers.length > 0) {
+        setcpCustomers(obj.cpCustomers.length);
+        _obj.cpCustomers = obj.cpCustomers;
       }
-      if(obj.compositions && obj.compositions.length >0){
-        setCompositions(obj.compositions.length)
-        _obj.compositions = obj.compositions
+      if (obj.compositions && obj.compositions.length > 0) {
+        setCompositions(obj.compositions.length);
+        _obj.compositions = obj.compositions;
       }
-      
-      if(obj.cpSuppliers && obj.cpSuppliers.length >0){
-        setcpSuppliers(obj.cpSuppliers.length)
-        _obj.cpSuppliers = obj.cpSuppliers
+
+      if (obj.cpSuppliers && obj.cpSuppliers.length > 0) {
+        setcpSuppliers(obj.cpSuppliers.length);
+        _obj.cpSuppliers = obj.cpSuppliers;
       }
-      
+
       console.log("打算把绝对不会撒啊撒", _obj);
       setTable3(_obj);
     } else if (inx == 4) {
@@ -487,10 +563,16 @@ function Others(props) {
             className="ant-advanced-search-form"
             onFinish={onFinish}
             {...layout}
-            onChange={(e) => {
-              let obj = form.getFieldsValue();
-              obj.id = companyId ? companyId : null;
-              setTable1(obj);
+            // onChange={(e) => {
+            //   let obj = form.getFieldsValue();
+            //   obj.id = companyId ? companyId : null;
+            //   setTable1(obj);
+            //   console.log("当前大撒把哈就", e);
+            // }}
+            onValuesChange={(changedValues, allValues) => {
+              let _obj = JSON.parse(JSON.stringify(table1))
+              Object.assign(_obj,{changedValues})
+              setTable1(_obj);
             }}
           >
             <Row gutter={24}>
@@ -519,15 +601,15 @@ function Others(props) {
                       style={{ flex: 1, marginRight: "0.1rem" }}
                       defaultValue={{
                         value: obj.province || "",
-                        label: obj.provinceName || ""
+                        label: obj.provinceName || "",
                       }}
                       labelInValue
                       onChange={(e) => {
                         _fetchAreas(e.value, 1);
                         setD1_id(e.value);
-                        let _obj = JSON.parse(JSON.stringify(table1))
-                        _obj.province = e.value 
-                        setTable1(_obj)
+                        let _obj = JSON.parse(JSON.stringify(table1));
+                        _obj.province = e.value;
+                        setTable1(_obj);
                       }}
                     >
                       {d1 &&
@@ -540,18 +622,18 @@ function Others(props) {
                         })}
                     </Select>
                     <Select
-                       defaultValue={{
+                      defaultValue={{
                         value: obj.city || "",
-                        label: obj.cityName || ""
+                        label: obj.cityName || "",
                       }}
                       labelInValue
                       style={{ flex: 1, marginRight: "0.1rem" }}
                       onChange={(e) => {
                         _fetchAreas(e.value, 2);
                         setD2_id(e.value);
-                        let _obj = JSON.parse(JSON.stringify(table1))
-                        _obj.city = e.value 
-                        setTable1(_obj)
+                        let _obj = JSON.parse(JSON.stringify(table1));
+                        _obj.city = e.value;
+                        setTable1(_obj);
                       }}
                     >
                       {d2 &&
@@ -564,16 +646,16 @@ function Others(props) {
                         })}
                     </Select>
                     <Select
-                    defaultValue={{
-                      value: obj.district || "",
-                      label: obj.districtName || ""
-                    }}
+                      defaultValue={{
+                        value: obj.district || "",
+                        label: obj.districtName || "",
+                      }}
                       style={{ flex: 1, marginRight: "0rem" }}
                       onChange={(e) => {
                         setD3_id(e.value);
-                        let _obj = JSON.parse(JSON.stringify(table1))
-                        _obj.district = e.value 
-                        setTable1(_obj)
+                        let _obj = JSON.parse(JSON.stringify(table1));
+                        _obj.district = e.value;
+                        setTable1(_obj);
                       }}
                       labelInValue
                     >
@@ -630,7 +712,7 @@ function Others(props) {
                       setRigsterTime(str);
                       console.log("Dsabhjh ", str);
                     }}
-                    defaultValue={obj.regTime && moment(obj.regTime )}
+                    defaultValue={obj.regTime && moment(obj.regTime)}
                     // picker="day"
                     locale={locale}
                   />
@@ -641,11 +723,14 @@ function Others(props) {
               <Col span={10}>
                 <Form.Item label={"融资阶段"} name="stage">
                   <Select
-                    defaultValue=""
+                    defaultValue={
+                      obj.stage != null &&
+                      (stageEnum[obj.stage - 1].name || null)
+                    }
                     onChange={(e) => {
                       let _obj = JSON.parse(JSON.stringify(table1));
                       _obj.stage = e;
-                      console.log("融资阶段",e)
+                      console.log("融资阶段", e);
                       setTable1(_obj);
                     }}
                   >
@@ -684,6 +769,10 @@ function Others(props) {
               <Col span={10}>
                 <Form.Item label={"所属行业"} name="industry">
                   <Select
+                    defaultValue={
+                      obj.industry != null &&
+                      (industryEnum[obj.industry].name || null)
+                    }
                     onChange={(e) => {
                       let _obj = JSON.parse(JSON.stringify(table1));
                       _obj.industry = e;
@@ -769,7 +858,7 @@ function Others(props) {
             onFinish={onFinish}
             onChange={(e) => {
               let obj = form.getFieldsValue();
-              console.log("监听下书",obj)
+              console.log("监听下书", obj);
               // obj.id = companyId ? companyId : null;
               // setTable3(obj);
             }}
@@ -777,17 +866,17 @@ function Others(props) {
             <Row gutter={24}>
               <Col span={12}>
                 <Form.Item label={"商业模式"} name="businessModel">
-                <Input.TextArea
-                      showCount
-                      maxLength={300}
-                      style={{ width: "100%" }}
-                      placeholder="请输入商业模式，不超过300个字"
-                      onChange={(e) => {
-                        let _obj = JSON.parse(JSON.stringify(table3));
-                        _obj.businessModel = e.target.value;
-                        setTable3(_obj);
-                      }}
-                    />
+                  <Input.TextArea
+                    showCount
+                    maxLength={300}
+                    style={{ width: "100%" }}
+                    placeholder="请输入商业模式，不超过300个字"
+                    onChange={(e) => {
+                      let _obj = JSON.parse(JSON.stringify(table3));
+                      _obj.businessModel = e.target.value;
+                      setTable3(_obj);
+                    }}
+                  />
                 </Form.Item>
               </Col>
 
@@ -985,12 +1074,15 @@ function Others(props) {
                           style={{ marginRight: "0.1rem" }}
                           onChange={(e) => {
                             let _obj = JSON.parse(JSON.stringify(table3));
-                            _obj.compositions[index] && (_obj.compositions[index].composition =
-                              e.target.value);
+                            _obj.compositions[index] &&
+                              (_obj.compositions[index].composition =
+                                e.target.value);
                             setTable3(_obj);
                           }}
-                          defaultValue = {
-                            table3.compositions && table3.compositions[index].composition || ""
+                          defaultValue={
+                            (table3.compositions &&
+                              table3.compositions[index].composition) ||
+                            ""
                           }
                         />
                         {index === 0 ? (
@@ -1047,12 +1139,15 @@ function Others(props) {
                           style={{ marginRight: "0.1rem" }}
                           onChange={(e) => {
                             let _obj = JSON.parse(JSON.stringify(table3));
-                            _obj.cpCustomers[index] && (_obj.cpCustomers[index].customerName =
-                              e.target.value);
+                            _obj.cpCustomers[index] &&
+                              (_obj.cpCustomers[index].customerName =
+                                e.target.value);
                             setTable3(_obj);
                           }}
-                          defaultValue = {
-                            table3.cpCustomers && table3.cpCustomers[index].customerName || ""
+                          defaultValue={
+                            (table3.cpCustomers &&
+                              table3.cpCustomers[index].customerName) ||
+                            ""
                           }
                         />
                         <Input
@@ -1060,12 +1155,15 @@ function Others(props) {
                           style={{ marginRight: "0.1rem" }}
                           onChange={(e) => {
                             let _obj = JSON.parse(JSON.stringify(table3));
-                            _obj.cpCustomers[index] && (_obj.cpCustomers[index].proportionSale =
-                              e.target.value);
+                            _obj.cpCustomers[index] &&
+                              (_obj.cpCustomers[index].proportionSale =
+                                e.target.value);
                             setTable3(_obj);
                           }}
-                          defaultValue = {
-                            table3.cpCustomers && table3.cpCustomers[index].proportionSale || ""
+                          defaultValue={
+                            (table3.cpCustomers &&
+                              table3.cpCustomers[index].proportionSale) ||
+                            ""
                           }
                         />
                         {index === 0 ? (
@@ -1120,12 +1218,15 @@ function Others(props) {
                           style={{ marginRight: "0.1rem" }}
                           onChange={(e) => {
                             let _obj = JSON.parse(JSON.stringify(table3));
-                            _obj.cpSuppliers[index] && (_obj.cpSuppliers[index].supplierName =
-                              e.target.value);
+                            _obj.cpSuppliers[index] &&
+                              (_obj.cpSuppliers[index].supplierName =
+                                e.target.value);
                             setTable3(_obj);
                           }}
-                          defaultValue = {
-                            table3.cpSuppliers && table3.cpSuppliers[index].supplierName || ""
+                          defaultValue={
+                            (table3.cpSuppliers &&
+                              table3.cpSuppliers[index].supplierName) ||
+                            ""
                           }
                         />
                         <Input
@@ -1133,12 +1234,15 @@ function Others(props) {
                           style={{ marginRight: "0.1rem" }}
                           onChange={(e) => {
                             let _obj = JSON.parse(JSON.stringify(table3));
-                            _obj.cpSuppliers[index] && (_obj.cpSuppliers[index].purchaseProportion =
-                              e.target.value);
+                            _obj.cpSuppliers[index] &&
+                              (_obj.cpSuppliers[index].purchaseProportion =
+                                e.target.value);
                             setTable3(_obj);
                           }}
-                          defaultValue = {
-                            table3.cpSuppliers && table3.cpSuppliers[index].purchaseProportion || ""
+                          defaultValue={
+                            (table3.cpSuppliers &&
+                              table3.cpSuppliers[index].purchaseProportion) ||
+                            ""
                           }
                         />
                         {index === 0 ? (
@@ -1820,9 +1924,9 @@ function Others(props) {
               style={{ marginRight: "0.3rem" }}
               onClick={() => {
                 submit();
-                if(flag1){
-                  props.setInx(2);
-                }
+                // if(flag1){
+                //   props.setInx(2);
+                // }
                 if (props.inx < 9) {
                   // props.setInx(props.inx + 1);
                 }
@@ -1836,7 +1940,7 @@ function Others(props) {
                 h="0.4rem"
               />
             </div>
-            <div
+            {/* <div
               onClick={() => {
                 // alert(1)
                 // submit();
@@ -1850,7 +1954,7 @@ function Others(props) {
                 t="保存"
                 h="0.4rem"
               />
-            </div>
+            </div> */}
           </p>
         ) : (
           <p

@@ -195,9 +195,7 @@ function Declare(props) {
 
   useEffect(() => {
     if (
-      companyId &&
-      props.location.state &&
-      (props.location.state.action == 1 || props.location.state.action == 2)
+      companyId 
     ) {
       // 编辑状态
       _getDeclareDetail(companyId);
@@ -568,6 +566,7 @@ function Declare(props) {
                 inx={inx}
                 companyId={companyId}
                 obj={obj}
+                updateId={updateCompanyId}
               />
             )}
           </section>
