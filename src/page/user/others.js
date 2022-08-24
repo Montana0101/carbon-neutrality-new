@@ -55,14 +55,14 @@ const cpPatentsItem = {
 
 // 投资方item
 const cpInvestorsItem = {
-  investorAmount: null, //投资金额
-  investorName: null, //投资者
-  investorRounds: null, //投资轮次
+  investorAmount: "", //投资金额
+  investorName: "", //投资者
+  investorRounds: "", //投资轮次
 };
 
 // 业务标签item
 const companyMarksItem = {
-  mark: null, //标签
+  mark: "", //标签
 };
 
 // 业务构成
@@ -141,7 +141,10 @@ function Others(props) {
     stage: null,
     website: null,
   }); // 基本信息表
-  const [table2, setTable2] = useState({}); // 公司战略
+  const [table2, setTable2] = useState({
+    strategicPositioning: null,
+    strategicPlanning: null,
+  }); // 公司战略
   const [table3, setTable3] = useState({
     businessModel: "",
     mainBusiness: "",
@@ -157,7 +160,9 @@ function Others(props) {
     cpCustomers: [cpCustomersItem],
     cpSuppliers: [cpSuppliersItem],
   }); // 公司经营
-  const [table4, setTable4] = useState({}); // 核心竞争力
+  const [table4, setTable4] = useState({
+    coreCompetitiveness: "",
+  }); // 核心竞争力
   const [table5, setTable5] = useState({
     cpLeaders: [
       {
@@ -182,10 +187,10 @@ function Others(props) {
   const [table7, setTable7] = useState({
     cpInvestors: [cpInvestorsItem],
   }); // 投资方
-  const [table8, setTable8] = useState({}); // 行业成长性
+  const [table8, setTable8] = useState({industryIntroduction:""}); // 行业成长性
 
   const onFinish = (values) => {
-    console.log("Received values of form: ", values);
+    // console.log("Received values of form: ", values);
   };
 
   // 省市区
@@ -206,7 +211,6 @@ function Others(props) {
   const verifyFull = (data) => {
     let _data = JSON.parse(JSON.stringify(data));
     let _flag = true;
-    console.log("打印下基本信息表 --> 提交前", data);
     delete _data.id;
     delete data.id;
     Object.values(_data).map((item) => {
@@ -214,7 +218,9 @@ function Others(props) {
         _flag = false;
       }
       if (item == "null") {
-        console.log('中')
+        _flag = false;
+      }
+      if (item == "" || item == " ") {
         _flag = false;
       }
       // if(typeof(item) == 'undefined'){
@@ -222,7 +228,6 @@ function Others(props) {
       // }
     });
     for (let key in data) {
-      console.log("打印下大撒把哈桑大", data[key]);
       if (typeof data[key] == "undefined") {
         _flag = false;
       }
@@ -234,7 +239,6 @@ function Others(props) {
   const save1 = async () => {
     // let _data = JSON.parse(JSON.stringify(table1))
     // let _flag = true
-    // console.log("打印下基本信息表 --> 提交前",table1)
     // delete _data.id
     // Object.values(_data).map(item=>{
     //   console.log(item)
@@ -276,7 +280,9 @@ function Others(props) {
       setFlag2(false);
       return;
     }
-    const res = await saveStrategic(table2);
+    let _t2 = JSON.parse(JSON.stringify(table2));
+    _t2.id = companyId ? companyId : null;
+    const res = await saveStrategic(_t2);
     if (res && res.code == 2000) {
       message.success("公司战略保存成功！");
       updateId(res.result);
@@ -290,69 +296,161 @@ function Others(props) {
 
   // 公司经营
   const save3 = async () => {
+    if (!verifyFull(table3)) {
+      message.warn("请完善公司经营！");
+      setFlag3(false);
+      return;
+    }
+
     let _t = JSON.parse(JSON.stringify(table3));
     _t.id = companyId ? companyId : null;
     const res = await saveOperation(_t);
     if (res && res.code == 2000) {
+      setFlag3(true);
       message.success("公司经营保存成功！");
+      updateId(res.result);
+      localStorage.setItem("companyId", res.result);
     } else {
+      setFlag3(false);
       message.error("公司经营保存失败！");
     }
   };
 
   // 核心竞争力
   const save4 = async () => {
-    const res = await saveCoreCompetence(table4);
+    if (!verifyFull(table4)) {
+      message.warn("请完善核心竞争力！");
+      setFlag4(false);
+      return;
+    }
+    let _t = JSON.parse(JSON.stringify(table4));
+    _t.id = companyId ? companyId : null;
+
+    const res = await saveCoreCompetence(_t);
     if (res && res.code == 2000) {
       message.success("核心竞争力保存成功！");
+      setFlag4(true);
+      updateId(res.result);
+      localStorage.setItem("companyId", res.result);
     } else {
       message.error("核心竞争力保存失败！");
+      setFlag4(false);
     }
   };
 
   // 核心团队
   const save5 = async () => {
     let _t = JSON.parse(JSON.stringify(table5));
+    if (
+      _t.cpLeaders[0].briefIntroduction == "" ||
+      _t.cpLeaders[0].leaderName == "" ||
+      _t.cpLeaders[0].position == ""
+    ) {
+      message.warn("请完善核心团队！");
+      setFlag5(false);
+      return;
+    }
+    if (
+      _t.cpTeams[0].briefIntroduction == "" ||
+      _t.cpTeams[0].leaderName == "" ||
+      _t.cpTeams[0].position == ""
+    ) {
+      setFlag5(false);
+      message.warn("请完善核心团队！");
+      return;
+    }
+
     _t.id = companyId ? companyId : null;
     const res = await saveLeader(_t);
     if (res && res.code == 2000) {
       message.success("核心团队保存成功！");
+      setFlag5(true);
+      updateId(res.result);
+      localStorage.setItem("companyId", res.result);
     } else {
       message.error("核心团队保存失败！");
+      setFlag5(false);
     }
   };
 
   // 核心技术
   const save6 = async () => {
     let _t = JSON.parse(JSON.stringify(table6));
+    if (
+      _t.cpPatents[0].abstracts == "" ||
+      _t.cpPatents[0].patentName == "" ||
+      _t.cpPatents[0].patentStatus == "" || _t.cpPatents[0].patentType == ""
+    ) {
+      message.warn("请完善核心技术！");
+      setFlag6(false);
+      return;
+    }
+    if(!_t.coreTechnology){
+      message.warn("请完善核心技术！");
+      setFlag6(false);
+      return;
+    }
+
     _t.id = companyId ? companyId : null;
     const res = await savePatent(_t);
     if (res && res.code == 2000) {
       message.success("核心技术保存成功！");
+      setFlag6(true);
+      updateId(res.result);
+      localStorage.setItem("companyId", res.result);
     } else {
       message.error("核心技术保存失败！");
+      setFlag6(false);
     }
   };
 
   // 投资方
   const save7 = async () => {
     let _t = JSON.parse(JSON.stringify(table7));
+  //   cpInvestors: {
+  //     investorAmount: any;
+  //     investorName: any;
+  //     investorRounds: any;
+  // }[];
+  if (
+    _t.cpInvestors[0].investorAmount == "" || _t.cpInvestors[0].investorAmount == null ||
+    _t.cpInvestors[0].investorName == "" || _t.cpInvestors[0].investorName == null ||
+    _t.cpInvestors[0].investorRounds == "" || _t.cpInvestors[0].investorRounds == null 
+  ) {
+    message.warn("请完善投资方！");
+    setFlag7(false);
+    return;
+  }
     _t.id = companyId ? companyId : null;
     const res = await saveInvestor(_t);
+
     if (res && res.code == 2000) {
       message.success("投资方保存成功！");
+      setFlag7(true);
+      updateId(res.result);
+      localStorage.setItem("companyId", res.result);
     } else {
       message.error("投资方保存失败！");
+      setFlag7(false);
     }
   };
 
   // 行业成长性
   const save8 = async () => {
+    let _t = JSON.parse(JSON.stringify(table8));
+    if(_t.industryIntroduction == "" || _t.industryIntroduction==null){
+      setFlag8(false)
+      return 
+    }
     const res = await saveIndustry(table8);
     if (res && res.code == 2000) {
       message.success("行业成长性保存成功！");
+      setFlag8(true)
+      updateId(res.result);
+      localStorage.setItem("companyId", res.result);
     } else {
       message.error("行业成长性保存失败！");
+      setFlag8(false)
     }
   };
 
@@ -414,8 +512,26 @@ function Others(props) {
     } else if (flag2) {
       props.setInx(3);
       setFlag2(false);
+    } else if (flag3) {
+      props.setInx(4);
+      setFlag3(false);
+    } else if (flag4) {
+      props.setInx(5);
+      setFlag4(false);
+    } else if (flag5) {
+      props.setInx(6);
+      setFlag5(false);
+    }else if (flag6) {
+      props.setInx(7);
+      setFlag6(false);
+    }else if (flag7) {
+      props.setInx(8);
+      setFlag7(false);
+    }else if (flag8) {
+      props.setInx(9);
+      setFlag8(false);
     }
-  }, [flag1, flag2]);
+  }, [flag1, flag2, flag3, flag4, flag5,flag6,flag7,flag8]);
 
   // 编辑状态初始化数据
   const initDataByEdit = () => {
@@ -463,7 +579,11 @@ function Others(props) {
         strategicPositioning: obj.strategicPositioning,
         strategicPlanning: obj.strategicPlanning,
       });
-    } else if (inx == 3) {
+      let _obj = JSON.parse(JSON.stringify(table2));
+      _obj.strategicPositioning = obj.strategicPositioning;
+      _obj.strategicPlanning = obj.strategicPlanning;
+      setTable2(_obj);
+    } else if (props.inx == 3) {
       // 公司经营
       form.setFieldsValue({
         businessModel: obj.businessModel, //商业模式
@@ -490,13 +610,15 @@ function Others(props) {
         _obj.cpSuppliers = obj.cpSuppliers;
       }
 
-      console.log("打算把绝对不会撒啊撒", _obj);
       setTable3(_obj);
     } else if (inx == 4) {
       // 核心竞争力
       form.setFieldsValue({
         coreCompetitiveness: obj.coreCompetitiveness,
       });
+      let _obj = JSON.parse(JSON.stringify(table4));
+      _obj.coreCompetitiveness = obj.coreCompetitiveness;
+      setTable4(_obj);
     } else if (inx == 5) {
       // 领军人物
       let _obj = JSON.parse(JSON.stringify(table5));
@@ -541,14 +663,6 @@ function Others(props) {
     initDataByEdit();
   }, [props.inx]);
 
-  useEffect(() => {
-    console.log("监听基本信息---->", table1);
-  }, [table1]);
-
-  useEffect(() => {
-    console.log("监听公司经营---->", table3);
-  }, [table3]);
-
   const initRef = useRef();
 
   return (
@@ -570,8 +684,9 @@ function Others(props) {
             //   console.log("当前大撒把哈就", e);
             // }}
             onValuesChange={(changedValues, allValues) => {
-              let _obj = JSON.parse(JSON.stringify(table1))
-              Object.assign(_obj,{changedValues})
+              console.log("表11", table1);
+              let _obj = JSON.parse(JSON.stringify(table1));
+              Object.assign(_obj, changedValues);
               setTable1(_obj);
             }}
           >
@@ -710,7 +825,6 @@ function Others(props) {
                     style={{ width: "100%" }}
                     onChange={(moment, str) => {
                       setRigsterTime(str);
-                      console.log("Dsabhjh ", str);
                     }}
                     defaultValue={obj.regTime && moment(obj.regTime)}
                     // picker="day"
@@ -730,7 +844,6 @@ function Others(props) {
                     onChange={(e) => {
                       let _obj = JSON.parse(JSON.stringify(table1));
                       _obj.stage = e;
-                      console.log("融资阶段", e);
                       setTable1(_obj);
                     }}
                   >
@@ -819,10 +932,16 @@ function Others(props) {
             name="advanced_search"
             className="ant-advanced-search-form"
             onFinish={onFinish}
-            onChange={(e) => {
-              let obj = form.getFieldsValue();
-              obj.id = companyId ? companyId : null;
-              setTable2(obj);
+            // onChange={(e) => {
+            //   let obj = form.getFieldsValue();
+            //   obj.id = companyId ? companyId : null;
+            //   setTable2(obj);
+            // }}
+            onValuesChange={(changedValues, allValues) => {
+              console.log("biao22222", table2);
+              let _obj = JSON.parse(JSON.stringify(table2));
+              Object.assign(_obj, changedValues);
+              setTable2(_obj);
             }}
             {...layout}
           >
@@ -858,7 +977,7 @@ function Others(props) {
             onFinish={onFinish}
             onChange={(e) => {
               let obj = form.getFieldsValue();
-              console.log("监听下书", obj);
+              // console.log("监听下书", obj);
               // obj.id = companyId ? companyId : null;
               // setTable3(obj);
             }}
@@ -882,21 +1001,17 @@ function Others(props) {
 
               <Col span={12} offset={0}>
                 <Form.Item label={"主营业务"} name="mainBusiness">
-                  <section style={{ display: "flex" }}>
-                    <span>&nbsp;</span> <span>&nbsp;</span>
-                    <span>&nbsp;</span>
-                    <Input.TextArea
-                      showCount
-                      maxLength={300}
-                      style={{ width: "100%" }}
-                      placeholder="请输入主营业务，不超过300个字"
-                      onChange={(e) => {
-                        let _obj = JSON.parse(JSON.stringify(table3));
-                        _obj.mainBusiness = e.target.value;
-                        setTable3(_obj);
-                      }}
-                    />
-                  </section>
+                  <Input.TextArea
+                    showCount
+                    maxLength={300}
+                    style={{ width: "100%" }}
+                    placeholder="请输入主营业务，不超过300个字"
+                    onChange={(e) => {
+                      let _obj = JSON.parse(JSON.stringify(table3));
+                      _obj.mainBusiness = e.target.value;
+                      setTable3(_obj);
+                    }}
+                  />
                 </Form.Item>
               </Col>
             </Row>
