@@ -1675,7 +1675,7 @@ function Others(props) {
                       _obj.coreTechnology = e.target.value;
                       setTable6(_obj);
                     }}
-                    defaultValue={table6 && table6.coreTechnology}
+                    defaultValue={obj && obj.coreTechnology}
                   />
                 </Form.Item>
               </Col>
@@ -1715,12 +1715,12 @@ function Others(props) {
                           />
                           <Select
                             defaultValue={{
-                              value: table6.cpPatents[index].patentType || "",
+                              value: obj.cpPatents[index].patentType || "",
                               label: patentType[
-                                table6.cpPatents[index].patentType - 1
+                                obj.cpPatents[index].patentType - 1
                               ]
                                 ? patentType[
-                                    table6.cpPatents[index].patentType - 1
+                                    obj.cpPatents[index].patentType - 1
                                   ].name
                                 : "",
                             }}
@@ -1744,12 +1744,12 @@ function Others(props) {
                           </Select>
                           <Select
                             defaultValue={{
-                              value: table6.cpPatents[index].patentStatus || "",
+                              value: obj.cpPatents[index].patentStatus || "",
                               label: patentStatus[
-                                table6.cpPatents[index].patentStatus - 1
+                                obj.cpPatents[index].patentStatus - 1
                               ]
                                 ? patentStatus[
-                                    table6.cpPatents[index].patentStatus - 1
+                                    obj.cpPatents[index].patentStatus - 1
                                   ].name
                                 : "",
                             }}
@@ -1811,9 +1811,9 @@ function Others(props) {
                               setTable6(_obj);
                             }}
                             defaultValue={
-                              table6 &&
-                              table6.cpPatents[index] &&
-                              table6.cpPatents[index].abstracts
+                              obj &&
+                              obj.cpPatents[index] &&
+                              obj.cpPatents[index].abstracts
                             }
                           />
                         </section>
@@ -1863,9 +1863,9 @@ function Others(props) {
                               setTable7(_obj);
                             }}
                             defaultValue={
-                              table7 &&
-                              table7.cpInvestors[index] &&
-                              table7.cpInvestors[index].investorName
+                              obj &&
+                              obj.cpInvestors[index] &&
+                              obj.cpInvestors[index].investorName
                             }
                           />
                           <Input
@@ -1879,9 +1879,9 @@ function Others(props) {
                               setTable7(_obj);
                             }}
                             defaultValue={
-                              table7 &&
-                              table7.cpInvestors[index] &&
-                              table7.cpInvestors[index].investorRounds
+                              obj &&
+                              obj.cpInvestors[index] &&
+                              obj.cpInvestors[index].investorRounds
                             }
                           />
                           <Input
@@ -1894,9 +1894,9 @@ function Others(props) {
                               setTable7(_obj);
                             }}
                             defaultValue={
-                              table7 &&
-                              table7.cpInvestors[index] &&
-                              table7.cpInvestors[index].investorAmount
+                              obj &&
+                              obj.cpInvestors[index] &&
+                              obj.cpInvestors[index].investorAmount
                             }
                           />
 
