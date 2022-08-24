@@ -102,6 +102,8 @@ function Others(props) {
   const [d3, setD3] = useState([]); //区
   const [d3_id, setD3_id] = useState(null);
 
+  const [flag1,setFlag1] = useState(false); // 校验基本信息表是否完成
+
   const [leaders, setLeaders] = useState(1); // 领军人物
   const [teams, setTeams] = useState(1); // 核心团队
   const [patent, setPatent] = useState(1); // 专利
@@ -205,8 +207,10 @@ function Others(props) {
     const res = await saveBaseInfo(_t1);
     if (res && res.code == 2000) {
       message.success("基本信息保存成功！");
+      setFlag1(true)
     } else {
       message.error("基本信息保存失败！");
+      setFlag1(false)
     }
   };
 
@@ -1815,8 +1819,12 @@ function Others(props) {
             <div
               style={{ marginRight: "0.3rem" }}
               onClick={() => {
+                submit();
+                if(flag1){
+                  props.setInx(2);
+                }
                 if (props.inx < 9) {
-                  props.setInx(props.inx + 1);
+                  // props.setInx(props.inx + 1);
                 }
               }}
             >
@@ -1831,7 +1839,7 @@ function Others(props) {
             <div
               onClick={() => {
                 // alert(1)
-                submit();
+                // submit();
                 // saveDeclareBalance();
               }}
             >

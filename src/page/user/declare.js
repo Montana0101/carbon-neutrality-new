@@ -69,7 +69,7 @@ const UpdateCmt = () => {
 function Declare(props) {
   const [tabInx, setTabInx] = useState(0);
   const [inx, setInx] = useState(0);
-  const [action,setAction] = useState(null); // 0新增 1编辑 2查看
+  const [action, setAction] = useState(null); // 0新增 1编辑 2查看
 
   const [companyId, setCompanyId] = useState(null); //公司id
   const [years, setYears] = useState(null); // 当前年份
@@ -105,18 +105,18 @@ function Declare(props) {
     document.getElementsByTagName("html")[0].style.overflowY = "scroll";
 
     let { state } = props.location;
-    
+
     if (state && state.action == 1) {
-      setAction(1)
+      setAction(1);
       setCompanyId(state.id);
       localStorage.setItem("companyId", state.id);
     } else if (state && state.action == 2) {
-      setAction(2)
+      setAction(2);
       setCompanyId(state.id);
       localStorage.setItem("companyId", state.id);
-    }else if (state && state.action == 0) {
+    } else if (state && state.action == 0) {
       // 新增数据
-      setAction(0)
+      setAction(0);
       localStorage.removeItem("companyId");
     }
 
@@ -170,7 +170,7 @@ function Declare(props) {
     setAllow(e);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     if (allow) {
       if (tabInx < 2) {
         setTabInx(tabInx + 1);
@@ -178,7 +178,7 @@ function Declare(props) {
         setInx(1);
       }
     }
-  },[allow])
+  }, [allow]);
 
   // 重置保存按钮
   const resetSaveButton = () => {
@@ -192,13 +192,15 @@ function Declare(props) {
   };
 
   useEffect(() => {
-    if (companyId && props.location.state && (props.location.state.action == 1 || props.location.state.action ==2 )) {
+    if (
+      companyId &&
+      props.location.state &&
+      (props.location.state.action == 1 || props.location.state.action == 2)
+    ) {
       // 编辑状态
       _getDeclareDetail(companyId);
     }
-    
   }, [companyId]);
-
 
   return (
     <>
@@ -385,6 +387,9 @@ function Declare(props) {
                               } else if (tabInx == 2) {
                                 setIsSaveCash(true);
                               }
+                              if(allow){
+                                setTabInx(index)
+                              }
                             }}
                           >
                             {item}
@@ -498,26 +503,34 @@ function Declare(props) {
                     alignItems: "center",
                   }}
                 >
-                 {action != 2 && <div
-                    style={{ marginRight: "0.3rem" }}
-                    onClick={() => {
-                      if (tabInx == 0) {
-                        setIsSaveAsset(true);
-                      } else if (tabInx == 1) {
-                        setIsSaveProfit(true);
-                      } else if (tabInx == 2) {
-                        setIsSaveCash(true);
-                      }
-                    }}
-                  >
-                    <ButtonCmt
-                      bg={ThemeColor}
-                      w="0.8rem"
-                      color="white"
-                      t="下一步"
-                      h="0.4rem"
-                    />
-                  </div>}
+                  {action != 2 && (
+                    <div
+                      style={{ marginRight: "0.3rem" }}
+                      onClick={() => {
+                        if (tabInx == 0) {
+                          setIsSaveAsset(true);
+                        } else if (tabInx == 1) {
+                          setIsSaveProfit(true);
+                        } else if (tabInx == 2) {
+                          setIsSaveCash(true);
+                        }
+                        
+                        if(allow){
+                          if(tabInx==2){
+                            setInx(1)
+                          }
+                        }
+                      }}
+                    >
+                      <ButtonCmt
+                        bg={ThemeColor}
+                        w="0.8rem"
+                        color="white"
+                        t="下一步"
+                        h="0.4rem"
+                      />
+                    </div>
+                  )}
                   {/* <div
                     onClick={() => {
                       // saveDeclareBalance();
