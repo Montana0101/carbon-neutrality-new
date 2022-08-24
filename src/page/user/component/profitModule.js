@@ -15,7 +15,7 @@ const profit_reducer = (state, action) => {
 
 // 利润表编辑时
 export const ProfitModuleEdit = (props) => {
-  const { isSaveProfit, companyId, year, profitJson, resetSaveButton } = props;
+  const { isSaveProfit, companyId, year, profitJson, resetSaveButton,allow } = props;
   const [profit_state, profit_dispatch] = useReducer(
     profit_reducer,
     profitJson
@@ -88,6 +88,7 @@ export const ProfitModuleEdit = (props) => {
     if (!_isEmpty()) {
       message.warn("每一项都必填");
       resetSaveButton();
+      allow(false)
       return;
     }
     let res;
@@ -106,6 +107,7 @@ export const ProfitModuleEdit = (props) => {
       message.error("操作失败！");
     }
     resetSaveButton();
+    allow(true)
   };
 
   return (
@@ -117,7 +119,7 @@ export const ProfitModuleEdit = (props) => {
 
 // 利润表新增时
 export const ProfitModuleInit = (props) => {
-  const { isSaveProfit, companyId, year, updateId, resetSaveButton } = props;
+  const { isSaveProfit, companyId, year, updateId, resetSaveButton,allow } = props;
   const [profit_state, profit_dispatch] = useReducer(
     profit_reducer,
     profitJson1
@@ -191,6 +193,7 @@ export const ProfitModuleInit = (props) => {
     if (!_isEmpty()) {
       message.warn("每一项都必填");
       resetSaveButton();
+      allow(false)
       return;
     }
     let res;
@@ -210,6 +213,7 @@ export const ProfitModuleInit = (props) => {
       message.error("操作失败！");
     }
     resetSaveButton();
+    allow(true)
   };
 
   return (

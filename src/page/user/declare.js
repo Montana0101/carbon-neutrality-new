@@ -74,6 +74,7 @@ function Declare(props) {
   const [years, setYears] = useState(null); // 当前年份
   const history = useHistory();
   const [obj, setObj] = useState({}); // 编辑所有数据
+  const [allow, setAllow] = useState(false); // 是否允许通过
 
   const [flagAssetEdit, setFlagAssetEdit] = useState(false); // 财务报表编辑渲染判断
   const [flagAssetNew, setFlagAssetNew] = useState(false); // 财务报表新增渲染判断
@@ -113,7 +114,6 @@ function Declare(props) {
     }
   }, []);
 
-
   // 编辑时-获取数据详情
   const _getDeclareDetail = async (id) => {
     const res = await getDeclareDetail(id);
@@ -146,6 +146,11 @@ function Declare(props) {
   // 更新companyId
   const updateCompanyId = (e) => {
     setCompanyId(e);
+  };
+
+  // 子父组件通信 - 判断是否通过校验 - 进入下一步前
+  const _allowPass = (e) => {
+    setAllow(e);
   };
 
   // 重置保存按钮
@@ -400,6 +405,7 @@ function Declare(props) {
                     year={years}
                     assetJson={assetJson}
                     resetSaveButton={resetSaveButton}
+                    allow={_allowPass}
                   />
                 )}
 
@@ -410,6 +416,7 @@ function Declare(props) {
                     year={years}
                     updateId={updateCompanyId}
                     resetSaveButton={resetSaveButton}
+                    allow={_allowPass}
                   />
                 )}
 
@@ -421,6 +428,7 @@ function Declare(props) {
                     year={years}
                     profitJson={profitJson}
                     resetSaveButton={resetSaveButton}
+                    allow={_allowPass}
                   />
                 )}
 
@@ -431,6 +439,7 @@ function Declare(props) {
                     year={years}
                     updateId={updateCompanyId}
                     resetSaveButton={resetSaveButton}
+                    allow={_allowPass}
                   />
                 )}
 
@@ -441,6 +450,7 @@ function Declare(props) {
                     year={years}
                     cashJson={cashJson}
                     resetSaveButton={resetSaveButton}
+                    allow={_allowPass}
                   />
                 )}
 
@@ -451,6 +461,7 @@ function Declare(props) {
                     year={years}
                     updateId={updateCompanyId}
                     resetSaveButton={resetSaveButton}
+                    allow={_allowPass}
                   />
                 )}
 
@@ -465,10 +476,21 @@ function Declare(props) {
                   <div
                     style={{ marginRight: "0.3rem" }}
                     onClick={() => {
-                      if (tabInx < 2) {
-                        setTabInx(tabInx + 1);
-                      } else {
-                        setInx(1);
+                      if (tabInx == 0) {
+                        setIsSaveAsset(true);
+                      } else if (tabInx == 1) {
+                        setIsSaveProfit(true);
+                      } else if (tabInx == 2) {
+                        setIsSaveCash(true);
+                      }
+
+                      // 判断是否允许通过
+                      if (allow) {
+                        if (tabInx < 2) {
+                          setTabInx(tabInx + 1);
+                        } else {
+                          setInx(1);
+                        }
                       }
                     }}
                   >
@@ -480,7 +502,7 @@ function Declare(props) {
                       h="0.4rem"
                     />
                   </div>
-                  <div
+                  {/* <div
                     onClick={() => {
                       // saveDeclareBalance();
                       if (tabInx == 0) {
@@ -499,7 +521,7 @@ function Declare(props) {
                       t="保存"
                       h="0.4rem"
                     />
-                  </div>
+                  </div> */}
                 </p>
               </div>
             )}

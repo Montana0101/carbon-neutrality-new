@@ -14,7 +14,7 @@ const cash_reducer = (state, action) => {
 
 // 财务负债编辑状态
 export const CashModuleEdit = (props) => {
-  const { isSaveCash, companyId, year, cashJson, resetSaveButton } = props;
+  const { isSaveCash, companyId, year, cashJson, resetSaveButton,allow } = props;
   const [cash_state, cash_dispatch] = useReducer(cash_reducer, cashJson);
   const [cashEnter, setCashEnter] = useState({ value: "", line: null });
 
@@ -83,6 +83,7 @@ export const CashModuleEdit = (props) => {
     if (!_isEmpty()) {
       message.warn("每一项都必填");
       resetSaveButton();
+      allow(false)
       return;
     }
 
@@ -102,6 +103,7 @@ export const CashModuleEdit = (props) => {
       message.error("操作失败！");
     }
     resetSaveButton();
+    allow(true)
   };
 
   return (
@@ -111,7 +113,7 @@ export const CashModuleEdit = (props) => {
 
 // 现金流量初始化状态
 export const CashModuleInit = (props) => {
-  const { isSaveCash, companyId, year, updateId, resetSaveButton } = props;
+  const { isSaveCash, companyId, year, updateId, resetSaveButton,allow } = props;
   const [cash_state, cash_dispatch] = useReducer(cash_reducer, cashJson1);
   const [cashEnter, setCashEnter] = useState({ value: "", line: null });
 
@@ -184,6 +186,7 @@ export const CashModuleInit = (props) => {
     if (!_isEmpty()) {
       message.warn("每一项都必填");
       resetSaveButton();
+      allow(false)
       return;
     }
 
@@ -204,6 +207,7 @@ export const CashModuleInit = (props) => {
       message.error("操作失败！");
     }
     resetSaveButton();
+    allow(true)
   };
 
   return (

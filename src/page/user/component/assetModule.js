@@ -14,13 +14,13 @@ const asset_reducer = (state, action) => {
 
 // 财务负债编辑状态
 export const AssetModuleEdit = (props) => {
-  const { isSaveAsset, companyId, year, assetJson, resetSaveButton } = props;
+  const { isSaveAsset, companyId, year, assetJson, resetSaveButton,allow } = props;
   const [asset_state, asset_dispatch] = useReducer(asset_reducer, assetJson);
   const [assetEnter, setAssetEnter] = useState({ value: "", line: null });
 
   useEffect(() => {
     dispathTrigger();
-    console.log("检测是否触发了assetEnter", asset_state);
+    // console.log("检测是否触发了assetEnter", asset_state);
   }, [assetEnter]);
 
   useEffect(() => {
@@ -84,6 +84,7 @@ export const AssetModuleEdit = (props) => {
     if (!_isEmpty()) {
       message.warn("每一项都必填");
       resetSaveButton();
+      allow(false)
       return;
     }
     let res;
@@ -102,6 +103,7 @@ export const AssetModuleEdit = (props) => {
       message.error("操作失败！");
     }
     resetSaveButton();
+    allow(true)
   };
 
   return (
@@ -111,7 +113,7 @@ export const AssetModuleEdit = (props) => {
 
 // 财务负债初始化状态
 export const AssetModuleInit = (props) => {
-  const { isSaveAsset, companyId, year, updateId, resetSaveButton } = props;
+  const { isSaveAsset, companyId, year, updateId, resetSaveButton,allow } = props;
   const [asset_state, asset_dispatch] = useReducer(asset_reducer, assetJson1);
   const [assetEnter, setAssetEnter] = useState({ value: "", line: null });
 
@@ -181,6 +183,7 @@ export const AssetModuleInit = (props) => {
     if (!_isEmpty()) {
       message.warn("每一项都必填");
       resetSaveButton();
+      allow(false)
       return;
     }
     let res;
@@ -200,6 +203,7 @@ export const AssetModuleInit = (props) => {
       message.error("操作失败！");
     }
     resetSaveButton();
+    allow(true)
   };
 
   return (
