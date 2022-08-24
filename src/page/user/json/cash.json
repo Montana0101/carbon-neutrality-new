@@ -189,7 +189,7 @@
         "accumulatedAmount":null,
         "currentAmount":null,
         "lineNo":32,
-        "name":"EffectRateOnEquivalents"
+        "name":"effectRateOnEquivalents"
     },
     "netIncreaseInequivalents":{
         "accumulatedAmount":null,

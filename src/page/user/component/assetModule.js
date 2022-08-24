@@ -97,13 +97,14 @@ export const AssetModuleEdit = (props) => {
       if (res.result) {
         // setCompanyId(res.result);
         message.success("操作成功！");
-        // localStorage.setItem("companyId", res.result);
+        allow(true)
+        localStorage.setItem("companyId", res.result);
       }
     } else {
+      allow(false)
       message.error("操作失败！");
     }
     resetSaveButton();
-    allow(true)
   };
 
   return (
@@ -196,14 +197,16 @@ export const AssetModuleInit = (props) => {
       if (res.result) {
         // setCompanyId(res.result);
         message.success("操作成功！");
+        allow(true)
         localStorage.setItem("companyId", res.result);
         updateId(res.result);
+      
       }
     } else {
       message.error("操作失败！");
+      allow(false)
     }
     resetSaveButton();
-    allow(true)
   };
 
   return (

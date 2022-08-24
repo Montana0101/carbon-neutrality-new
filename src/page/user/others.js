@@ -178,6 +178,21 @@ function Others(props) {
 
   // 保存基本信息
   const save1 = async () => {
+    let _data = JSON.parse(JSON.stringify(table1))
+    let _flag = true
+    console.log("打印下基本信息表 --> 提交前",table1)
+    delete _data.id
+    Object.values(_data).map(item=>{
+      console.log(item)
+      if(item == null){
+        _flag = false
+      }
+    })
+    if(!_flag) {
+      message.warn("所有字段都必填！")
+      return
+    }
+    // console.log('打印下_flag',_flag)
     let _t1 = JSON.parse(JSON.stringify(table1));
     _t1.id = companyId ? companyId : null;
     d1_id && (_t1.province = d1_id);
@@ -344,23 +359,23 @@ function Others(props) {
       });
 
       let _obj = JSON.parse(JSON.stringify(table1));
-      _obj.companyName = obj.companyName
-      _obj.enterpriseAbbreviation=obj.enterpriseAbbreviation
-      _obj.regCapital=obj.regCapital
-      _obj.contactNumber=obj.contactNumber
-      _obj.email=obj.email
-      _obj.financingScale=obj.financingScale
-      _obj.enterpriseValuation=obj.enterpriseValuation
-      _obj.legalPersonName=obj.legalPersonName
-      _obj.website=obj.website
-      _obj.companyProfile=obj.companyProfile
+      _obj.companyName = obj.companyName || null
+      _obj.enterpriseAbbreviation=obj.enterpriseAbbreviation || null
+      _obj.regCapital=obj.regCapital || null
+      _obj.contactNumber=obj.contactNumber || null
+      _obj.email=obj.email || null
+      _obj.financingScale=obj.financingScale || null
+      _obj.enterpriseValuation=obj.enterpriseValuation || null
+      _obj.legalPersonName=obj.legalPersonName || null
+      _obj.website=obj.website || null
+      _obj.companyProfile=obj.companyProfile || null
 
       _obj.id = companyId ? companyId : null;
-      _obj.stage = obj.stage;
-      _obj.industry =obj.industry;
-      _obj.province = obj.province;
-      _obj.city = obj.city;
-      _obj.district = obj.district;
+      _obj.stage = obj.stage || null;
+      _obj.industry =obj.industry  || null;
+      _obj.province = obj.province || null;
+      _obj.city = obj.city || null;
+      _obj.district = obj.district || null;
       setTable1(_obj);
     } else if (props.inx == 2) {
       // 公司战略

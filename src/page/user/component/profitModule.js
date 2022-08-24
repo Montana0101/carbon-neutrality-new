@@ -15,7 +15,14 @@ const profit_reducer = (state, action) => {
 
 // 利润表编辑时
 export const ProfitModuleEdit = (props) => {
-  const { isSaveProfit, companyId, year, profitJson, resetSaveButton,allow } = props;
+  const {
+    isSaveProfit,
+    companyId,
+    year,
+    profitJson,
+    resetSaveButton,
+    allow,
+  } = props;
   const [profit_state, profit_dispatch] = useReducer(
     profit_reducer,
     profitJson
@@ -68,9 +75,9 @@ export const ProfitModuleEdit = (props) => {
   // 判断是否为空
   const _isEmpty = () => {
     var _flag = true;
-    let _obj = JSON.parse(JSON.stringify(profit_state))
-    delete _obj.companyId
-    delete _obj.years 
+    let _obj = JSON.parse(JSON.stringify(profit_state));
+    delete _obj.companyId;
+    delete _obj.years;
 
     Object.values(_obj).map((item, index) => {
       if (item.accumulatedAmount == null) {
@@ -88,7 +95,7 @@ export const ProfitModuleEdit = (props) => {
     if (!_isEmpty()) {
       message.warn("每一项都必填");
       resetSaveButton();
-      allow(false)
+      allow(false);
       return;
     }
     let res;
@@ -101,13 +108,14 @@ export const ProfitModuleEdit = (props) => {
       if (res.result) {
         // setCompanyId(res.result);
         message.success("操作成功！");
-        // localStorage.setItem("companyId", res.result);
+        localStorage.setItem("companyId", res.result);
+        allow(true);
       }
     } else {
       message.error("操作失败！");
+      allow(false);
     }
     resetSaveButton();
-    allow(true)
   };
 
   return (
@@ -119,7 +127,14 @@ export const ProfitModuleEdit = (props) => {
 
 // 利润表新增时
 export const ProfitModuleInit = (props) => {
-  const { isSaveProfit, companyId, year, updateId, resetSaveButton,allow } = props;
+  const {
+    isSaveProfit,
+    companyId,
+    year,
+    updateId,
+    resetSaveButton,
+    allow,
+  } = props;
   const [profit_state, profit_dispatch] = useReducer(
     profit_reducer,
     profitJson1
@@ -172,9 +187,9 @@ export const ProfitModuleInit = (props) => {
   // 判断是否为空
   const _isEmpty = () => {
     var _flag = true;
-    let _obj = JSON.parse(JSON.stringify(profit_state))
-    delete _obj.companyId
-    delete _obj.years 
+    let _obj = JSON.parse(JSON.stringify(profit_state));
+    delete _obj.companyId;
+    delete _obj.years;
 
     Object.values(_obj).map((item, index) => {
       if (item.accumulatedAmount == null) {
@@ -189,11 +204,11 @@ export const ProfitModuleInit = (props) => {
 
   // 保存资产负债表
   const saveDeclareBalance = async () => {
-    console.log(profit_state)
+    console.log(profit_state);
     if (!_isEmpty()) {
       message.warn("每一项都必填");
       resetSaveButton();
-      allow(false)
+      allow(false);
       return;
     }
     let res;
@@ -208,12 +223,13 @@ export const ProfitModuleInit = (props) => {
         message.success("操作成功！");
         localStorage.setItem("companyId", res.result);
         updateId(res.result);
+        allow(true);
       }
     } else {
       message.error("操作失败！");
+      allow(false);
     }
     resetSaveButton();
-    allow(true)
   };
 
   return (

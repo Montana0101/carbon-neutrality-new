@@ -303,12 +303,21 @@ function CommonUser(props) {
     },
     {
       title: "操作",
-      width: 200,
+      width: 220,
       render: (text, record) => {
         return (
           <div style={{ display: "flex", justifyContent: "space-around" }}>
             <div
-              style={{ marginBottom: "0.05rem" }}
+              // style={{ marginBottom: "0.05rem" }}
+              onClick={() => {
+                // _editDeclare([record.id]);
+                history.push("declare", { id: record.id, action: 2 });
+              }}
+            >
+              {ButtonCmt("#6395F9", "white", "查看")}
+            </div>
+            <div
+              // style={{ marginBottom: "0.05rem" }}
               onClick={() => {
                 // _editDeclare([record.id]);
                 history.push("declare", { id: record.id, action: 1 });
@@ -319,7 +328,9 @@ function CommonUser(props) {
             <div>
               <Popconfirm
                 title="确认删除该条申报吗？"
-                onConfirm={()=>{ _deleteRecord([record.id]);}}
+                onConfirm={() => {
+                  _deleteRecord([record.id]);
+                }}
                 // onCancel={cancel}
                 okText="确认"
                 cancelText="取消"
@@ -694,7 +705,7 @@ function CommonUser(props) {
             ) : (
               <div
                 onClick={() => {
-                  localStorage.removeItem("companyId")
+                  localStorage.removeItem("companyId");
                   history.push("/declare", { action: 0 });
                 }}
               >
