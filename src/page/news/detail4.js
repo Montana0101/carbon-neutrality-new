@@ -7,7 +7,7 @@ import {
 import { AliOss, ThemeColor, CutLine } from "../../lib/const"
 import './default.less'
 import news4 from '../../static/imgs/new4.png'
-
+import store from "../../store/index";
 
 const IconFont = createFromIconfontCN({
     scriptUrl: '//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js',
@@ -15,6 +15,15 @@ const IconFont = createFromIconfontCN({
 
 
 function NewsDetail3(props) {
+    const [amount, setAmount] = useState(0);
+
+    useEffect(() => {
+      store.subscribe(() => {
+        setAmount(store.getState().amount);
+      });
+    }, []);
+
+
     useEffect(() => {
         document.getElementsByTagName("html")[0].style.overflowX = "hidden"
         document.getElementsByTagName("html")[0].style.overflowY = "scroll"
@@ -133,6 +142,21 @@ function NewsDetail3(props) {
                     </div>
                 </section>
             </div>
+            <p
+        style={{
+          height: "0.5rem",
+          fontSize: "0.12rem",
+          color: "rgba(0,0,0,0.6)",
+          display: "flex",
+          justifyContent: "right",
+          padding: "0 0.5rem",
+          alignItems: "center",
+          zIndex: 10000,
+        }}
+      >
+        <span>访问量：</span>
+        <span>{amount}</span>
+      </p>
         </div>
     )
 }

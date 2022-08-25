@@ -9,7 +9,7 @@ import {
   IframeUrl,
 } from "../../../lib/const";
 import { Popover, Steps } from "antd";
-
+import store from "../../../store/index";
 import { useHistory } from "react-router-dom";
 
 import "./default.less";
@@ -23,10 +23,13 @@ const data = [
 const year = [2009, 2015, 2017, 2020];
 
 const ConsultSub3 = () => {
-  const [inx, setInx] = useState(0);
-  const [flag, setFlag] = useState(false);
-  const [plus, setPlus] = useState(false);
-  const [overInx, setOverInx] = useState(0);
+  const [amount, setAmount] = useState(0);
+
+  useEffect(() => {
+    store.subscribe(() => {
+      setAmount(store.getState().amount);
+    });
+  }, []);
 
   const history = useHistory();
 
@@ -362,6 +365,21 @@ const ConsultSub3 = () => {
           })}
         </ul>
       </div>
+      <p
+        style={{
+          height: "0.5rem",
+          fontSize: "0.12rem",
+          color: "rgba(0,0,0,0.6)",
+          display: "flex",
+          justifyContent: "right",
+          padding: "0 0.5rem",
+          alignItems: "center",
+          zIndex: 10000,
+        }}
+      >
+        <span>访问量：</span>
+        <span>{amount}</span>
+      </p>
     </div>
   );
 };

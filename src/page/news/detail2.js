@@ -10,7 +10,7 @@ import img2 from './imgs/2.png'
 import img3 from './imgs/3.png'
 import img4 from './imgs/4.png'
 import './default.less'
-
+import store from "../../store/index";
 const IframeUrl = "http://58.33.170.254:8867"
 const data = [
     IframeUrl + "/news_detail_1.html",
@@ -26,6 +26,14 @@ const IconFont = createFromIconfontCN({
 
 
 function NewsDetail2(props) {
+    const [amount, setAmount] = useState(0);
+
+    useEffect(() => {
+      store.subscribe(() => {
+        setAmount(store.getState().amount);
+      });
+    }, []);
+
     useEffect(() => {
         document.getElementsByTagName("html")[0].style.overflowX = "hidden"
         document.getElementsByTagName("html")[0].style.overflowY = "scroll"
@@ -144,6 +152,21 @@ function NewsDetail2(props) {
                     </div>
                 </section>
             </div>
+            <p
+        style={{
+          height: "0.5rem",
+          fontSize: "0.12rem",
+          color: "rgba(0,0,0,0.6)",
+          display: "flex",
+          justifyContent: "right",
+          padding: "0 0.5rem",
+          alignItems: "center",
+          zIndex: 10000,
+        }}
+      >
+        <span>访问量：</span>
+        <span>{amount}</span>
+      </p>
         </div>
     )
 }

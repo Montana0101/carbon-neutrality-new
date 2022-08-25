@@ -9,35 +9,17 @@ import {
   IframeUrl,
 } from "../../../lib/const";
 import { useHistory } from "react-router-dom";
-
+import store from "../../../store/index";
 import "./default.less";
 
-const data = [
-  {
-    title: "碳达峰",
-    en: "Carbon up to the peak",
-
-    content:
-      "指排放不再增长，达到峰位后逐步由碳中和是指企业、团体或个人测算在一定时间内直接或间接产生的温室气体排放总量，然后通过植物造树造林、节能减排等形式，抵消自身产生的二氧化碳排放量，实现二氧化碳”零排放",
-  },
-  {
-    title: "碳中和",
-    en: "Carbon neutrality",
-    content:
-      "指企业、团体或个人测算在一定时间内,直接或间接产生的温室气体排放总量, 通过植树造林、节能减排等形式，抵消自身产生的二氧化碳排放量，实现二氧化碳“零排放”。",
-  },
-  {
-    title: "碳中和主要概念",
-    en: "Carbon neutrality concept",
-    content:
-      "全球变暖是人类的行为造成地球气候变化的后果。“碳”就是石油、煤炭、木材等由碳元素构成的自然资源。“碳”耗用得多，导致地球暖化的元凶“二氧化碳”也制造得多。随着人类的活动，全球变暖也在改变着人们的生活方式，带来越来越多的问题。在国际上，气候中性和净零 CO2 排放量的定义与碳中和一致。要达到碳中和，一般有两种方法：一是通过特殊的方式去除温室气体。二是使用可再生能源，减少碳排放。",
-  },
-];
 const ConsultSub2 = () => {
-  const [inx, setInx] = useState(0);
-  const [flag, setFlag] = useState(false);
-  const [plus, setPlus] = useState(false);
-  const [overInx, setOverInx] = useState(0);
+  const [amount, setAmount] = useState(0);
+
+  useEffect(() => {
+    store.subscribe(() => {
+      setAmount(store.getState().amount);
+    });
+  }, []);
 
   const history = useHistory();
 
@@ -197,6 +179,21 @@ const ConsultSub2 = () => {
           />
         </article>
       </div>
+      <p
+        style={{
+          height: "0.5rem",
+          fontSize: "0.12rem",
+          color: "rgba(0,0,0,0.6)",
+          display: "flex",
+          justifyContent: "right",
+          padding: "0 0.5rem",
+          alignItems: "center",
+          zIndex: 10000,
+        }}
+      >
+        <span>访问量：</span>
+        <span>{amount}</span>
+      </p>
     </div>
   );
 };

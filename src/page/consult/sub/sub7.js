@@ -8,51 +8,19 @@ import {
   barHeight,
   IframeUrl,
 } from "../../../lib/const";
-import { Popover, Steps } from "antd";
-
+import store from "../../../store/index";
 import { useHistory } from "react-router-dom";
 
 import "./default.less";
-const { Step } = Steps;
-const data = [
-  {
-    name: "“零外购电”工厂",
-    txt:
-      "是指生产企业有效利用生产工艺过程的余热余温及厂区内外的土地、厂房、矿山等区域，采用太阳能、风能、潮汐、地热、势能等资源进行发电，产生能满足企业生产及配套设施用电需求的绿电，实现企业年净外购电为零，甚至年净外购电为负的工厂。",
-  },
-  {
-    name: "“零化石能源”工厂",
-    txt:
-      "是指生产企业尤其是窑炉企业，通过综合利用太阳能、风能、地热能及氢能等可再生绿色能源，开展工业、生活、农林等有热值废弃物协同处置，合理使用周边产业的余热余温等满足生产及配套设施需求，企业年化石燃料使用为零的工厂。",
-  },
-  {
-    name: "“零一次资源”工厂",
-    txt:
-      "是指生产企业发挥建材行业资源综合利用优势，生产所需原、燃料全部使用工业副产品及废弃物、建筑废弃物及生活垃圾、矿山尾矿废渣等二次资源，企业一次不可再生自然资源使用为零的工厂。",
-  },
-  {
-    name: "“零碳排放”工厂",
-    txt:
-      "是指企业生产采用非化石能源、低碳酸盐含量原料等低碳、无碳原燃料，生产工艺过程节能降碳，生产废气经降碳、捕碳、固碳处置，进而达到企业全生产过程二氧化碳排放为零的工厂。",
-  },
-  {
-    name: "“零废弃物排放”工厂",
-    txt:
-      "是指生产企业通过工艺优化、技术装备提升和末端处理设施的改造升级或再造，在现有废弃物有效综合利用和超低排放基础上，进一步实现企业固体、液体、气体废弃物的近零或零排放的工厂。",
-  },
-  {
-    name: "“零员工”工厂",
-    txt:
-      "是指综合应用数字化、自动化、网络化控制技术，实现从原料到产品全过程智能控制，生产一线无需配备人员的工厂。",
-  },
-];
-const year = [2009, 2015, 2017, 2020];
 
 const ConsultSub7 = () => {
-  const [inx, setInx] = useState(0);
-  const [flag, setFlag] = useState(false);
-  const [plus, setPlus] = useState(false);
-  const [overInx, setOverInx] = useState(0);
+  const [amount, setAmount] = useState(0);
+
+  useEffect(() => {
+    store.subscribe(() => {
+      setAmount(store.getState().amount);
+    });
+  }, []);
 
   const history = useHistory();
 
@@ -262,6 +230,21 @@ const ConsultSub7 = () => {
         信息来源：生态环境部
         </p>
       </div>
+      <p
+        style={{
+          height: "0.5rem",
+          fontSize: "0.12rem",
+          color: "rgba(0,0,0,0.6)",
+          display: "flex",
+          justifyContent: "right",
+          padding: "0 0.5rem",
+          alignItems: "center",
+          zIndex: 10000,
+        }}
+      >
+        <span>访问量：</span>
+        <span>{amount}</span>
+      </p>
     </div>
   );
 };
