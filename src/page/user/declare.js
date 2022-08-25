@@ -45,7 +45,6 @@ const UpdateCmt = () => {
     },
     method: "POST",
     onChange(info) {
-      // console.log("打印下数据", info);
       if (info.file.status !== "uploading") {
         console.log(info.file, info.fileList);
       }
@@ -238,6 +237,73 @@ function Declare(props) {
     console.log("所有表填写状态", flags);
   }, [flags]);
 
+  // 编辑状态判断各表是否填完
+  useEffect(() => {
+    console.log("获取到的数据", obj);
+    let _arr = [];
+    // 财务表填过
+    if (
+      obj.cashFlowStatement &&
+      obj.cashFlowStatement.servicesCash.accumulatedAmount != null
+    ) {
+      // _setFla(true, 0);
+      _arr.push(true);
+    } else {
+      _arr.push(false);
+    }
+
+    // 基本信息表
+    if (obj.companyName) {
+      _arr.push(true);
+    } else {
+      _arr.push(false);
+    }
+
+    // 公司战略表
+    if (obj.strategicPositioning) {
+      _arr.push(true);
+    } else {
+      _arr.push(false);
+    }
+
+    if (obj.businessModel) {
+      _arr.push(true);
+    } else {
+      _arr.push(false);
+    }
+
+    if (obj.coreCompetitiveness) {
+      _arr.push(true);
+    } else {
+      _arr.push(false);
+    }
+
+    if (obj.cpLeaders && obj.cpLeaders[0]) {
+      _arr.push(true);
+    } else {
+      _arr.push(false);
+    }
+
+    if (obj.coreTechnology) {
+      _arr.push(true);
+    } else {
+      _arr.push(false);
+    }
+
+    if (obj.cpInvestors && obj.cpInvestors[0]) {
+      _arr.push(true);
+    } else {
+      _arr.push(false);
+    }
+
+    if (obj.industryIntroduction) {
+      _arr.push(true);
+    } else {
+      _arr.push(false);
+    }
+    setFlags(_arr);
+  }, [obj]);
+
   return (
     <>
       <div className="declare_page">
@@ -428,20 +494,6 @@ function Declare(props) {
                               if (action == 2) {
                                 setTabInx(index);
                               }
-                              // _bool = 0
-                              // if (tabInx == 0) {
-                              //   setIsSaveAsset(true);
-                              // } else if (tabInx == 1) {
-                              //   setIsSaveProfit(true);
-                              // } else if (tabInx == 2) {
-                              //   setIsSaveCash(true);
-                              // }
-                              // setTabInx(index)
-                              // if(allow){
-                              //   setTabInx(index)
-                              // }
-                              // console.log("子表切换 allow",allow)
-                              // console.log('子表切换 tabinx',tabInx)
                             }}
                           >
                             {item}
@@ -561,9 +613,6 @@ function Declare(props) {
                     <div
                       style={{ marginRight: "0.3rem" }}
                       onClick={() => {
-                        // console.log('下一步 当前tabInx',tabInx)
-                        // console.log("下一步 当前allow",allow)
-                        // _bool=1
                         if (tabInx == 0) {
                           setIsSaveAsset(true);
                         } else if (tabInx == 1) {
