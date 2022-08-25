@@ -92,7 +92,7 @@ const layout = {
 };
 
 function Others(props) {
-  const { inx, companyId, obj, updateId } = props;
+  const { inx, companyId, obj, updateId, setFlags,titles,flags,action } = props;
   const history = useHistory();
   const [form] = Form.useForm();
   const [d1, setD1] = useState([]); //省
@@ -237,18 +237,10 @@ function Others(props) {
 
   // 保存基本信息
   const save1 = async () => {
-    // let _data = JSON.parse(JSON.stringify(table1))
-    // let _flag = true
-    // delete _data.id
-    // Object.values(_data).map(item=>{
-    //   console.log(item)
-    //   if(item == null){
-    //     _flag = false
-    //   }
-    // })
     if (!verifyFull(table1)) {
       message.warn("请完善基本信息！");
       setFlag1(false);
+      setFlags(false, 1);
       return;
     }
 
@@ -265,11 +257,13 @@ function Others(props) {
     if (res && res.code == 2000) {
       message.success("基本信息保存成功！");
       setFlag1(true);
+      setFlags(true, 1);
       updateId(res.result);
       localStorage.setItem("companyId", res.result);
     } else {
       message.error("基本信息保存失败！");
       setFlag1(false);
+      setFlags(false, 1);
     }
   };
 
@@ -278,6 +272,7 @@ function Others(props) {
     if (!verifyFull(table2)) {
       message.warn("请完善公司战略！");
       setFlag2(false);
+      setFlags(false, 2);
       return;
     }
     let _t2 = JSON.parse(JSON.stringify(table2));
@@ -288,9 +283,11 @@ function Others(props) {
       updateId(res.result);
       localStorage.setItem("companyId", res.result);
       setFlag2(true);
+      setFlags(true, 2);
     } else {
       message.error("公司战略保存失败！");
       setFlag2(false);
+      setFlags(false, 2);
     }
   };
 
@@ -299,6 +296,7 @@ function Others(props) {
     if (!verifyFull(table3)) {
       message.warn("请完善公司经营！");
       setFlag3(false);
+      setFlags(false, 3);
       return;
     }
 
@@ -306,13 +304,15 @@ function Others(props) {
     _t.id = companyId ? companyId : null;
     const res = await saveOperation(_t);
     if (res && res.code == 2000) {
-      setFlag3(true);
       message.success("公司经营保存成功！");
+      setFlag3(true);
+      setFlags(true, 3);
       updateId(res.result);
       localStorage.setItem("companyId", res.result);
     } else {
-      setFlag3(false);
       message.error("公司经营保存失败！");
+      setFlag3(false);
+      setFlags(false, 3);
     }
   };
 
@@ -321,6 +321,7 @@ function Others(props) {
     if (!verifyFull(table4)) {
       message.warn("请完善核心竞争力！");
       setFlag4(false);
+      setFlags(false, 4);
       return;
     }
     let _t = JSON.parse(JSON.stringify(table4));
@@ -330,11 +331,13 @@ function Others(props) {
     if (res && res.code == 2000) {
       message.success("核心竞争力保存成功！");
       setFlag4(true);
+      setFlags(true, 4);
       updateId(res.result);
       localStorage.setItem("companyId", res.result);
     } else {
       message.error("核心竞争力保存失败！");
       setFlag4(false);
+      setFlags(false, 4);
     }
   };
 
@@ -348,6 +351,7 @@ function Others(props) {
     ) {
       message.warn("请完善核心团队！");
       setFlag5(false);
+      setFlags(false, 5);
       return;
     }
     if (
@@ -356,6 +360,7 @@ function Others(props) {
       _t.cpTeams[0].position == ""
     ) {
       setFlag5(false);
+      setFlags(false, 5);
       message.warn("请完善核心团队！");
       return;
     }
@@ -365,11 +370,13 @@ function Others(props) {
     if (res && res.code == 2000) {
       message.success("核心团队保存成功！");
       setFlag5(true);
+      setFlags(true, 5);
       updateId(res.result);
       localStorage.setItem("companyId", res.result);
     } else {
       message.error("核心团队保存失败！");
       setFlag5(false);
+      setFlags(false, 5);
     }
   };
 
@@ -384,11 +391,13 @@ function Others(props) {
     ) {
       message.warn("请完善核心技术！");
       setFlag6(false);
+      setFlags(false, 6);
       return;
     }
     if (!_t.coreTechnology) {
       message.warn("请完善核心技术！");
       setFlag6(false);
+      setFlags(false, 6);
       return;
     }
 
@@ -397,22 +406,19 @@ function Others(props) {
     if (res && res.code == 2000) {
       message.success("核心技术保存成功！");
       setFlag6(true);
+      setFlags(true, 6);
       updateId(res.result);
       localStorage.setItem("companyId", res.result);
     } else {
       message.error("核心技术保存失败！");
       setFlag6(false);
+      setFlags(false, 6);
     }
   };
 
   // 投资方
   const save7 = async () => {
     let _t = JSON.parse(JSON.stringify(table7));
-    //   cpInvestors: {
-    //     investorAmount: any;
-    //     investorName: any;
-    //     investorRounds: any;
-    // }[];
     if (
       // _t.cpInvestors[0].investorAmount == "" ||
       // _t.cpInvestors[0].investorAmount == null ||
@@ -423,6 +429,7 @@ function Others(props) {
     ) {
       message.warn("请完善投资方！");
       setFlag7(false);
+      setFlags(false, 7);
       return;
     }
     _t.id = companyId ? companyId : null;
@@ -431,11 +438,13 @@ function Others(props) {
     if (res && res.code == 2000) {
       message.success("投资方保存成功！");
       setFlag7(true);
+      setFlags(true, 7);
       updateId(res.result);
       localStorage.setItem("companyId", res.result);
     } else {
       message.error("投资方保存失败！");
       setFlag7(false);
+      setFlags(false, 7);
     }
   };
 
@@ -443,31 +452,52 @@ function Others(props) {
   const save8 = async () => {
     let _t = JSON.parse(JSON.stringify(table8));
     if (_t.industryIntroduction == "" || _t.industryIntroduction == null) {
+      message.warn("请完善行业成长性！");
       setFlag8(false);
+      setFlags(false, 8);
       return;
     }
-    const res = await saveIndustry(table8);
+    _t.id = companyId ? companyId : null;
+    const res = await saveIndustry(_t);
     if (res && res.code == 2000) {
       message.success("行业成长性保存成功！");
       setFlag8(true);
+      setFlags(true, 8);
       updateId(res.result);
       localStorage.setItem("companyId", res.result);
     } else {
       message.error("行业成长性保存失败！");
       setFlag8(false);
+      setFlags(false, 8);
     }
   };
 
   // 保存所有表格
   const saveAll = async () => {
-    const res = await commit(companyId);
-    if (res && res.code == 2000) {
-      message.success("提交成功！");
-      setTimeout(() => {
-        history.push("/common");
-      }, 1500);
+    let _flag = true;
+    let _index;
+
+    for(let i=0;i<props.flags.length;i++){
+      if(!props.flags[i]){
+        _flag = false;
+        _index = i;
+        break;
+      }
+    }
+
+    console.log("当前所有表状态", props.flags);
+    if (_flag) {
+      const res = await commit(companyId);
+      if (res && res.code == 2000) {
+        message.success("提交成功！");
+        setTimeout(() => {
+          history.push("/common");
+        }, 1500);
+      } else {
+        message.error("提交失败！");
+      }
     } else {
-      message.error("提交失败！");
+      message.warn(`请将${props.titles[_index]}表填写完成再提交！`);
     }
   };
 
@@ -655,6 +685,9 @@ function Others(props) {
       form.setFieldsValue({
         industryIntroduction: obj.industryIntroduction,
       });
+      let _obj = JSON.parse(JSON.stringify(table8));
+      _obj.industryIntroduction = obj.industryIntroduction;
+      setTable8(_obj);
     }
   };
 
@@ -812,7 +845,7 @@ function Others(props) {
 
               <Col span={10} offset={4}>
                 <Form.Item label={"注册资金"} name="regCapital">
-                  <Input placeholder="请输入注册资金，默认为万" />
+                  <Input placeholder="请输入注册资金，默认单位为万" />
                 </Form.Item>
               </Col>
             </Row>
@@ -864,7 +897,7 @@ function Others(props) {
 
               <Col span={10} offset={4}>
                 <Form.Item label={"联系邮箱"} name="email">
-                  <Input placeholder="请输入" />
+                  <Input placeholder="请输入联系邮箱" />
                 </Form.Item>
               </Col>
             </Row>
@@ -872,13 +905,13 @@ function Others(props) {
             <Row gutter={24}>
               <Col span={10}>
                 <Form.Item label={"融资金额"} name="financingScale">
-                  <Input placeholder="请输入，默认为万" />
+                  <Input placeholder="请输入融资金额，默认单位为万" />
                 </Form.Item>
               </Col>
 
               <Col span={10} offset={4}>
                 <Form.Item label={"投前估值"} name="enterpriseValuation">
-                  <Input placeholder="请输入" />
+                  <Input placeholder="请输入投前估值，默认单位为万" />
                 </Form.Item>
               </Col>
             </Row>
@@ -905,7 +938,7 @@ function Others(props) {
 
               <Col span={10} offset={4}>
                 <Form.Item label={"法定代表人"} name="legalPersonName">
-                  <Input placeholder="请输入" />
+                  <Input placeholder="请输入法定代表人" />
                 </Form.Item>
               </Col>
             </Row>
@@ -913,7 +946,7 @@ function Others(props) {
             <Row gutter={24}>
               <Col span={10}>
                 <Form.Item label={"官网"} name="website">
-                  <Input placeholder="请输入" />
+                  <Input placeholder="请输入官网" />
                 </Form.Item>
               </Col>
 
@@ -1717,19 +1750,27 @@ function Others(props) {
                               setTable6(_obj);
                             }}
                             defaultValue={
-                              obj.cpPatents && 
+                              obj.cpPatents &&
                               obj.cpPatents[index] &&
                               obj.cpPatents[index].patentName
                             }
                           />
                           <Select
                             defaultValue={{
-                              value: obj.cpPatents && obj.cpPatents[index] && obj.cpPatents[index].patentType || "",
+                              value:
+                                (obj.cpPatents &&
+                                  obj.cpPatents[index] &&
+                                  obj.cpPatents[index].patentType) ||
+                                "",
                               label: patentType[
-                                obj.cpPatents && obj.cpPatents[index] &&  obj.cpPatents[index].patentType - 1
+                                obj.cpPatents &&
+                                  obj.cpPatents[index] &&
+                                  obj.cpPatents[index].patentType - 1
                               ]
                                 ? patentType[
-                                  obj.cpPatents && obj.cpPatents[index] &&  obj.cpPatents[index].patentType - 1
+                                    obj.cpPatents &&
+                                      obj.cpPatents[index] &&
+                                      obj.cpPatents[index].patentType - 1
                                   ].name
                                 : "",
                             }}
@@ -1753,12 +1794,20 @@ function Others(props) {
                           </Select>
                           <Select
                             defaultValue={{
-                              value: obj.cpPatents && obj.cpPatents[index] && obj.cpPatents[index].patentStatus || "",
+                              value:
+                                (obj.cpPatents &&
+                                  obj.cpPatents[index] &&
+                                  obj.cpPatents[index].patentStatus) ||
+                                "",
                               label: patentStatus[
-                                obj.cpPatents && obj.cpPatents[index] && obj.cpPatents[index].patentStatus - 1
+                                obj.cpPatents &&
+                                  obj.cpPatents[index] &&
+                                  obj.cpPatents[index].patentStatus - 1
                               ]
                                 ? patentStatus[
-                                  obj.cpPatents && obj.cpPatents[index] && obj.cpPatents[index].patentStatus - 1
+                                    obj.cpPatents &&
+                                      obj.cpPatents[index] &&
+                                      obj.cpPatents[index].patentStatus - 1
                                   ].name
                                 : "",
                             }}
@@ -1894,7 +1943,7 @@ function Others(props) {
                             }
                           />
                           <Input
-                            placeholder="请输入投资金额，不填则代表暂不公开，默认为万"
+                            placeholder="请输入投资金额，不填则代表暂不公开，默认单位为万"
                             style={{ marginRight: "0.1rem", flex: 4 }}
                             onChange={(e) => {
                               let _obj = JSON.parse(JSON.stringify(table7));
@@ -2018,7 +2067,7 @@ function Others(props) {
             </section>
           </div>
         )}
-        {props.inx != 9 ? (
+        {action != 2 && (props.inx != 9 ? (
           <p
             style={{
               height: "1rem",
@@ -2109,7 +2158,7 @@ function Others(props) {
               />
             </div>
           </p>
-        )}{" "}
+        ))}
       </div>
     </div>
   );

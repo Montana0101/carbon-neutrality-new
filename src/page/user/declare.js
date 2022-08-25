@@ -19,7 +19,7 @@ var assetJson = require("./json/asset.json"); //资产负债json
 var profitJson = require("./json/profit.json"); // 利润表json
 var cashJson = require("./json/cash.json");
 
-const titles = [
+var titles = [
   "财务报表",
   "基本信息",
   "公司战略",
@@ -65,7 +65,7 @@ const UpdateCmt = () => {
   );
 };
 
-var _bool = null
+var _bool = null;
 
 // 财务负债编辑状态
 function Declare(props) {
@@ -91,7 +91,17 @@ function Declare(props) {
   const [flagCashNew, setFlagCashNew] = useState(false); // 现金表新增渲染判断
   const [isSaveCash, setIsSaveCash] = useState(false); // 保存现金表
 
-  const [flags,setFlags] = useState([false,false,false,false,false,false,false,false,false,false]); //二道审核所有表是否完成
+  const [flags, setFlags] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ]); //二道审核所有表是否完成
   var date = new Date();
   var y = date.getFullYear();
   // 表格展示所用数据
@@ -126,6 +136,9 @@ function Declare(props) {
     if (state && (state.action == 1 || state.action == 2)) {
       // 编辑状态
       _getDeclareDetail(companyId);
+      setFlagAssetNew(false);
+      setFlagProfitNew(false);
+      setFlagCashNew(false);
     } else {
       // 新增财务报表按钮
       setFlagAssetNew(true);
@@ -159,6 +172,9 @@ function Declare(props) {
       setFlagAssetEdit(true);
       setFlagProfitEdit(true);
       setFlagCashEdit(true);
+      setFlagAssetNew(false);
+      setFlagProfitNew(false);
+      setFlagCashNew(false);
       setObj(res.result);
     }
   };
@@ -177,24 +193,13 @@ function Declare(props) {
     if (allow) {
       if (tabInx < 2) {
         setTabInx(tabInx + 1);
-        setAllow(false)
-      }else{
-        if(_bool==0){
-          setTabInx(tabInx-1)
-        }
-        if(_bool==1){
-          setInx(1)
-        }
+        setAllow(false);
+      } else {
+        setInx(1);
+        setAllow(false);
       }
     }
-    console.log('allow changing',allow)
   }, [allow]);
-
-  useEffect(()=>{
-    setAllow(false)
-    
-  },[tabInx])
-
 
   // 重置保存按钮
   const resetSaveButton = () => {
@@ -208,30 +213,28 @@ function Declare(props) {
   };
 
   useEffect(() => {
-    if (
-      companyId 
-    ) {
+    if (companyId) {
       // 编辑状态
       _getDeclareDetail(companyId);
     }
   }, [companyId]);
 
-  useEffect(()=>{
+  useEffect(() => {
     // 刷新下最近状态
     _getDeclareDetail(companyId);
-  },[inx])
+  }, [inx]);
 
   // 订阅财务报表是否完成
-  const _setFlags = (e) => {
-    let _flags = JSON.parse(JSON.stringify(flags))
-    _flags[0] = e
-    setFlags(_flags)
-  }
+  const _setFlags = (e, i = 0) => {
+    let _flags = JSON.parse(JSON.stringify(flags));
+    _flags[i] = e;
+    setFlags(_flags);
+  };
 
   // 监听所有表状态
-  useEffect(()=>{
-    console.log("所有表填写状态",flags)
-  },[flags])
+  useEffect(() => {
+    console.log("所有表填写状态", flags);
+  }, [flags]);
 
   return (
     <>
@@ -321,6 +324,9 @@ function Declare(props) {
               }}
             >
               {titles.map((item, index) => {
+                if (action == 2) {
+                  if (item == "提交完成") return;
+                }
                 return (
                   <li
                     style={{
@@ -330,6 +336,9 @@ function Declare(props) {
                     }}
                     onClick={() => {
                       setInx(index);
+                      if (index == 0) {
+                        setTabInx(0);
+                      }
                     }}
                     key={index}
                   >
@@ -404,26 +413,33 @@ function Declare(props) {
                           <span
                             key={index}
                             style={{
-                              color: tabInx == index ? ThemeColor : "black",
+                              color:
+                                tabInx == index
+                                  ? ThemeColor
+                                  : "rgba(0,0,0,0.3)",
                               borderBottom:
                                 tabInx == index
                                   ? `0.02rem solid ${ThemeColor}`
                                   : defaultColor,
                             }}
                             onClick={() => {
-                              _bool = 0
-                              if (tabInx == 0) {
-                                setIsSaveAsset(true);
-                              } else if (tabInx == 1) {
-                                setIsSaveProfit(true);
-                              } else if (tabInx == 2) {
-                                setIsSaveCash(true);
+                              if (action == 2) {
+                                setTabInx(index);
                               }
-                              if(allow){
-                                setTabInx(index)
-                              }
-                              console.log("子表切换 allow",allow)
-                              console.log('子表切换 tabinx',tabInx)
+                              // _bool = 0
+                              // if (tabInx == 0) {
+                              //   setIsSaveAsset(true);
+                              // } else if (tabInx == 1) {
+                              //   setIsSaveProfit(true);
+                              // } else if (tabInx == 2) {
+                              //   setIsSaveCash(true);
+                              // }
+                              // setTabInx(index)
+                              // if(allow){
+                              //   setTabInx(index)
+                              // }
+                              // console.log("子表切换 allow",allow)
+                              // console.log('子表切换 tabinx',tabInx)
                             }}
                           >
                             {item}
@@ -515,7 +531,7 @@ function Declare(props) {
                     cashJson={cashJson}
                     resetSaveButton={resetSaveButton}
                     allow={_allowPass}
-                    setFlags = {_setFlags}
+                    setFlags={_setFlags}
                   />
                 )}
 
@@ -527,7 +543,7 @@ function Declare(props) {
                     updateId={updateCompanyId}
                     resetSaveButton={resetSaveButton}
                     allow={_allowPass}
-                    setFlags = {_setFlags}
+                    setFlags={_setFlags}
                   />
                 )}
 
@@ -545,7 +561,7 @@ function Declare(props) {
                       onClick={() => {
                         // console.log('下一步 当前tabInx',tabInx)
                         // console.log("下一步 当前allow",allow)
-                        _bool=1
+                        // _bool=1
                         if (tabInx == 0) {
                           setIsSaveAsset(true);
                         } else if (tabInx == 1) {
@@ -598,6 +614,10 @@ function Declare(props) {
                 companyId={companyId}
                 obj={obj}
                 updateId={updateCompanyId}
+                setFlags={_setFlags}
+                flags={flags}
+                titles={titles}
+                action={action}
               />
             )}
           </section>

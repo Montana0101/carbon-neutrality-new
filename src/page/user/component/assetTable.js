@@ -74,12 +74,12 @@ const AssetTable = (props) => {
         <tr>
           <th>资产</th>
           <th>行次</th>
-          <th>期末余额</th>
-          <th>年初余额</th>
+          <th>期末余额(万)</th>
+          <th>年初余额(万)</th>
           <th>负债和所有者权益</th>
           <th>行次</th>
-          <th>期末余额</th>
-          <th>年初余额</th>
+          <th>期末余额(万)</th>
+          <th>年初余额(万)</th>
         </tr>
       </thead>
       <tbody>

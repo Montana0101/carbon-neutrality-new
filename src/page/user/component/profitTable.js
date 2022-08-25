@@ -76,8 +76,8 @@ const ProfitTable = (props) => {
         <tr>
           <th>项目</th>
           <th>行次</th>
-          <th>本年累计金额</th>
-          <th>本期金额</th>
+          <th>本年累计金额(万)</th>
+          <th>本期金额(万)</th>
         </tr>
       </thead>
       <tbody>
