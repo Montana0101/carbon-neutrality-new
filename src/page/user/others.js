@@ -414,8 +414,8 @@ function Others(props) {
     //     investorRounds: any;
     // }[];
     if (
-      _t.cpInvestors[0].investorAmount == "" ||
-      _t.cpInvestors[0].investorAmount == null ||
+      // _t.cpInvestors[0].investorAmount == "" ||
+      // _t.cpInvestors[0].investorAmount == null ||
       _t.cpInvestors[0].investorName == "" ||
       _t.cpInvestors[0].investorName == null ||
       _t.cpInvestors[0].investorRounds == "" ||
@@ -697,13 +697,13 @@ function Others(props) {
             <Row gutter={24}>
               <Col span={10}>
                 <Form.Item label={"企业名称"} name="companyName">
-                  <Input placeholder="请输入" />
+                  <Input placeholder="请输入企业名称" />
                 </Form.Item>
               </Col>
 
               <Col span={10} offset={4}>
                 <Form.Item label={"企业简介"} name="enterpriseAbbreviation">
-                  <Input placeholder="请输入" />
+                  <Input placeholder="请输入企业简介" />
                 </Form.Item>
               </Col>
             </Row>
@@ -812,14 +812,14 @@ function Others(props) {
 
               <Col span={10} offset={4}>
                 <Form.Item label={"注册资金"} name="regCapital">
-                  <Input placeholder="请输入" />
+                  <Input placeholder="请输入注册资金，默认为万" />
                 </Form.Item>
               </Col>
             </Row>
             <Row gutter={24}>
               <Col span={10}>
                 <Form.Item label={"联系电话"} name="contactNumber">
-                  <Input placeholder="请输入" />
+                  <Input placeholder="请输入联系电话" />
                 </Form.Item>
               </Col>
 
@@ -872,7 +872,7 @@ function Others(props) {
             <Row gutter={24}>
               <Col span={10}>
                 <Form.Item label={"融资金额"} name="financingScale">
-                  <Input placeholder="请输入" />
+                  <Input placeholder="请输入，默认为万" />
                 </Form.Item>
               </Col>
 
@@ -1726,10 +1726,10 @@ function Others(props) {
                             defaultValue={{
                               value: obj.cpPatents && obj.cpPatents[index] && obj.cpPatents[index].patentType || "",
                               label: patentType[
-                                obj.cpPatents[index].patentType - 1
+                                obj.cpPatents && obj.cpPatents[index] &&  obj.cpPatents[index].patentType - 1
                               ]
                                 ? patentType[
-                                    obj.cpPatents[index].patentType - 1
+                                  obj.cpPatents && obj.cpPatents[index] &&  obj.cpPatents[index].patentType - 1
                                   ].name
                                 : "",
                             }}
@@ -1753,12 +1753,12 @@ function Others(props) {
                           </Select>
                           <Select
                             defaultValue={{
-                              value: obj.cpPatents[index].patentStatus || "",
+                              value: obj.cpPatents && obj.cpPatents[index] && obj.cpPatents[index].patentStatus || "",
                               label: patentStatus[
-                                obj.cpPatents[index].patentStatus - 1
+                                obj.cpPatents && obj.cpPatents[index] && obj.cpPatents[index].patentStatus - 1
                               ]
                                 ? patentStatus[
-                                    obj.cpPatents[index].patentStatus - 1
+                                  obj.cpPatents && obj.cpPatents[index] && obj.cpPatents[index].patentStatus - 1
                                   ].name
                                 : "",
                             }}
@@ -1894,7 +1894,7 @@ function Others(props) {
                             }
                           />
                           <Input
-                            placeholder="请输入投资金额，不填则代表暂不公开"
+                            placeholder="请输入投资金额，不填则代表暂不公开，默认为万"
                             style={{ marginRight: "0.1rem", flex: 4 }}
                             onChange={(e) => {
                               let _obj = JSON.parse(JSON.stringify(table7));

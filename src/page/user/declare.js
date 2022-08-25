@@ -91,6 +91,7 @@ function Declare(props) {
   const [flagCashNew, setFlagCashNew] = useState(false); // 现金表新增渲染判断
   const [isSaveCash, setIsSaveCash] = useState(false); // 保存现金表
 
+  const [flags,setFlags] = useState([false,false,false,false,false,false,false,false,false,false]); //二道审核所有表是否完成
   var date = new Date();
   var y = date.getFullYear();
   // 表格展示所用数据
@@ -219,6 +220,18 @@ function Declare(props) {
     // 刷新下最近状态
     _getDeclareDetail(companyId);
   },[inx])
+
+  // 订阅财务报表是否完成
+  const _setFlags = (e) => {
+    let _flags = JSON.parse(JSON.stringify(flags))
+    _flags[0] = e
+    setFlags(_flags)
+  }
+
+  // 监听所有表状态
+  useEffect(()=>{
+    console.log("所有表填写状态",flags)
+  },[flags])
 
   return (
     <>
@@ -502,6 +515,7 @@ function Declare(props) {
                     cashJson={cashJson}
                     resetSaveButton={resetSaveButton}
                     allow={_allowPass}
+                    setFlags = {_setFlags}
                   />
                 )}
 
@@ -513,6 +527,7 @@ function Declare(props) {
                     updateId={updateCompanyId}
                     resetSaveButton={resetSaveButton}
                     allow={_allowPass}
+                    setFlags = {_setFlags}
                   />
                 )}
 
