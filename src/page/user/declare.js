@@ -100,10 +100,12 @@ function Declare(props) {
     false,
     false,
     false,
-    false
+    false,
   ]); //二道审核所有表是否完成
+
   var date = new Date();
   var y = date.getFullYear();
+
   // 表格展示所用数据
   let tArr = [];
 

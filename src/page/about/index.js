@@ -14,6 +14,7 @@ import lszp from "../../static/imgs/lishiz.png";
 import flszp from "../../static/imgs/fulishiz.png";
 import Logo1 from "../../static/logo/logo墙-01.jpg";
 import { message } from "antd";
+import store from "../../store/index";
 
 const data = [
   "孵化技术创新平台",
@@ -28,6 +29,7 @@ const AboutLeague = () => {
   const [flag, setFlag] = useState(true);
   const [mask_flag, setMaskFlag] = useState(false);
   const [mask_inx, setMaskInx] = useState(-1);
+  const [amount,setAmount] = useState(null)
 
   useEffect(() => {
     const main = document.getElementById("main_container");
@@ -46,6 +48,10 @@ const AboutLeague = () => {
       //   setMaskInx(2);
       // }
       // message.info("信息未公开")
+    });
+
+    store.subscribe(() => {
+      setAmount(store.getState().amount);
     });
   }, []);
 
@@ -397,8 +403,12 @@ const AboutLeague = () => {
           联盟宗旨
         </h3>
         <ul
-          style={{ display: "flex", borderLeft: CutLine, borderRight: CutLine ,
-        margin:0}}
+          style={{
+            display: "flex",
+            borderLeft: CutLine,
+            borderRight: CutLine,
+            margin: 0,
+          }}
         >
           {data.map((item, index) => {
             return (
@@ -549,6 +559,7 @@ const AboutLeague = () => {
               }}
               src={`${AliOss}/new_version_0518/company.svg`}
             />
+
             {/* <section
               style={{
                 background: "rgba(0,0,0,0.2)",
@@ -583,6 +594,20 @@ const AboutLeague = () => {
               </div>
             </section> */}
           </div>
+          <p
+            style={{
+              height: "0.5rem",
+              fontSize: "0.12rem",
+              color: "rgba(0,0,0,0.6)",
+              display: "flex",
+              justifyContent: "right",
+              // padding: "0 0.5rem",
+              alignItems: "center",
+            }}
+          >
+            <span>访问量：</span>
+            <span>{amount}</span>
+          </p>
         </section>
       </div>
     </div>

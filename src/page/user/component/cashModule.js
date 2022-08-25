@@ -80,13 +80,13 @@ export const CashModuleEdit = (props) => {
 
   // 保存资产负债表
   const saveDeclareBalance = async () => {
-    // if (!_isEmpty()) {
-    //   message.warn("每一项都必填");
-    //   resetSaveButton();
-    //   allow(false)
-    //   setFlags(false)
-    //   return;
-    // }
+    if (!_isEmpty()) {
+      message.warn("每一项都必填");
+      resetSaveButton();
+      allow(false)
+      setFlags(false)
+      return;
+    }
 
     let res;
     let params = JSON.parse(JSON.stringify(cash_state));
@@ -187,13 +187,13 @@ export const CashModuleInit = (props) => {
 
   // 保存资产负债表
   const saveDeclareBalance = async () => {
-    // if (!_isEmpty()) {
-    //   message.warn("每一项都必填");
-    //   resetSaveButton();
-    //   allow(false)
-    //   setFlags(false)
-    //   return;
-    // }
+    if (!_isEmpty()) {
+      message.warn("每一项都必填");
+      resetSaveButton();
+      allow(false)
+      setFlags(false)
+      return;
+    }
 
     let res;
     let params = JSON.parse(JSON.stringify(cash_state));
@@ -208,7 +208,7 @@ export const CashModuleInit = (props) => {
         localStorage.setItem("companyId", res.result);
         updateId(res.result);
         allow(true)
-        setFlags(true)
+        setFlags()
       }
     } else {
       message.error("操作失败！");

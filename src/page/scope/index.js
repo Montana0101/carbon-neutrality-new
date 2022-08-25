@@ -12,6 +12,7 @@ import {
 import { getNewsList } from "../../apis/index";
 import scopeBg from "../../static/imgs/scope_bg.png";
 import "./index.less";
+import store from "../../store/index";
 
 const data = ["战略咨询服务", "绿色金融服务", "课题研究服务", "人才培养任务"];
 const arr = [
@@ -50,6 +51,15 @@ const list = [
 
 const Scope = () => {
   const [inx, setInx] = useState(0);
+  const [amount,setAmount] = useState(0)
+
+  useEffect(() => {
+    store.subscribe(() => {
+      setAmount(store.getState().amount);
+    });
+  }, []);
+
+  
   return (
     <div className="scope_page">
       <section
@@ -141,6 +151,20 @@ const Scope = () => {
           </main>
         </div>
       </section>
+      <p
+        style={{
+          height: "0.5rem",
+          fontSize: "0.12rem",
+          color: "rgba(0,0,0,0.6)",
+          display: "flex",
+          justifyContent: "right",
+          padding: "0 0.5rem",
+          alignItems: "center",
+        }}
+      >
+        <span>访问量：</span>
+        <span>{amount}</span>
+      </p>
     </div>
   );
 };

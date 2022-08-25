@@ -293,3 +293,9 @@ export const getDeclareDetail = (id) => {
   const url = `/${env}/portrait/company?id=${id}`;
   return fetchGadget(url, "GET");
 };
+
+// 访问量
+export const putVcount = (tag) => {
+  const url = `/${env}/visit/vcount?tag=${tag}`;
+  return fetchGadget(url, "GET");
+}

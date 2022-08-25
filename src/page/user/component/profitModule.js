@@ -31,6 +31,7 @@ export const ProfitModuleEdit = (props) => {
 
   useEffect(() => {
     dispathTrigger();
+    // console.log("检测是否触发了assetEnter")
   }, [profitEnter]);
 
   useEffect(() => {
@@ -91,12 +92,12 @@ export const ProfitModuleEdit = (props) => {
 
   // 保存资产负债表
   const saveDeclareBalance = async () => {
-    // if (!_isEmpty()) {
-    //   message.warn("每一项都必填");
-    //   resetSaveButton();
-    //   allow(false);
-    //   return;
-    // }
+    if (!_isEmpty()) {
+      message.warn("每一项都必填");
+      resetSaveButton();
+      allow(false);
+      return;
+    }
     let res;
     let params = JSON.parse(JSON.stringify(profit_state));
     params.years = year;
@@ -142,6 +143,7 @@ export const ProfitModuleInit = (props) => {
 
   useEffect(() => {
     dispathTrigger();
+    // console.log("检测是否触发了assetEnter")
   }, [profitEnter]);
 
   useEffect(() => {
@@ -202,12 +204,13 @@ export const ProfitModuleInit = (props) => {
 
   // 保存资产负债表
   const saveDeclareBalance = async () => {
-    // if (!_isEmpty()) {
-    //   message.warn("每一项都必填");
-    //   resetSaveButton();
-    //   allow(false);
-    //   return;
-    // }
+    console.log(profit_state);
+    if (!_isEmpty()) {
+      message.warn("每一项都必填");
+      resetSaveButton();
+      allow(false);
+      return;
+    }
     let res;
     let params = JSON.parse(JSON.stringify(profit_state));
     params.years = year;

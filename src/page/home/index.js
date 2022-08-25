@@ -125,7 +125,7 @@ export default function Home(props) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [content, setContent] = useState("");
-
+  const [amount, setAmount] = useState(null);
   var formRef = useRef();
 
   const onSubmit = async () => {
@@ -170,6 +170,12 @@ export default function Home(props) {
     }
     // document.body.scrollTop = 0;
   }, [isModalVisible]);
+
+  useEffect(() => {
+    store.subscribe(() => {
+      setAmount(store.getState().amount);
+    });
+  }, []);
 
   return (
     <div
@@ -925,19 +931,20 @@ export default function Home(props) {
           </section>
         </h3>
       </div>
+
       <p
         style={{
           height: "0.5rem",
           fontSize: "0.12rem",
           color: "rgba(0,0,0,0.6)",
-          display:"flex",
-          justifyContent:"right",
-          padding:"0 0.5rem",
-          alignItems:"center"
+          display: "flex",
+          justifyContent: "right",
+          padding: "0 0.5rem",
+          alignItems: "center",
         }}
       >
         <span>访问量：</span>
-        <span>311</span>
+        <span>{amount}</span>
       </p>
     </div>
   );

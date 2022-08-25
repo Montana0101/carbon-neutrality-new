@@ -1,16 +1,8 @@
 // 双碳咨讯
 import React, { useState, useEffect } from "react";
-import {
-  AliOss,
-  ThemeColor,
-  CutLine,
-  barFontSize,
-  barHeight,
-  IframeUrl,
-} from "../../lib/const";
+import { AliOss, ThemeColor, CutLine } from "../../lib/const";
 import { useHistory } from "react-router-dom";
-
-// import './index.less'
+import store from "../../store/index";
 
 const data = [
   {
@@ -50,10 +42,13 @@ const data = [
   },
 ];
 const Consult = () => {
-  const [inx, setInx] = useState(0);
-  const [flag, setFlag] = useState(false);
-  const [plus, setPlus] = useState(false);
-  const [overInx, setOverInx] = useState(0);
+  const [amount, setAmount] = useState(0);
+
+  useEffect(() => {
+    store.subscribe(() => {
+      setAmount(store.getState().amount);
+    });
+  }, []);
 
   const history = useHistory();
 
@@ -225,6 +220,20 @@ const Consult = () => {
           })}
         </ul>
       </section>
+      <p
+        style={{
+          height: "0.5rem",
+          fontSize: "0.12rem",
+          color: "rgba(0,0,0,0.6)",
+          display: "flex",
+          justifyContent: "right",
+          padding: "0 0.5rem",
+          alignItems: "center",
+        }}
+      >
+        <span>访问量：</span>
+        <span>{amount}</span>
+      </p>
     </div>
   );
 };

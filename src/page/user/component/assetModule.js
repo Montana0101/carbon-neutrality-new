@@ -81,12 +81,12 @@ export const AssetModuleEdit = (props) => {
 
   // 保存资产负债表
   const saveDeclareBalance = async () => {
-    // if (!_isEmpty()) {
-    //   message.warn("每一项都必填");
-    //   resetSaveButton();
-    //   allow(false)
-    //   return;
-    // }
+    if (!_isEmpty()) {
+      message.warn("每一项都必填");
+      resetSaveButton();
+      allow(false)
+      return;
+    }
     let res;
     let params = JSON.parse(JSON.stringify(asset_state));
     params.years = year;
@@ -181,12 +181,12 @@ export const AssetModuleInit = (props) => {
 
   // 保存资产负债表
   const saveDeclareBalance = async () => {
-    // if (!_isEmpty()) {
-    //   message.warn("每一项都必填");
-    //   resetSaveButton();
-    //   allow(false)
-    //   return;
-    // }
+    if (!_isEmpty()) {
+      message.warn("每一项都必填");
+      resetSaveButton();
+      allow(false)
+      return;
+    }
     let res;
     let params = JSON.parse(JSON.stringify(asset_state));
     params.years = year;

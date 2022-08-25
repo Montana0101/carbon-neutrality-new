@@ -95,6 +95,10 @@ let HeaderCmt = () => {
     }
   }, []);
 
+  useEffect(()=>{
+    console.log('对巴萨回家和的八十八等哈说')
+  },[])
+
   const _messageTips = async () => {
     const res = await messageTips();
     if (res && res.code === 2000) {
