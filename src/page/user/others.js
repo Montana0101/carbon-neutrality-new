@@ -92,7 +92,16 @@ const layout = {
 };
 
 function Others(props) {
-  const { inx, companyId, obj, updateId, setFlags,titles,flags,action } = props;
+  const {
+    inx,
+    companyId,
+    obj,
+    updateId,
+    setFlags,
+    titles,
+    flags,
+    action,
+  } = props;
   const history = useHistory();
   const [form] = Form.useForm();
   const [d1, setD1] = useState([]); //省
@@ -477,8 +486,8 @@ function Others(props) {
     let _flag = true;
     let _index;
 
-    for(let i=0;i<props.flags.length;i++){
-      if(!props.flags[i]){
+    for (let i = 0; i < props.flags.length; i++) {
+      if (!props.flags[i]) {
         _flag = false;
         _index = i;
         break;
@@ -751,10 +760,15 @@ function Others(props) {
                   >
                     <Select
                       style={{ flex: 1, marginRight: "0.1rem" }}
-                      defaultValue={{
-                        value: obj.province || "",
-                        label: obj.provinceName || "",
+                      defaultValue={() => {
+                        if (obj.province) {
+                          return {
+                            value: obj.province || "",
+                            label: obj.provinceName || "",
+                          };
+                        }
                       }}
+                      placeholder="请选择"
                       labelInValue
                       onChange={(e) => {
                         _fetchAreas(e.value, 1);
@@ -774,10 +788,15 @@ function Others(props) {
                         })}
                     </Select>
                     <Select
-                      defaultValue={{
-                        value: obj.city || "",
-                        label: obj.cityName || "",
+                      defaultValue={() => {
+                        if (obj.city) {
+                          return {
+                            value: obj.city || "",
+                            label: obj.cityName || "",
+                          };
+                        }
                       }}
+                      placeholder="请选择"
                       labelInValue
                       style={{ flex: 1, marginRight: "0.1rem" }}
                       onChange={(e) => {
@@ -798,9 +817,13 @@ function Others(props) {
                         })}
                     </Select>
                     <Select
-                      defaultValue={{
-                        value: obj.district || "",
-                        label: obj.districtName || "",
+                      defaultValue={() => {
+                        if (obj.district) {
+                          return {
+                            value: obj.district || "",
+                            label: obj.districtName || "",
+                          };
+                        }
                       }}
                       style={{ flex: 1, marginRight: "0rem" }}
                       onChange={(e) => {
@@ -809,6 +832,7 @@ function Others(props) {
                         _obj.district = e.value;
                         setTable1(_obj);
                       }}
+                      placeholder="请选择"
                       labelInValue
                     >
                       {d3 &&
@@ -874,10 +898,12 @@ function Others(props) {
               <Col span={10}>
                 <Form.Item label={"融资阶段"} name="stage">
                   <Select
-                    defaultValue={
-                      obj.stage != null &&
-                      (stageEnum[obj.stage - 1].name || null)
-                    }
+                    defaultValue={() => {
+                      if (obj.stage) {
+                        return stageEnum[obj.stage - 1].name;
+                      }
+                    }}
+                    placeholder="请选择融资阶段"
                     onChange={(e) => {
                       let _obj = JSON.parse(JSON.stringify(table1));
                       _obj.stage = e;
@@ -919,10 +945,12 @@ function Others(props) {
               <Col span={10}>
                 <Form.Item label={"所属行业"} name="industry">
                   <Select
-                    defaultValue={
-                      obj.industry != null &&
-                      (industryEnum[obj.industry].name || null)
-                    }
+                    defaultValue={() => {
+                      if (obj.industry != null) {
+                        return industryEnum[obj.industry].name;
+                      }
+                    }}
+                    placeholder="请选择所属行业"
                     onChange={(e) => {
                       let _obj = JSON.parse(JSON.stringify(table1));
                       _obj.industry = e;
@@ -1756,23 +1784,27 @@ function Others(props) {
                             }
                           />
                           <Select
-                            defaultValue={{
-                              value:
-                                (obj.cpPatents &&
-                                  obj.cpPatents[index] &&
-                                  obj.cpPatents[index].patentType) ||
-                                "",
-                              label: patentType[
-                                obj.cpPatents &&
-                                  obj.cpPatents[index] &&
-                                  obj.cpPatents[index].patentType - 1
-                              ]
-                                ? patentType[
+                            defaultValue={() => {
+                              if (obj.cpPatents && obj.cpPatents[index]) {
+                                return {
+                                  value:
+                                    (obj.cpPatents &&
+                                      obj.cpPatents[index] &&
+                                      obj.cpPatents[index].patentType) ||
+                                    "",
+                                  label: patentType[
                                     obj.cpPatents &&
                                       obj.cpPatents[index] &&
                                       obj.cpPatents[index].patentType - 1
-                                  ].name
-                                : "",
+                                  ]
+                                    ? patentType[
+                                        obj.cpPatents &&
+                                          obj.cpPatents[index] &&
+                                          obj.cpPatents[index].patentType - 1
+                                      ].name
+                                    : "",
+                                };
+                              }
                             }}
                             labelInValue
                             placeholder="请选择专利类型"
@@ -1793,23 +1825,27 @@ function Others(props) {
                             })}
                           </Select>
                           <Select
-                            defaultValue={{
-                              value:
-                                (obj.cpPatents &&
-                                  obj.cpPatents[index] &&
-                                  obj.cpPatents[index].patentStatus) ||
-                                "",
-                              label: patentStatus[
-                                obj.cpPatents &&
-                                  obj.cpPatents[index] &&
-                                  obj.cpPatents[index].patentStatus - 1
-                              ]
-                                ? patentStatus[
+                            defaultValue={() => {
+                              if (obj.cpPatents && obj.cpPatents[index]) {
+                                return {
+                                  value:
+                                    (obj.cpPatents &&
+                                      obj.cpPatents[index] &&
+                                      obj.cpPatents[index].patentStatus) ||
+                                    "",
+                                  label: patentStatus[
                                     obj.cpPatents &&
                                       obj.cpPatents[index] &&
                                       obj.cpPatents[index].patentStatus - 1
-                                  ].name
-                                : "",
+                                  ]
+                                    ? patentStatus[
+                                        obj.cpPatents &&
+                                          obj.cpPatents[index] &&
+                                          obj.cpPatents[index].patentStatus - 1
+                                      ].name
+                                    : "",
+                                };
+                              }
                             }}
                             labelInValue
                             placeholder="请选择专利状态"
@@ -2067,53 +2103,54 @@ function Others(props) {
             </section>
           </div>
         )}
-        {action != 2 && (props.inx != 9 ? (
-          <p
-            style={{
-              height: "1rem",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <div
-              style={{ marginRight: "0.3rem" }}
-              onClick={() => {
-                // if (tabInx < 2) {
-                //   setTabInx(tabInx + 1);
-                // }
-                props.setInx(props.inx - 1);
+        {action != 2 &&
+          (props.inx != 9 ? (
+            <p
+              style={{
+                height: "1rem",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
-              <ButtonCmt
-                bg={ThemeColor}
-                w="0.8rem"
-                color="white"
-                t="上一步"
-                h="0.4rem"
-              />
-            </div>
-            <div
-              style={{ marginRight: "0.3rem" }}
-              onClick={() => {
-                submit();
-                // if(flag1){
-                //   props.setInx(2);
-                // }
-                if (props.inx < 9) {
-                  // props.setInx(props.inx + 1);
-                }
-              }}
-            >
-              <ButtonCmt
-                bg={ThemeColor}
-                w="0.8rem"
-                color="white"
-                t="下一步"
-                h="0.4rem"
-              />
-            </div>
-            {/* <div
+              <div
+                style={{ marginRight: "0.3rem" }}
+                onClick={() => {
+                  // if (tabInx < 2) {
+                  //   setTabInx(tabInx + 1);
+                  // }
+                  props.setInx(props.inx - 1);
+                }}
+              >
+                <ButtonCmt
+                  bg={ThemeColor}
+                  w="0.8rem"
+                  color="white"
+                  t="上一步"
+                  h="0.4rem"
+                />
+              </div>
+              <div
+                style={{ marginRight: "0.3rem" }}
+                onClick={() => {
+                  submit();
+                  // if(flag1){
+                  //   props.setInx(2);
+                  // }
+                  if (props.inx < 9) {
+                    // props.setInx(props.inx + 1);
+                  }
+                }}
+              >
+                <ButtonCmt
+                  bg={ThemeColor}
+                  w="0.8rem"
+                  color="white"
+                  t="下一步"
+                  h="0.4rem"
+                />
+              </div>
+              {/* <div
               onClick={() => {
                 // alert(1)
                 // submit();
@@ -2128,37 +2165,37 @@ function Others(props) {
                 h="0.4rem"
               />
             </div> */}
-          </p>
-        ) : (
-          <p
-            style={{
-              height: "1rem",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <div
-              onClick={() => {
-                if (checked) {
-                  // message.success("提交成功 ！");
-                  saveAll();
-                } else {
-                  message.warn("请授权后再提交 ！");
-                }
-                // saveDeclareBalance();
+            </p>
+          ) : (
+            <p
+              style={{
+                height: "1rem",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
-              <ButtonCmt
-                bg="#51AA95"
-                w="0.8rem"
-                color="white"
-                t="提交"
-                h="0.4rem"
-              />
-            </div>
-          </p>
-        ))}
+              <div
+                onClick={() => {
+                  if (checked) {
+                    // message.success("提交成功 ！");
+                    saveAll();
+                  } else {
+                    message.warn("请授权后再提交 ！");
+                  }
+                  // saveDeclareBalance();
+                }}
+              >
+                <ButtonCmt
+                  bg="#51AA95"
+                  w="0.8rem"
+                  color="white"
+                  t="提交"
+                  h="0.4rem"
+                />
+              </div>
+            </p>
+          ))}
       </div>
     </div>
   );
