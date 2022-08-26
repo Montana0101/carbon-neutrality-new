@@ -42,12 +42,17 @@ const UpdateCmt = (prop) => {
     },
     data: {
       description: "",
+      companyId:prop.companyId || null
     },
     method: "POST",
     beforeUpload: (file) => {
       const isPNG = file.type === "application/pdf";
       const isLength = file.name.length <= 20;
-      if (!isPNG) {
+      const isId = prop.companyId 
+      
+      if(!isId){
+        message.error(`请先填写表单！`);
+      }else if (!isPNG) {
         message.error(`请上传pdf文件！`);
       }else{
         if (!isLength) {
@@ -55,8 +60,9 @@ const UpdateCmt = (prop) => {
         }
       }
 
-      return (isPNG && isLength) || Upload.LIST_IGNORE;
+      return (isPNG && isLength && isId) || Upload.LIST_IGNORE;
     },
+
     onChange(info) {
       if (info.file.status !== "uploading") {
         console.log(info.file, info.fileList);
@@ -547,7 +553,7 @@ function Declare(props) {
                       />
                     </div>
 
-                    <div
+                    {action == 0 && <div
                       style={{
                         border: "0px solid red",
                         marginLeft: "0.5rem",
@@ -555,8 +561,32 @@ function Declare(props) {
                       }}
                     >
                       <span>上传报表：</span>
-                      <UpdateCmt isDone={_isUploadDone}/>{" "}
+                      <UpdateCmt isDone={_isUploadDone} companyId={companyId}/>{" "}
+                    </div>}
+
+                    {action == 1 && <div
+                      style={{
+                        border: "0px solid red",
+                        marginLeft: "0.5rem",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      <span>上传报表{(obj.ossFileUrl || heightFlag) ? '(已上传)' : '(未上传)'}：</span>
+                      <UpdateCmt isDone={_isUploadDone} companyId={companyId}/>{" "}
                     </div>
+                    }
+
+                    {action == 2 && <div
+                      style={{
+                        border: "0px solid red",
+                        marginLeft: "0.5rem",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      <span>报表：</span>
+                      <span>{obj.ossFileUrl ? '已上传' : '未上传'}</span>
+                      {/* <UpdateCmt isDone={_isUploadDone} companyId={companyId}/>{" "} */}
+                    </div>}
                   </div>
                 </section>
                 {/* 资产负债表 */}

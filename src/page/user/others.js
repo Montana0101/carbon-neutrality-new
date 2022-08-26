@@ -608,7 +608,7 @@ function Others(props) {
       _obj.legalPersonName = obj.legalPersonName || null;
       _obj.website = obj.website || null;
       _obj.companyProfile = obj.companyProfile || null;
-
+      _obj.regTime = obj.regTime || null;
       _obj.id = companyId ? companyId : null;
       _obj.stage = obj.stage || null;
       _obj.industry = obj.industry || null;
