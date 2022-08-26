@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { withRouter, useHistory } from "react-router-dom";
-import { getDeclareDetail } from "../../apis/index";
+import { getDeclareDetail, env } from "../../apis/index";
 import { ThemeColor, CutLine } from "../../lib/const";
 import { DatePicker, Upload, Button, message } from "antd";
 import "./declare.less";
@@ -33,10 +33,10 @@ var titles = [
 ];
 
 // 上传报表
-const UpdateCmt = () => {
+const UpdateCmt = (prop) => {
   const props = {
-    name: "file",
-    action: "https://api.stiacn.com/stiacn-app/oss/fileUpload",
+    // name: "file",
+    action: `https://api.stiacn.com/${env}/oss/fileUpload`,
     headers: {
       // authorization: 'authorization-text',
     },
@@ -44,6 +44,19 @@ const UpdateCmt = () => {
       description: "",
     },
     method: "POST",
+    beforeUpload: (file) => {
+      const isPNG = file.type === "image/png";
+      const isLength = file.name.length <= 20;
+      if (!isPNG) {
+        message.error(`请上传png格式！`);
+      }else{
+        if (!isLength) {
+          message.error(`文件名过长，不能超过10个汉字或20个英文字母！`);
+        }
+      }
+
+      return (isPNG && isLength) || Upload.LIST_IGNORE;
+    },
     onChange(info) {
       if (info.file.status !== "uploading") {
         console.log(info.file, info.fileList);
@@ -51,14 +64,18 @@ const UpdateCmt = () => {
 
       if (info.file.status === "done") {
         message.success(`${info.file.name} 上传成功`);
+        prop.isDone(true)
       } else if (info.file.status === "error") {
         message.error(`${info.file.name} 上传失败`);
+        prop.isDone(false)
+      }else if(info.file.status === 'removed'){
+        prop.isDone(false)
       }
     },
   };
 
   return (
-    <Upload {...props}>
+    <Upload {...props} maxCount={1}>
       <Button icon={<UploadOutlined />}></Button>
     </Upload>
   );
@@ -71,6 +88,7 @@ function Declare(props) {
   const [tabInx, setTabInx] = useState(0);
   const [inx, setInx] = useState(0);
   const [action, setAction] = useState(null); // 0新增 1编辑 2查看
+  const [heightFlag,setHeightFlag] = useState(false)
 
   const [companyId, setCompanyId] = useState(null); //公司id
   const [years, setYears] = useState(null); // 当前年份
@@ -113,6 +131,11 @@ function Declare(props) {
       tArr.push(item);
     }
   });
+
+  // 判断文件是否上传成功
+  const _isUploadDone=(e)=>{
+    setHeightFlag(e)
+  }
 
   useEffect(() => {
     document.getElementsByTagName("html")[0].style.overflowX = "hidden";
@@ -473,7 +496,9 @@ function Declare(props) {
             {/* 1 - 财务报表 */}
             {inx == 0 && (
               <div className="active_1">
-                <section>
+                <section style={{
+                  height:heightFlag?'0.7rem':"0.44rem"
+                }}>
                   <div className="tabs">
                     {["资产负债表", "利润表", "现金流量表"].map(
                       (item, index) => {
@@ -527,7 +552,7 @@ function Declare(props) {
                       }}
                     >
                       <span>上传报表：</span>
-                      <UpdateCmt />{" "}
+                      <UpdateCmt isDone={_isUploadDone}/>{" "}
                     </div>
                   </div>
                 </section>

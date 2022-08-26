@@ -1,6 +1,6 @@
 import { fetchGadget } from "./fetch";
 
-let env = "stiacn";
+export let env = "stiacn";
 // let env = 'stiacn-app'
 // 注册
 export const register = (params) => {
