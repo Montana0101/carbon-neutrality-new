@@ -258,7 +258,7 @@ function Others(props) {
     d1_id && (_t1.province = d1_id);
     d2_id && (_t1.city = d2_id);
     d3_id && (_t1.district = d3_id);
-    delete _t1.regTime;
+    // delete _t1.regTime;
     if (rigsterTime) {
       _t1.regTime = rigsterTime;
     }

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { withRouter, useHistory } from "react-router-dom";
 import { getDeclareDetail, env } from "../../apis/index";
 import { ThemeColor, CutLine } from "../../lib/const";
-import { DatePicker, Upload, Button, message } from "antd";
+import { DatePicker, Upload, Button, message, Popconfirm } from "antd";
 import "./declare.less";
 import { ButtonCmt } from "../../component/button";
 import "moment/locale/zh-cn";
@@ -42,19 +42,19 @@ const UpdateCmt = (prop) => {
     },
     data: {
       description: "",
-      companyId:prop.companyId || null
+      companyId: prop.companyId || null,
     },
     method: "POST",
     beforeUpload: (file) => {
       const isPNG = file.type === "application/pdf";
       const isLength = file.name.length <= 20;
-      const isId = prop.companyId 
-      
-      if(!isId){
+      const isId = prop.companyId;
+
+      if (!isId) {
         message.error(`请先填写表单！`);
-      }else if (!isPNG) {
+      } else if (!isPNG) {
         message.error(`请上传pdf文件！`);
-      }else{
+      } else {
         if (!isLength) {
           message.error(`文件名过长，不能超过10个汉字或20个英文字母！`);
         }
@@ -70,14 +70,14 @@ const UpdateCmt = (prop) => {
 
       if (info.file.status === "done") {
         message.success(`${info.file.name} 上传成功`);
-        prop.isDone(true)
+        prop.isDone(true);
       } else if (info.file.status === "error") {
         message.error(`${info.file.name} 上传失败`);
-        prop.isDone(false)
-      }else if(info.file.status === 'removed'){
-        prop.isDone(false)
-      }else if(info.file.status === 'uploading'){
-        prop.isDone(true)
+        prop.isDone(false);
+      } else if (info.file.status === "removed") {
+        prop.isDone(false);
+      } else if (info.file.status === "uploading") {
+        prop.isDone(true);
       }
     },
   };
@@ -96,7 +96,7 @@ function Declare(props) {
   const [tabInx, setTabInx] = useState(0);
   const [inx, setInx] = useState(0);
   const [action, setAction] = useState(null); // 0新增 1编辑 2查看
-  const [heightFlag,setHeightFlag] = useState(false)
+  const [heightFlag, setHeightFlag] = useState(false);
 
   const [companyId, setCompanyId] = useState(null); //公司id
   const [years, setYears] = useState(null); // 当前年份
@@ -141,9 +141,9 @@ function Declare(props) {
   });
 
   // 判断文件是否上传成功
-  const _isUploadDone=(e)=>{
-    setHeightFlag(e)
-  }
+  const _isUploadDone = (e) => {
+    setHeightFlag(e);
+  };
 
   useEffect(() => {
     document.getElementsByTagName("html")[0].style.overflowX = "hidden";
@@ -433,12 +433,12 @@ function Declare(props) {
                       alignItems: "center",
                       cursor: "pointer",
                     }}
-                    onClick={() => {
-                      setInx(index);
-                      if (index == 0) {
-                        setTabInx(0);
-                      }
-                    }}
+                    // onClick={() => {
+                    //   setInx(index);
+                    //   if (index == 0) {
+                    //     setTabInx(0);
+                    //   }
+                    // }}
                     key={index}
                   >
                     <div
@@ -468,7 +468,20 @@ function Declare(props) {
                         fontWeight: inx == index ? 600 : 400,
                       }}
                     >
-                      {item}
+                      <Popconfirm
+                        title='即将离开当前页，请点击"下一步"保存当前页数据'
+                        onConfirm={() => {
+                          setInx(index);
+                          if (index == 0) {
+                            setTabInx(0);
+                          }
+                        }}
+                        onCancel={() => {}}
+                        okText="不保存"
+                        cancelText="取消"
+                      >
+                        {item}
+                      </Popconfirm>
                     </span>
                   </li>
                 );
@@ -504,10 +517,12 @@ function Declare(props) {
             {/* 1 - 财务报表 */}
             {inx == 0 && (
               <div className="active_1">
-                <section style={{
-                  height:heightFlag?'0.7rem':"0.44rem",
-                  marginBottom:heightFlag?'0':"0.1rem",
-                }}>
+                <section
+                  style={{
+                    height: heightFlag ? "0.7rem" : "0.44rem",
+                    marginBottom: heightFlag ? "0" : "0.1rem",
+                  }}
+                >
                   <div className="tabs">
                     {["资产负债表", "利润表", "现金流量表"].map(
                       (item, index) => {
@@ -553,40 +568,57 @@ function Declare(props) {
                       />
                     </div>
 
-                    {action == 0 && <div
-                      style={{
-                        border: "0px solid red",
-                        marginLeft: "0.5rem",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      <span>上传报表：</span>
-                      <UpdateCmt isDone={_isUploadDone} companyId={companyId}/>{" "}
-                    </div>}
+                    {action == 0 && (
+                      <div
+                        style={{
+                          border: "0px solid red",
+                          marginLeft: "0.5rem",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        <span>上传报表：</span>
+                        <UpdateCmt
+                          isDone={_isUploadDone}
+                          companyId={companyId}
+                        />{" "}
+                      </div>
+                    )}
 
-                    {action == 1 && <div
-                      style={{
-                        border: "0px solid red",
-                        marginLeft: "0.5rem",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      <span>上传报表{(obj.ossFileUrl || heightFlag) ? '(已上传)' : '(未上传)'}：</span>
-                      <UpdateCmt isDone={_isUploadDone} companyId={companyId}/>{" "}
-                    </div>
-                    }
+                    {action == 1 && (
+                      <div
+                        style={{
+                          border: "0px solid red",
+                          marginLeft: "0.5rem",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        <span>
+                          上传报表
+                          {obj.ossFileUrl || heightFlag
+                            ? "(已上传)"
+                            : "(未上传)"}
+                          ：
+                        </span>
+                        <UpdateCmt
+                          isDone={_isUploadDone}
+                          companyId={companyId}
+                        />{" "}
+                      </div>
+                    )}
 
-                    {action == 2 && <div
-                      style={{
-                        border: "0px solid red",
-                        marginLeft: "0.5rem",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      <span>报表：</span>
-                      <span>{obj.ossFileUrl ? '已上传' : '未上传'}</span>
-                      {/* <UpdateCmt isDone={_isUploadDone} companyId={companyId}/>{" "} */}
-                    </div>}
+                    {action == 2 && (
+                      <div
+                        style={{
+                          border: "0px solid red",
+                          marginLeft: "0.5rem",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        <span>报表：</span>
+                        <span>{obj.ossFileUrl ? "已上传" : "未上传"}</span>
+                        {/* <UpdateCmt isDone={_isUploadDone} companyId={companyId}/>{" "} */}
+                      </div>
+                    )}
                   </div>
                 </section>
                 {/* 资产负债表 */}
