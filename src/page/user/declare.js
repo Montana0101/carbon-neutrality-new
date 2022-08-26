@@ -45,10 +45,10 @@ const UpdateCmt = (prop) => {
     },
     method: "POST",
     beforeUpload: (file) => {
-      const isPNG = file.type === "image/png";
+      const isPNG = file.type === "application/pdf";
       const isLength = file.name.length <= 20;
       if (!isPNG) {
-        message.error(`请上传png格式！`);
+        message.error(`请上传pdf文件！`);
       }else{
         if (!isLength) {
           message.error(`文件名过长，不能超过10个汉字或20个英文字母！`);
@@ -70,6 +70,8 @@ const UpdateCmt = (prop) => {
         prop.isDone(false)
       }else if(info.file.status === 'removed'){
         prop.isDone(false)
+      }else if(info.file.status === 'uploading'){
+        prop.isDone(true)
       }
     },
   };
@@ -497,7 +499,8 @@ function Declare(props) {
             {inx == 0 && (
               <div className="active_1">
                 <section style={{
-                  height:heightFlag?'0.7rem':"0.44rem"
+                  height:heightFlag?'0.7rem':"0.44rem",
+                  marginBottom:heightFlag?'0':"0.1rem",
                 }}>
                   <div className="tabs">
                     {["资产负债表", "利润表", "现金流量表"].map(
