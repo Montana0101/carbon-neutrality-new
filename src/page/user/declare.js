@@ -268,6 +268,12 @@ function Declare(props) {
     console.log("所有表填写状态", flags);
   }, [flags]);
 
+  useEffect(() => {
+    if (inx == 0) {
+      setTabInx(0);
+    }
+  }, [inx]);
+
   // 编辑状态判断各表是否填完
   useEffect(() => {
     console.log("获取到的数据", obj);
@@ -461,28 +467,46 @@ function Declare(props) {
                     >
                       {index + 1}
                     </div>
-                    <span
-                      style={{
-                        fontSize: "0.14rem",
-                        color: inx == index ? "black" : defaultColor,
-                        fontWeight: inx == index ? 600 : 400,
-                      }}
-                    >
-                      <Popconfirm
-                        title='即将离开当前页，请点击"下一步"保存当前页数据'
-                        onConfirm={() => {
+                    {action != 2 ? (
+                      <span
+                        style={{
+                          fontSize: "0.14rem",
+                          color: inx == index ? "black" : defaultColor,
+                          fontWeight: inx == index ? 600 : 400,
+                        }}
+                      >
+                        <Popconfirm
+                          title='即将离开当前页，请点击"下一步"保存当前页数据'
+                          onConfirm={() => {
+                            setInx(index);
+                            if (index == 0) {
+                              setTabInx(0);
+                            }
+                          }}
+                          onCancel={() => {}}
+                          okText="不保存"
+                          cancelText="取消"
+                        >
+                          {item}
+                        </Popconfirm>
+                      </span>
+                    ) : (
+                      <span
+                        style={{
+                          fontSize: "0.14rem",
+                          color: inx == index ? "black" : defaultColor,
+                          fontWeight: inx == index ? 600 : 400,
+                        }}
+                        onClick={() => {
                           setInx(index);
                           if (index == 0) {
                             setTabInx(0);
                           }
                         }}
-                        onCancel={() => {}}
-                        okText="不保存"
-                        cancelText="取消"
                       >
                         {item}
-                      </Popconfirm>
-                    </span>
+                      </span>
+                    )}
                   </li>
                 );
               })}
