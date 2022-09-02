@@ -5,6 +5,7 @@ import {
     LeftOutlined, createFromIconfontCN
 } from '@ant-design/icons'
 import { AliOss, ThemeColor, CutLine } from "../../lib/const"
+import {Input,Button} from 'antd'
 
 // import './default.less'
 
@@ -73,12 +74,13 @@ function SearchResult(props) {
             }}>
                 <section style={{
                     fontSize: "0.12rem", fontWeight: "400", display: "flex", margin: 0,
-                    padding: "0 0.3rem", height: "0.7rem", flexDirection: "column",
+                    padding: "0 0.3rem", height: "0.7rem", 
                     alignItems: "center", justifyContent: "center",
-                    borderLeft: CutLine, borderRight: CutLine
+                    borderLeft: CutLine, borderRight: CutLine,
+                    
                 }}>
-                    <div className='newsTitle'>上海碳中和技术创新联盟发起人会议在新能源中心成功召开</div>
-                    <div style={{ color: "rgba(0,0,0,0.6)" }}>发布时间: 2021.12.13</div>
+                    <Input placeholder="请输入公司名进行查询"/>
+                    <Button type="primary">搜索</Button>
                 </section>
             </div>
 
@@ -94,31 +96,6 @@ function SearchResult(props) {
             }}>
 
             
-            </div>
-
-            <div style={{
-                border: CutLine, padding: '0 0.5rem', borderRight: "none", borderLeft: "none",
-                // borderTop: "none"
-            }}>
-                <section style={{
-                    fontSize: "0.12rem", fontWeight: "400", display: "flex", margin: 0,
-                    padding: "0 0.3rem", height: "0.9rem", flexDirection: "column",
-                    alignItems: "flex-start", justifyContent: "center",
-                    borderLeft: CutLine, borderRight: CutLine,
-                }}>
-                    <div onClick={() => { history.push("/news/1") }}>
-                        <IconFont type="icon-tuichu" style={{ color: ThemeColor, margin: "0 0.1rem 0 0", fontSize: "0.12rem" }} />
-                        <a href="#" style={{ fontSize: "0.12rem", textDecoration: "underline", color: ThemeColor, fontWeight: "400" }}>
-                        沪科〔2021〕497号 关于同意成立上海碳中和技术创新联盟的批复</a>
-                    </div>
-                    <div onClick={()=>{history.push("/news/3")}}>
-                        <IconFont type="icon-tuichu" style={{ color: ThemeColor, margin: "0 0.1rem 0 0", fontSize: "0.12rem" }} />
-                        <a href="#" style={{ fontSize: "0.12rem", textDecoration: "underline", color: ThemeColor, fontWeight: "400" }}>
-                            中共中央 国务院关于完整准确全面贯彻新发展理念做好碳达峰碳中和工作的意见
-
-</a>
-                    </div>
-                </section>
             </div>
         </div>
     )

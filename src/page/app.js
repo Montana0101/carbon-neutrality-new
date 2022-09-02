@@ -11,7 +11,7 @@ import {
 import Routers from "../route/index";
 import { AliOss, ThemeColor, CutLine } from "../lib/const";
 import { useEffect, useState } from "react";
-import { UserOutlined } from "@ant-design/icons";
+import { UserOutlined, SearchOutlined } from "@ant-design/icons";
 import IconSearch from "../static/imgs/search.svg";
 import { messageTips } from "../apis/index";
 
@@ -46,6 +46,7 @@ let HeaderCmt = () => {
   const [dialog, setDialog] = useState(false);
   const [userInfo, setUserInfo] = useState({});
   const [tips, setTips] = useState(0);
+  const [hide, setHide] = useState(false);
 
   const history = useHistory();
 
@@ -95,9 +96,9 @@ let HeaderCmt = () => {
     }
   }, []);
 
-  useEffect(()=>{
-    console.log('对巴萨回家和的八十八等哈说')
-  },[])
+  useEffect(() => {
+    console.log("对巴萨回家和的八十八等哈说");
+  }, []);
 
   const _messageTips = async () => {
     const res = await messageTips();
@@ -169,15 +170,32 @@ let HeaderCmt = () => {
               style={{
                 width: "2rem",
                 padding: "border-box",
-                display: "none",
+                display: !hide ? "none" : "block",
+              }}
+              onKeyDown={(ev) => {
+                if (ev.keyCode == 13) {
+                  history.push("/result");
+                  // message.warn("dsa");
+
+                }
               }}
             />
-            {/* <SearchOutlined style={{fontWeight:"bold", color: "#7B7B7B", width: "0.5rem" }} onClick={() => {
-              setFlag(!flag)
-            }} /> */}
+            <SearchOutlined
+              style={{ fontWeight: "bold", color: "#7B7B7B", width: "0.5rem" }}
+              onClick={() => {
+                if (logined) {
+                  setHide(!hide);
+                } else {
+                  message.warn({
+                    content: "请登录",
+                    style: { zIndex: 88888888888 },
+                  });
+                }
+              }}
+            />
             {/* <img alt="" src={IconSearch} style={{ width: "0.15rem", margin: "0 0.15rem 0 0.3rem" }} onClick={() => {
               if (logined) {
-                setFlag(!flag)
+                setHide(!hide)
               } else {
                 message.warn({
                   content: "请登录",
