@@ -1,0 +1,62 @@
+.result_page {
+    height    : auto;
+    width     : 100%;
+    background: white;
+    padding   : 0 0.3rem;
+
+    .card {
+        color           : black;
+        background-color: #F7F7F7;
+        height          : 1.8rem;
+        display         : flex;
+        justify-content : space-between;
+        padding         : 0.1rem 0.2rem;
+        margin          : 0 0.3rem;
+
+        .left {
+            flex           : 3;
+            height         : 100%;
+            display        : flex;
+            justify-content: center;
+            align-items    : center;
+
+            &>img {
+                width: 100%;
+            }
+        }
+
+        .middle {
+            flex          : 10;
+            display       : flex;
+            flex-direction: column;
+            align-items   : flex-start;
+            color         : rgba(0, 0, 0, 0.7);
+            font-size     : 0.12rem;
+            margin-left  : 0.2rem;
+            
+            &>ul {
+                display        : flex;
+                justify-content: space-between;
+                height         : 100%;
+
+                li {
+                    height          : 100%;
+                    display         : flex;
+                    flex-direction  : column;
+                    justify-content : space-between;
+                    margin-right    : 0.2rem;
+
+                    p {
+                        display        : flex;
+                        justify-content: flex-start;
+                    }
+                }
+            }
+        }
+
+        .right {
+            flex: 4;
+            background-color: red;
+        }
+    }
+}

@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import { UserOutlined, SearchOutlined } from "@ant-design/icons";
 import IconSearch from "../static/imgs/search.svg";
 import { messageTips } from "../apis/index";
+import {portrait} from "../apis/index"
 
 const logo = AliOss + "/img/logo.png";
 
@@ -47,7 +48,8 @@ let HeaderCmt = () => {
   const [userInfo, setUserInfo] = useState({});
   const [tips, setTips] = useState(0);
   const [hide, setHide] = useState(false);
-
+  const [result,setResult] = useState(false);
+  const [company,SetCompany] = useState("")
   const history = useHistory();
 
   useEffect(() => {
@@ -96,9 +98,14 @@ let HeaderCmt = () => {
     }
   }, []);
 
-  useEffect(() => {
-    console.log("对巴萨回家和的八十八等哈说");
-  }, []);
+  const _portrait = async () => {
+    const res = await portrait(company)
+    if(res && res.code == 2000){
+      setResult(res.result)
+      localStorage.setItem('search',JSON.stringify(res.result))
+      history.push("/result",{value:JSON.stringify(res.result)})
+    }
+  }
 
   const _messageTips = async () => {
     const res = await messageTips();
@@ -120,7 +127,10 @@ let HeaderCmt = () => {
           height: "0.98rem !important",
         }}
       >
-        <section className="header-left">
+        <section className="header-left" onClick={()=>{
+          history.push("/")
+          setInx(0);
+        }}>
           <img
             src={logo}
             alt=""
@@ -172,11 +182,15 @@ let HeaderCmt = () => {
                 padding: "border-box",
                 display: !hide ? "none" : "block",
               }}
+              onChange={e=>{SetCompany(e.target.value)}}
               onKeyDown={(ev) => {
                 if (ev.keyCode == 13) {
-                  history.push("/result");
-                  // message.warn("dsa");
-
+                  if(company){
+                    // history.push("/result");
+                    _portrait()
+                  }else{
+                    message.warn("请输入公司名称")
+                  }
                 }
               }}
             />

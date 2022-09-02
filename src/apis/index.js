@@ -1,7 +1,7 @@
 import { fetchGadget } from "./fetch";
 
-export let env = "stiacn";
-// let env = 'stiacn-app'
+// export let env = "stiacn";
+export let env = 'stiacn-app'
 // 注册
 export const register = (params) => {
   const url = `/${env}/user/register`;
@@ -297,5 +297,11 @@ export const getDeclareDetail = (id) => {
 // 访问量
 export const putVcount = (tag) => {
   const url = `/${env}/visit/vcount?tag=${tag}`;
+  return fetchGadget(url, "GET");
+}
+
+// 搜索结果
+export const portrait = (name) => {
+  const url = `/${env}/portrait/companyInfo?companyName=${name}`;
   return fetchGadget(url, "GET");
 }
