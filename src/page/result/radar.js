@@ -8,14 +8,12 @@ const RadarChart = (props) => {
 
   useEffect(() => {
     setScore(props.data.comprehensiveScore);
-    console.log("xxx",props.data)
   }, [props.data]);
 
   useEffect(() => {
       if(score){
         const radar_dom = document.getElementById("radar");
         initRadar(radar_dom);
-        console.log("的必杀技对巴萨就被单杀",score)
       }
   }, [score]);
 
@@ -38,7 +36,7 @@ const RadarChart = (props) => {
             { name: "主营业务能力", max: 10 },
           ],
         //   center: ['75%', '0%'],
-          radius: [30,40],
+          radius: [20,45],
           axisName: {
             color: "rgba(1,1,1,0.8)",
             // backgroundColor: '#666',
