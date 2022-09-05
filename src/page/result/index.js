@@ -4,6 +4,7 @@ import { withRouter, useHistory } from "react-router-dom";
 import { LeftOutlined, createFromIconfontCN } from "@ant-design/icons";
 import { AliOss, ThemeColor, CutLine } from "../../lib/const";
 import { Input, Button } from "antd";
+import RadarChart from "./radar"
 import "./index.less";
 
 const defaultImg = AliOss + "/new_version_0518/company_default.png";
@@ -14,13 +15,14 @@ const CompanyCard = (props) => {
   useEffect(() => {
     console.log("获取到查询道德参数", data);
   }, [data]);
+
   return (
     <div className="card">
       <section className="left">
         <img src={defaultImg} alt="" />
       </section>
       <section className="middle">
-        <div style={{display:"flex",alignItems:"center"}}>
+        <div style={{display:"flex",alignItems:"center",marginBottom:"0.1rem"}}>
           <span style={{fontSize:"0.2rem",fontWeight:"bold",color:"rgba(0,0,0,0.8)"}}>{data.companyName}</span>
           <span style={{marginLeft:"0.1rem"}}>(简称：{data.enterpriseAbbreviation})</span>
         </div>
@@ -45,7 +47,9 @@ const CompanyCard = (props) => {
           </li>
         </ul>
       </section>
-      <section className="right">you</section>
+      <section className="right">
+        <RadarChart data={data}/>
+      </section>
     </div>
   );
 };
