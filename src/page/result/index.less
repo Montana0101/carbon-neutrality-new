@@ -1,8 +1,9 @@
 .result_page {
-    height    : auto;
-    width     : 100%;
-    background: white;
-    padding   : 0 0.3rem;
+    height        : auto;
+    width         : 100%;
+    background    : white;
+    padding       : 0 0.3rem;
+    padding-bottom: 0.5rem;
 
     .card {
         color           : black;
@@ -74,23 +75,24 @@
         nav {
             font-size: 0.12rem;
             color    : rgba(0, 0, 0, 0.8);
-            width    : 2.8rem;
+            flex     : 1;
 
             h3 {
                 margin-top : 0.1rem;
                 font-weight: bold;
                 font-size  : 0.13rem;
+
             }
         }
 
         // 分割线
         .line {
             height          : auto;
-            width           : 0.08rem;
+            width           : 0.05rem;
             margin          : 0 0.2rem;
-            background-color: rgba(0, 0, 0, 0.1);
+            background-color: rgba(133, 133, 133, 0.1);
             position        : relative;
-            
+
             &>section {
                 display         : inline-block;
                 width           : 0.14rem;
@@ -117,33 +119,53 @@
         article {
             display        : flex;
             font-size      : 0.12rem;
-            flex-direction: column;
+            flex-direction : column;
             justify-content: flex-start;
+            flex           : 7;
 
-          &>section{
-              margin-top: 0.15rem;
-            .sub {
-                font-weight    : bold;
-                // text-align: left;
-                display        : flex;
-                justify-content: flex-start;
-                font-size      : 14px;
-                margin-bottom: 0.07rem !important;
+            &>section {
+                margin-top: 0.15rem;
+
+                .sub {
+                    font-weight    : bold;
+                    // text-align: left;
+                    display        : flex;
+                    justify-content: flex-start;
+                    font-size      : 14px;
+                    margin-bottom  : 0.07rem !important;
+                }
+
+                .content {
+                    color     : rgba(0, 0, 0, 0.8) !important;
+                    text-align: left;
+                    font-size : 12px;
+                }
+
             }
-            .content {
-                color: rgba(0, 0, 0, 0.8) !important;
-                text-align: left;
-               font-size: 12px;
+
+            // 子表样式
+            .sub_table {
+                table {
+             
+                    color:rgba(0, 0, 0, 0.8);
+                    &>tr:nth-child(1) {
+                        background-color: #ADD6AD;
+                        color:white
+                    }
+                    td,th{
+                        text-align: left;
+                        padding-left: 0.1rem;
+                    }
+                }
             }
-          }
         }
     }
 
     // 底部分割线
-    .underline{
-        height: 0.04rem;
-        width: 100%;
-        background-color: rgba(144,144,144,0.1);
-        margin-top: 0.15rem;
+    .underline {
+        height          : 0.07rem;
+        width           : 100%;
+        background-color: rgba(144, 144, 144, 0.1);
+        margin-top      : 0.15rem;
     }
 }

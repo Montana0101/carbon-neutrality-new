@@ -3,9 +3,9 @@ import { screen_scale } from "../../util/rem";
 import { withRouter, useHistory } from "react-router-dom";
 import { LeftOutlined, createFromIconfontCN } from "@ant-design/icons";
 import { AliOss, ThemeColor, CutLine } from "../../lib/const";
-import { Input, Button, Radio, Timeline, Anchor,Divider  } from "antd";
+import { Input, Button, Radio, Timeline, Anchor, Divider } from "antd";
 import RadarChart from "./radar";
-import * as $ from 'jquery'
+import * as $ from "jquery";
 import "./index.less";
 
 const defaultImg = AliOss + "/new_version_0518/company_default.png";
@@ -13,8 +13,7 @@ const { Link } = Anchor;
 const CompanyCard = (props) => {
   let { data } = props;
 
-  useEffect(() => {
-  }, [data]);
+  useEffect(() => {}, [data]);
 
   return (
     <div className="card">
@@ -130,16 +129,15 @@ function SearchResult(props) {
       setObj(JSON.parse(localStorage.getItem("search")));
     }
 
-    let h1= $("#position1").offset().top
-    let h0 = $("#nav").offset().top
+    let h1 = $("#position1").offset().top;
+    let h0 = $("#nav").offset().top;
 
-    setTargetOffset((h1-h0).toFixed(2))
-
+    setTargetOffset((h1 - h0).toFixed(2));
   }, []);
 
-  useEffect(()=>{
-    console.log("当前定位点",targetOffset)
-  },[targetOffset])
+  useEffect(() => {
+    console.log("当前定位点", targetOffset);
+  }, [targetOffset]);
 
   return (
     <div className="result_page">
@@ -262,35 +260,74 @@ function SearchResult(props) {
         </nav>
 
         <div className="line">
-          <section style={{
-              top:targetOffset+'px'
-            }}>
+          <section
+            style={{
+              top: targetOffset + "px",
+            }}
+          >
             <span></span>
           </section>
         </div>
 
         <article>
-          <section style={{color:ThemeColor,marginTop:(targetOffset-6)+'px'}} >
-            <p className='sub'>企业简介：</p>
-            <p className="content">
-              上海北斗卫星导航平台有限公司（简称：“上海北斗平台公司”）是在国家主管部门的推动与组织下，由北斗导航基金与上海航天局共同出资组建成立，旨在为社会提供导航定位、精确授时、卫星通信和基于北斗卫星导航应用的专业化公司。上海北斗平台公司主要承担“北斗（上海）位置信息综合服务平台”的规划和建设工作，在北斗卫星导航系统管理办公室的指导下运营和管理此位置信息综合服务平台。
-            </p>
+          <section
+            style={{ color: ThemeColor, marginTop: targetOffset - 6 + "px" }}
+          >
+            <p className="sub">企业简介：</p>
+            <p className="content">{obj.companyProfile}</p>
             <div className="underline"></div>
           </section>
 
-          <section style={{color:ThemeColor}} >
-            <p className='sub'>战略定位：</p>
-            <p className="content">
-              上海北斗卫星导航平台有限公司（简称：“上海北斗平台公司”）是在国家主管部门的推动与组织下，由北斗导航基金与上海航天局共同出资组建成立，旨在为社会提供导航定位、精确授时、卫星通信和基于北斗卫星导航应用的专业化公司。上海北斗平台公司主要承担“北斗（上海）位置信息综合服务平台”的规划和建设工作，在北斗卫星导航系统管理办公室的指导下运营和管理此位置信息综合服务平台。
-            </p>
-            {/* <div className="underline"></div> */}
+          <section style={{ color: ThemeColor }}>
+            <p className="sub">战略定位：</p>
+            <p className="content">{obj.corporateStrategy}</p>
           </section>
-          <section style={{color:ThemeColor}} >
-            <p className='sub'>战略规划：</p>
-            <p className="content">
-              上海北斗卫星导航平台有限公司（简称：“上海北斗平台公司”）是在国家主管部门的推动与组织下，由北斗导航基金与上海航天局共同出资组建成立，旨在为社会提供导航定位、精确授时、卫星通信和基于北斗卫星导航应用的专业化公司。上海北斗平台公司主要承担“北斗（上海）位置信息综合服务平台”的规划和建设工作，在北斗卫星导航系统管理办公室的指导下运营和管理此位置信息综合服务平台。
-            </p>
-            <div className="underline"></div>
+          <section style={{ color: ThemeColor }}>
+            <p className="sub">战略规划：</p>
+            <p className="content">{obj.strategicPlanning}</p>
+          </section>
+          <div className="underline"></div>
+          <section style={{ color: ThemeColor }}>
+            <p className="sub">商业模式：</p>
+            <p className="content">{obj.businessModel}</p>
+          </section>
+          <section style={{ color: ThemeColor }}>
+            <p className="sub">主营业务：</p>
+            <p className="content">{obj.mainBusiness}</p>
+          </section>
+          <section style={{ color: ThemeColor }} className="sub_table">
+            <p className="sub">业务构成：</p>
+            <table style={{ width: "100%" }}>
+              <tr
+                style={{  width: "100%", color: "white",height:"0.4rem" }}
+              >
+                <th>序好</th>
+                <th>名称</th>
+                <th>占比</th>
+              </tr>
+              <tr style={{height:"0.4rem"}}>
+                <td>2</td>
+                <td>2</td>
+                <td>2</td>
+              </tr>
+            </table>
+          </section>
+          <section style={{ color: ThemeColor }}>
+            <p className="sub">核心：</p>
+            <table style={{ width: "100%" }} >
+              <tr
+                style={{ background: "#ADD6AD", width: "100%", color: "white",height:"0.4rem" }}
+              >
+                <th>序好</th>
+                <th>名称</th>
+                <th>占比</th>
+              </tr>
+              <tr style={{height:"0.4rem"}}>
+                <td>2</td>
+                <td>2</td>
+                <td>2</td>
+              </tr>
+            </table>
           </section>
         </article>
       </main>
