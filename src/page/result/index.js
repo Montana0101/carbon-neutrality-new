@@ -10,7 +10,14 @@ import "./index.less";
 import * as echarts from "echarts";
 
 const defaultImg = AliOss + "/new_version_0518/company_default.png";
-const { Link } = Anchor;
+const finTabs = [
+  "盈利能力",
+  "收益质量",
+  "运营能力",
+  "偿债能力",
+  "现金能力",
+  "成长能力",
+];
 const CompanyCard = (props) => {
   let { data } = props;
 
@@ -108,11 +115,13 @@ const CompanyCard = (props) => {
 
 const SearchResult = (props) => {
   const [obj, setObj] = useState({});
-
+  const [financeInx,setFinanceInx] = useState(0)
   const [targetOffset, setTargetOffset] = useState(undefined);
+  const [pageNo, setPageNo] = useState(1);
 
   const initPie = (_node, _data, _total, _title) => {
     let data = [];
+
     if (_title == "核心客户") {
       _data &&
         _data.map((item) => {
@@ -131,7 +140,6 @@ const SearchResult = (props) => {
         });
     }
 
-    console.log("打印下数据xx", _data);
     let option = {
       tooltip: {
         trigger: "item",
@@ -197,6 +205,63 @@ const SearchResult = (props) => {
     option && myChart.setOption(option);
   };
 
+  const initBar = (_node, _obj = {}) => {
+    console.log("对巴萨回家和对巴萨阿娇", _obj);
+    let option = {
+      grid: {
+        left: "0%",
+        right: "0%",
+        bottom: "10%",
+        top: "10%",
+        containLabel: true,
+      },
+      xAxis: {
+        type: "category",
+        data: Object.keys(_obj),
+        axisLabel: {
+          interval: 0, //坐标轴刻度标签的显示间隔(在类目轴中有效) 0:显示所有  1：隔一个显示一个 :3：隔三个显示一个...
+          // rotate:-20    //标签倾斜的角度，显示不全时可以通过旋转防止标签重叠（-90到90）
+        },
+      },
+      yAxis: {
+        type: "value",
+      },
+      series: [
+        {
+          data: Object.values(_obj),
+          type: "bar",
+          showBackground: true,
+          backgroundStyle: {
+            color: "rgba(180, 180, 180, 0.2)",
+          },
+          itemStyle: {
+            normal: {
+              //这里是颜色
+              color: function (params) {
+                //注意，如果颜色太少的话，后面颜色不会自动循环，最好多定义几个颜色
+                var colorList = [
+                  "#00A3E0",
+                  "#FFA100",
+                  "#ffc0cb",
+                  "#CCCCCC",
+                  "#BBFFAA",
+                  "#749f83",
+                  "#ca8622",
+                ];
+                return colorList[params.dataIndex];
+              },
+            },
+          },
+        },
+      ],
+    };
+
+    var myChart = echarts.init(_node);
+    myChart.resize();
+
+    option && myChart.setOption(option);
+  };
+
   useEffect(() => {
     setTargetOffset(window.innerHeight / 2);
   }, []);
@@ -243,6 +308,9 @@ const SearchResult = (props) => {
         obj.cpSuppliers && obj.cpSuppliers.length,
         "核心供应商"
       );
+
+      let bar1 = document.getElementById("bar1");
+      initBar(bar1, obj.patents);
     }
   }, [obj]);
 
@@ -504,51 +572,123 @@ const SearchResult = (props) => {
 
           <section style={{ color: ThemeColor }}>
             <p className="sub">专利：</p>
-            <div style={{ display: "flex" }}>
+            <div style={{ display: "flex", height: "auto" }}>
               <div
                 style={{
                   width: "25%",
-                  border: "1px solid green",
                   marginRight: "5%",
+                  height: "auto",
                 }}
+                id="bar1"
               ></div>
-              <div style={{ flex: 1,display:"flex",flexDirection:"column",justifyContent:"space-between"}}>
-                <table style={{ width: "100%",marginBottom:"0.1rem" }}>
+              <div
+                style={{
+                  flex: 1,
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                }}
+              >
+                <table style={{ width: "100%", marginBottom: "0.1rem" }}>
                   <tr
                     style={{ width: "100%", color: "white", height: "0.4rem" }}
                   >
                     <th style={{ width: "10%" }}>序号</th>
-                    <th style={{ }}>专利名称</th>
+                    <th style={{}}>专利名称</th>
                     <th>专利类型</th>
                     <th>专利状态</th>
-                    <th style={{ }}>专利优势</th>
+                    <th style={{}}>专利优势</th>
                   </tr>
                   {obj.cpPatents &&
-                    obj.cpPatents.map((item, index) => {
-                      return (
-                        <tr style={{ height: "0.4rem" }}>
-                          <td>{index + 1}</td>
-                          <td>{item.patentName}</td>
-                          <td>{item.patentType}</td>
-                          <td>{item.patentStatus}</td>
-                          <td>{item.abstracts}</td>
-                        </tr>
-                      );
-                    })}
+                    obj.cpPatents
+                      .slice((pageNo - 1) * 5, pageNo * 5)
+                      .map((item, index) => {
+                        return (
+                          <tr style={{ height: "0.4rem" }}>
+                            <td>{index + 1 + (pageNo - 1) * 5}</td>
+                            <td>{item.patentName}</td>
+                            <td>{item.patentType}</td>
+                            <td>{item.patentStatus}</td>
+                            <td>{item.abstracts}</td>
+                          </tr>
+                        );
+                      })}
                 </table>
 
-                  <p style={{display:"flex",justifyContent:"flex-end"}}>
+                <p style={{ display: "flex", justifyContent: "flex-end" }}>
                   <Pagination
-                  total={ obj.cpPatents.length}
-                  size="small"
-                  // showSizeChanger
-                  showQuickJumper
-                  // showTotal={(total) => `Total ${total} items`}
-                />
-                  </p>
+                    total={obj.cpPatents ? obj.cpPatents.length : 0}
+                    size="small"
+                    pageSize={5}
+                    onChange={(e) => {
+                      setPageNo(e);
+                      console.log("答应你西萨的难道就卡死难道就卡死", e);
+                    }}
+                    // showSizeChanger
+                    showQuickJumper
+                    // showTotal={(total) => `Total ${total} items`}
+                  />
+                </p>
               </div>
             </div>
             <div className="underline"></div>
+          </section>
+
+          <section style={{ color: ThemeColor }}>
+            <p className="sub">财务能力：</p>
+            <p style={{height:"2rem",width:"100%",border:"1px solid red"}}>
+            <ul style={{display:"flex"}}>
+              {finTabs.map((item, index) => {
+                return (
+                  <li
+                    key={index}
+                    onClick={() => {
+                      setFinanceInx(index);
+                      // getParams(index);
+                    }}
+                    style={{
+                      borderBottom:
+                        financeInx == index ? "0.02rem solid "+ThemeColor : "none",
+                      padding:"0.06rem 0",
+                      marginRight:"0.2rem",
+                      color: financeInx == index ?  ThemeColor :"rgba(0,0,0,0.8)"
+                    }}
+                  >
+                    {item}
+                  </li>
+                );
+              })}
+            </ul>
+            </p>
+          </section>
+
+          <section style={{ color: ThemeColor }} className="sub_table">
+            <p className="sub">投资方：</p>
+            <table style={{ width: "100%" }}>
+              <tr style={{ width: "100%", color: "white", height: "0.4rem" }}>
+                <th style={{ width: "10%" }}>序号</th>
+                <th style={{ width: "40%" }}>投资方名称</th>
+                <th style={{ width: "15%" }}>轮次</th>
+                <th style={{ width: "35%" }}>投资金额</th>
+              </tr>
+              {obj.cpInvestors &&
+                obj.cpInvestors.map((item, index) => {
+                  return (
+                    <tr style={{ height: "0.4rem" }}>
+                      <td>{index + 1}</td>
+                      <td>{item.investorName}</td>
+                      <td>{item.investorRounds}</td>
+                      <td>{item.investorAmount ? item.investorAmount+"万元" : null}</td>
+                    </tr>
+                  );
+                })}
+            </table>
+            <div className="underline"></div>
+          </section>
+
+          <section style={{ color: ThemeColor }}>
+            <p className="sub">行业成长性：</p>
+            <p className="content">{obj.industryIntroduction}</p>
           </section>
         </article>
       </main>
