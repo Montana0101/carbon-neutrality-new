@@ -124,8 +124,8 @@
             flex           : 7;
 
             &>section {
-                margin-top: 0.15rem;
-
+                margin-top: 0.2rem;
+                margin-bottom: 0.1rem;
                 .sub {
                     font-weight    : bold;
                     // text-align: left;
@@ -144,20 +144,33 @@
             }
 
             // 子表样式
-            .sub_table {
-                table {
+            // .sub_table {
+            //     table {
              
-                    color:rgba(0, 0, 0, 0.8);
-                    &>tr:nth-child(1) {
-                        background-color: #ADD6AD;
-                        color:white
-                    }
-                    td,th{
-                        text-align: left;
-                        padding-left: 0.1rem;
-                    }
-                }
-            }
+            //         color:rgba(0, 0, 0, 0.8);
+            //         &>tr:nth-child(1) {
+            //             background-color: #ADD6AD;
+            //             color:white
+            //         }
+            //         td,th{
+            //             text-align: left;
+            //             padding-left: 0.1rem;
+            //         }
+            //     }
+            // }
+        }
+    }
+
+    table {
+             
+        color:rgba(0, 0, 0, 0.8);
+        &>tr:nth-child(1) {
+            background-color: #ADD6AD;
+            color:white
+        }
+        td,th{
+            text-align: left;
+            padding-left: 0.1rem;
         }
     }
 

@@ -3,7 +3,7 @@ import { screen_scale } from "../../util/rem";
 import { withRouter, useHistory } from "react-router-dom";
 import { LeftOutlined, createFromIconfontCN } from "@ant-design/icons";
 import { AliOss, ThemeColor, CutLine } from "../../lib/const";
-import { Input, Button, Radio, Timeline, Anchor, Divider } from "antd";
+import { Input, Button, Radio, Timeline, Anchor, Pagination } from "antd";
 import RadarChart from "./radar";
 import * as $ from "jquery";
 import "./index.less";
@@ -111,42 +111,85 @@ const SearchResult = (props) => {
 
   const [targetOffset, setTargetOffset] = useState(undefined);
 
-  const initPie = (_node, _data) => {
+  const initPie = (_node, _data, _total, _title) => {
+    let data = [];
+    if (_title == "核心客户") {
+      _data &&
+        _data.map((item) => {
+          data.push({
+            value: item.proportionSale,
+            name: item.customerName,
+          });
+        });
+    } else {
+      _data &&
+        _data.map((item) => {
+          data.push({
+            value: item.purchaseProportion,
+            name: item.supplierName,
+          });
+        });
+    }
+
+    console.log("打印下数据xx", _data);
     let option = {
       tooltip: {
         trigger: "item",
+        formatter: function (params) {
+          return `${params.name}  ${params.value}%`;
+        },
+        textStyle: {
+          color: "#232325",
+        },
+        backgroundColor: "rgba(255,255,255,1)",
       },
       legend: {
-        top: "5%",
+        // top: "5%",
         left: "center",
+        orient: "vertical",
+
+        bottom: "bottom",
       },
       series: [
         {
-          name: "Access From",
           type: "pie",
           radius: ["40%", "70%"],
           avoidLabelOverlap: false,
           label: {
-            show: false,
+            show: true,
             position: "center",
-          },
-          emphasis: {
-            label: {
-              show: true,
-              fontSize: "40",
-              fontWeight: "bold",
+            color: "#232325",
+            formatter: `{total|${_total}\n}` + `${_title}`,
+            rich: {
+              total: {
+                fontSize: 20,
+                fontWeight: "bold", // fontFamily : “微软雅黑”,
+                color: "#232325",
+                lineHeight: 30,
+              },
+              active: {
+                // fontFamily : “微软雅黑”,
+                // fontSize: 12,
+                // color: "#232325",
+                // color: "#fff",
+                // lineHeight: 30,
+              },
             },
           },
+          // emphasis: {
+          //   label: {
+          //     show: false,
+          //     fontSize: "20",
+          //     fontWeight: "bold",
+          //     formatter: function(item){
+          //       return `{${item.name} : ${item.value}%}`
+          //     },
+          //   },
+          // },
           labelLine: {
             show: false,
           },
-          data: [
-            { value: 1048, name: "Search Engine" },
-            { value: 735, name: "Direct" },
-            { value: 580, name: "Email" },
-            { value: 484, name: "Union Ads" },
-            { value: 300, name: "Video Ads" },
-          ],
+          data: data,
         },
       ],
     };
@@ -183,6 +226,25 @@ const SearchResult = (props) => {
   useEffect(() => {
     console.log("当前定位点", targetOffset);
   }, [targetOffset]);
+
+  useEffect(() => {
+    if (obj != null) {
+      let node1 = document.getElementById("pie1");
+      initPie(
+        node1,
+        obj.cpCustomers,
+        obj.cpCustomers && obj.cpCustomers.length,
+        "核心客户"
+      );
+      let node2 = document.getElementById("pie2");
+      initPie(
+        node2,
+        obj.cpSuppliers,
+        obj.cpSuppliers && obj.cpSuppliers.length,
+        "核心供应商"
+      );
+    }
+  }, [obj]);
 
   return (
     <div className="result_page">
@@ -344,17 +406,17 @@ const SearchResult = (props) => {
             <p className="sub">业务构成：</p>
             <table style={{ width: "100%" }}>
               <tr style={{ width: "100%", color: "white", height: "0.4rem" }}>
-                <th>序好</th>
-                <th>名称</th>
-                <th>占比</th>
+                <th style={{ width: "0.7rem" }}>序号</th>
+                <th>构成</th>
+                {/* <th>占比</th> */}
               </tr>
               {obj.compositions &&
                 obj.compositions.map((item, index) => {
                   return (
                     <tr style={{ height: "0.4rem" }}>
                       <td>{index + 1}</td>
-                      <td>2</td>
-                      <td>2</td>
+                      <td>{item.composition}</td>
+                      {/* <td>2</td> */}
                     </tr>
                   );
                 })}
@@ -363,20 +425,130 @@ const SearchResult = (props) => {
           <section style={{ color: ThemeColor, display: "flex" }}>
             <div style={{ flex: 1 }}>
               <p className="sub">核心客户：</p>
-              <div id="pie1" style={{
-                height:"3rem",
-                border:"1px solid red",
-                width:"100%"
-              }}></div>
+              <div
+                id="pie1"
+                style={{
+                  height: "3rem",
+                  width: "100%",
+                }}
+              ></div>
             </div>
             <div style={{ flex: 1 }}>
               <p className="sub">核心供应商：</p>
-              <div id="pie2" style={{
-                height:"3rem",
-                border:"1px solid red",
-                width:"100%"
-              }}></div>
+              <div
+                id="pie2"
+                style={{
+                  height: "3rem",
+                  width: "100%",
+                }}
+              ></div>
             </div>
+          </section>
+          <div className="underline"></div>
+
+          <section style={{ color: ThemeColor }}>
+            <p className="sub">核心竞争力：</p>
+            <p className="content">{obj.coreCompetitiveness}</p>
+          </section>
+
+          <section style={{ color: ThemeColor }} className="sub_table">
+            <p className="sub">领军人物：</p>
+            <table style={{ width: "100%" }}>
+              <tr style={{ width: "100%", color: "white", height: "0.4rem" }}>
+                <th style={{ width: "10%" }}>序号</th>
+                <th style={{ width: "15%" }}>姓名</th>
+                <th style={{ width: "15%" }}>职位</th>
+                <th style={{ width: "60%" }}>描述</th>
+              </tr>
+              {obj.cpLeaders &&
+                obj.cpLeaders.map((item, index) => {
+                  return (
+                    <tr style={{ height: "0.4rem" }}>
+                      <td>{index + 1}</td>
+                      <td>{item.leaderName}</td>
+                      <td>{item.position}</td>
+                      <td>{item.briefIntroduction}</td>
+                    </tr>
+                  );
+                })}
+            </table>
+          </section>
+
+          <section style={{ color: ThemeColor }} className="sub_table">
+            <p className="sub">核心团队：</p>
+            <table style={{ width: "100%" }}>
+              <tr style={{ width: "100%", color: "white", height: "0.4rem" }}>
+                <th style={{ width: "10%" }}>序号</th>
+                <th style={{ width: "15%" }}>姓名</th>
+                <th style={{ width: "15%" }}>职位</th>
+                <th style={{ width: "60%" }}>描述</th>
+              </tr>
+              {obj.cpTeams &&
+                obj.cpTeams.map((item, index) => {
+                  return (
+                    <tr style={{ height: "0.4rem" }}>
+                      <td>{index + 1}</td>
+                      <td>{item.memberName}</td>
+                      <td>{item.position}</td>
+                      <td>{item.briefIntroduction}</td>
+                    </tr>
+                  );
+                })}
+            </table>
+          </section>
+
+          <section style={{ color: ThemeColor }}>
+            <p className="sub">核心技术：</p>
+            <p className="content">{obj.coreTechnology}</p>
+          </section>
+
+          <section style={{ color: ThemeColor }}>
+            <p className="sub">专利：</p>
+            <div style={{ display: "flex" }}>
+              <div
+                style={{
+                  width: "25%",
+                  border: "1px solid green",
+                  marginRight: "5%",
+                }}
+              ></div>
+              <div style={{ flex: 1,display:"flex",flexDirection:"column",justifyContent:"space-between"}}>
+                <table style={{ width: "100%",marginBottom:"0.1rem" }}>
+                  <tr
+                    style={{ width: "100%", color: "white", height: "0.4rem" }}
+                  >
+                    <th style={{ width: "10%" }}>序号</th>
+                    <th style={{ }}>专利名称</th>
+                    <th>专利类型</th>
+                    <th>专利状态</th>
+                    <th style={{ }}>专利优势</th>
+                  </tr>
+                  {obj.cpPatents &&
+                    obj.cpPatents.map((item, index) => {
+                      return (
+                        <tr style={{ height: "0.4rem" }}>
+                          <td>{index + 1}</td>
+                          <td>{item.patentName}</td>
+                          <td>{item.patentType}</td>
+                          <td>{item.patentStatus}</td>
+                          <td>{item.abstracts}</td>
+                        </tr>
+                      );
+                    })}
+                </table>
+
+                  <p style={{display:"flex",justifyContent:"flex-end"}}>
+                  <Pagination
+                  total={ obj.cpPatents.length}
+                  size="small"
+                  // showSizeChanger
+                  showQuickJumper
+                  // showTotal={(total) => `Total ${total} items`}
+                />
+                  </p>
+              </div>
+            </div>
+            <div className="underline"></div>
           </section>
         </article>
       </main>
