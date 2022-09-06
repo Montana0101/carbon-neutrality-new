@@ -11,10 +11,10 @@ const RadarChart = (props) => {
   }, [props.data]);
 
   useEffect(() => {
-      if(score){
-        const radar_dom = document.getElementById("radar");
-        initRadar(radar_dom);
-      }
+    if (score) {
+      const radar_dom = document.getElementById("radar");
+      initRadar(radar_dom);
+    }
   }, [score]);
 
   const initRadar = (dom) => {
@@ -35,8 +35,8 @@ const RadarChart = (props) => {
             { name: "核心竞争力", max: 10 },
             { name: "主营业务能力", max: 10 },
           ],
-        //   center: ['75%', '0%'],
-          radius: [20,45],
+          //   center: ['75%', '0%'],
+          radius: [20, 45],
           axisName: {
             color: "rgba(1,1,1,0.8)",
             // backgroundColor: '#666',
@@ -626,7 +626,7 @@ const RadarChart = (props) => {
     option && myChart.setOption(option);
   };
 
-  return <div id="radar" style={{width:"100%",height:"100%"}}></div>;
+  return <div id="radar" style={{ width: "100%", height: "100%" }}></div>;
 };
 
 export default RadarChart;

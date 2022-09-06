@@ -7,6 +7,7 @@ import { Input, Button, Radio, Timeline, Anchor, Divider } from "antd";
 import RadarChart from "./radar";
 import * as $ from "jquery";
 import "./index.less";
+import * as echarts from "echarts";
 
 const defaultImg = AliOss + "/new_version_0518/company_default.png";
 const { Link } = Anchor;
@@ -105,10 +106,54 @@ const CompanyCard = (props) => {
   );
 };
 
-function SearchResult(props) {
+const SearchResult = (props) => {
   const [obj, setObj] = useState({});
 
   const [targetOffset, setTargetOffset] = useState(undefined);
+
+  const initPie = (_node, _data) => {
+    let option = {
+      tooltip: {
+        trigger: "item",
+      },
+      legend: {
+        top: "5%",
+        left: "center",
+      },
+      series: [
+        {
+          name: "Access From",
+          type: "pie",
+          radius: ["40%", "70%"],
+          avoidLabelOverlap: false,
+          label: {
+            show: false,
+            position: "center",
+          },
+          emphasis: {
+            label: {
+              show: true,
+              fontSize: "40",
+              fontWeight: "bold",
+            },
+          },
+          labelLine: {
+            show: false,
+          },
+          data: [
+            { value: 1048, name: "Search Engine" },
+            { value: 735, name: "Direct" },
+            { value: 580, name: "Email" },
+            { value: 484, name: "Union Ads" },
+            { value: 300, name: "Video Ads" },
+          ],
+        },
+      ],
+    };
+    var myChart = echarts.init(_node);
+    option && myChart.setOption(option);
+  };
+
   useEffect(() => {
     setTargetOffset(window.innerHeight / 2);
   }, []);
@@ -298,41 +343,45 @@ function SearchResult(props) {
           <section style={{ color: ThemeColor }} className="sub_table">
             <p className="sub">业务构成：</p>
             <table style={{ width: "100%" }}>
-              <tr
-                style={{  width: "100%", color: "white",height:"0.4rem" }}
-              >
+              <tr style={{ width: "100%", color: "white", height: "0.4rem" }}>
                 <th>序好</th>
                 <th>名称</th>
                 <th>占比</th>
               </tr>
-              <tr style={{height:"0.4rem"}}>
-                <td>2</td>
-                <td>2</td>
-                <td>2</td>
-              </tr>
+              {obj.compositions &&
+                obj.compositions.map((item, index) => {
+                  return (
+                    <tr style={{ height: "0.4rem" }}>
+                      <td>{index + 1}</td>
+                      <td>2</td>
+                      <td>2</td>
+                    </tr>
+                  );
+                })}
             </table>
           </section>
-          <section style={{ color: ThemeColor }}>
-            <p className="sub">核心：</p>
-            <table style={{ width: "100%" }} >
-              <tr
-                style={{ background: "#ADD6AD", width: "100%", color: "white",height:"0.4rem" }}
-              >
-                <th>序好</th>
-                <th>名称</th>
-                <th>占比</th>
-              </tr>
-              <tr style={{height:"0.4rem"}}>
-                <td>2</td>
-                <td>2</td>
-                <td>2</td>
-              </tr>
-            </table>
+          <section style={{ color: ThemeColor, display: "flex" }}>
+            <div style={{ flex: 1 }}>
+              <p className="sub">核心客户：</p>
+              <div id="pie1" style={{
+                height:"3rem",
+                border:"1px solid red",
+                width:"100%"
+              }}></div>
+            </div>
+            <div style={{ flex: 1 }}>
+              <p className="sub">核心供应商：</p>
+              <div id="pie2" style={{
+                height:"3rem",
+                border:"1px solid red",
+                width:"100%"
+              }}></div>
+            </div>
           </section>
         </article>
       </main>
     </div>
   );
-}
+};
 
 export default withRouter(SearchResult);
