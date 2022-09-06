@@ -115,7 +115,7 @@ const CompanyCard = (props) => {
 
 const SearchResult = (props) => {
   const [obj, setObj] = useState({});
-  const [financeInx,setFinanceInx] = useState(0)
+  const [financeInx, setFinanceInx] = useState(0);
   const [targetOffset, setTargetOffset] = useState(undefined);
   const [pageNo, setPageNo] = useState(1);
 
@@ -636,29 +636,34 @@ const SearchResult = (props) => {
 
           <section style={{ color: ThemeColor }}>
             <p className="sub">财务能力：</p>
-            <p style={{height:"2rem",width:"100%",border:"1px solid red"}}>
-            <ul style={{display:"flex"}}>
-              {finTabs.map((item, index) => {
-                return (
-                  <li
-                    key={index}
-                    onClick={() => {
-                      setFinanceInx(index);
-                      // getParams(index);
-                    }}
-                    style={{
-                      borderBottom:
-                        financeInx == index ? "0.02rem solid "+ThemeColor : "none",
-                      padding:"0.06rem 0",
-                      marginRight:"0.2rem",
-                      color: financeInx == index ?  ThemeColor :"rgba(0,0,0,0.8)"
-                    }}
-                  >
-                    {item}
-                  </li>
-                );
-              })}
-            </ul>
+            <p
+              style={{ height: "2rem", width: "100%", border: "1px solid red" }}
+            >
+              <ul style={{ display: "flex" }}>
+                {finTabs.map((item, index) => {
+                  return (
+                    <li
+                      key={index}
+                      onClick={() => {
+                        setFinanceInx(index);
+                        // getParams(index);
+                      }}
+                      style={{
+                        borderBottom:
+                          financeInx == index
+                            ? "0.02rem solid " + ThemeColor
+                            : "none",
+                        padding: "0.06rem 0",
+                        marginRight: "0.2rem",
+                        color:
+                          financeInx == index ? ThemeColor : "rgba(0,0,0,0.8)",
+                      }}
+                    >
+                      {item}
+                    </li>
+                  );
+                })}
+              </ul>
             </p>
           </section>
 
@@ -678,7 +683,11 @@ const SearchResult = (props) => {
                       <td>{index + 1}</td>
                       <td>{item.investorName}</td>
                       <td>{item.investorRounds}</td>
-                      <td>{item.investorAmount ? item.investorAmount+"万元" : null}</td>
+                      <td>
+                        {item.investorAmount
+                          ? item.investorAmount + "万元"
+                          : null}
+                      </td>
                     </tr>
                   );
                 })}
