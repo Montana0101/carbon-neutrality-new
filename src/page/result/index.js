@@ -18,6 +18,307 @@ const finTabs = [
   "现金能力",
   "成长能力",
 ];
+const finArr = [
+  ["净资产收益率ROE", "总资产报酬率ROA", "销售毛利率", "销售净利率"],
+  [
+    "经营活动产生的现金流量净额",
+    "经营活动净利润",
+    "营业利润总额",
+    "扣除非经常损益后的净利润",
+  ],
+  [
+    "经营活动产生的现金流量净额",
+    "经营活动净利润",
+    "营业利润总额",
+    "扣除非经常损益后的净利润",
+  ],
+  ["应收账款周转率", "存货周转率", "总资产周转率", "流动资产周转率"],
+  ["流动比率", "速动比率", "流动负债", "已获利息倍数"],
+  [
+    "经营活动净收益",
+    "销售商品提供劳务收到的现金",
+    "经营活动产生的现金流量净额",
+    "资本支出",
+  ],
+  [
+    "净资产同比增长率",
+    "资产总计相对年初增长率",
+    "营业总收入同比增长率",
+    "净利润同比增长率",
+  ],
+];
+
+const colors = ["#00E0FF", "#07CC3E", "#9732E2", "#D8DB3A"];
+
+const initBar = (_node, _obj = {}) => {
+  let option = {
+    grid: {
+      left: "0%",
+      right: "0%",
+      bottom: "10%",
+      top: "10%",
+      containLabel: true,
+    },
+    xAxis: {
+      type: "category",
+      data: Object.keys(_obj),
+      axisLabel: {
+        interval: 0, //坐标轴刻度标签的显示间隔(在类目轴中有效) 0:显示所有  1：隔一个显示一个 :3：隔三个显示一个...
+        // rotate:-20    //标签倾斜的角度，显示不全时可以通过旋转防止标签重叠（-90到90）
+      },
+    },
+    yAxis: {
+      type: "value",
+    },
+    series: [
+      {
+        data: Object.values(_obj),
+        type: "bar",
+        showBackground: true,
+        backgroundStyle: {
+          color: "rgba(180, 180, 180, 0.2)",
+        },
+        itemStyle: {
+          normal: {
+            //这里是颜色
+            color: function (params) {
+              //注意，如果颜色太少的话，后面颜色不会自动循环，最好多定义几个颜色
+              var colorList = [
+                "#00A3E0",
+                "#FFA100",
+                "#ffc0cb",
+                "#CCCCCC",
+                "#BBFFAA",
+                "#749f83",
+                "#ca8622",
+              ];
+              return colorList[params.dataIndex];
+            },
+          },
+        },
+      },
+    ],
+  };
+
+  var myChart = echarts.init(_node);
+  myChart.resize();
+
+  option && myChart.setOption(option);
+};
+
+// 柱状图
+const initColumnar = (dom, cutFin, financeInx) => {
+  var colorList = ["#00AAFF", "#A52A2A", "#FF752D", "#FFCF31"];
+  // var defaultData = [800, 800, 800, 800]
+  let option = {
+    backgroundColor: "#fff",
+    grid: {
+      left: "0%",
+      right: "0%",
+      bottom: "-5%",
+      top: "5%",
+      containLabel: true,
+    },
+    tooltip: {
+      // trigger: "axis",
+      axisPointer: {
+        // type: "shadow",
+      },
+      position: function (point, params, dom, rect, size) {
+        return [point[0], point[1]];
+      },
+      confine: false,
+      // formatter: function (params) {},
+    },
+    xAxis: {
+      show: false,
+      type: "value",
+    },
+    yAxis: [
+      {
+        type: "category",
+        inverse: false,
+        splitLine: {
+          show: false,
+        },
+        axisTick: {
+          show: false,
+        },
+        axisLine: {
+          show: false,
+        },
+        axisLabel: {
+          // margin: 220,
+          // interval:0,//横轴信息全部显示
+          // textStyle: {
+          //   color: "#232325",
+          //   fontSize: "12",
+          //   align:"left"
+          // },
+          formatter: function (value) {
+            // value = value.length > 7 ? value.substring(0, 7) + "..." : value;
+            return value;
+          },
+        },
+        data: finArr[financeInx],
+      },
+      {
+        type: "category",
+        inverse: true,
+        axisTick: "none",
+        axisLine: "none",
+        show: true,
+        axisLabel: {
+          textStyle: {
+            color: "#232325",
+            fontSize: "12",
+          },
+          formatter: function (value) {
+            return value;
+          },
+        },
+        data: cutFin,
+      },
+    ],
+    series: [
+      {
+        name: "数量",
+        type: "bar",
+        zlevel: 1,
+        label: {
+          show: true,
+          formatter: function (obj) {
+            // return finArr[financeInx][obj.dataIndex];
+            return "";
+          },
+        },
+        itemStyle: {
+          normal: {
+            barBorderRadius: [0, 30, 30, 0],
+            color: (params) => {
+              return new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                {
+                  offset: 0,
+                  color: "rgba(54,69,129,1)",
+                },
+                {
+                  offset: 0.8,
+                  color: colorList[params.dataIndex],
+                },
+                {
+                  offset: 1,
+                  color: "rgba(255,255,255,0.8)",
+                },
+              ]);
+            },
+            // color: (params) => {
+            //   return colorList[params.dataIndex]
+            // }
+          },
+        },
+        barWidth: 20,
+        data: cutFin,
+      },
+    ],
+  };
+  var myChart = echarts.init(dom);
+  option && myChart.setOption(option);
+};
+
+// 折线图
+const initLine = (dom, d1, d2, d3, d4, years) => {
+  let option = {
+    grid: {
+      left: "0%",
+      right: "0%",
+      bottom: "0%",
+      top: "10%",
+      containLabel: true,
+    },
+    xAxis: {
+      type: "category",
+      // boundaryGap: false,
+      data: years,
+      axisLine: {
+        show: true,
+        lineStyle: {
+          color: "#232325",
+          width: 0,
+          type: "solid",
+        },
+      },
+      splitLine: {
+        //分割线配置
+        show: false,
+        lineStyle: {
+          color: "red",
+        },
+      },
+    },
+    yAxis: {
+      type: "value",
+      splitNumber: 3,
+      axisLine: {
+        show: true,
+        lineStyle: {
+          color: "#232325",
+          width: 0,
+          type: "solid",
+        },
+      },
+      splitLine: {
+        //分割线配置
+        show: true,
+        lineStyle: {
+          color: "rgba(1,1,1,0.3)",
+          type: "dashed",
+        },
+      },
+    },
+    series: [
+      {
+        name: d1.name,
+        type: "line",
+
+        data: d1.data,
+        lineStyle: {
+          color: colors[0],
+        },
+      },
+      {
+        name: d2.name,
+        type: "line",
+
+        data: d2.data,
+        lineStyle: {
+          color: colors[1],
+        },
+      },
+      {
+        name: d3.name,
+        type: "line",
+
+        data: d3.data,
+        lineStyle: {
+          color: colors[2],
+        },
+      },
+      {
+        name: d4.name,
+        type: "line",
+
+        data: d4.data,
+        lineStyle: {
+          color: colors[3],
+        },
+      },
+    ],
+  };
+
+  var myChart = echarts.init(dom);
+  option && myChart.setOption(option);
+};
+
 const CompanyCard = (props) => {
   let { data } = props;
 
@@ -118,7 +419,14 @@ const SearchResult = (props) => {
   const [financeInx, setFinanceInx] = useState(0);
   const [targetOffset, setTargetOffset] = useState(undefined);
   const [pageNo, setPageNo] = useState(1);
-
+  const [cutFin, setCutFin] = useState([]); //当前tab数据
+  const [d1, setData1] = useState({});
+  const [d2, setData2] = useState({});
+  const [d3, setData3] = useState({});
+  const [d4, setData4] = useState({});
+  const [finances, setFinances] = useState({});
+  const [lineData, setLineData] = useState([]);
+  const [years, setYears] = useState([]);
   const initPie = (_node, _data, _total, _title) => {
     let data = [];
 
@@ -205,63 +513,6 @@ const SearchResult = (props) => {
     option && myChart.setOption(option);
   };
 
-  const initBar = (_node, _obj = {}) => {
-    console.log("对巴萨回家和对巴萨阿娇", _obj);
-    let option = {
-      grid: {
-        left: "0%",
-        right: "0%",
-        bottom: "10%",
-        top: "10%",
-        containLabel: true,
-      },
-      xAxis: {
-        type: "category",
-        data: Object.keys(_obj),
-        axisLabel: {
-          interval: 0, //坐标轴刻度标签的显示间隔(在类目轴中有效) 0:显示所有  1：隔一个显示一个 :3：隔三个显示一个...
-          // rotate:-20    //标签倾斜的角度，显示不全时可以通过旋转防止标签重叠（-90到90）
-        },
-      },
-      yAxis: {
-        type: "value",
-      },
-      series: [
-        {
-          data: Object.values(_obj),
-          type: "bar",
-          showBackground: true,
-          backgroundStyle: {
-            color: "rgba(180, 180, 180, 0.2)",
-          },
-          itemStyle: {
-            normal: {
-              //这里是颜色
-              color: function (params) {
-                //注意，如果颜色太少的话，后面颜色不会自动循环，最好多定义几个颜色
-                var colorList = [
-                  "#00A3E0",
-                  "#FFA100",
-                  "#ffc0cb",
-                  "#CCCCCC",
-                  "#BBFFAA",
-                  "#749f83",
-                  "#ca8622",
-                ];
-                return colorList[params.dataIndex];
-              },
-            },
-          },
-        },
-      ],
-    };
-
-    var myChart = echarts.init(_node);
-    myChart.resize();
-
-    option && myChart.setOption(option);
-  };
-
   useEffect(() => {
     setTargetOffset(window.innerHeight / 2);
   }, []);
@@ -277,7 +528,14 @@ const SearchResult = (props) => {
     window.pageYOffset = 0;
     let { state } = props.location;
     if (state && state.value) {
-      setObj(JSON.parse(state.value));
+      let _obj = JSON.parse(state.value);
+      setObj(_obj);
+      if (_obj.cpFinancial) {
+        setFinances(_obj.cpFinancial);
+      }
+      if (_obj.financialHistories) {
+        setLineData(_obj.financialHistories);
+      }
     } else {
       setObj(JSON.parse(localStorage.getItem("search")));
     }
@@ -311,8 +569,164 @@ const SearchResult = (props) => {
 
       let bar1 = document.getElementById("bar1");
       initBar(bar1, obj.patents);
+
+      // let bar2 = document.getElementById("bar2");
+      // initColumnar(bar2, cutFin, financeInx);
     }
   }, [obj]);
+
+  useEffect(() => {
+    let bar2 = document.getElementById("bar2");
+    initColumnar(bar2, cutFin, financeInx);
+
+    let line1 = document.getElementById("line1");
+    initLine(line1, d1, d2, d3, d4, years);
+  }, [financeInx, cutFin]);
+
+  useEffect(() => {
+    getParams();
+  }, [finances]);
+
+  // 动态获取当前财务参数
+  const getParams = (inx = 0) => {
+    let arr = [];
+    let _years = [];
+    let _d1 = { name: "", data: [] };
+    let _d2 = { name: "", data: [] };
+    let _d3 = { name: "", data: [] };
+    let _d4 = { name: "", data: [] };
+
+    switch (inx) {
+      case 0:
+        arr = [
+          finances.profitRoe,
+          finances.profitRoa,
+          finances.profitGpm,
+          finances.profitNir,
+        ];
+        lineData &&
+          lineData.map((item) => {
+            _d1.data.push(item.profitRoe);
+            _d2.data.push(item.profitRoa);
+            _d3.data.push(item.profitGpm);
+            _d4.data.push(item.profitNir);
+            _years.push(item.createTime);
+          });
+        _d1.name = "净资产收益率ROE";
+        _d2.name = "总资产报酬率ROA";
+        _d3.name = "销售毛利率";
+        _d4.name = "销售净利率";
+        break;
+      case 1:
+        arr = [
+          finances.incomeQualityCashFlow,
+          finances.incomeQualityNetProfit,
+          finances.incomeQualityTotalProfit,
+          finances.incomeQualityNpl,
+        ];
+        lineData &&
+          lineData.map((item) => {
+            _d1.data.push(item.incomeQualityCashFlow);
+            _d2.data.push(item.incomeQualityNetProfit);
+            _d3.data.push(item.incomeQualityTotalProfit);
+            _d4.data.push(item.incomeQualityNpl);
+            _years.push(item.createTime);
+          });
+        _d1.name = "经营活动产生的现金流量净额";
+        _d2.name = "经营活动净利润";
+        _d3.name = "营业利润总额";
+        _d4.name = "扣除非经常损益后的净利润";
+        break;
+      case 2:
+        arr = [
+          finances.operateTrc,
+          finances.operateIta,
+          finances.operateTat,
+          finances.operateTra,
+        ];
+        lineData &&
+          lineData.map((item) => {
+            _d1.data.push(item.operateTrc);
+            _d2.data.push(item.operateIta);
+            _d3.data.push(item.operateTat);
+            _d4.data.push(item.operateTra);
+            _years.push(item.createTime);
+          });
+        _d1.name = "应收账款周转率";
+        _d2.name = "存货周转率";
+        _d3.name = "总资产周转率";
+        _d4.name = "流动资产周转率";
+        break;
+      case 3:
+        arr = [
+          finances.debtQuickRatio,
+          finances.debtCurrentLiabilities,
+          finances.debtInterestCoverage,
+          finances.debtCurrentRatio,
+        ];
+        lineData &&
+          lineData.map((item) => {
+            _d1.data.push(item.debtQuickRatio);
+            _d2.data.push(item.debtCurrentLiabilities);
+            _d3.data.push(item.debtInterestCoverage);
+            _d4.data.push(item.debtCurrentRatio);
+            _years.push(item.createTime);
+          });
+        _d1.name = "流动比率";
+        _d2.name = "速动比率";
+        _d3.name = "流动负债";
+        _d4.name = "已获利息倍数";
+        break;
+      case 4:
+        arr = [
+          finances.cashIoa,
+          finances.cashCsp,
+          finances.cashFoa,
+          finances.cashCe,
+        ];
+        lineData &&
+          lineData.map((item) => {
+            _d1.data.push(item.cashIoa);
+            _d2.data.push(item.cashCsp);
+            _d3.data.push(item.cashFoa);
+            _d4.data.push(item.cashCe);
+            _years.push(item.createTime);
+          });
+        _d1.name = "经营活动净收益";
+        _d2.name = "销售商品提供劳务收到的现金";
+        _d3.name = "经营活动产生的现金流量净额";
+        _d4.name = "资本支出";
+        break;
+      case 5:
+        arr = [
+          finances.growthRoa,
+          finances.growthTar,
+          finances.growthGoi,
+          finances.growthGrp,
+        ];
+        lineData &&
+          lineData.map((item) => {
+            _d1.data.push(item.growthRoa);
+            _d2.data.push(item.growthTar);
+            _d3.data.push(item.growthGoi);
+            _d4.data.push(item.growthGrp);
+            _years.push(item.createTime);
+          });
+        _d1.name = "净资产同比增长率";
+        _d2.name = "资产总计相对年初增长率";
+        _d3.name = "营业总收入同比增长率";
+        _d4.name = "净利润同比增长率";
+        break;
+      default:
+        break;
+    }
+    setCutFin(arr);
+    setData1(_d1);
+    setData2(_d2);
+    setData3(_d3);
+    setData4(_d4);
+    setYears(_years);
+  };
 
   return (
     <div className="result_page">
@@ -636,35 +1050,76 @@ const SearchResult = (props) => {
 
           <section style={{ color: ThemeColor }}>
             <p className="sub">财务能力：</p>
-            <p
-              style={{ height: "2rem", width: "100%", border: "1px solid red" }}
+            <ul style={{ display: "flex" }}>
+              {finTabs.map((item, index) => {
+                return (
+                  <li
+                    key={index}
+                    onClick={() => {
+                      setFinanceInx(index);
+                      getParams(index);
+                    }}
+                    style={{
+                      borderBottom:
+                        financeInx == index
+                          ? "0.02rem solid " + ThemeColor
+                          : "none",
+                      padding: "0.05rem 0",
+                      marginRight: "0.2rem",
+                      cursor: "pointer",
+                      color:
+                        financeInx == index ? ThemeColor : "rgba(0,0,0,0.8)",
+                    }}
+                  >
+                    {item}
+                  </li>
+                );
+              })}
+            </ul>
+
+            <div
+              style={{
+                height: "2.2rem",
+                width: "100%",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
             >
-              <ul style={{ display: "flex" }}>
-                {finTabs.map((item, index) => {
-                  return (
-                    <li
-                      key={index}
-                      onClick={() => {
-                        setFinanceInx(index);
-                        // getParams(index);
-                      }}
-                      style={{
-                        borderBottom:
-                          financeInx == index
-                            ? "0.02rem solid " + ThemeColor
-                            : "none",
-                        padding: "0.06rem 0",
-                        marginRight: "0.2rem",
-                        color:
-                          financeInx == index ? ThemeColor : "rgba(0,0,0,0.8)",
-                      }}
-                    >
-                      {item}
-                    </li>
-                  );
-                })}
-              </ul>
-            </p>
+              <div id="bar2" style={{ height: "100%", width: "45%" }}></div>
+              <div
+                style={{
+                  height: "100%",
+                  width: "45%",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <div id="line1" style={{ height: "80%", width: "100%" }}></div>
+                <div className="underLine_div">
+                  <p>
+                    <div>
+                      <span style={{ background: colors[0] }}></span>
+                      <span>{d1.name}</span>
+                    </div>
+                    <div>
+                      <span style={{ background: colors[1] }}></span>
+                      <span>{d2.name}</span>
+                    </div>
+                  </p>
+                  <p>
+                    <div>
+                      <span style={{ background: colors[2] }}></span>
+                      <span>{d3.name}</span>
+                    </div>
+                    <div>
+                      <span style={{ background: colors[3] }}></span>
+                      <span>{d4.name}</span>
+                    </div>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="underline"></div>
           </section>
 
           <section style={{ color: ThemeColor }} className="sub_table">

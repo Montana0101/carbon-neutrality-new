@@ -181,4 +181,29 @@
         background-color: rgba(144, 144, 144, 0.1);
         margin-top      : 0.15rem;
     }
+
+    .underLine_div{
+        margin-top: 0.1rem;
+        &>p{
+            display: flex;
+            padding: 0 0.2rem;
+            color:rgba(0,0,0,0.7);
+            &>div{
+                flex:1;
+                // border:1px solid red;
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                &>span:first-child{
+                    background-color: #00E0FF;
+                    width: 0.06rem;
+                    height:0.06rem;
+                    display: inline-block;
+                    border-radius: 0.03rem; 
+                    margin-right: 0.1rem;
+
+                    }
+            }
+        }
+    }
 }
