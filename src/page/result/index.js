@@ -460,6 +460,10 @@ const SearchResult = (props) => {
   const [cardPos, setCardPos] = useState(undefined);
   const [flag, setFlag] = useState(false); // 是否吸顶
 
+  const [inx, setInx] = useState(0); // 子菜单索引
+  const [isUp, setIsUp] = useState(null); //true往下滚 false往上
+
+  const history = useHistory()
   const _portrait = async () => {
     const res = await portrait(company);
     if (res && res.code == 2000) {
@@ -470,203 +474,6 @@ const SearchResult = (props) => {
       message.warn("未查询到该公司数据！");
     }
   };
-
-  function getScrollTop() {
-    var scrollPos;
-    if (window.pageYOffset) {
-      scrollPos = window.pageYOffset;
-    } else if (document.compatMode && document.compatMode != "BackCompat") {
-      scrollPos = document.documentElement.scrollTop;
-    } else if (document.body) {
-      scrollPos = document.body.scrollTop;
-    }
-    return scrollPos;
-  }
-
-  const initPie = (_node, _data, _total, _title) => {
-    let data = [];
-
-    if (_title == "核心客户") {
-      _data &&
-        _data.map((item) => {
-          data.push({
-            value: item.proportionSale,
-            name: item.customerName,
-          });
-        });
-    } else {
-      _data &&
-        _data.map((item) => {
-          data.push({
-            value: item.purchaseProportion,
-            name: item.supplierName,
-          });
-        });
-    }
-
-    let option = {
-      tooltip: {
-        trigger: "item",
-        formatter: function (params) {
-          return `${params.name}  ${params.value}%`;
-        },
-        textStyle: {
-          color: "rgba(0,0,0,0.8)",
-        },
-        backgroundColor: "rgba(255,255,255,1)",
-      },
-      legend: {
-        // top: "5%",
-        left: "center",
-        orient: "vertical",
-
-        bottom: "bottom",
-      },
-      series: [
-        {
-          type: "pie",
-          radius: ["40%", "70%"],
-          avoidLabelOverlap: false,
-          label: {
-            show: true,
-            position: "center",
-            color: "rgba(0,0,0,0.8)",
-            formatter: `{total|${_total}\n}` + `${_title}`,
-            rich: {
-              total: {
-                fontSize: 20,
-                fontWeight: "bold", // fontFamily : “微软雅黑”,
-                color: "rgba(0,0,0,0.8)",
-                lineHeight: 30,
-              },
-              active: {
-                // fontFamily : “微软雅黑”,
-                // fontSize: 12,
-                // color: "rgba(0,0,0,0.8)",
-                // color: "#fff",
-                // lineHeight: 30,
-              },
-            },
-          },
-          // emphasis: {
-          //   label: {
-          //     show: false,
-          //     fontSize: "20",
-          //     fontWeight: "bold",
-          //     formatter: function(item){
-          //       return `{${item.name} : ${item.value}%}`
-          //     },
-          //   },
-          // },
-          labelLine: {
-            show: false,
-          },
-          data: data,
-        },
-      ],
-    };
-    var myChart = echarts.init(_node);
-    option && myChart.setOption(option);
-  };
-
-  useEffect(() => {
-    setTargetOffset(window.innerHeight / 2);
-    setCardPos(window.innerHeight / 2);
-    let input_search = document.getElementById("input_search");
-    let icon_search = document.getElementById("icon_search");
-    input_search.style.display = "none";
-    icon_search.style.display = "none";
-    document.getElementsByTagName("html")[0].style.overflowX = "hidden";
-    document.getElementsByTagName("html")[0].style.overflowY = "scroll";
-    // chrome
-    document.body.scrollTop = 0;
-    // firefox
-    document.documentElement.scrollTop = 0;
-    // safari
-    window.pageYOffset = 0;
-
-    let { state } = props.location;
-    if (state && state.value) {
-      let _obj = JSON.parse(state.value);
-      setObj(_obj);
-      if (_obj.cpFinancial) {
-        setFinances(_obj.cpFinancial);
-      }
-      if (_obj.financialHistories) {
-        setLineData(_obj.financialHistories);
-      }
-    } else {
-      setObj(JSON.parse(localStorage.getItem("search")));
-    }
-
-    let h1 = $("#position1").offset().top;
-    let h0 = $("#nav").offset().top;
-    let card = $("#card").offset().top;
-
-    window.onscroll = function () {
-      let scrollPos = getScrollTop();
-      setScrollPos(scrollPos);
-    };
-
-    setTargetOffset((h1 - h0).toFixed(2));
-    setCardPos(card);
-
-    return () => {
-      input_search.style.display = "inline-block";
-      icon_search.style.display = "inline-block";
-    };
-  }, []);
-
-  useEffect(() => {}, []);
-
-  useEffect(() => {
-    if ($("#card").offset().top <= 0) {
-      console.log("到达了底部");
-      setFlag(true);
-    } else {
-      console.log("没到");
-      setFlag(false);
-    }
-  }, [cardPos, scrollPos]);
-
-  useEffect(() => {}, []);
-
-  useEffect(() => {
-    if (obj != null) {
-      let node1 = document.getElementById("pie1");
-      initPie(
-        node1,
-        obj.cpCustomers,
-        obj.cpCustomers && obj.cpCustomers.length,
-        "核心客户"
-      );
-      let node2 = document.getElementById("pie2");
-      initPie(
-        node2,
-        obj.cpSuppliers,
-        obj.cpSuppliers && obj.cpSuppliers.length,
-        "核心供应商"
-      );
-
-      let bar1 = document.getElementById("bar1");
-      initBar(bar1, obj.patents);
-
-      // let bar2 = document.getElementById("bar2");
-      // initColumnar(bar2, cutFin, financeInx);
-    }
-  }, [obj]);
-
-  useEffect(() => {
-    let bar2 = document.getElementById("bar2");
-    initColumnar(bar2, cutFin, financeInx);
-
-    let line1 = document.getElementById("line1");
-    initLine(line1, d1, d2, d3, d4, years);
-  }, [financeInx, cutFin]);
-
-  useEffect(() => {
-    getParams();
-  }, [finances]);
 
   // 动态获取当前财务参数
   const getParams = (inx = 0) => {
@@ -809,8 +616,274 @@ const SearchResult = (props) => {
     setYears(_years);
   };
 
+  function getScrollTop() {
+    var scrollPos;
+    if (window.pageYOffset) {
+      scrollPos = window.pageYOffset;
+    } else if (document.compatMode && document.compatMode != "BackCompat") {
+      scrollPos = document.documentElement.scrollTop;
+    } else if (document.body) {
+      scrollPos = document.body.scrollTop;
+    }
+    return scrollPos;
+  }
+
+  const initPie = (_node, _data, _total, _title) => {
+    let data = [];
+
+    if (_title == "核心客户") {
+      _data &&
+        _data.map((item) => {
+          data.push({
+            value: item.proportionSale,
+            name: item.customerName,
+          });
+        });
+    } else {
+      _data &&
+        _data.map((item) => {
+          data.push({
+            value: item.purchaseProportion,
+            name: item.supplierName,
+          });
+        });
+    }
+
+    let option = {
+      tooltip: {
+        trigger: "item",
+        formatter: function (params) {
+          return `${params.name}  ${params.value}%`;
+        },
+        textStyle: {
+          color: "rgba(0,0,0,0.8)",
+        },
+        backgroundColor: "rgba(255,255,255,1)",
+      },
+      legend: {
+        // top: "5%",
+        left: "center",
+        orient: "vertical",
+
+        bottom: "bottom",
+      },
+      series: [
+        {
+          type: "pie",
+          radius: ["40%", "70%"],
+          avoidLabelOverlap: false,
+          label: {
+            show: true,
+            position: "center",
+            color: "rgba(0,0,0,0.8)",
+            formatter: `{total|${_total}\n}` + `${_title}`,
+            rich: {
+              total: {
+                fontSize: 20,
+                fontWeight: "bold", // fontFamily : “微软雅黑”,
+                color: "rgba(0,0,0,0.8)",
+                lineHeight: 30,
+              },
+              active: {
+                // fontFamily : “微软雅黑”,
+                // fontSize: 12,
+                // color: "rgba(0,0,0,0.8)",
+                // color: "#fff",
+                // lineHeight: 30,
+              },
+            },
+          },
+          // emphasis: {
+          //   label: {
+          //     show: false,
+          //     fontSize: "20",
+          //     fontWeight: "bold",
+          //     formatter: function(item){
+          //       return `{${item.name} : ${item.value}%}`
+          //     },
+          //   },
+          // },
+          labelLine: {
+            show: false,
+          },
+          data: data,
+        },
+      ],
+    };
+    var myChart = echarts.init(_node);
+    option && myChart.setOption(option);
+  };
+
+  useEffect(() => {
+    setTargetOffset(window.innerHeight / 2);
+    setCardPos(window.innerHeight / 2);
+    let input_search = document.getElementById("input_search");
+    let icon_search = document.getElementById("icon_search");
+    input_search.style.display = "none";
+    icon_search.style.display = "none";
+    document.getElementsByTagName("html")[0].style.overflowX = "hidden";
+    document.getElementsByTagName("html")[0].style.overflowY = "scroll";
+    // chrome
+    document.body.scrollTop = 0;
+    // firefox
+    document.documentElement.scrollTop = 0;
+    // safari
+    window.pageYOffset = 0;
+
+    let { state } = props.location;
+    if (state && state.value) {
+      let _obj = JSON.parse(state.value);
+      setObj(_obj);
+      if (_obj.cpFinancial) {
+        setFinances(_obj.cpFinancial);
+      }
+      if (_obj.financialHistories) {
+        setLineData(_obj.financialHistories);
+      }
+    } else {
+      if(JSON.parse(localStorage.getItem("search"))){
+        setObj(JSON.parse(localStorage.getItem("search")));
+      }else{
+        history.push('/')
+      }
+    }
+
+    let h1 = $("#position1").offset().top;
+    let h0 = $("#nav").offset().top;
+    let card = $("#card").offset().top;
+
+    // 监听滚动条当前定位
+    window.onscroll = function () {
+      let scrollPos = getScrollTop();
+      setScrollPos(scrollPos);
+    };
+
+    // 监听鼠标滚轮事件
+
+    window.onmousewheel = document.onmousewheel = (e) => {
+      if (e.wheelDelta < 0) {
+        throttle(function () {
+          setIsUp(true);
+        }, 500)();
+      } else if (e.wheelDelta > 0) {
+        throttle(function () {
+          setIsUp(false);
+        }, 500)();
+      }
+    };
+
+    setTargetOffset((h1 - h0).toFixed(2));
+    setCardPos(card);
+
+    return () => {
+      input_search.style.display = "inline-block";
+      icon_search.style.display = "inline-block";
+    };
+  }, []);
+
+  // 节流函数
+
+  function throttle(fn, interval) {
+    // last为上一次触发回调的时间
+    var last = 0;
+    // 将throttle处理结果当作函数返回
+    return function () {
+      // 保留调用时的this上下文
+      var context = this;
+      // 保留调用时传入的参数
+      var args = arguments;
+      // 记录本次触发回调的时间
+      var now = +new Date();
+      // 判断上次触发的时间和本次触发的时间差是否小于时间间隔的阈值
+      if (now - last >= interval) {
+        // 如果时间间隔大于我们设定的时间间隔阈值，则执行回调
+        last = now;
+        fn.apply(context, args);
+      }
+    };
+  }
+  // 卡片吸顶
+  useEffect(() => {
+    if ($("#card").offset().top <= 0) {
+      setFlag(true);
+    } else {
+      setFlag(false);
+    }
+  }, [cardPos, scrollPos]);
+
+  useEffect(() => {
+    if (flag && isUp) {
+      console.log("12312m3k12lm312lk");
+      throttle(function () {
+        console.log("dmsakdsal");
+        if (inx < 11) {
+          setInx(inx + 1);
+        }
+        setIsUp(null);
+      }, 1000)();
+      console.log("难道就卡死难道就卡死");
+    }
+
+    if (flag && isUp == false) {
+      throttle(function () {
+        console.log("网上触发");
+        if (inx > 0) {
+          setInx(inx - 1);
+        }
+        setIsUp(null);
+      }, 1000)();
+    }
+  }, [flag, isUp]);
+
+  // 监听索引变化
+  useEffect(() => {
+    console.log("监听索引变化", inx);
+  }, [inx]);
+
+  useEffect(() => {
+    if (obj != null) {
+      let node1 = document.getElementById("pie1");
+      initPie(
+        node1,
+        obj.cpCustomers,
+        obj.cpCustomers && obj.cpCustomers.length,
+        "核心客户"
+      );
+      let node2 = document.getElementById("pie2");
+      initPie(
+        node2,
+        obj.cpSuppliers,
+        obj.cpSuppliers && obj.cpSuppliers.length,
+        "核心供应商"
+      );
+
+      let bar1 = document.getElementById("bar1");
+      initBar(bar1, obj.patents);
+
+      // let bar2 = document.getElementById("bar2");
+      // initColumnar(bar2, cutFin, financeInx);
+    }
+  }, [obj]);
+
+  useEffect(() => {
+    let bar2 = document.getElementById("bar2");
+    initColumnar(bar2, cutFin, financeInx);
+
+    let line1 = document.getElementById("line1");
+    initLine(line1, d1, d2, d3, d4, years);
+  }, [financeInx, cutFin]);
+
+  useEffect(() => {
+    getParams();
+  }, [finances]);
+
   return (
-    <div className="result_page">
+    <div
+      className="result_page"
+      style={{
+        height: !flag ? "auto" : "150%",
+      }}
+    >
       <div
         style={{
           border: CutLine,
@@ -887,26 +960,26 @@ const SearchResult = (props) => {
         </section>
       </div>
 
-      
+      <div
+        style={{
+          boxSizing: "border-box",
+          color: "white",
+          marginBottom: "-0.5rem",
+          border: CutLine,
+          borderTop: "none",
+          borderBottom: "none",
+          margin: "0 0.5rem 0 0.5rem",
+          padding: "0.3rem 0",
+          height: !flag ? "2.4rem" : 0,
+          visibility: !flag ? 1 : 0,
+          overflow: "hidden",
+        }}
+        id="card"
+      >
+        <CompanyCard data={obj} />
+      </div>
+      {flag && (
         <div
-          style={{
-            boxSizing: "border-box",
-            color: "white",
-            marginBottom: "-0.5rem",
-            border: CutLine,
-            borderTop: "none",
-            borderBottom: "none",
-            margin: "0 0.5rem 0 0.5rem",
-            padding: "0.3rem 0",
-            height:!flag ? '2.4rem' :0,
-            visibility:!flag ? 1 :0,
-            overflow:"hidden"
-          }}
-          id="card"
-        >
-          <CompanyCard data={obj} />
-        </div>
-       {flag && <div
           style={{
             boxSizing: "border-box",
             color: "white",
@@ -915,17 +988,18 @@ const SearchResult = (props) => {
             borderTop: "none",
             borderBottom: "0.07rem solid rgba(144, 144, 144, 0.1)",
             margin: "0 0.5rem 0 0.5rem",
-            padding: "0.3rem 0",
-            position:"fixed",
-            top:0,
-            left:0,
-            right:0,
-            zIndex:7777,
-            background:"white"
+            padding: "0.15rem 0",
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            zIndex: 7777,
+            background: "white",
           }}
         >
           <CompanyCard data={obj} />
-        </div>}
+        </div>
+      )}
 
       <main
         style={{
@@ -937,40 +1011,128 @@ const SearchResult = (props) => {
           borderBottom: "none",
           margin: "0 0.5rem 0 0.5rem",
           padding: "0 0.3rem",
+          borderLeft: !flag ? CutLine : "none",
+          // position:!flag ? 'relative' :'fixed',
+          // top:!flag ? 0 :'0.25rem'
         }}
       >
-        <nav id="nav">
-          <h3>基本信息</h3>
-          <p id="position1">企业简介</p>
-          <h3>公司战略</h3>
-          <p>战略定位</p>
-          <p>战略规划</p>
-          <h3>公司经营</h3>
-          <p>商业模式</p>
-          <p>主营业务</p>
-          <p>业务构成</p>
-          <p>核心客户&amp;供应商</p>
-          <h3>核心能力</h3>
-          <p>核心竞争力</p>
-          <p>领军人物</p>
-          <p>核心团队</p>
-          <p>核心技术</p>
-          <p>专利</p>
-          <h3>财务能力</h3>
-          <h3>投资方</h3>
-          <h3>行业成长</h3>
-        </nav>
-
-        <div className="line">
-          <section
+        {!flag ? (
+          <nav id="nav" style={{ width: "1.5rem" }}>
+            <h3>基本信息</h3>
+            <p
+              id="position1"
+              style={{ color: inx == 0 ? ThemeColor : "rgba(0,0,0,0.8)" }}
+            >
+              企业简介
+            </p>
+            <h3>公司战略</h3>
+            <p>战略定位</p>
+            <p>战略规划</p>
+            <h3>公司经营</h3>
+            <p>商业模式</p>
+            <p>主营业务</p>
+            <p>业务构成</p>
+            <p>核心客户&amp;供应商</p>
+            <h3>核心能力</h3>
+            <p>核心竞争力</p>
+            <p>领军人物</p>
+            <p>核心团队</p>
+            <p>核心技术</p>
+            <p>专利</p>
+            <h3>财务能力</h3>
+            <h3>投资方</h3>
+            <h3>行业成长</h3>
+          </nav>
+        ) : (
+          <nav
+            id="nav"
             style={{
-              top: targetOffset + "px",
+              width: "2.1rem",
+              position: "fixed",
+              top: "2.2rem",
+              bottom: 0,
+              left: "0.8rem",
+              borderLeft: CutLine,
+              color: "rgba(0,0,0,0.8)",
             }}
           >
-            <span></span>
-          </section>
-        </div>
+            <h3>基本信息</h3>
+            <p
+              id="position1"
+              style={{ color: inx == 0 ? ThemeColor : "rgba(0,0,0,0.8)" }}
+            >
+              企业简介
+            </p>
 
+            <p style={{ color: inx == 1 ? ThemeColor : "rgba(0,0,0,0.8)" }}>
+              战略定位
+            </p>
+            <p style={{ color: inx == 2 ? ThemeColor : "rgba(0,0,0,0.8)" }}>
+              战略规划
+            </p>
+            <h3>公司经营</h3>
+            <p style={{ color: inx == 3 ? ThemeColor : "rgba(0,0,0,0.8)" }}>
+              商业模式
+            </p>
+            <p style={{ color: inx == 4 ? ThemeColor : "rgba(0,0,0,0.8)" }}>
+              主营业务
+            </p>
+            <p style={{ color: inx == 5 ? ThemeColor : "rgba(0,0,0,0.8)" }}>
+              业务构成
+            </p>
+            <p style={{ color: inx == 6 ? ThemeColor : "rgba(0,0,0,0.8)" }}>
+              核心客户&amp;供应商
+            </p>
+            <h3>核心能力</h3>
+            <p style={{ color: inx == 7 ? ThemeColor : "rgba(0,0,0,0.8)" }}>
+              核心竞争力
+            </p>
+            <p style={{ color: inx == 8 ? ThemeColor : "rgba(0,0,0,0.8)" }}>
+              领军人物
+            </p>
+            <p style={{ color: inx == 9 ? ThemeColor : "rgba(0,0,0,0.8)" }}>
+              核心团队
+            </p>
+            <p style={{ color: inx == 10 ? ThemeColor : "rgba(0,0,0,0.8)" }}>
+              核心技术
+            </p>
+            <p style={{ color: inx == 11 ? ThemeColor : "rgba(0,0,0,0.8)" }}>
+              专利
+            </p>
+            <h3>财务能力</h3>
+            <h3>投资方</h3>
+            <h3>行业成长</h3>
+          </nav>
+        )}
+
+        {/* 占位 */}
+        {flag && <nav style={{ width: "1.5rem" }}></nav>}
+
+        {!flag && (
+          <div className="line" style={{ width: "0.05rem" }}>
+            <section
+              style={{
+                top: targetOffset + "px",
+              }}
+            >
+              <span></span>
+            </section>
+          </div>
+        )}
+
+        {flag && (
+          <div className="line" style={{ position: "", width: "0.05rem" }}>
+            <section
+              style={{
+                top: targetOffset + "px",
+              }}
+            >
+              <span></span>
+            </section>
+          </div>
+        )}
+
+        {flag && <div style={{ width: "0.05rem" }}></div>}
         <article>
           <section
             style={{ color: ThemeColor, marginTop: targetOffset - 6 + "px" }}
