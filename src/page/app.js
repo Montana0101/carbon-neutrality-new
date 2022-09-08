@@ -49,7 +49,7 @@ let HeaderCmt = () => {
   const [tips, setTips] = useState(0);
   const [hide, setHide] = useState(false);
   const [result,setResult] = useState(false);
-  const [company,SetCompany] = useState("")
+  const [company,setCompany] = useState("")
   const history = useHistory();
 
   useEffect(() => {
@@ -103,7 +103,12 @@ let HeaderCmt = () => {
     if(res && res.code == 2000){
       setResult(res.result)
       localStorage.setItem('search',JSON.stringify(res.result))
+      // history.push("/")
+      setInx(null)
+      setCompany("")
       history.push("/result",{value:JSON.stringify(res.result)})
+    }else{
+      message.warn('未查询到该公司数据！')
     }
   }
 
@@ -176,13 +181,15 @@ let HeaderCmt = () => {
             }}
           >
             <Input
+              id="input_search"
               placeholder="请输入企业名称"
               style={{
                 width: "2rem",
                 padding: "border-box",
                 display: !hide ? "none" : "block",
               }}
-              onChange={e=>{SetCompany(e.target.value)}}
+              value={company}
+              onChange={e=>{setCompany(e.target.value)}}
               onKeyDown={(ev) => {
                 if (ev.keyCode == 13) {
                   if(company){
@@ -195,6 +202,7 @@ let HeaderCmt = () => {
               }}
             />
             <SearchOutlined
+                id="icon_search"
               style={{ fontWeight: "bold", color: "#7B7B7B", width: "0.5rem" }}
               onClick={() => {
                 if (logined) {

@@ -1,10 +1,19 @@
 import { useState, useEffect, useRef } from "react";
 import { screen_scale } from "../../util/rem";
 import { withRouter, useHistory } from "react-router-dom";
-import { LeftOutlined, createFromIconfontCN } from "@ant-design/icons";
+import { StarFilled, StarOutlined } from "@ant-design/icons";
 import { AliOss, ThemeColor, CutLine } from "../../lib/const";
-import { Input, Button, Radio, Timeline, Anchor, Pagination } from "antd";
+import {
+  Input,
+  Button,
+  Radio,
+  Timeline,
+  Anchor,
+  Pagination,
+  message,
+} from "antd";
 import RadarChart from "./radar";
+import { portrait } from "../../apis/index";
 import * as $ from "jquery";
 import "./index.less";
 import * as echarts from "echarts";
@@ -151,7 +160,7 @@ const initColumnar = (dom, cutFin, financeInx) => {
           // margin: 220,
           // interval:0,//横轴信息全部显示
           // textStyle: {
-          //   color: "#232325",
+          //   color: "rgba(0,0,0,0.8)",
           //   fontSize: "12",
           //   align:"left"
           // },
@@ -170,7 +179,7 @@ const initColumnar = (dom, cutFin, financeInx) => {
         show: true,
         axisLabel: {
           textStyle: {
-            color: "#232325",
+            color: "rgba(0,0,0,0.8)",
             fontSize: "12",
           },
           formatter: function (value) {
@@ -242,7 +251,7 @@ const initLine = (dom, d1, d2, d3, d4, years) => {
       axisLine: {
         show: true,
         lineStyle: {
-          color: "#232325",
+          color: "rgba(0,0,0,0.8)",
           width: 0,
           type: "solid",
         },
@@ -261,7 +270,7 @@ const initLine = (dom, d1, d2, d3, d4, years) => {
       axisLine: {
         show: true,
         lineStyle: {
-          color: "#232325",
+          color: "rgba(0,0,0,0.8)",
           width: 0,
           type: "solid",
         },
@@ -326,6 +335,23 @@ const CompanyCard = (props) => {
 
   return (
     <div className="card">
+      <p className="lp">
+        <StarOutlined
+          style={{
+            marginRight: "0.05rem",
+            fontSize: "0.18rem",
+            color: "white",
+          }}
+        />
+        添加关注
+      </p>
+      {/* <StarFilled /> */}
+      <p className="rp" style={{ background: ThemeColor }}>
+        <span>
+          {data.comprehensiveScore ? data.comprehensiveScore.totalScore : 0}
+        </span>
+        分
+      </p>
       <section className="left">
         <img src={defaultImg} alt="" />
       </section>
@@ -390,7 +416,9 @@ const CompanyCard = (props) => {
           <li>
             <p>
               <span>网址：</span>
-              <span>{data.website}</span>
+              <a target="_blank" href={data.website}>
+                {data.website}
+              </a>
             </p>
             <p>
               <span>融资阶段：</span>
@@ -427,6 +455,34 @@ const SearchResult = (props) => {
   const [finances, setFinances] = useState({});
   const [lineData, setLineData] = useState([]);
   const [years, setYears] = useState([]);
+  const [company, setCompany] = useState("");
+  const [scrollPos, setScrollPos] = useState(undefined); //滚动条位置
+  const [cardPos, setCardPos] = useState(undefined);
+  const [flag, setFlag] = useState(false); // 是否吸顶
+
+  const _portrait = async () => {
+    const res = await portrait(company);
+    if (res && res.code == 2000) {
+      setObj(res.result);
+      localStorage.setItem("search", JSON.stringify(res.result));
+      // history.push("/")
+    } else {
+      message.warn("未查询到该公司数据！");
+    }
+  };
+
+  function getScrollTop() {
+    var scrollPos;
+    if (window.pageYOffset) {
+      scrollPos = window.pageYOffset;
+    } else if (document.compatMode && document.compatMode != "BackCompat") {
+      scrollPos = document.documentElement.scrollTop;
+    } else if (document.body) {
+      scrollPos = document.body.scrollTop;
+    }
+    return scrollPos;
+  }
+
   const initPie = (_node, _data, _total, _title) => {
     let data = [];
 
@@ -455,7 +511,7 @@ const SearchResult = (props) => {
           return `${params.name}  ${params.value}%`;
         },
         textStyle: {
-          color: "#232325",
+          color: "rgba(0,0,0,0.8)",
         },
         backgroundColor: "rgba(255,255,255,1)",
       },
@@ -474,19 +530,19 @@ const SearchResult = (props) => {
           label: {
             show: true,
             position: "center",
-            color: "#232325",
+            color: "rgba(0,0,0,0.8)",
             formatter: `{total|${_total}\n}` + `${_title}`,
             rich: {
               total: {
                 fontSize: 20,
                 fontWeight: "bold", // fontFamily : “微软雅黑”,
-                color: "#232325",
+                color: "rgba(0,0,0,0.8)",
                 lineHeight: 30,
               },
               active: {
                 // fontFamily : “微软雅黑”,
                 // fontSize: 12,
-                // color: "#232325",
+                // color: "rgba(0,0,0,0.8)",
                 // color: "#fff",
                 // lineHeight: 30,
               },
@@ -515,9 +571,11 @@ const SearchResult = (props) => {
 
   useEffect(() => {
     setTargetOffset(window.innerHeight / 2);
-  }, []);
-
-  useEffect(() => {
+    setCardPos(window.innerHeight / 2);
+    let input_search = document.getElementById("input_search");
+    let icon_search = document.getElementById("icon_search");
+    input_search.style.display = "none";
+    icon_search.style.display = "none";
     document.getElementsByTagName("html")[0].style.overflowX = "hidden";
     document.getElementsByTagName("html")[0].style.overflowY = "scroll";
     // chrome
@@ -526,6 +584,7 @@ const SearchResult = (props) => {
     document.documentElement.scrollTop = 0;
     // safari
     window.pageYOffset = 0;
+
     let { state } = props.location;
     if (state && state.value) {
       let _obj = JSON.parse(state.value);
@@ -542,13 +601,35 @@ const SearchResult = (props) => {
 
     let h1 = $("#position1").offset().top;
     let h0 = $("#nav").offset().top;
+    let card = $("#card").offset().top;
+
+    window.onscroll = function () {
+      let scrollPos = getScrollTop();
+      setScrollPos(scrollPos);
+    };
 
     setTargetOffset((h1 - h0).toFixed(2));
+    setCardPos(card);
+
+    return () => {
+      input_search.style.display = "inline-block";
+      icon_search.style.display = "inline-block";
+    };
   }, []);
 
+  useEffect(() => {}, []);
+
   useEffect(() => {
-    console.log("当前定位点", targetOffset);
-  }, [targetOffset]);
+    if ($("#card").offset().top <= 0) {
+      console.log("到达了底部");
+      setFlag(true);
+    } else {
+      console.log("没到");
+      setFlag(false);
+    }
+  }, [cardPos, scrollPos]);
+
+  useEffect(() => {}, []);
 
   useEffect(() => {
     if (obj != null) {
@@ -794,25 +875,57 @@ const SearchResult = (props) => {
             borderRight: CutLine,
           }}
         >
-          <Input placeholder="请输入公司名进行查询" />
-          <Button type="primary">搜索</Button>
+          <Input
+            placeholder="请输入公司名进行查询"
+            onChange={(e) => {
+              setCompany(e.target.value);
+            }}
+          />
+          <Button type="primary" onClick={_portrait}>
+            搜索
+          </Button>
         </section>
       </div>
 
-      <div
-        style={{
-          boxSizing: "border-box",
-          color: "white",
-          marginBottom: "-0.5rem",
-          border: CutLine,
-          borderTop: "none",
-          borderBottom: "none",
-          margin: "0 0.5rem 0 0.5rem",
-          padding: "0.3rem 0",
-        }}
-      >
-        <CompanyCard data={obj} />
-      </div>
+      
+        <div
+          style={{
+            boxSizing: "border-box",
+            color: "white",
+            marginBottom: "-0.5rem",
+            border: CutLine,
+            borderTop: "none",
+            borderBottom: "none",
+            margin: "0 0.5rem 0 0.5rem",
+            padding: "0.3rem 0",
+            height:!flag ? '2.4rem' :0,
+            visibility:!flag ? 1 :0,
+            overflow:"hidden"
+          }}
+          id="card"
+        >
+          <CompanyCard data={obj} />
+        </div>
+       {flag && <div
+          style={{
+            boxSizing: "border-box",
+            color: "white",
+            marginBottom: "-0.5rem",
+            // border: CutLine,
+            borderTop: "none",
+            borderBottom: "0.07rem solid rgba(144, 144, 144, 0.1)",
+            margin: "0 0.5rem 0 0.5rem",
+            padding: "0.3rem 0",
+            position:"fixed",
+            top:0,
+            left:0,
+            right:0,
+            zIndex:7777,
+            background:"white"
+          }}
+        >
+          <CompanyCard data={obj} />
+        </div>}
 
       <main
         style={{
