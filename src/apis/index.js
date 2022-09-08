@@ -305,3 +305,21 @@ export const portrait = (name) => {
   const url = `/${env}/portrait/companyInfo?companyName=${name}`;
   return fetchGadget(url, "GET");
 }
+
+// 查询是否关注
+export const checkAttention = (name) => {
+  const url = `/${env}/attention/checkAttention?companyName=${name}`;
+  return fetchGadget(url, "GET");
+}
+
+// 关注
+export const doAttention = (name) => {
+  const url = `/${env}/attention/doAttention?companyName=${name}`;
+  return fetchGadget(url, "PUT");
+}
+
+// 取消关注
+export const calAttention = (name) => {
+  const url = `/${env}/attention/cancelAttention?companyName=${name}`;
+  return fetchGadget(url, "PUT");
+}

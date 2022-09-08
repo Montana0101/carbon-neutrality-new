@@ -17,6 +17,7 @@ import { portrait } from "../../apis/index";
 import * as $ from "jquery";
 import "./index.less";
 import * as echarts from "echarts";
+import { doAttention, calAttention, checkAttention } from "../../apis/index";
 
 const defaultImg = AliOss + "/new_version_0518/company_default.png";
 const finTabs = [
@@ -329,23 +330,79 @@ const initLine = (dom, d1, d2, d3, d4, years) => {
 };
 
 const CompanyCard = (props) => {
+  const [flag, setFlag] = useState(false);
+
+  const history = useHistory();
   let { data } = props;
 
-  useEffect(() => {}, [data]);
+  const _checkAttention = async () => {
+    const res = await checkAttention(data.companyName);
+    if (res && res.code == 2000) {
+      setFlag(res.result);
+    }
+  };
+
+  const _doAttention = async () => {
+    const res = await doAttention(data.companyName);
+    console.log("关注的公司",data.companyName)
+    if (res && res.code == 2000) {
+      _checkAttention();
+    } else {
+      message.warn("关注失败！");
+    }
+  };
+
+  const _calAttention = async () => {
+    const res = await calAttention(data.companyName);
+    console.log("取消关注的公司",data.companyName)
+    if (res && res.code == 2000) {
+      _checkAttention();
+    } else {
+      message.warn("取消关注失败！");
+    }
+  };
+
+  useEffect(() => {
+    let user = JSON.parse(localStorage.getItem("user"))
+    if(user && user.companyName ){
+      // setName(user.companyName);
+      // _checkAttention(user.companyName);
+    }else{
+      history.push("/");
+    }
+  }, []);
 
   return (
     <div className="card">
-      <p className="lp">
-        <StarOutlined
-          style={{
-            marginRight: "0.05rem",
-            fontSize: "0.18rem",
-            color: "white",
-          }}
-        />
-        添加关注
-      </p>
-      {/* <StarFilled /> */}
+      {!flag ? (
+        <p className="lp">
+          <StarOutlined
+            style={{
+              marginRight: "0.05rem",
+              fontSize: "0.18rem",
+              color: ThemeColor,
+            }}
+            onClick={() => {
+              _doAttention();
+            }}
+          />
+          添加关注
+        </p>
+      ) : (
+        <p className="lp">
+          <StarFilled
+            style={{
+              marginRight: "0.05rem",
+              fontSize: "0.18rem",
+              color: ThemeColor,
+            }}
+            onClick={() => {
+              _calAttention();
+            }}
+          />
+          已关注
+        </p>
+      )}
       <p className="rp" style={{ background: ThemeColor }}>
         <span>
           {data.comprehensiveScore ? data.comprehensiveScore.totalScore : 0}
