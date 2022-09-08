@@ -463,7 +463,8 @@ const SearchResult = (props) => {
   const [inx, setInx] = useState(0); // 子菜单索引
   const [isUp, setIsUp] = useState(null); //true往下滚 false往上
 
-  const history = useHistory()
+  const history = useHistory();
+
   const _portrait = async () => {
     const res = await portrait(company);
     if (res && res.code == 2000) {
@@ -741,14 +742,14 @@ const SearchResult = (props) => {
         setLineData(_obj.financialHistories);
       }
     } else {
-      if(JSON.parse(localStorage.getItem("search"))){
+      if (JSON.parse(localStorage.getItem("search"))) {
         setObj(JSON.parse(localStorage.getItem("search")));
-      }else{
-        history.push('/')
+      } else {
+        history.push("/");
       }
     }
 
-    let h1 = $("#position1").offset().top;
+    let h1 = $("#pos0").offset().top;
     let h0 = $("#nav").offset().top;
     let card = $("#card").offset().top;
 
@@ -838,6 +839,15 @@ const SearchResult = (props) => {
   // 监听索引变化
   useEffect(() => {
     console.log("监听索引变化", inx);
+    if (inx == 5) {
+      // $(window).scrollTop($("#pos0").offset().top)
+      // $(window).scrollTop(500)
+    }
+
+    setTargetOffset(
+      ($(`#pos${inx}`).offset().top - $("#nav").offset().top).toFixed(2)
+    );
+    // $("#article")[3].scrollIntoView({block: 'center'});
   }, [inx]);
 
   useEffect(() => {
@@ -1020,7 +1030,7 @@ const SearchResult = (props) => {
           <nav id="nav" style={{ width: "1.5rem" }}>
             <h3>基本信息</h3>
             <p
-              id="position1"
+              id="pos0"
               style={{ color: inx == 0 ? ThemeColor : "rgba(0,0,0,0.8)" }}
             >
               企业简介
@@ -1054,49 +1064,83 @@ const SearchResult = (props) => {
               left: "0.8rem",
               borderLeft: CutLine,
               color: "rgba(0,0,0,0.8)",
+              borderRight: "0.05rem solid rgba(133, 133, 133, 0.1)",
             }}
           >
             <h3>基本信息</h3>
             <p
-              id="position1"
+              id="pos0"
               style={{ color: inx == 0 ? ThemeColor : "rgba(0,0,0,0.8)" }}
             >
               企业简介
             </p>
 
-            <p style={{ color: inx == 1 ? ThemeColor : "rgba(0,0,0,0.8)" }}>
+            <p
+              id="pos1"
+              style={{ color: inx == 1 ? ThemeColor : "rgba(0,0,0,0.8)" }}
+            >
               战略定位
             </p>
-            <p style={{ color: inx == 2 ? ThemeColor : "rgba(0,0,0,0.8)" }}>
+            <p
+              id="pos2"
+              style={{ color: inx == 2 ? ThemeColor : "rgba(0,0,0,0.8)" }}
+            >
               战略规划
             </p>
             <h3>公司经营</h3>
-            <p style={{ color: inx == 3 ? ThemeColor : "rgba(0,0,0,0.8)" }}>
+            <p
+              id="pos3"
+              style={{ color: inx == 3 ? ThemeColor : "rgba(0,0,0,0.8)" }}
+            >
               商业模式
             </p>
-            <p style={{ color: inx == 4 ? ThemeColor : "rgba(0,0,0,0.8)" }}>
+            <p
+              id="pos4"
+              style={{ color: inx == 4 ? ThemeColor : "rgba(0,0,0,0.8)" }}
+            >
               主营业务
             </p>
-            <p style={{ color: inx == 5 ? ThemeColor : "rgba(0,0,0,0.8)" }}>
+            <p
+              id="pos5"
+              style={{ color: inx == 5 ? ThemeColor : "rgba(0,0,0,0.8)" }}
+            >
               业务构成
             </p>
-            <p style={{ color: inx == 6 ? ThemeColor : "rgba(0,0,0,0.8)" }}>
+            <p
+              id="pos6"
+              style={{ color: inx == 6 ? ThemeColor : "rgba(0,0,0,0.8)" }}
+            >
               核心客户&amp;供应商
             </p>
             <h3>核心能力</h3>
-            <p style={{ color: inx == 7 ? ThemeColor : "rgba(0,0,0,0.8)" }}>
+            <p
+              id="pos7"
+              style={{ color: inx == 7 ? ThemeColor : "rgba(0,0,0,0.8)" }}
+            >
               核心竞争力
             </p>
-            <p style={{ color: inx == 8 ? ThemeColor : "rgba(0,0,0,0.8)" }}>
+            <p
+              id="pos8"
+              style={{ color: inx == 8 ? ThemeColor : "rgba(0,0,0,0.8)" }}
+            >
               领军人物
             </p>
-            <p style={{ color: inx == 9 ? ThemeColor : "rgba(0,0,0,0.8)" }}>
+            <p
+              id="pos9"
+              style={{ color: inx == 9 ? ThemeColor : "rgba(0,0,0,0.8)" }}
+            >
               核心团队
             </p>
-            <p style={{ color: inx == 10 ? ThemeColor : "rgba(0,0,0,0.8)" }}>
+            <p
+              id="pos10"
+              style={{ color: inx == 10 ? ThemeColor : "rgba(0,0,0,0.8)" }}
+            >
               核心技术
             </p>
-            <p style={{ color: inx == 11 ? ThemeColor : "rgba(0,0,0,0.8)" }}>
+            <p
+              id="pos11"
+              style={{ color: inx == 11 ? ThemeColor : "rgba(0,0,0,0.8)" }}
+            >
               专利
             </p>
             <h3>财务能力</h3>
@@ -1121,7 +1165,15 @@ const SearchResult = (props) => {
         )}
 
         {flag && (
-          <div className="line" style={{ position: "", width: "0.05rem" }}>
+          <div
+            className="line"
+            style={{
+              position: "fixed",
+              width: "0",
+              top: "2.22rem",
+              left: "2.65rem",
+            }}
+          >
             <section
               style={{
                 top: targetOffset + "px",
@@ -1132,8 +1184,12 @@ const SearchResult = (props) => {
           </div>
         )}
 
-        {flag && <div style={{ width: "0.05rem" }}></div>}
-        <article>
+        <article
+          id="article"
+          style={{
+            marginLeft: !flag ? 0 : "0.5rem",
+          }}
+        >
           <section
             style={{ color: ThemeColor, marginTop: targetOffset - 6 + "px" }}
           >
