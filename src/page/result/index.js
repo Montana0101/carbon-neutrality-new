@@ -344,7 +344,6 @@ const CompanyCard = (props) => {
 
   const _doAttention = async () => {
     const res = await doAttention(data.companyName);
-    console.log("关注的公司",data.companyName)
     if (res && res.code == 2000) {
       _checkAttention();
     } else {
@@ -354,7 +353,6 @@ const CompanyCard = (props) => {
 
   const _calAttention = async () => {
     const res = await calAttention(data.companyName);
-    console.log("取消关注的公司",data.companyName)
     if (res && res.code == 2000) {
       _checkAttention();
     } else {
@@ -871,40 +869,29 @@ const SearchResult = (props) => {
 
   useEffect(() => {
     if (flag && isUp) {
-      console.log("12312m3k12lm312lk");
       throttle(function () {
-        console.log("dmsakdsal");
         if (inx < 11) {
           setInx(inx + 1);
         }
         setIsUp(null);
-      }, 1000)();
-      console.log("难道就卡死难道就卡死");
+      },100)();
     }
 
     if (flag && isUp == false) {
       throttle(function () {
-        console.log("网上触发");
         if (inx > 0) {
           setInx(inx - 1);
         }
         setIsUp(null);
-      }, 1000)();
+      },100)();
     }
   }, [flag, isUp]);
 
   // 监听索引变化
   useEffect(() => {
-    console.log("监听索引变化", inx);
-    if (inx == 5) {
-      // $(window).scrollTop($("#pos0").offset().top)
-      // $(window).scrollTop(500)
-    }
-
     setTargetOffset(
       ($(`#pos${inx}`).offset().top - $("#nav").offset().top).toFixed(2)
     );
-    // $("#article")[3].scrollIntoView({block: 'center'});
   }, [inx]);
 
   useEffect(() => {
@@ -1424,7 +1411,6 @@ const SearchResult = (props) => {
                     pageSize={5}
                     onChange={(e) => {
                       setPageNo(e);
-                      console.log("答应你西萨的难道就卡死难道就卡死", e);
                     }}
                     // showSizeChanger
                     showQuickJumper
