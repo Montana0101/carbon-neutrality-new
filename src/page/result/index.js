@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { screen_scale } from "../../util/rem";
 import { withRouter, useHistory } from "react-router-dom";
-import { StarFilled, StarOutlined } from "@ant-design/icons";
+import { StarFilled, StarOutlined, LoadingOutlined } from "@ant-design/icons";
 import { AliOss, ThemeColor, CutLine } from "../../lib/const";
 import {
   Input,
@@ -11,6 +11,7 @@ import {
   Anchor,
   Pagination,
   message,
+  Spin,
 } from "antd";
 import RadarChart from "./radar";
 import { portrait } from "../../apis/index";
@@ -18,8 +19,13 @@ import * as $ from "jquery";
 import "./index.less";
 import * as echarts from "echarts";
 import { doAttention, calAttention, checkAttention } from "../../apis/index";
+import store from "../../store/index";
+import * as jscPng from "../../static/imgs/jsc.png"
+
+const { Link } = Anchor;
 
 const defaultImg = AliOss + "/new_version_0518/company_default.png";
+// const jscPng = require("../../static/imgs/jsc.png")
 const finTabs = [
   "盈利能力",
   "收益质量",
@@ -118,7 +124,7 @@ const initBar = (_node, _obj = {}) => {
 
 // 柱状图
 const initColumnar = (dom, cutFin, financeInx) => {
-  var colorList = ["#00AAFF", "#A52A2A", "#FF752D", "#FFCF31"];
+  var colorList = ["#1890FF", "#FFFF37", "#69B56A", "#FF6000"];
   // var defaultData = [800, 800, 800, 800]
   let option = {
     backgroundColor: "#fff",
@@ -184,7 +190,7 @@ const initColumnar = (dom, cutFin, financeInx) => {
             fontSize: "12",
           },
           formatter: function (value) {
-            return value;
+            return value ? value : 0;
           },
         },
         data: cutFin,
@@ -204,22 +210,23 @@ const initColumnar = (dom, cutFin, financeInx) => {
         },
         itemStyle: {
           normal: {
-            barBorderRadius: [0, 30, 30, 0],
+            barBorderRadius: [0, 0, 0, 0],
             color: (params) => {
-              return new echarts.graphic.LinearGradient(0, 0, 1, 0, [
-                {
-                  offset: 0,
-                  color: "rgba(54,69,129,1)",
-                },
-                {
-                  offset: 0.8,
-                  color: colorList[params.dataIndex],
-                },
-                {
-                  offset: 1,
-                  color: "rgba(255,255,255,0.8)",
-                },
-              ]);
+              // return new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+              //   {
+              //     offset: 0,
+              //     color: "rgba(54,69,129,1)",
+              //   },
+              //   {
+              //     offset: 0.8,
+              //     color: colorList[params.dataIndex],
+              //   },
+              //   {
+              //     offset: 1,
+              //     color: "rgba(255,255,255,0.8)",
+              //   },
+              // ]);
+              return colorList[params.dataIndex];
             },
             // color: (params) => {
             //   return colorList[params.dataIndex]
@@ -361,46 +368,47 @@ const CompanyCard = (props) => {
   };
 
   useEffect(() => {
-    let user = JSON.parse(localStorage.getItem("user"))
-    if(user && user.companyName ){
-      // setName(user.companyName);
-      // _checkAttention(user.companyName);
-    }else{
+    _checkAttention();
+  }, [props.data]);
+
+  useEffect(() => {
+    let user = JSON.parse(localStorage.getItem("user"));
+    if (user && user.companyName) {
+    } else {
       history.push("/");
     }
   }, []);
 
   return (
     <div className="card">
-      {!flag ? (
-        <p className="lp">
-          <StarOutlined
-            style={{
-              marginRight: "0.05rem",
-              fontSize: "0.18rem",
-              color: ThemeColor,
-            }}
-            onClick={() => {
-              _doAttention();
-            }}
-          />
-          添加关注
-        </p>
-      ) : (
-        <p className="lp">
-          <StarFilled
-            style={{
-              marginRight: "0.05rem",
-              fontSize: "0.18rem",
-              color: ThemeColor,
-            }}
-            onClick={() => {
-              _calAttention();
-            }}
-          />
-          已关注
-        </p>
-      )}
+      <p className="lp" style={{ display: !flag ? "flex" : "none" }}>
+        <StarOutlined
+          style={{
+            marginRight: "0.05rem",
+            fontSize: "0.18rem",
+            color: ThemeColor,
+          }}
+          onClick={() => {
+            _doAttention();
+          }}
+        />
+        添加关注
+      </p>
+
+      <p className="lp" style={{ display: flag ? "flex" : "none" }}>
+        <StarFilled
+          style={{
+            marginRight: "0.05rem",
+            fontSize: "0.18rem",
+            color: ThemeColor,
+          }}
+          onClick={() => {
+            _calAttention();
+          }}
+        />
+        已关注
+      </p>
+
       <p className="rp" style={{ background: ThemeColor }}>
         <span>
           {data.comprehensiveScore ? data.comprehensiveScore.totalScore : 0}
@@ -447,7 +455,7 @@ const CompanyCard = (props) => {
             </p>
             <p>
               <span>统一社会信用代码：</span>
-              <span>{data.industryName}</span>
+              <span>{data.companyCode}</span>
             </p>
           </li>
           <li>
@@ -491,7 +499,9 @@ const CompanyCard = (props) => {
         </ul>
       </section>
       <section className="right">
-        <RadarChart data={data} />
+        {data.comprehensiveScore && (
+          <RadarChart data={data} action={props.action} />
+        )}
       </section>
     </div>
   );
@@ -517,17 +527,30 @@ const SearchResult = (props) => {
 
   const [inx, setInx] = useState(0); // 子菜单索引
   const [isUp, setIsUp] = useState(null); //true往下滚 false往上
-
+  const [showLoading, setShowLoading] = useState(false);
+  const [amount,setAmount] = useState(0)
   const history = useHistory();
 
+  useEffect(() => {
+    store.subscribe(() => {
+      setAmount(store.getState().amount);
+    });
+  }, []);
+
   const _portrait = async () => {
+    // setShowLoading(true);
     const res = await portrait(company);
     if (res && res.code == 2000) {
       setObj(res.result);
+      setFinances(res.result.cpFinancial || {});
+      setLineData(res.result.financialHistories || []);
+
       localStorage.setItem("search", JSON.stringify(res.result));
+      // setShowLoading(false);
       // history.push("/")
     } else {
       message.warn("未查询到该公司数据！");
+      // setShowLoading(false);
     }
   };
 
@@ -720,7 +743,15 @@ const SearchResult = (props) => {
         // top: "5%",
         left: "center",
         orient: "vertical",
-
+        formatter: function (params, ii) {
+          let _p = 0;
+          data.map((item, index) => {
+            if (item.name == params) {
+              _p = item.value;
+            }
+          });
+          return `${params}` + " " + " " + `${_p}%`;
+        },
         bottom: "bottom",
       },
       series: [
@@ -820,11 +851,11 @@ const SearchResult = (props) => {
       if (e.wheelDelta < 0) {
         throttle(function () {
           setIsUp(true);
-        }, 500)();
+        }, 100)();
       } else if (e.wheelDelta > 0) {
         throttle(function () {
           setIsUp(false);
-        }, 500)();
+        }, 100)();
       }
     };
 
@@ -868,30 +899,42 @@ const SearchResult = (props) => {
   }, [cardPos, scrollPos]);
 
   useEffect(() => {
-    if (flag && isUp) {
-      throttle(function () {
-        if (inx < 11) {
-          setInx(inx + 1);
-        }
-        setIsUp(null);
-      },100)();
-    }
+    setTimeout(() => {
+      if (flag && isUp) {
+        throttle(function () {
+          if (inx < 14) {
+            setInx(inx + 1);
+          }
+          setIsUp(null);
+        }, 100)();
+      }
 
-    if (flag && isUp == false) {
-      throttle(function () {
-        if (inx > 0) {
-          setInx(inx - 1);
-        }
-        setIsUp(null);
-      },100)();
-    }
+      if (flag && isUp == false) {
+        throttle(function () {
+          if (inx > 0) {
+            setInx(inx - 1);
+          }
+          setIsUp(null);
+        }, 100)();
+      }
+    }, 500);
   }, [flag, isUp]);
 
   // 监听索引变化
   useEffect(() => {
-    setTargetOffset(
-      ($(`#pos${inx}`).offset().top - $("#nav").offset().top).toFixed(2)
-    );
+    if ($(`#pos${inx}`).offset()) {
+      setTargetOffset(
+        ($(`#pos${inx}`).offset().top - $("#nav").offset().top).toFixed(2)
+      );
+    }
+
+    document.querySelector(`#content${inx}`).scrollIntoView({
+      behavior: "smooth",
+      // 定义动画过渡效果， "auto"或 "smooth" 之一。默认为 "auto"
+      block: "center",
+      // 定义垂直方向的对齐， "start", "center", "end", 或 "nearest"之一。默认为 "start"
+      inline: "nearest",
+    });
   }, [inx]);
 
   useEffect(() => {
@@ -931,13 +974,52 @@ const SearchResult = (props) => {
     getParams();
   }, [finances]);
 
+  const antIcon = (
+    <LoadingOutlined
+      style={{
+        fontSize: 24,
+      }}
+      spin
+    />
+  );
+
   return (
     <div
       className="result_page"
       style={{
-        height: !flag ? "auto" : "150%",
+        height: "auto",
       }}
     >
+      {/* {showLoading && (
+        <Spin
+          indicator={antIcon}
+          style={{
+            position: "fixed",
+            margin:"0 auto",
+            zIndex:111111111111
+          }}
+        />
+      )} */}
+      {/* 驾驶舱 */}
+      <div  style={{
+        position:"fixed",
+        right:"0.8rem",
+        bottom:"0.8rem",
+        width:"0.6rem",
+        height:"0.6rem",
+        borderRadius:"0.1rem",
+        background:ThemeColor,
+        opacity:"0.7",
+        display:"flex",
+        flexDirection:"column",
+        color:"white",
+        fontSize:"0.12rem",
+        fontWeight:"bold"
+      }}>
+        <img src={jscPng} style={{width:"70%"}}/>
+        <span>驾驶舱看板</span>
+      </div>
+
       <div
         style={{
           border: CutLine,
@@ -1003,9 +1085,20 @@ const SearchResult = (props) => {
           }}
         >
           <Input
-            placeholder="请输入公司名进行查询"
+            placeholder="请输入企业名称全称进行查询"
             onChange={(e) => {
               setCompany(e.target.value);
+            }}
+            onKeyDown={(ev) => {
+              if (ev.keyCode == 13) {
+                if (company) {
+                  // history.push("/result");
+
+                  _portrait();
+                } else {
+                  message.warn("请输入公司名称");
+                }
+              }
             }}
           />
           <Button type="primary" onClick={_portrait}>
@@ -1027,10 +1120,12 @@ const SearchResult = (props) => {
           height: !flag ? "2.4rem" : 0,
           visibility: !flag ? 1 : 0,
           overflow: "hidden",
+          borderLeft:CutLine,
+          borderRight:CutLine
         }}
         id="card"
       >
-        <CompanyCard data={obj} />
+        <CompanyCard data={obj} action="0" />
       </div>
       {flag && (
         <div
@@ -1051,7 +1146,7 @@ const SearchResult = (props) => {
             background: "white",
           }}
         >
-          <CompanyCard data={obj} />
+          <CompanyCard data={obj} action="1" />
         </div>
       )}
 
@@ -1066,6 +1161,7 @@ const SearchResult = (props) => {
           margin: "0 0.5rem 0 0.5rem",
           padding: "0 0.3rem",
           borderLeft: !flag ? CutLine : "none",
+          borderRight: CutLine ,
           // position:!flag ? 'relative' :'fixed',
           // top:!flag ? 0 :'0.25rem'
         }}
@@ -1187,9 +1283,24 @@ const SearchResult = (props) => {
             >
               专利
             </p>
-            <h3>财务能力</h3>
-            <h3>投资方</h3>
-            <h3>行业成长</h3>
+            <h3
+              id="pos12"
+              style={{ color: inx == 12 ? ThemeColor : "rgba(0,0,0,0.8)" }}
+            >
+              财务能力
+            </h3>
+            <h3
+              id="pos13"
+              style={{ color: inx == 13 ? ThemeColor : "rgba(0,0,0,0.8)" }}
+            >
+              投资方
+            </h3>
+            <h3
+              id="pos14"
+              style={{ color: inx == 14 ? ThemeColor : "rgba(0,0,0,0.8)" }}
+            >
+              行业成长
+            </h3>
           </nav>
         )}
 
@@ -1237,30 +1348,42 @@ const SearchResult = (props) => {
           <section
             style={{ color: ThemeColor, marginTop: targetOffset - 6 + "px" }}
           >
-            <p className="sub">企业简介：</p>
+            <p className="sub" id="content0">
+              企业简介：
+            </p>
             <p className="content">{obj.companyProfile}</p>
             <div className="underline"></div>
           </section>
 
           <section style={{ color: ThemeColor }}>
-            <p className="sub">战略定位：</p>
+            <p className="sub" id="content1">
+              战略定位：
+            </p>
             <p className="content">{obj.corporateStrategy}</p>
           </section>
           <section style={{ color: ThemeColor }}>
-            <p className="sub">战略规划：</p>
+            <p className="sub" id="content2">
+              战略规划：
+            </p>
             <p className="content">{obj.strategicPlanning}</p>
           </section>
           <div className="underline"></div>
           <section style={{ color: ThemeColor }}>
-            <p className="sub">商业模式：</p>
+            <p className="sub" id="content3">
+              商业模式：
+            </p>
             <p className="content">{obj.businessModel}</p>
           </section>
           <section style={{ color: ThemeColor }}>
-            <p className="sub">主营业务：</p>
+            <p className="sub" id="content4">
+              主营业务：
+            </p>
             <p className="content">{obj.mainBusiness}</p>
           </section>
           <section style={{ color: ThemeColor }} className="sub_table">
-            <p className="sub">业务构成：</p>
+            <p className="sub" id="content5">
+              业务构成：
+            </p>
             <table style={{ width: "100%" }}>
               <tr style={{ width: "100%", color: "white", height: "0.4rem" }}>
                 <th style={{ width: "0.7rem" }}>序号</th>
@@ -1280,7 +1403,7 @@ const SearchResult = (props) => {
             </table>
           </section>
           <section style={{ color: ThemeColor, display: "flex" }}>
-            <div style={{ flex: 1 }}>
+            <div style={{ flex: 1 }} id="content6">
               <p className="sub">核心客户：</p>
               <div
                 id="pie1"
@@ -1304,12 +1427,16 @@ const SearchResult = (props) => {
           <div className="underline"></div>
 
           <section style={{ color: ThemeColor }}>
-            <p className="sub">核心竞争力：</p>
+            <p className="sub" id="content7">
+              核心竞争力：
+            </p>
             <p className="content">{obj.coreCompetitiveness}</p>
           </section>
 
           <section style={{ color: ThemeColor }} className="sub_table">
-            <p className="sub">领军人物：</p>
+            <p className="sub" id="content8">
+              领军人物：
+            </p>
             <table style={{ width: "100%" }}>
               <tr style={{ width: "100%", color: "white", height: "0.4rem" }}>
                 <th style={{ width: "10%" }}>序号</th>
@@ -1332,7 +1459,9 @@ const SearchResult = (props) => {
           </section>
 
           <section style={{ color: ThemeColor }} className="sub_table">
-            <p className="sub">核心团队：</p>
+            <p className="sub" id="content9">
+              核心团队：
+            </p>
             <table style={{ width: "100%" }}>
               <tr style={{ width: "100%", color: "white", height: "0.4rem" }}>
                 <th style={{ width: "10%" }}>序号</th>
@@ -1355,12 +1484,16 @@ const SearchResult = (props) => {
           </section>
 
           <section style={{ color: ThemeColor }}>
-            <p className="sub">核心技术：</p>
+            <p className="sub" id="content10">
+              核心技术：
+            </p>
             <p className="content">{obj.coreTechnology}</p>
           </section>
 
           <section style={{ color: ThemeColor }}>
-            <p className="sub">专利：</p>
+            <p className="sub" id="content11">
+              专利：
+            </p>
             <div style={{ display: "flex", height: "auto" }}>
               <div
                 style={{
@@ -1423,7 +1556,9 @@ const SearchResult = (props) => {
           </section>
 
           <section style={{ color: ThemeColor }}>
-            <p className="sub">财务能力：</p>
+            <p className="sub" id="content12">
+              财务能力：
+            </p>
             <ul style={{ display: "flex" }}>
               {finTabs.map((item, index) => {
                 return (
@@ -1497,7 +1632,9 @@ const SearchResult = (props) => {
           </section>
 
           <section style={{ color: ThemeColor }} className="sub_table">
-            <p className="sub">投资方：</p>
+            <p className="sub" id="content13">
+              投资方：
+            </p>
             <table style={{ width: "100%" }}>
               <tr style={{ width: "100%", color: "white", height: "0.4rem" }}>
                 <th style={{ width: "10%" }}>序号</th>
@@ -1525,11 +1662,28 @@ const SearchResult = (props) => {
           </section>
 
           <section style={{ color: ThemeColor }}>
-            <p className="sub">行业成长性：</p>
+            <p className="sub" id="content14">
+              行业成长性：
+            </p>
             <p className="content">{obj.industryIntroduction}</p>
           </section>
         </article>
+     
       </main>
+      <p
+        style={{
+          height: "0.5rem",
+          fontSize: "0.12rem",
+          color: "rgba(0,0,0,0.6)",
+          display: "flex",
+          justifyContent: "right",
+          padding: "0 0.5rem",
+          alignItems: "center",
+        }}
+      >
+        <span>访问量：</span>
+        <span>{amount}</span>
+      </p>
     </div>
   );
 };

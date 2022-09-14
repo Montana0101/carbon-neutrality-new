@@ -182,7 +182,7 @@ let HeaderCmt = () => {
           >
             <Input
               id="input_search"
-              placeholder="请输入企业名称"
+              placeholder="请输入企业名称全称"
               style={{
                 width: "2rem",
                 padding: "border-box",

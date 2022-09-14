@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import * as echarts from "echarts";
+import { AliOss, ThemeColor, CutLine } from "../../lib/const";
 
 const RadarChart = (props) => {
   var option;
@@ -8,23 +9,41 @@ const RadarChart = (props) => {
 
   useEffect(() => {
     setScore(props.data.comprehensiveScore);
+    console.log("是否重新渲染了111")
   }, [props.data]);
 
   useEffect(() => {
+    var radar_dom
     if (score) {
-      const radar_dom = document.getElementById("radar");
+
+       radar_dom = props.action==0 ? document.getElementById("radar0") : document.getElementById("radar1") ;
       initRadar(radar_dom);
     }
   }, [score]);
 
+  
+
   const initRadar = (dom) => {
+ 
     option = {
       color: ["#67F9D8", "#FFE434", "#56A3F1", "#FF917C"],
       tooltip: {},
-      radar: [
+      radar: 
         {
+          // name: {
+          //   show:true,
+          //   textStyle: {
+          //       color: '#ffffff00',
+          //       backgroundColor: '#00B3BF',
+          //       borderRadius: 3,
+          //       padding: [3, 7],
+          //   }
+        // },
           indicator: [
-            { name: "战略管理能力", max: 10 },
+            {
+              name: "战略管理能力",
+              max: 10,
+            },
             { name: "成长能力", max: 10 },
             { name: "现金能力", max: 10 },
             { name: "债尝能力", max: 10 },
@@ -36,7 +55,7 @@ const RadarChart = (props) => {
             { name: "主营业务能力", max: 10 },
           ],
           //   center: ['75%', '0%'],
-          radius: [20, 45],
+          radius: [20, 35],
           axisName: {
             color: "rgba(1,1,1,0.8)",
             // backgroundColor: '#666',
@@ -63,7 +82,7 @@ const RadarChart = (props) => {
             },
           },
         },
-      ],
+      
 
       series: [
         {
@@ -84,7 +103,6 @@ const RadarChart = (props) => {
           symbol: "none",
           data: [
             {
-              name: "hi",
               value: [
                 score && score.strategicManagementCapability,
                 null,
@@ -108,6 +126,14 @@ const RadarChart = (props) => {
               ],
             },
           ],
+          name: {
+            textStyle: {
+                color: '#fff',
+                backgroundColor: '#00B3BF',
+                borderRadius: 3,
+                padding: [3, 7],
+            }
+        },
         },
         {
           type: "radar",
@@ -127,7 +153,6 @@ const RadarChart = (props) => {
           symbol: "none",
           data: [
             {
-              name: "hi",
               value: [
                 // score && score.strategicManagementCapability,
                 null,
@@ -175,7 +200,6 @@ const RadarChart = (props) => {
           z: 10,
           data: [
             {
-              name: "hi",
               value: [
                 // score && score.strategicManagementCapability,
                 null,
@@ -232,7 +256,6 @@ const RadarChart = (props) => {
           z: 10,
           data: [
             {
-              name: "hi",
               value: [
                 // score && score.strategicManagementCapability,
                 null,
@@ -289,7 +312,6 @@ const RadarChart = (props) => {
           z: 10,
           data: [
             {
-              name: "hi",
               value: [
                 // score && score.strategicManagementCapability,
                 null,
@@ -346,7 +368,6 @@ const RadarChart = (props) => {
           z: 10,
           data: [
             {
-              name: "hi",
               value: [
                 // score && score.strategicManagementCapability,
                 null,
@@ -403,7 +424,6 @@ const RadarChart = (props) => {
           z: 10,
           data: [
             {
-              name: "hi",
               value: [
                 // score && score.strategicManagementCapability,
                 null,
@@ -448,7 +468,6 @@ const RadarChart = (props) => {
           z: 10,
           data: [
             {
-              name: "hi",
               value: [
                 null,
                 null,
@@ -569,16 +588,15 @@ const RadarChart = (props) => {
               //return data.value+"<br>"+a1.seriesName+":"+a1.value;
             },
           },
-          name: "hi",
           type: "radar",
           areaStyle: {
             color: new echarts.graphic.RadialGradient(0.1, 0.6, 1, [
               {
-                color: "rgba(92, 123, 217,0.2)",
+                color: "#51AA5220",
                 offset: 0,
               },
               {
-                color: "#7ED3F4",
+                color: ThemeColor,
                 offset: 1,
               },
             ]),
@@ -591,7 +609,7 @@ const RadarChart = (props) => {
             borderColor: "rgba(0,197,204,0)",
             borderWidth: 10,
           },
-          lineStyle: { color: "#7ED3F4", width: 2 },
+          lineStyle: { color: "#51AA5220", width: 2 },
           tooltip: {
             show: false, //原始的就是五个连成一条线的，tooltip不能显示，否则会一次显示五个维度的
           },
@@ -609,7 +627,6 @@ const RadarChart = (props) => {
                 score && score.coreCompetitiveness,
                 score && score.mainBusinessCapacity,
               ],
-              name: "hi",
               dataTmp: [
                 // { name: "平均下载速率", value: 4000 },
                 // { name: "建立连接时延", value: 2080 },
@@ -626,7 +643,7 @@ const RadarChart = (props) => {
     option && myChart.setOption(option);
   };
 
-  return <div id="radar" style={{ width: "100%", height: "100%" }}></div>;
+  return <div id={props.action=='0'?'radar0':"radar1"} style={{ width: "100%", height: "100%"}}></div>;
 };
 
 export default RadarChart;

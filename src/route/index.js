@@ -162,7 +162,12 @@ const Routers = () => {
           }}
         />
 
-        <Route path="/result" exact render={SearchResult} />
+        <Route path="/result" exact render={(props)=>{
+          console.log("打印下的时候打算",props)
+           let id = JSON.parse(props.location.state.value).id
+              _putVcount(`/result/${id}`);
+          return <SearchResult/>
+        }} />
         <Route
           path="/declare"
           exact
