@@ -972,7 +972,7 @@ const SearchResult = (props) => {
 
   useEffect(() => {
     getParams();
-  }, [finances]);
+  }, [finances,lineData]);
 
   const antIcon = (
     <LoadingOutlined
