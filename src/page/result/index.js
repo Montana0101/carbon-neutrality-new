@@ -20,7 +20,7 @@ import "./index.less";
 import * as echarts from "echarts";
 import { doAttention, calAttention, checkAttention } from "../../apis/index";
 import store from "../../store/index";
-import * as jscPng from "../../static/imgs/jsc.png"
+import jscPng from "../../static/imgs/jsc.png";
 
 const { Link } = Anchor;
 
@@ -528,7 +528,7 @@ const SearchResult = (props) => {
   const [inx, setInx] = useState(0); // 子菜单索引
   const [isUp, setIsUp] = useState(null); //true往下滚 false往上
   const [showLoading, setShowLoading] = useState(false);
-  const [amount,setAmount] = useState(0)
+  const [amount, setAmount] = useState(0);
   const history = useHistory();
 
   useEffect(() => {
@@ -1001,23 +1001,34 @@ const SearchResult = (props) => {
         />
       )} */}
       {/* 驾驶舱 */}
-      <div  style={{
-        position:"fixed",
-        right:"0.8rem",
-        bottom:"0.8rem",
-        width:"0.6rem",
-        height:"0.6rem",
-        borderRadius:"0.1rem",
-        background:ThemeColor,
-        opacity:"0.7",
-        display:"flex",
-        flexDirection:"column",
-        color:"white",
-        fontSize:"0.12rem",
-        fontWeight:"bold"
-      }}>
-        <img src={jscPng} style={{width:"70%"}}/>
-        <span>驾驶舱看板</span>
+      <div
+        onClick={()=>{
+          console.log("的那是的接口",obj)
+          // alert(obj.companyName)
+          window.open(`https://iframe.stiacn.com/iframe/chart/build/#${obj.companyName}`)
+        }}
+        style={{
+          position: "fixed",
+          right: "0.8rem",
+          bottom: "0.8rem",
+          width: "0.7rem",
+          height: "0.7rem",
+          borderRadius: "0.15rem",
+          background: ThemeColor,
+          opacity: "0.7",
+          display: "flex",
+          flexDirection: "column",
+          color: "white",
+          fontWeight: "bold",
+          justifyContent: "space-around",
+          alignItems: "center",
+          zIndex: 11111111111111,
+          padding: "0.05rem 0.05rem",
+          cursor:"pointer"
+        }}
+      >
+        <img src={jscPng} style={{ width: "50%" }} />
+        <span style={{ fontSize: "0.1rem" }}>驾驶舱看板</span>
       </div>
 
       <div
@@ -1120,8 +1131,8 @@ const SearchResult = (props) => {
           height: !flag ? "2.4rem" : 0,
           visibility: !flag ? 1 : 0,
           overflow: "hidden",
-          borderLeft:CutLine,
-          borderRight:CutLine
+          borderLeft: CutLine,
+          borderRight: CutLine,
         }}
         id="card"
       >
@@ -1161,7 +1172,7 @@ const SearchResult = (props) => {
           margin: "0 0.5rem 0 0.5rem",
           padding: "0 0.3rem",
           borderLeft: !flag ? CutLine : "none",
-          borderRight: CutLine ,
+          borderRight: CutLine,
           // position:!flag ? 'relative' :'fixed',
           // top:!flag ? 0 :'0.25rem'
         }}
@@ -1668,7 +1679,6 @@ const SearchResult = (props) => {
             <p className="content">{obj.industryIntroduction}</p>
           </section>
         </article>
-     
       </main>
       <p
         style={{
