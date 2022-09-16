@@ -939,23 +939,30 @@ const SearchResult = (props) => {
 
   useEffect(() => {
     if (obj != null) {
-      let node1 = document.getElementById("pie1");
-      initPie(
-        node1,
-        obj.cpCustomers,
-        obj.cpCustomers && obj.cpCustomers.length,
-        "核心客户"
-      );
-      let node2 = document.getElementById("pie2");
-      initPie(
-        node2,
-        obj.cpSuppliers,
-        obj.cpSuppliers && obj.cpSuppliers.length,
-        "核心供应商"
-      );
+      if (obj.cpCustomers) {
+        let node1 = document.getElementById("pie1");
+        initPie(
+          node1,
+          obj.cpCustomers,
+          obj.cpCustomers && obj.cpCustomers.length,
+          "核心客户"
+        );
+      }
 
-      let bar1 = document.getElementById("bar1");
-      initBar(bar1, obj.patents);
+      if (obj.cpSuppliers) {
+        let node2 = document.getElementById("pie2");
+        initPie(
+          node2,
+          obj.cpSuppliers,
+          obj.cpSuppliers && obj.cpSuppliers.length,
+          "核心供应商"
+        );
+      }
+
+      if (obj.patents) {
+        let bar1 = document.getElementById("bar1");
+        initBar(bar1, obj.patents);
+      }
 
       // let bar2 = document.getElementById("bar2");
       // initColumnar(bar2, cutFin, financeInx);
@@ -963,16 +970,30 @@ const SearchResult = (props) => {
   }, [obj]);
 
   useEffect(() => {
-    let bar2 = document.getElementById("bar2");
-    initColumnar(bar2, cutFin, financeInx);
+    let _flag = false 
+    cutFin &&
+    cutFin.map((item) => {
+      if (typeof(item) != "undefined") {
+        _flag= true;
+      }else{
+        _flag= false;
+      }
+    })
+    if (_flag) {
+      let bar2 = document.getElementById("bar2");
+      initColumnar(bar2, cutFin, financeInx);
+    }
 
-    let line1 = document.getElementById("line1");
-    initLine(line1, d1, d2, d3, d4, years);
+    if (d1.data && d1.data.length>0 && d2.data && d3.data && d4.data) {
+      let line1 = document.getElementById("line1");
+      console.log("打印下dsa",d1,d2,d3,d4)
+      initLine(line1, d1, d2, d3, d4, years);
+    }
   }, [financeInx, cutFin]);
 
   useEffect(() => {
     getParams();
-  }, [finances,lineData]);
+  }, [finances, lineData]);
 
   const antIcon = (
     <LoadingOutlined
@@ -1002,10 +1023,12 @@ const SearchResult = (props) => {
       )} */}
       {/* 驾驶舱 */}
       <div
-        onClick={()=>{
-          console.log("的那是的接口",obj)
+        onClick={() => {
+          console.log("的那是的接口", obj);
           // alert(obj.companyName)
-          window.open(`https://iframe.stiacn.com/iframe/chart/build/#${obj.companyName}`)
+          window.open(
+            `https://iframe.stiacn.com/iframe/chart/build/#${obj.companyName}`
+          );
         }}
         style={{
           position: "fixed",
@@ -1024,7 +1047,7 @@ const SearchResult = (props) => {
           alignItems: "center",
           zIndex: 11111111111111,
           padding: "0.05rem 0.05rem",
-          cursor:"pointer"
+          cursor: "pointer",
         }}
       >
         <img src={jscPng} style={{ width: "50%" }} />
@@ -1362,7 +1385,9 @@ const SearchResult = (props) => {
             <p className="sub" id="content0">
               企业简介：
             </p>
-            <p className="content">{obj.companyProfile}</p>
+            <p className="content">
+              {obj.companyProfile ? obj.companyProfile : "无"}
+            </p>
             <div className="underline"></div>
           </section>
 
@@ -1370,39 +1395,47 @@ const SearchResult = (props) => {
             <p className="sub" id="content1">
               战略定位：
             </p>
-            <p className="content">{obj.corporateStrategy}</p>
+            <p className="content">
+              {obj.corporateStrategy ? obj.corporateStrategy : "无"}
+            </p>
           </section>
           <section style={{ color: ThemeColor }}>
             <p className="sub" id="content2">
               战略规划：
             </p>
-            <p className="content">{obj.strategicPlanning}</p>
+            <p className="content">
+              {obj.strategicPlanning ? obj.strategicPlanning : "无"}
+            </p>
           </section>
           <div className="underline"></div>
           <section style={{ color: ThemeColor }}>
             <p className="sub" id="content3">
               商业模式：
             </p>
-            <p className="content">{obj.businessModel}</p>
+            <p className="content">
+              {obj.businessModel ? obj.businessModel : "无"}
+            </p>
           </section>
           <section style={{ color: ThemeColor }}>
             <p className="sub" id="content4">
               主营业务：
             </p>
-            <p className="content">{obj.mainBusiness}</p>
+            <p className="content">
+              {obj.mainBusiness ? obj.mainBusiness : "无"}
+            </p>
           </section>
           <section style={{ color: ThemeColor }} className="sub_table">
             <p className="sub" id="content5">
               业务构成：
             </p>
-            <table style={{ width: "100%" }}>
-              <tr style={{ width: "100%", color: "white", height: "0.4rem" }}>
-                <th style={{ width: "0.7rem" }}>序号</th>
-                <th>构成</th>
-                {/* <th>占比</th> */}
-              </tr>
-              {obj.compositions &&
-                obj.compositions.map((item, index) => {
+            {obj.compositions ? (
+              <table style={{ width: "100%" }}>
+                <tr style={{ width: "100%", color: "white", height: "0.4rem" }}>
+                  <th style={{ width: "0.7rem" }}>序号</th>
+                  <th>构成</th>
+                  {/* <th>占比</th> */}
+                </tr>
+                {obj.compositions.map((item, index) => {
                   return (
                     <tr style={{ height: "0.4rem" }}>
                       <td>{index + 1}</td>
@@ -1411,28 +1444,37 @@ const SearchResult = (props) => {
                     </tr>
                   );
                 })}
-            </table>
+              </table>
+            ) :       <p style={{color:"black",textAlign:"left"}}>无</p>}
           </section>
           <section style={{ color: ThemeColor, display: "flex" }}>
             <div style={{ flex: 1 }} id="content6">
               <p className="sub">核心客户：</p>
-              <div
-                id="pie1"
-                style={{
-                  height: "3rem",
-                  width: "100%",
-                }}
-              ></div>
+              {obj.cpCustomers ? (
+                <div
+                  id="pie1"
+                  style={{
+                    height: "3rem",
+                    width: "100%",
+                  }}
+                ></div>
+              ) : (
+                <p style={{color:"black",textAlign:"left"}}>无</p>
+              )}
             </div>
             <div style={{ flex: 1 }}>
               <p className="sub">核心供应商：</p>
-              <div
-                id="pie2"
-                style={{
-                  height: "3rem",
-                  width: "100%",
-                }}
-              ></div>
+              {obj.cpSuppliers ? (
+                <div
+                  id="pie2"
+                  style={{
+                    height: "3rem",
+                    width: "100%",
+                  }}
+                ></div>
+              ) : (
+                <p style={{color:"black",textAlign:"left"}}>无</p>
+              )}
             </div>
           </section>
           <div className="underline"></div>
@@ -1441,22 +1483,22 @@ const SearchResult = (props) => {
             <p className="sub" id="content7">
               核心竞争力：
             </p>
-            <p className="content">{obj.coreCompetitiveness}</p>
+            <p className="content">{obj.coreCompetitiveness || "无"}</p>
           </section>
 
           <section style={{ color: ThemeColor }} className="sub_table">
             <p className="sub" id="content8">
               领军人物：
             </p>
-            <table style={{ width: "100%" }}>
-              <tr style={{ width: "100%", color: "white", height: "0.4rem" }}>
-                <th style={{ width: "10%" }}>序号</th>
-                <th style={{ width: "15%" }}>姓名</th>
-                <th style={{ width: "15%" }}>职位</th>
-                <th style={{ width: "60%" }}>描述</th>
-              </tr>
-              {obj.cpLeaders &&
-                obj.cpLeaders.map((item, index) => {
+            {obj.cpLeaders ? (
+              <table style={{ width: "100%" }}>
+                <tr style={{ width: "100%", color: "white", height: "0.4rem" }}>
+                  <th style={{ width: "10%" }}>序号</th>
+                  <th style={{ width: "15%" }}>姓名</th>
+                  <th style={{ width: "15%" }}>职位</th>
+                  <th style={{ width: "60%" }}>描述</th>
+                </tr>
+                {obj.cpLeaders.map((item, index) => {
                   return (
                     <tr style={{ height: "0.4rem" }}>
                       <td>{index + 1}</td>
@@ -1466,22 +1508,23 @@ const SearchResult = (props) => {
                     </tr>
                   );
                 })}
-            </table>
+              </table>
+            ) :      <p style={{color:"black",textAlign:"left"}}>无</p>}{" "}
           </section>
 
           <section style={{ color: ThemeColor }} className="sub_table">
             <p className="sub" id="content9">
               核心团队：
             </p>
-            <table style={{ width: "100%" }}>
-              <tr style={{ width: "100%", color: "white", height: "0.4rem" }}>
-                <th style={{ width: "10%" }}>序号</th>
-                <th style={{ width: "15%" }}>姓名</th>
-                <th style={{ width: "15%" }}>职位</th>
-                <th style={{ width: "60%" }}>描述</th>
-              </tr>
-              {obj.cpTeams &&
-                obj.cpTeams.map((item, index) => {
+            {obj.cpTeams ? (
+              <table style={{ width: "100%" }}>
+                <tr style={{ width: "100%", color: "white", height: "0.4rem" }}>
+                  <th style={{ width: "10%" }}>序号</th>
+                  <th style={{ width: "15%" }}>姓名</th>
+                  <th style={{ width: "15%" }}>职位</th>
+                  <th style={{ width: "60%" }}>描述</th>
+                </tr>
+                {obj.cpTeams.map((item, index) => {
                   return (
                     <tr style={{ height: "0.4rem" }}>
                       <td>{index + 1}</td>
@@ -1491,14 +1534,15 @@ const SearchResult = (props) => {
                     </tr>
                   );
                 })}
-            </table>
+              </table>
+            ) :       <p style={{color:"black",textAlign:"left"}}>无</p>}{" "}
           </section>
 
           <section style={{ color: ThemeColor }}>
             <p className="sub" id="content10">
               核心技术：
             </p>
-            <p className="content">{obj.coreTechnology}</p>
+            <p className="content">{obj.coreTechnology || "无"}</p>
           </section>
 
           <section style={{ color: ThemeColor }}>
@@ -1506,14 +1550,18 @@ const SearchResult = (props) => {
               专利：
             </p>
             <div style={{ display: "flex", height: "auto" }}>
-              <div
-                style={{
-                  width: "25%",
-                  marginRight: "5%",
-                  height: "auto",
-                }}
-                id="bar1"
-              ></div>
+              {obj.patents ? (
+                <div
+                  style={{
+                    width: "25%",
+                    marginRight: "5%",
+                    height: "auto",
+                  }}
+                  id="bar1"
+                ></div>
+              ) : (
+                <p style={{color:"black",textAlign:"left"}}>无</p>
+              )}
               <div
                 style={{
                   flex: 1,
@@ -1599,45 +1647,54 @@ const SearchResult = (props) => {
 
             <div
               style={{
-                height: "2.2rem",
+                height: typeof(cutFin[0])!='undefined' ? "2.2rem" : 'auto',
                 width: "100%",
                 display: "flex",
                 justifyContent: "space-between",
               }}
             >
-              <div id="bar2" style={{ height: "100%", width: "45%" }}></div>
-              <div
-                style={{
-                  height: "100%",
-                  width: "45%",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <div id="line1" style={{ height: "80%", width: "100%" }}></div>
-                <div className="underLine_div">
-                  <p>
-                    <div>
-                      <span style={{ background: colors[0] }}></span>
-                      <span>{d1.name}</span>
-                    </div>
-                    <div>
-                      <span style={{ background: colors[1] }}></span>
-                      <span>{d2.name}</span>
-                    </div>
-                  </p>
-                  <p>
-                    <div>
-                      <span style={{ background: colors[2] }}></span>
-                      <span>{d3.name}</span>
-                    </div>
-                    <div>
-                      <span style={{ background: colors[3] }}></span>
-                      <span>{d4.name}</span>
-                    </div>
-                  </p>
+              {  cutFin && typeof(cutFin[0])!='undefined' ? (
+                <div id="bar2" style={{ height: "100%", width: "45%" }}></div>
+              ) : (
+                <p style={{color:"black",textAlign:"left"}}>无</p>
+              )}
+              {(d1.data && d1.data.length>0 && d2.data && d3.data && d4.data) ? (
+                <div
+                  style={{
+                    height: "100%",
+                    width: "45%",
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  <div
+                    id="line1"
+                    style={{ height: "80%", width: "100%" }}
+                  ></div>
+                  <div className="underLine_div">
+                    <p>
+                      <div>
+                        <span style={{ background: colors[0] }}></span>
+                        <span>{d1.name}</span>
+                      </div>
+                      <div>
+                        <span style={{ background: colors[1] }}></span>
+                        <span>{d2.name}</span>
+                      </div>
+                    </p>
+                    <p>
+                      <div>
+                        <span style={{ background: colors[2] }}></span>
+                        <span>{d3.name}</span>
+                      </div>
+                      <div>
+                        <span style={{ background: colors[3] }}></span>
+                        <span>{d4.name}</span>
+                      </div>
+                    </p>
+                  </div>
                 </div>
-              </div>
+              ) : <span></span>}
             </div>
             <div className="underline"></div>
           </section>
@@ -1646,15 +1703,15 @@ const SearchResult = (props) => {
             <p className="sub" id="content13">
               投资方：
             </p>
-            <table style={{ width: "100%" }}>
-              <tr style={{ width: "100%", color: "white", height: "0.4rem" }}>
-                <th style={{ width: "10%" }}>序号</th>
-                <th style={{ width: "40%" }}>投资方名称</th>
-                <th style={{ width: "15%" }}>轮次</th>
-                <th style={{ width: "35%" }}>投资金额</th>
-              </tr>
-              {obj.cpInvestors &&
-                obj.cpInvestors.map((item, index) => {
+            {obj.cpInvestors ? (
+              <table style={{ width: "100%" }}>
+                <tr style={{ width: "100%", color: "white", height: "0.4rem" }}>
+                  <th style={{ width: "10%" }}>序号</th>
+                  <th style={{ width: "40%" }}>投资方名称</th>
+                  <th style={{ width: "15%" }}>轮次</th>
+                  <th style={{ width: "35%" }}>投资金额</th>
+                </tr>
+                {obj.cpInvestors.map((item, index) => {
                   return (
                     <tr style={{ height: "0.4rem" }}>
                       <td>{index + 1}</td>
@@ -1668,7 +1725,10 @@ const SearchResult = (props) => {
                     </tr>
                   );
                 })}
-            </table>
+              </table>
+            ) : (
+              <p style={{color:"black",textAlign:"left"}}>无</p>
+            )}{" "}
             <div className="underline"></div>
           </section>
 
@@ -1676,7 +1736,7 @@ const SearchResult = (props) => {
             <p className="sub" id="content14">
               行业成长性：
             </p>
-            <p className="content">{obj.industryIntroduction}</p>
+            <p className="content">{obj.industryIntroduction || "无"}</p>
           </section>
         </article>
       </main>
