@@ -1,7 +1,9 @@
 import { fetchGadget } from "./fetch";
 
-export let env = "stiacn";
-// export let env = 'stiacn-app'
+// export let env = "stiacn";
+export let env = "stiacn-app";
+// export let website = 'website'
+export let website = "website-app";
 // 注册
 export const register = (params) => {
   const url = `/${env}/user/register`;
@@ -17,10 +19,17 @@ export const login = (params) => {
 
 // 联盟动态
 export const getNewsList = (params) => {
-  let { page, limit } = params;
-  const url = `/website/news/list?page=${page}&limit=${limit}`;
-  return fetchGadget(url, "GET");
+  const { page, limit} = params
+  const url = `/${website}/news/list?page=${page}&limit=${limit}&` +
+      `status=1&project=2`
+  return fetchGadget(url, 'GET')
 };
+
+// 新闻详情
+export const getNewsInfo = (id) => {
+  const url = `/${website}/news/info?id=${id}`
+  return fetchGadget(url, 'GET')
+}
 
 // 未读消息
 export const messageTips = () => {
@@ -298,28 +307,28 @@ export const getDeclareDetail = (id) => {
 export const putVcount = (tag) => {
   const url = `/${env}/visit/vcount?tag=${tag}`;
   return fetchGadget(url, "GET");
-}
+};
 
 // 搜索结果
 export const portrait = (name) => {
   const url = `/${env}/portrait/companyInfo?companyName=${name}`;
   return fetchGadget(url, "GET");
-}
+};
 
 // 查询是否关注
 export const checkAttention = (name) => {
   const url = `/${env}/attention/checkAttention?companyName=${name}`;
   return fetchGadget(url, "GET");
-}
+};
 
 // 关注
 export const doAttention = (name) => {
   const url = `/${env}/attention/doAttention?companyName=${name}`;
   return fetchGadget(url, "PUT");
-}
+};
 
 // 取消关注
 export const calAttention = (name) => {
   const url = `/${env}/attention/cancelAttention?companyName=${name}`;
   return fetchGadget(url, "PUT");
-}
+};

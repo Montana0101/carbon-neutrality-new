@@ -19,7 +19,7 @@ import {
 } from "antd";
 import { NavigateButton } from "../../component/button";
 import { FormOutlined } from "@ant-design/icons";
-import { consult } from "../../apis/index";
+import { consult, getNewsList } from "../../apis/index";
 import store from "../../store/index";
 
 import "./index.less";
@@ -126,6 +126,7 @@ export default function Home(props) {
   const [phone, setPhone] = useState("");
   const [content, setContent] = useState("");
   const [amount, setAmount] = useState(null);
+  const [list, setList] = useState([]);
   var formRef = useRef();
 
   const onSubmit = async () => {
@@ -175,7 +176,19 @@ export default function Home(props) {
     store.subscribe(() => {
       setAmount(store.getState().amount);
     });
+    _getNewsList();
   }, []);
+
+  const _getNewsList = async () => {
+    const res = await getNewsList({
+      page: 1,
+      limit: 4,
+    });
+    if (res.code === 2000 && res.success) {
+      console.log("胡哦去得第三款的撒", res.result.data);
+      setList(res.result.data);
+    }
+  };
 
   return (
     <div
@@ -690,7 +703,7 @@ export default function Home(props) {
         className="news_area"
       >
         <ul style={{ display: "flex", margin: "0" }}>
-          {news.map((item, index) => {
+          {list.map((item, index) => {
             return (
               <li
                 style={{
@@ -715,9 +728,13 @@ export default function Home(props) {
                     display: "flex",
                   }}
                 >
-                  <span>{item.year} 年</span>
-                  <span>{item.month} 月</span>
-                  <span>{item.day} 日</span>
+                  <span>{item.releaseTime.substr(0, 4)}年</span>
+                  <span style={{ marginLeft: "0" }}>
+                    {item.releaseTime.substr(5, 2)}月
+                  </span>
+                  <span style={{ marginLeft: "0" }}>
+                    {item.releaseTime.substr(8, 2)}日
+                  </span>
                 </div>
                 <div
                   style={{
@@ -733,7 +750,35 @@ export default function Home(props) {
                 >
                   {item.title}
                 </div>
-                {index != 0 ? (
+                <p
+                  style={{
+                    width: "1.2rem",
+                    height: "0.4rem",
+                    alignSelf: "flex-end",
+                    marginTop: "0.05rem",
+                    position: "absolute",
+                    right: "0.3rem",
+                    bottom: "0.2rem",
+                  }}
+                >
+                  <div
+                    className="navigate_button"
+                    onClick={() => {
+                      if (item.linking) {
+                        window.open(item.linking);
+                      }else{
+                        window.location.href = `/news/${item.id}`;
+                      }
+                    }}
+                    style={{
+                      color: "#51AA52",
+                      border: `1px solid ${props.color}`,
+                    }}
+                  >
+                    <span>更多信息</span>
+                  </div>
+                </p>
+                {/* {index != 0 ? (
                   <p
                     style={{
                       width: "1.2rem",
@@ -795,7 +840,7 @@ export default function Home(props) {
                       <span>更多信息</span>
                     </div>
                   </p>
-                )}
+                )} */}
               </li>
             );
           })}

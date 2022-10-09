@@ -74,11 +74,12 @@ const Dynamic = () => {
             releaseTime: item.releaseTime.substring(0, 10),
             title: item.title,
             linking: item.linking,
+            id:item.id
           });
         });
       setTotal(res.result.totalRecord);
     }
-    console.log("答应数据", arr);
+    // console.log("答应数据", arr);
     setData(arr);
     // setTotal(arr.length)
   };
@@ -131,15 +132,17 @@ const Dynamic = () => {
                       //     //  window.location.href = `/news/4`
                       //     history.push('/news/4')
                       // }
-                      if (index == 3) {
-                        history.push(`/news/1`);
-                      } else if (index == 4) {
-                        history.push(`/news/2`);
-                      } else if (index == 5) {
-                        history.push(`/news/3`);
-                      } else if (index == 1) {
-                        history.push(`/news/4`);
-                      }
+                      window.location.href = '/news/'+item.id
+                      // history.push()
+                      // if (index == 3) {
+                      //   history.push(`/news/1`);
+                      // } else if (index == 4) {
+                      //   history.push(`/news/2`);
+                      // } else if (index == 5) {
+                      //   history.push(`/news/3`);
+                      // } else if (index == 1) {
+                      //   history.push(`/news/4`);
+                      // }
                     }
                   }}
                   className="col"

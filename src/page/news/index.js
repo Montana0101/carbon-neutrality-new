@@ -6,6 +6,7 @@ import { AliOss, ThemeColor, CutLine } from "../../lib/const";
 import { createFromIconfontCN } from "@ant-design/icons";
 import "./default.less";
 import store from "../../store/index";
+import { getNewsInfo } from "../../apis/index";
 
 const IconFont = createFromIconfontCN({
   scriptUrl: "//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js",
@@ -13,6 +14,8 @@ const IconFont = createFromIconfontCN({
 
 function News(props) {
   const [amount, setAmount] = useState(0);
+  const [id, setId] = useState(null);
+  const [obj, setObj] = useState({});
 
   useEffect(() => {
     store.subscribe(() => {
@@ -23,7 +26,20 @@ function News(props) {
   useEffect(() => {
     document.getElementsByTagName("html")[0].style.overflowX = "hidden";
     document.getElementsByTagName("html")[0].style.overflowY = "scroll";
+
+    const path = window.location.href;
+    let _path = props.location.pathname;
+    _getNews(_path.substr(6));
+    setId(_path.substr(6));
   }, []);
+
+  const _getNews = async (id) => {
+    const res = await getNewsInfo(id);
+    if (res.code == 2000) {
+      console.log("第十八届还多久啊撒", res.result);
+      setObj(res.result);
+    }
+  };
   const history = useHistory();
 
   return (
@@ -76,9 +92,7 @@ function News(props) {
             联盟动态
           </span>
           <span style={{ margin: "0 0.1rem" }}>/</span>
-          <span>
-            沪科〔2021〕497号 关于同意成立上海碳中和技术创新联盟的批复
-          </span>
+          <span>{obj && obj.title}</span>
         </h3>
       </div>
 
@@ -106,17 +120,17 @@ function News(props) {
             borderRight: CutLine,
           }}
         >
-          <div className="newsTitle">
-            沪科〔2021〕497号 关于同意成立上海碳中和技术创新联盟的批复
+          <div className="newsTitle">{obj && obj.title}</div>
+          <div style={{ color: "rgba(0,0,0,0.6)" }}>
+            发布时间: {obj && obj.releaseTime}
           </div>
-          <div style={{ color: "rgba(0,0,0,0.6)" }}>发布时间: 2021.12.17</div>
         </section>
       </div>
 
       <div
         style={{
           boxSizing: "border-box",
-          color: "white",
+          // color: "white",
           marginBottom: "-0.5rem",
           border: CutLine,
           borderTop: "none",
@@ -130,7 +144,10 @@ function News(props) {
             margin: "0 0",
           }}
         >
-          <img src={img1} />
+          <div
+            dangerouslySetInnerHTML={{ __html: obj && obj.content }}
+            style={{ width: "100%" }}
+          ></div>
         </article>
       </div>
 
@@ -160,7 +177,11 @@ function News(props) {
         >
           <div
             onClick={() => {
-              history.push("/news/2");
+              if (obj && obj.proNews && obj.proNews.linking) {
+                window.open(obj.proNews.linking);
+              } else {
+                window.location.href = `/news/${obj.proNews.id}`;
+              }
             }}
           >
             <IconFont
@@ -180,12 +201,16 @@ function News(props) {
                 fontWeight: "400",
               }}
             >
-              上海碳中和技术创新联盟发起人会议在新能源中心召开
+              {obj && obj.proNews && obj.proNews.title}
             </a>
           </div>
           <div
             onClick={() => {
-              history.push("/news/3");
+              if (obj && obj.nextNews && obj.nextNews.linking) {
+                window.open(obj.nextNews.linking);
+              } else {
+                window.location.href = `/news/${obj.nextNews.id}`;
+              }
             }}
           >
             <IconFont
@@ -205,9 +230,7 @@ function News(props) {
                 fontWeight: "400",
               }}
             >
-              中共中央
-              国务院关于完整准确全面贯彻新发展理念做好碳达峰碳中和工作的意见
-              (2021年9月22日)
+              {obj && obj.nextNews && obj.nextNews.title}
             </a>
           </div>
         </section>

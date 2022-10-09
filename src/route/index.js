@@ -29,17 +29,17 @@ import SearchResult from "../page/result/index"; // 搜索结果页
 import Declare from "../page/user/declare"; // 申报模块
 import { putVcount } from "../apis/index";
 
-import store from "../store/index"
+import store from "../store/index";
 
 const _putVcount = async (tag) => {
   const res = await putVcount(tag);
   if (res && res.code == 2000) {
-    if(res.result){
-      localStorage.setItem("amount",res.result)
+    if (res.result) {
+      localStorage.setItem("amount", res.result);
       store.dispatch({
-        type:"Set_Amount",
-        value:res.result
-      })
+        type: "Set_Amount",
+        value: res.result,
+      });
     }
   }
 };
@@ -49,6 +49,13 @@ const Routers = () => {
     // <Router>
     <>
       <Switch>
+        <Route
+          path="/news"
+          render={(routeProps) => {
+            _putVcount(routeProps.location.pathname);
+            return <News {...routeProps} />;
+          }}
+        />
         <Route
           path="/news/1"
           exact
@@ -162,12 +169,16 @@ const Routers = () => {
           }}
         />
 
-        <Route path="/result" exact render={(props)=>{
-          console.log("打印下的时候打算",props)
-           let id = JSON.parse(props.location.state.value).id
-              _putVcount(`/result/${id}`);
-          return <SearchResult/>
-        }} />
+        <Route
+          path="/result"
+          exact
+          render={(props) => {
+            console.log("打印下的时候打算", props);
+            let id = JSON.parse(props.location.state.value).id;
+            _putVcount(`/result/${id}`);
+            return <SearchResult />;
+          }}
+        />
         <Route
           path="/declare"
           exact
@@ -237,10 +248,10 @@ const Routers = () => {
         <Route
           path="/"
           exact
-          render={ () => {
-             _putVcount("/home")
-             
-              return <Home />
+          render={() => {
+            _putVcount("/home");
+
+            return <Home />;
           }}
         />
       </Switch>
