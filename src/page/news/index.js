@@ -175,64 +175,68 @@ function News(props) {
             borderRight: CutLine,
           }}
         >
-          <div
-            onClick={() => {
-              if (obj && obj.proNews && obj.proNews.linking) {
-                window.open(obj.proNews.linking);
-              } else {
-                window.location.href = `/news/${obj.proNews.id}`;
-              }
-            }}
-          >
-            <IconFont
-              type="icon-tuichu"
-              style={{
-                color: ThemeColor,
-                margin: "0 0.1rem 0 0",
-                fontSize: "0.12rem",
-              }}
-            />
-            <a
-              href="#"
-              style={{
-                fontSize: "0.12rem",
-                textDecoration: "underline",
-                color: ThemeColor,
-                fontWeight: "400",
+          {obj && obj.proNews && (
+            <div
+              onClick={() => {
+                if (obj && obj.proNews && obj.proNews.linking) {
+                  window.open(obj.proNews.linking);
+                } else {
+                  window.location.href = `/news/${obj.proNews.id}`;
+                }
               }}
             >
-              {obj && obj.proNews && obj.proNews.title}
-            </a>
-          </div>
-          <div
-            onClick={() => {
-              if (obj && obj.nextNews && obj.nextNews.linking) {
-                window.open(obj.nextNews.linking);
-              } else {
-                window.location.href = `/news/${obj.nextNews.id}`;
-              }
-            }}
-          >
-            <IconFont
-              type="icon-tuichu"
-              style={{
-                color: ThemeColor,
-                margin: "0 0.1rem 0 0",
-                fontSize: "0.12rem",
-              }}
-            />
-            <a
-              href="#"
-              style={{
-                fontSize: "0.12rem",
-                textDecoration: "underline",
-                color: ThemeColor,
-                fontWeight: "400",
+              <IconFont
+                type="icon-tuichu"
+                style={{
+                  color: ThemeColor,
+                  margin: "0 0.1rem 0 0",
+                  fontSize: "0.12rem",
+                }}
+              />
+              <a
+                href="#"
+                style={{
+                  fontSize: "0.12rem",
+                  textDecoration: "underline",
+                  color: ThemeColor,
+                  fontWeight: "400",
+                }}
+              >
+                {obj && obj.proNews && obj.proNews.title}
+              </a>
+            </div>
+          )}{" "}
+          {obj && obj.nextNews && (
+            <div
+              onClick={() => {
+                if (obj && obj.nextNews && obj.nextNews.linking) {
+                  window.open(obj.nextNews.linking);
+                } else {
+                  window.location.href = `/news/${obj.nextNews.id}`;
+                }
               }}
             >
-              {obj && obj.nextNews && obj.nextNews.title}
-            </a>
-          </div>
+              <IconFont
+                type="icon-tuichu"
+                style={{
+                  color: ThemeColor,
+                  margin: "0 0.1rem 0 0",
+                  fontSize: "0.12rem",
+                }}
+              />
+              <a
+                href="#"
+                style={{
+                  fontSize: "0.12rem",
+                  textDecoration: "underline",
+                  color: ThemeColor,
+                  fontWeight: "400",
+                }}
+              >
+                {obj && obj.nextNews && obj.nextNews.title}
+              </a>
+            </div>
+          )}{" "}
         </section>
       </div>
       <p
