@@ -83,6 +83,10 @@ export const industryEnum = [
 // 融资阶段
 export const stageEnum = [
   {
+    value:19,
+    name:"未融资"
+  },
+  {
     value: 1,
     name: "天使",
   },

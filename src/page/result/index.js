@@ -970,23 +970,23 @@ const SearchResult = (props) => {
   }, [obj]);
 
   useEffect(() => {
-    let _flag = false 
+    let _flag = false;
     cutFin &&
-    cutFin.map((item) => {
-      if (typeof(item) != "undefined") {
-        _flag= true;
-      }else{
-        _flag= false;
-      }
-    })
+      cutFin.map((item) => {
+        if (typeof item != "undefined") {
+          _flag = true;
+        } else {
+          _flag = false;
+        }
+      });
     if (_flag) {
       let bar2 = document.getElementById("bar2");
       initColumnar(bar2, cutFin, financeInx);
     }
 
-    if (d1.data && d1.data.length>0 && d2.data && d3.data && d4.data) {
+    if (d1.data && d1.data.length > 0 && d2.data && d3.data && d4.data) {
       let line1 = document.getElementById("line1");
-      console.log("打印下dsa",d1,d2,d3,d4)
+      console.log("打印下dsa", d1, d2, d3, d4);
       initLine(line1, d1, d2, d3, d4, years);
     }
   }, [financeInx, cutFin]);
@@ -1024,9 +1024,7 @@ const SearchResult = (props) => {
       {/* 驾驶舱 */}
       <div
         onClick={() => {
-          window.open(
-            `https://www.stiacn.com/chart/#${obj.companyName}`
-          );
+          window.open(`https://www.stiacn.com/chart/#${obj.companyName}`);
         }}
         style={{
           position: "fixed",
@@ -1443,7 +1441,9 @@ const SearchResult = (props) => {
                   );
                 })}
               </table>
-            ) :       <p style={{color:"black",textAlign:"left"}}>无</p>}
+            ) : (
+              <p style={{ color: "black", textAlign: "left" }}>无</p>
+            )}
           </section>
           <section style={{ color: ThemeColor, display: "flex" }}>
             <div style={{ flex: 1 }} id="content6">
@@ -1457,7 +1457,7 @@ const SearchResult = (props) => {
                   }}
                 ></div>
               ) : (
-                <p style={{color:"black",textAlign:"left"}}>无</p>
+                <p style={{ color: "black", textAlign: "left" }}>无</p>
               )}
             </div>
             <div style={{ flex: 1 }}>
@@ -1471,7 +1471,7 @@ const SearchResult = (props) => {
                   }}
                 ></div>
               ) : (
-                <p style={{color:"black",textAlign:"left"}}>无</p>
+                <p style={{ color: "black", textAlign: "left" }}>无</p>
               )}
             </div>
           </section>
@@ -1507,7 +1507,9 @@ const SearchResult = (props) => {
                   );
                 })}
               </table>
-            ) :      <p style={{color:"black",textAlign:"left"}}>无</p>}{" "}
+            ) : (
+              <p style={{ color: "black", textAlign: "left" }}>无</p>
+            )}{" "}
           </section>
 
           <section style={{ color: ThemeColor }} className="sub_table">
@@ -1533,7 +1535,9 @@ const SearchResult = (props) => {
                   );
                 })}
               </table>
-            ) :       <p style={{color:"black",textAlign:"left"}}>无</p>}{" "}
+            ) : (
+              <p style={{ color: "black", textAlign: "left" }}>无</p>
+            )}{" "}
           </section>
 
           <section style={{ color: ThemeColor }}>
@@ -1558,7 +1562,7 @@ const SearchResult = (props) => {
                   id="bar1"
                 ></div>
               ) : (
-                <p style={{color:"black",textAlign:"left"}}>无</p>
+                <p style={{ color: "black", textAlign: "left" }}>无</p>
               )}
               <div
                 style={{
@@ -1645,18 +1649,22 @@ const SearchResult = (props) => {
 
             <div
               style={{
-                height: typeof(cutFin[0])!='undefined' ? "2.2rem" : 'auto',
+                height: typeof cutFin[0] != "undefined" ? "2.2rem" : "auto",
                 width: "100%",
                 display: "flex",
                 justifyContent: "space-between",
               }}
             >
-              {  cutFin && typeof(cutFin[0])!='undefined' ? (
+              {cutFin && typeof cutFin[0] != "undefined" ? (
                 <div id="bar2" style={{ height: "100%", width: "45%" }}></div>
               ) : (
-                <p style={{color:"black",textAlign:"left"}}>无</p>
+                <p style={{ color: "black", textAlign: "left" }}>无</p>
               )}
-              {(d1.data && d1.data.length>0 && d2.data && d3.data && d4.data) ? (
+              {d1.data &&
+              d1.data.length > 0 &&
+              d2.data &&
+              d3.data &&
+              d4.data ? (
                 <div
                   style={{
                     height: "100%",
@@ -1692,7 +1700,9 @@ const SearchResult = (props) => {
                     </p>
                   </div>
                 </div>
-              ) : <span></span>}
+              ) : (
+                <span></span>
+              )}
             </div>
             <div className="underline"></div>
           </section>
@@ -1725,7 +1735,7 @@ const SearchResult = (props) => {
                 })}
               </table>
             ) : (
-              <p style={{color:"black",textAlign:"left"}}>无</p>
+              <p style={{ color: "black", textAlign: "left" }}>无</p>
             )}{" "}
             <div className="underline"></div>
           </section>
@@ -1736,22 +1746,24 @@ const SearchResult = (props) => {
             </p>
             <p className="content">{obj.industryIntroduction || "无"}</p>
           </section>
+
+          <section
+            style={{
+              // height: "0.5rem",
+              fontSize: "0.12rem",
+              color: "rgba(0,0,0,0.6)",
+              display: "flex",
+              justifyContent: "right",
+              padding: "0 0",
+              alignItems: "center",
+              // background:'red'
+            }}
+          >
+            <span>访问量：</span>
+            <span>{amount}</span>
+          </section>
         </article>
       </main>
-      <p
-        style={{
-          height: "0.5rem",
-          fontSize: "0.12rem",
-          color: "rgba(0,0,0,0.6)",
-          display: "flex",
-          justifyContent: "right",
-          padding: "0 0.5rem",
-          alignItems: "center",
-        }}
-      >
-        <span>访问量：</span>
-        <span>{amount}</span>
-      </p>
     </div>
   );
 };

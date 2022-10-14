@@ -35,7 +35,7 @@ const InputCmt = (props) => {
 
   return (
     <>
-      {amount > 0 && (
+      {(amount > 0 || amount < 0) && (
         <InputNumber
           bordered={false}
           controls={false}
@@ -59,11 +59,8 @@ const InputCmt = (props) => {
   );
 };
 
-
-
-
 const CashTable = (props) => {
-  let { onInput,data } = props;
+  let { onInput, data } = props;
   return (
     <table className="table_2" rules="all">
       <thead>
@@ -88,12 +85,24 @@ const CashTable = (props) => {
                 <td></td>
               ) : (
                 <td>
-                  <InputCmt event={onInput} line={item.lineNo + "_0"} data={data}/>
+                  <InputCmt
+                    event={onInput}
+                    line={item.lineNo + "_0"}
+                    data={data}
+                  />
                 </td>
               )}
-              {item.empty ? <td></td> : <td>
-                <InputCmt event={onInput} line={item.lineNo + "_1"} data={data}/>
-              </td>}
+              {item.empty ? (
+                <td></td>
+              ) : (
+                <td>
+                  <InputCmt
+                    event={onInput}
+                    line={item.lineNo + "_1"}
+                    data={data}
+                  />
+                </td>
+              )}
             </tr>
           );
         })}

@@ -99,7 +99,10 @@ function Declare(props) {
   const [heightFlag, setHeightFlag] = useState(false);
 
   const [companyId, setCompanyId] = useState(null); //公司id
-  const [years, setYears] = useState((new Date()).getFullYear()); // 当前年份
+
+  let _date = new Date();
+
+  const [years, setYears] = useState(2022); // 当前年份
   const history = useHistory();
   const [obj, setObj] = useState({}); // 编辑所有数据
   const [allow, setAllow] = useState(false); // 是否允许通过
@@ -167,7 +170,7 @@ function Declare(props) {
 
     if (state && (state.action == 1 || state.action == 2)) {
       // 编辑状态
-      _getDeclareDetail(companyId);
+      // _getDeclareDetail(companyId);
       setFlagAssetNew(false);
       setFlagProfitNew(false);
       setFlagCashNew(false);
@@ -188,18 +191,29 @@ function Declare(props) {
       let profitModels = res.result.profitStatement; // 利润表
       let cashModels = res.result.cashFlowStatement; // 现金流量表
 
-      capitalModels.years && setYears(capitalModels.years);
+      if( capitalModels.years){
+        setYears(capitalModels.years);
+        console.log("走到这没",capitalModels.years)
+      }
+
       delete capitalModels.companyId;
+      if (capitalModels.years) {
+        delete capitalModels.years;
+      }
       delete capitalModels.years;
       assetJson = capitalModels;
 
-      delete profitModels.companyId;
-      delete profitModels.years;
-      profitJson = profitModels;
+      if (profitModels) {
+        delete profitModels.companyId;
+        delete profitModels.years;
+        profitJson = profitModels;
+      }
 
-      delete cashModels.companyId;
-      delete cashModels.years;
-      cashJson = cashModels;
+      if (cashModels) {
+        delete cashModels.companyId;
+        delete cashModels.years;
+        cashJson = cashModels;
+      }
 
       setFlagAssetEdit(true);
       setFlagProfitEdit(true);
@@ -251,9 +265,15 @@ function Declare(props) {
     }
   }, [companyId]);
 
+  useEffect(()=>{
+    console.log('年份变化',years)
+  },[years])
   useEffect(() => {
     // 刷新下最近状态
-    _getDeclareDetail(companyId);
+    if(inx>0){
+      // _getDeclareDetail(companyId);
+    }
+    // _getDeclareDetail(companyId);
   }, [inx]);
 
   // 订阅财务报表是否完成
@@ -264,9 +284,9 @@ function Declare(props) {
   };
 
   // 监听所有表状态
-  useEffect(() => {
-    console.log("所有表填写状态", flags);
-  }, [flags]);
+  // useEffect(() => {
+  //   console.log("所有表填写状态", flags);
+  // }, [flags]);
 
   useEffect(() => {
     if (inx == 0) {
@@ -276,7 +296,6 @@ function Declare(props) {
 
   // 编辑状态判断各表是否填完
   useEffect(() => {
-    console.log("获取到的数据", obj);
     let _arr = [];
     // 财务表填过
     if (
@@ -579,17 +598,17 @@ function Declare(props) {
                     <div>
                       <span style={{ fontWeight: "bold" }}>选择年份：</span>
 
-                      <DatePicker
-                        onChange={(moment, str) => {
-                          setYears(str);
-                        }}
-                        defaultValue={
-                          years ? moment(years) : moment(y.toString())
-                        }
-                        // showTime={{ defaultValue: 2022}}
-                        picker="year"
-                        locale={locale}
-                      />
+                        <DatePicker
+                          onChange={(moment, str) => {
+                            setYears(str);
+                          }}
+                          defaultValue={
+                            moment((years).toString())
+                          }
+                          // showTime={{ defaultValue: 2122}}
+                          picker="year"
+                          locale={locale}
+                        />
                     </div>
 
                     {action == 0 && (

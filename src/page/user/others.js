@@ -247,6 +247,7 @@ function Others(props) {
   // 保存基本信息
   const save1 = async () => {
     if (!verifyFull(table1)) {
+      console.log("你打数据库的那数据库",table1)
       message.warn("请完善基本信息！");
       setFlag1(false);
       setFlags(false, 1);
@@ -744,8 +745,8 @@ function Others(props) {
               </Col>
 
               <Col span={10} offset={4}>
-                <Form.Item label={"企业简介"} name="enterpriseAbbreviation">
-                  <Input placeholder="请输入企业简介" />
+                <Form.Item label={"企业简称"} name="enterpriseAbbreviation">
+                  <Input placeholder="请输入企业简称" />
                 </Form.Item>
               </Col>
             </Row>

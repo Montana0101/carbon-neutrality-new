@@ -39,7 +39,7 @@ const InputCmt = (props) => {
 
   return (
     <>
-    {amount > 0 && (
+    {(amount > 0 || amount<0) && (
       <InputNumber
         bordered={false}
         controls={false}
