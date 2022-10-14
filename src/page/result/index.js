@@ -1024,10 +1024,8 @@ const SearchResult = (props) => {
       {/* 驾驶舱 */}
       <div
         onClick={() => {
-          console.log("的那是的接口", obj);
-          // alert(obj.companyName)
           window.open(
-            `https://iframe.stiacn.com/iframe/chart/build/#${obj.companyName}`
+            `https://www.stiacn.com/chart/#${obj.companyName}`
           );
         }}
         style={{

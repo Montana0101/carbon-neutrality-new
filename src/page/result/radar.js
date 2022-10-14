@@ -167,16 +167,16 @@ const RadarChart = (props) => {
                 null,
               ],
               areaStyle: {
-                color: new echarts.graphic.RadialGradient(0.1, 0.6, 1, [
-                  {
-                    color: "rgba(92, 123, 217,0.4)",
-                    offset: 0,
-                  },
-                  {
-                    color: "#7ED3F4",
-                    offset: 1,
-                  },
-                ]),
+                // color: new echarts.graphic.RadialGradient(0.1, 0.6, 1, [
+                //   {
+                //     color: "rgba(92, 123, 217,0.4)",
+                //     offset: 0,
+                //   },
+                //   {
+                //     color: "#7ED3F4",
+                //     offset: 1,
+                //   },
+                // ]),
               },
             },
           ],
@@ -223,16 +223,16 @@ const RadarChart = (props) => {
                 // score && score.mainBusinessCapacity,
               ],
               areaStyle: {
-                color: new echarts.graphic.RadialGradient(0.1, 0.6, 1, [
-                  {
-                    color: "rgba(92, 123, 217,0.4)",
-                    offset: 0,
-                  },
-                  {
-                    color: "#7ED3F4",
-                    offset: 1,
-                  },
-                ]),
+                // color: new echarts.graphic.RadialGradient(0.1, 0.6, 1, [
+                //   {
+                //     color: "rgba(92, 123, 217,0.4)",
+                //     offset: 0,
+                //   },
+                //   {
+                //     color: "#7ED3F4",
+                //     offset: 1,
+                //   },
+                // ]),
               },
             },
           ],
@@ -278,18 +278,6 @@ const RadarChart = (props) => {
                 // score && score.coreCompetitiveness,
                 // score && score.mainBusinessCapacity,
               ],
-              areaStyle: {
-                color: new echarts.graphic.RadialGradient(0.1, 0.6, 1, [
-                  {
-                    color: "rgba(92, 123, 217,0.4)",
-                    offset: 0,
-                  },
-                  {
-                    color: "#7ED3F4",
-                    offset: 1,
-                  },
-                ]),
-              },
             },
           ],
         },
@@ -334,18 +322,6 @@ const RadarChart = (props) => {
                 // score && score.coreCompetitiveness,
                 // score && score.mainBusinessCapacity,
               ],
-              areaStyle: {
-                color: new echarts.graphic.RadialGradient(0.1, 0.6, 1, [
-                  {
-                    color: "rgba(92, 123, 217,0.4)",
-                    offset: 0,
-                  },
-                  {
-                    color: "#7ED3F4",
-                    offset: 1,
-                  },
-                ]),
-              },
             },
           ],
         },
@@ -390,18 +366,6 @@ const RadarChart = (props) => {
                 // score && score.coreCompetitiveness,
                 // score && score.mainBusinessCapacity,
               ],
-              areaStyle: {
-                color: new echarts.graphic.RadialGradient(0.1, 0.6, 1, [
-                  {
-                    color: "rgba(92, 123, 217,0.4)",
-                    offset: 0,
-                  },
-                  {
-                    color: "#7ED3F4",
-                    offset: 1,
-                  },
-                ]),
-              },
             },
           ],
         },
@@ -590,17 +554,17 @@ const RadarChart = (props) => {
           },
           type: "radar",
           areaStyle: {
-            color: new echarts.graphic.RadialGradient(0.1, 0.6, 1, [
+            color: new echarts.graphic.RadialGradient(1, 1, 1, [
               {
-                color: "#51AA5220",
-                offset: 0,
+                color: "#51AA5290",
+                offset: 1,
               },
               {
-                color: ThemeColor,
+                color: "#51AA5290",
                 offset: 1,
               },
             ]),
-          }, //#00C5CC
+          }, 
           // symbol: "circle",
           symbolSize: 0,
           symbol: "none",

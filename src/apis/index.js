@@ -1,9 +1,9 @@
 import { fetchGadget } from "./fetch";
 
 // export let env = "stiacn";
-export let env = "stiacn-app";
+export let env = "stiacn";
 // export let website = 'website'
-export let website = "website-app";
+export let website = "website";
 // 注册
 export const register = (params) => {
   const url = `/${env}/user/register`;

@@ -99,7 +99,7 @@ function Declare(props) {
   const [heightFlag, setHeightFlag] = useState(false);
 
   const [companyId, setCompanyId] = useState(null); //公司id
-  const [years, setYears] = useState(null); // 当前年份
+  const [years, setYears] = useState((new Date()).getFullYear()); // 当前年份
   const history = useHistory();
   const [obj, setObj] = useState({}); // 编辑所有数据
   const [allow, setAllow] = useState(false); // 是否允许通过
