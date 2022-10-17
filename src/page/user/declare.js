@@ -89,20 +89,17 @@ const UpdateCmt = (prop) => {
   );
 };
 
-var _bool = null;
-
 // 财务负债编辑状态
 function Declare(props) {
   const [tabInx, setTabInx] = useState(0);
   const [inx, setInx] = useState(0);
   const [action, setAction] = useState(null); // 0新增 1编辑 2查看
   const [heightFlag, setHeightFlag] = useState(false);
-
   const [companyId, setCompanyId] = useState(null); //公司id
 
-  let _date = new Date();
-
   const [years, setYears] = useState(2022); // 当前年份
+  const [yearFlag, setYearFlag] = useState(false);
+
   const history = useHistory();
   const [obj, setObj] = useState({}); // 编辑所有数据
   const [allow, setAllow] = useState(false); // 是否允许通过
@@ -130,9 +127,6 @@ function Declare(props) {
     false,
     false,
   ]); //二道审核所有表是否完成
-
-  var date = new Date();
-  var y = date.getFullYear();
 
   // 表格展示所用数据
   let tArr = [];
@@ -191,9 +185,9 @@ function Declare(props) {
       let profitModels = res.result.profitStatement; // 利润表
       let cashModels = res.result.cashFlowStatement; // 现金流量表
 
-      if( capitalModels.years){
+      if (capitalModels.years) {
         setYears(capitalModels.years);
-        console.log("走到这没",capitalModels.years)
+        // console.log("走到这没", capitalModels.years);
       }
 
       delete capitalModels.companyId;
@@ -265,12 +259,15 @@ function Declare(props) {
     }
   }, [companyId]);
 
-  useEffect(()=>{
-    console.log('年份变化',years)
-  },[years])
+  useEffect(() => {
+    console.log("年份变化", years);
+    if (years != "2022") {
+      setYearFlag(true);
+    }
+  }, [years]);
   useEffect(() => {
     // 刷新下最近状态
-    if(inx>0){
+    if (inx > 0) {
       // _getDeclareDetail(companyId);
     }
     // _getDeclareDetail(companyId);
@@ -598,17 +595,27 @@ function Declare(props) {
                     <div>
                       <span style={{ fontWeight: "bold" }}>选择年份：</span>
 
+                      {!yearFlag ? (
                         <DatePicker
+                          key="years11"
                           onChange={(moment, str) => {
                             setYears(str);
                           }}
-                          defaultValue={
-                            moment((years).toString())
-                          }
-                          // showTime={{ defaultValue: 2122}}
+                          defaultValue={moment(years.toString())}
                           picker="year"
                           locale={locale}
                         />
+                      ) : (
+                        <DatePicker
+                          key="years22"
+                          onChange={(moment, str) => {
+                            setYears(str);
+                          }}
+                          defaultValue={moment(years.toString())}
+                          picker="year"
+                          locale={locale}
+                        />
+                      )}
                     </div>
 
                     {action == 0 && (

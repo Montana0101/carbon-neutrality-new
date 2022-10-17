@@ -185,7 +185,6 @@ export default function Home(props) {
       limit: 4,
     });
     if (res.code === 2000 && res.success) {
-      console.log("胡哦去得第三款的撒", res.result.data);
       setList(res.result.data);
     }
   };
