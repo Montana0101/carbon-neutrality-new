@@ -6,39 +6,120 @@
     position: relative;
     padding : 0 0.3rem;
 
+    // 架构单行
+    .article {
+        // background-color: gold;
+
+        .jiagou_item_col,
+        .jiagou_item_col_right {
+            height         : 0.6rem;
+            display        : flex;
+            justify-content: space-between;
+            flex-direction : column;
+            align-items    : flex-start;
+            padding        : 0.15rem 0 0.3rem 0;
+            padding-left   : 0.3rem;
+
+            .title {
+                font-size  : 0.13rem;
+                font-weight: bold;
+            }
+
+            .hide {
+                opacity: 0;
+            }
+        }
+
+        // .jiagou_item_out{
+        //     display: flex;
+        // }
+        .jiagou_item_right_out {
+            display    : flex !important;
+            height     : 0.6rem;
+            margin-left: 0.3rem !important;
+            padding    : 0.15rem 0 0.3rem 0;
+            box-sizing : border-box;
+
+
+        }
+
+        .jiagou_item_col_right {
+            color             : rgba(0, 0, 0, 0.8);
+            display           : flex;
+            // justify-content: flex-start;
+            align-items       : flex-start;
+            padding           : 0;
+            padding-right     : 0.3rem;
+            height            : 100%;
+
+            &:first-of-type {
+                // background-color: red;
+                width: 40%;
+            }
+
+            &:nth-of-type(2) {
+                // background-color: gray;
+                width: 30%;
+            }
+
+            &:nth-of-type(3) {
+                // background-color: gray;
+                width: 30%;
+            }
+
+            .title {
+                font-weight: normal !important;
+            }
+
+            .value {
+                font-size: 0.12rem;
+                color    : rgba(0, 0, 0, 0.6)
+            }
+        }
+
+        .jiagou_item_col_right_hide {
+            opacity: 0;
+        }
+    }
+
+
     // Logo区域
-    .logo_area{
+    .logo_area {
+
         // background-color: red;
-        .col{
-            height: 0.6rem;
+        .col {
+            height          : 0.6rem;
             // border-bottom: 1px solid red;
-            z-index: 88888;
-            width: 100%;
-            .trapezoid{
-                position: absolute;
-                display: inline-flex;
-                height: 0;
-                width: 1rem;
-                background-color: aqua;
-                border-bottom: 0.4rem solid;
-                border-left: 0.2rem solid transparent;
-                border-right: 0.2rem solid transparent;
+            z-index         : 88888;
+            width           : 100%;
+
+            .trapezoid {
+                position                  : absolute;
+                display                   : inline-flex;
+                height                    : 0;
+                width                     : 1rem;
+                background-color          : aqua;
+                border-bottom             : 0.4rem solid;
+                border-left               : 0.2rem solid transparent;
+                border-right              : 0.2rem solid transparent;
                 border-bottom-right-radius: 0.1rem;
-                border-bottom-left-radius: 0.1rem;
-                display: flex;
-                justify-content: center;
-                align-items: flex-start;
-                img{
+                border-bottom-left-radius : 0.1rem;
+                display                   : flex;
+                justify-content           : center;
+                align-items               : flex-start;
+
+                img {
                     // height: 40%;
                     width: 80%;
 
                 }
             }
         }
-        .col:nth-child(1){
+
+        .col:nth-child(1) {
             background-color: red;
-            display: flex;
-            justify-content: center;
+            display         : flex;
+            justify-content : center;
         }
     }
 
@@ -124,9 +205,8 @@
 
     .reactOrgChart {
         // margin-top:0.8rem;
-        width    : 100%;
-        // border:1px solid yellowgreen;
-        height   : 90%;
+        width : 100%;
+        height: 90%;
     }
 
     .reactOrgChart .orgNodeChildGroup .nodeGroupLineVerticalMiddle {
@@ -216,7 +296,7 @@
 
         [colspan="0"] {
             // background-color: aqua;
-            position        : relative;
+            position: relative;
 
             .initechNode {
                 // background-color: red;
@@ -371,30 +451,32 @@
 
                 article {
 
-                    width           : 82%;
-                    height          : 92%;
-                    display         : flex;
-                    align-items     : center;
-                    padding         : 0.1rem 0.15rem;
-                    position: relative;
+                    width      : 82%;
+                    height     : 92%;
+                    display    : flex;
+                    align-items: center;
+                    padding    : 0.1rem 0.15rem;
+                    position   : relative;
+
                     // background-color: rgba(0, 0, 0, 0.8);
-                   &> div{
-                        position: absolute;
-                        top:0;
-                        bottom: 0;
-                        left: 0;
-                        right: 0;
-                     background-color: rgba(0, 0, 0, 0.6);
+                    &>div {
+                        position        : absolute;
+                        top             : 0;
+                        bottom          : 0;
+                        left            : 0;
+                        right           : 0;
+                        background-color: rgba(0, 0, 0, 0.6);
 
                     }
-                   &> span {
 
-                        font-size  : 0.12rem;
-                        color      : rgba(255, 255, 255, 1);
-                        font-weight: 100;
-                        text-align : left;
-                        line-height: 0.2rem;
-                        z-index: 1;
+                    &>span {
+
+                        font-size     : 0.12rem;
+                        color         : rgba(255, 255, 255, 1);
+                        font-weight   : 100;
+                        text-align    : left;
+                        line-height   : 0.2rem;
+                        z-index       : 1;
                         // font-weight: bold;
                     }
                 }
@@ -437,31 +519,33 @@
     }
 
     // 人物架构区域
-    #about_mask{
-        display: flex;
+    #about_mask {
+        display        : flex;
         justify-content: center;
-        align-items: center;
-        & > section {
-            position: absolute;
-            left: 0;
-            right:0;
-            margin:auto;
-            bottom: 0;
-            top: 0;
-            width: 6rem;
+        align-items    : center;
+
+        &>section {
+            position        : absolute;
+            left            : 0;
+            right           : 0;
+            margin          : auto;
+            bottom          : 0;
+            top             : 0;
+            width           : 6rem;
             // border:1px solid red;
             background-color: white;
-            border-radius: 0.1rem;
-            padding:0.08rem 0.2rem;
+            border-radius   : 0.1rem;
+            padding         : 0.08rem 0.2rem;
+
             &>p {
-                width: 100%;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
+                width              : 100%;
+                display            : flex;
+                align-items        : center;
+                justify-content    : space-between;
                 // background-color: rebeccapurple;
             }
         }
 
-     
+
     }
 }

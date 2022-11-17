@@ -24,13 +24,20 @@ const data = [
   "联合产品市场推广",
 ];
 
+const arr = [
+  "理事会",
+  "专家咨询委员会",
+  "专业技术委员会",
+  "秘书处",
+  "联盟单位",
+];
 const AboutLeague = () => {
   const [inx, setInx] = useState(0);
   const [flag, setFlag] = useState(true);
   const [mask_flag, setMaskFlag] = useState(false);
   const [mask_inx, setMaskInx] = useState(-1);
-  const [amount,setAmount] = useState(null)
-
+  const [amount, setAmount] = useState(null);
+  const [tab, setTab] = useState(0);
   useEffect(() => {
     const main = document.getElementById("main_container");
     main.style.height = "100%";
@@ -484,11 +491,253 @@ const AboutLeague = () => {
             borderRight: CutLine,
             height: "auto",
             display: "flex",
+            flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
+            padding: "0 0.5rem",
           }}
         >
-          {flag && <IframeStruct />}
+          {/* {flag && <IframeStruct />} */}
+          <img
+            style={{
+              margin: "0.5rem 0",
+              width: "60%",
+            }}
+            src={AliOss + "/new_version_0518/about_us_jiaGou.svg"}
+          />
+          <section
+            style={{
+              border: `1px solid ${ThemeColor}`,
+              width: "100%",
+              height: "3rem",
+              padding: "0.2rem",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <p
+              style={{
+                display: "flex",
+                height: "0.3rem",
+                borderBottom: "1px solid rgba(0,0,0,0.1)",
+              }}
+            >
+              {arr.map((item, index) => {
+                return (
+                  <div
+                    style={{
+                      padding: "0 0.15rem",
+                      margin: "0 0.15rem",
+                      cursor: "pointer",
+                      fontWeight: "bold",
+                      fontSize: "0.13rem",
+                      color: index == tab ? ThemeColor : "black",
+                      borderBottom:
+                        index == tab ? `3px solid ${ThemeColor}` : "none",
+                    }}
+                    onClick={() => {
+                      setTab(index);
+                    }}
+                  >
+                    {item}
+                  </div>
+                );
+              })}
+            </p>
+            {tab == 0 && (
+              <article
+                style={{
+                  flex: 1,
+                  // border: "1px solid red",
+                  display: "flex",
+                }}
+                className="article"
+              >
+                <div style={{ width: "1rem" }}>
+                  <p className="jiagou_item_col">
+                    <span className="title">理事长</span>
+                    <span className="hide">内容</span>
+                  </p>
+                  <p className="jiagou_item_col">
+                    <span className="title">副理事长</span>
+                    <span className="hide">内容</span>
+                  </p>
+                </div>
+                <div style={{ flex: 1 }}>
+                  <p className="jiagou_item_right_out">
+                    <p className="jiagou_item_col_right">
+                      <span className="title">
+                        黄&nbsp;&nbsp;&nbsp;&nbsp;震
+                      </span>
+                      <span className="value">
+                        上海市政协副主席、中国工程院院士
+                      </span>
+                    </p>
+                    <p className="jiagou_item_col_right jiagou_item_col_right_hide">
+                      <span className="title">副理事长</span>
+                      <span className="value">内容</span>
+                    </p>
+                    <p className="jiagou_item_col_right jiagou_item_col_right_hide">
+                      <span className="title">副理事长</span>
+                      <span className="value">内容</span>
+                    </p>
+                  </p>
+                  <p className="jiagou_item_right_out">
+                    <p className="jiagou_item_col_right">
+                      <span className="title">董绍明</span>
+                      <span className="value">
+                        中国工程院院士，中国科学院上海硅酸盐研究所研究员
+                      </span>
+                    </p>
+                    <p className="jiagou_item_col_right">
+                      <span className="title">谭瑞琮</span>
+                      <span className="value">
+                        上海长三角技术创新研究院党委书记
+                      </span>
+                    </p>
+                    <p className="jiagou_item_col_right">
+                      <span className="title">刘金生</span>
+                      <span className="value">华能集团华东分公司副总经理</span>
+                    </p>
+                  </p>
+                  <p className="jiagou_item_right_out">
+                    <p className="jiagou_item_col_right">
+                      <span className="title">李少先</span>
+                      <span className="value">
+                        中国铁建华东区域总部副总经理
+                      </span>
+                    </p>
+                    <p className="jiagou_item_col_right">
+                      <span className="title">
+                        张&nbsp;&nbsp;&nbsp;&nbsp;忠
+                      </span>
+                      <span className="value">
+                        上海长兴企业集团党委书记、董事长
+                      </span>
+                    </p>
+                    <p className="jiagou_item_col_right">
+                      <span className="title">
+                        王&nbsp;&nbsp;&nbsp;&nbsp;路
+                      </span>
+                      <span className="value">上海市计量协会会长</span>
+                    </p>
+                  </p>
+                  <p className="jiagou_item_right_out">
+                    <p className="jiagou_item_col_right">
+                      <span className="title">尹邦奇</span>
+                      <span className="value">
+                        上海科技交流中心原主任、教授级高工
+                      </span>
+                    </p>
+                    <p className="jiagou_item_col_right jiagou_item_col_right_hide">
+                      <span className="title">副理事长</span>
+                      <span className="value">内容</span>
+                    </p>
+                    <p className="jiagou_item_col_right jiagou_item_col_right_hide">
+                      <span className="title">副理事长</span>
+                      <span className="value">内容</span>
+                    </p>
+                  </p>
+                </div>
+              </article>
+            )}
+
+            {(tab == 1 || tab == 2) && (
+              <aside
+                style={{
+                  height: "100%",
+                  width: "1rem",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  fontSize: "0.13rem",
+                }}
+              >
+                暂无信息
+              </aside>
+            )}
+            {tab == 3 && (
+              <article
+                style={{
+                  flex: 1,
+                  // border: "1px solid red",
+                  display: "flex",
+                }}
+                className="article"
+              >
+                <div style={{ width: "1rem" ,height:"100%",display:"flex",flexDirection:'column',}}>
+                  <p className="jiagou_item_col">
+                    <span className="title">秘书长</span>
+                    <span className="hide">内容</span>
+                  </p>
+                  <p className="jiagou_item_col">
+                    <span className="title">执行秘书长</span>
+                    <span className="hide">内容</span>
+                  </p>
+                  <p className="jiagou_item_col">
+                    <span className="title">副秘书长</span>
+                    <span className="hide">内容</span>
+                  </p>
+                </div>
+                <div style={{ flex: 1 }}>
+                  <p className="jiagou_item_right_out">
+                    <p className="jiagou_item_col_right">
+                      <span className="title">
+                        黄&nbsp;&nbsp;&nbsp;&nbsp;瓒
+                      </span>
+                      <span className="value">
+                        上海新能源科技成果转化与产业促进中心主任
+                      </span>
+                    </p>
+                    <p className="jiagou_item_col_right jiagou_item_col_right_hide">
+                      <span className="title">副理事长</span>
+                      <span className="value">内容</span>
+                    </p>
+                    <p className="jiagou_item_col_right jiagou_item_col_right_hide">
+                      <span className="title">副理事长</span>
+                      <span className="value">内容</span>
+                    </p>
+                  </p>
+                  <p className="jiagou_item_right_out">
+                    <p className="jiagou_item_col_right">
+                      <span className="title">
+                        陈&nbsp;&nbsp;&nbsp;&nbsp;成
+                      </span>
+                      <span className="value">
+                        上海北斗卫星导航平台有限公司总经理
+                      </span>
+                    </p>
+                    <p className="jiagou_item_col_right jiagou_item_col_right_hide">
+                      <span className="title">副理事长</span>
+                      <span className="value">内容</span>
+                    </p>
+                    <p className="jiagou_item_col_right jiagou_item_col_right_hide">
+                      <span className="title">副理事长</span>
+                      <span className="value">内容</span>
+                    </p>
+                  </p>
+                  <p className="jiagou_item_right_out">
+                    <p className="jiagou_item_col_right">
+                      <span className="title">
+                        陈&nbsp;&nbsp;&nbsp;&nbsp;娇
+                      </span>
+                      <span className="value">
+                        上海锦邑创业孵化器有限公司总经理
+                      </span>
+                    </p>
+                    <p className="jiagou_item_col_right jiagou_item_col_right_hide">
+                      <span className="title">副理事长</span>
+                      <span className="value">内容</span>
+                    </p>
+                    <p className="jiagou_item_col_right jiagou_item_col_right_hide">
+                      <span className="title">副理事长</span>
+                      <span className="value">内容</span>
+                    </p>
+                  </p>
+                </div>
+              </article>
+            )}
+          </section>
         </div>
       </div>
 
