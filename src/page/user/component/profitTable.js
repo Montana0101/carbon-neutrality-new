@@ -39,36 +39,47 @@ const InputCmt = (props) => {
 
   return (
     <>
-    {(amount > 0 || amount<0) && (
-      <InputNumber
-        bordered={false}
-        controls={false}
-        defaultValue={amount}
-        onChange={(e) => {
-           props.event({ value: e, line: line });
-        }}
-      />
-    )}
+      {(amount > 0 || amount < 0) && (
+        <InputNumber
+          bordered={false}
+          controls={false}
+          defaultValue={amount}
+          onChange={(e) => {
+            props.event({ value: e, line: line });
+          }}
+        />
+      )}
 
-    {(amount == 0 || amount == null) && (
-      <InputNumber
-        bordered={false}
-        controls={false}
-        onChange={(e) => {
-           props.event({ value: e, line: line });
-        }}
-      />
-    )}
-  </>
+      {amount == 0 && (
+        <InputNumber
+          bordered={false}
+          controls={false}
+          defaultValue={amount}
+          onChange={(e) => {
+            props.event({ value: e, line: line });
+          }}
+        />
+      )}
+
+      {amount == null && (
+        <InputNumber
+          bordered={false}
+          controls={false}
+          onChange={(e) => {
+            props.event({ value: e, line: line });
+          }}
+        />
+      )}
+    </>
   );
 };
 
 const ProfitTable = (props) => {
-  let { onInput ,data} = props;
+  let { onInput, data } = props;
 
-  useEffect(()=>{
+  useEffect(() => {
     // console.log('监听第二张表数据变化',data)
-  },[data])
+  }, [data]);
 
   return (
     <table className="table_2" rules="all">

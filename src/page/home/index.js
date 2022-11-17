@@ -184,9 +184,17 @@ export default function Home(props) {
       page: 1,
       limit: 4,
     });
-    if (res.code === 2000 && res.success) {
-      setList(res.result.data);
+    try{
+      if (res.code === 2000 && res.success) {
+        setList(res.result.data);
+      }else{
+        message.warn("获取新闻失败")
+      }
+    }catch(err){
+      console.log("异常报错",err)
+      message.error("异常错误i")
     }
+ 
   };
 
   return (

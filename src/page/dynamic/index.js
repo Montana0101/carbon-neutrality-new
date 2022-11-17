@@ -154,7 +154,7 @@ const Dynamic = () => {
               <Pagination
                 total={total}
                 showTotal={(total) => `总计 ${total} 条`}
-                defaultPageSize={5}
+                // defaultPageSize={page}
                 defaultCurrent={1}
                 pageSizeOptions={[5, 10]}
                 onChange={(a, b) => {

@@ -27,8 +27,13 @@ export const fetchGadget = (url, method, params) => {
         // store.dispatch({
         //     type: "LOADING_END"
         // })
+        console.log("打一把你的撒九年",res)
         return res.json()
     }).then(res => {
+        if(res.code===2002){
+            message.warn(res.msg)
+            return 
+        }
         return res
     }).catch(e => {
         setTimeout(() => {

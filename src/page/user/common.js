@@ -26,6 +26,7 @@ import { Pie } from "@ant-design/plots";
 import "moment/locale/zh-cn";
 import DefaultLogo from "../../static/imgs/person.png"; // 默认企业logo
 import "./admin.less";
+import {portrait} from "../../apis/index"
 
 const { TabPane } = Tabs;
 
@@ -344,6 +345,21 @@ function CommonUser(props) {
     },
   ];
 
+  const _portrait = async (company) => {
+    console.log("不对哈手段解决",company)
+    const res = await portrait(company)
+    if(res && res.code == 2000){
+      // setResult(res.result)
+      localStorage.setItem('search',JSON.stringify(res.result))
+      // history.push("/")
+      // setInx(null)
+      // setCompany("")
+      history.push("/result",{value:JSON.stringify(res.result)})
+    }else{
+      message.warn('未查询到该公司数据！')
+    }
+    }
+
   // 关注模型
   const columns = [
     {
@@ -366,7 +382,12 @@ function CommonUser(props) {
       render: (text, record) => {
         return (
           <div style={{ display: "flex", justifyContent: "space-around" }}>
-            <div style={{ marginBottom: "0.05rem" }}>
+            <div style={{ marginBottom: "0.05rem" }} onClick={
+              ()=>{
+                console.log("你电大金卡是",text,record)
+                _portrait(record.companyName)
+              }
+            }>
               {ButtonCmt("white", ThemeColor, "查看详情")}
             </div>
             <div

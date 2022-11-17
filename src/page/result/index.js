@@ -66,6 +66,7 @@ const finArr = [
 
 const colors = ["#00E0FF", "#07CC3E", "#9732E2", "#D8DB3A"];
 
+// 专利柱状图
 const initBar = (_node, _obj = {}) => {
   let option = {
     grid: {
@@ -78,13 +79,29 @@ const initBar = (_node, _obj = {}) => {
     xAxis: {
       type: "category",
       data: Object.keys(_obj),
-      axisLabel: {
-        interval: 0, //坐标轴刻度标签的显示间隔(在类目轴中有效) 0:显示所有  1：隔一个显示一个 :3：隔三个显示一个...
-        // rotate:-20    //标签倾斜的角度，显示不全时可以通过旋转防止标签重叠（-90到90）
-      },
+      // axisLabel: {
+      //   interval: 0, //坐标轴刻度标签的显示间隔(在类目轴中有效) 0:显示所有  1：隔一个显示一个 :3：隔三个显示一个...
+      //   // rotate:-20    //标签倾斜的角度，显示不全时可以通过旋转防止标签重叠（-90到90）
+      // },
+      // splitLine: {
+      //   show: false,
+      // },
+      // axisLine: {
+      //   show: false,
+      // },
+      // axisLabel: {
+      //   show: false,
+      // },
+      // axisTick: {
+      //   show: false,
+      // },
     },
     yAxis: {
       type: "value",
+      splitLine: {
+        show: false,
+      },
+      minInterval: 1,
     },
     series: [
       {
@@ -92,7 +109,7 @@ const initBar = (_node, _obj = {}) => {
         type: "bar",
         showBackground: true,
         backgroundStyle: {
-          color: "rgba(180, 180, 180, 0.2)",
+          color: "white",
         },
         itemStyle: {
           normal: {
@@ -123,8 +140,9 @@ const initBar = (_node, _obj = {}) => {
 };
 
 // 柱状图
-const initColumnar = (dom, cutFin, financeInx) => {
+const initColumnar = (dom, cutFin, financeInx, d1, d2, d3, d4) => {
   var colorList = ["#1890FF", "#FFFF37", "#69B56A", "#FF6000"];
+  console.log("柱状图数据", cutFin);
   // var defaultData = [800, 800, 800, 800]
   let option = {
     backgroundColor: "#fff",
@@ -135,17 +153,7 @@ const initColumnar = (dom, cutFin, financeInx) => {
       top: "5%",
       containLabel: true,
     },
-    tooltip: {
-      // trigger: "axis",
-      axisPointer: {
-        // type: "shadow",
-      },
-      position: function (point, params, dom, rect, size) {
-        return [point[0], point[1]];
-      },
-      confine: false,
-      // formatter: function (params) {},
-    },
+
     xAxis: {
       show: false,
       type: "value",
@@ -171,16 +179,16 @@ const initColumnar = (dom, cutFin, financeInx) => {
           //   fontSize: "12",
           //   align:"left"
           // },
-          formatter: function (value) {
+          formatter: function (value, index) {
             // value = value.length > 7 ? value.substring(0, 7) + "..." : value;
-            return value;
+            return [d1.name, d2.name, d3.name, d4.name][index];
           },
         },
-        data: finArr[financeInx],
+        // data: finArr[financeInx],
       },
       {
         type: "category",
-        inverse: true,
+        // inverse: true,
         axisTick: "none",
         axisLine: "none",
         show: true,
@@ -189,8 +197,8 @@ const initColumnar = (dom, cutFin, financeInx) => {
             color: "rgba(0,0,0,0.8)",
             fontSize: "12",
           },
-          formatter: function (value) {
-            return value ? value : 0;
+          formatter: function (value, index) {
+            return cutFin[index];
           },
         },
         data: cutFin,
@@ -202,7 +210,7 @@ const initColumnar = (dom, cutFin, financeInx) => {
         type: "bar",
         zlevel: 1,
         label: {
-          show: true,
+          show: false,
           formatter: function (obj) {
             // return finArr[financeInx][obj.dataIndex];
             return "";
@@ -416,7 +424,7 @@ const CompanyCard = (props) => {
         分
       </p>
       <section className="left">
-        <img src={defaultImg} alt="" />
+        <img src={data.logoUrl ? data.logoUrl : defaultImg} alt="" />
       </section>
       <section className="middle">
         <div
@@ -707,6 +715,7 @@ const SearchResult = (props) => {
     return scrollPos;
   }
 
+  // 饼图
   const initPie = (_node, _data, _total, _title) => {
     let data = [];
 
@@ -729,36 +738,12 @@ const SearchResult = (props) => {
     }
 
     let option = {
-      tooltip: {
-        trigger: "item",
-        formatter: function (params) {
-          return `${params.name}  ${params.value}%`;
-        },
-        textStyle: {
-          color: "rgba(0,0,0,0.8)",
-        },
-        backgroundColor: "rgba(255,255,255,1)",
-      },
-      legend: {
-        // top: "5%",
-        left: "center",
-        orient: "vertical",
-        formatter: function (params, ii) {
-          let _p = 0;
-          data.map((item, index) => {
-            if (item.name == params) {
-              _p = item.value;
-            }
-          });
-          return `${params}` + " " + " " + `${_p}%`;
-        },
-        bottom: "bottom",
-      },
       series: [
         {
           type: "pie",
-          radius: ["40%", "70%"],
-          avoidLabelOverlap: false,
+          radius: ["35%", "65%"],
+          center:['50%','35%'],
+          avoidLabelOverlap: true,
           label: {
             show: true,
             position: "center",
@@ -780,22 +765,32 @@ const SearchResult = (props) => {
               },
             },
           },
-          // emphasis: {
-          //   label: {
-          //     show: false,
-          //     fontSize: "20",
-          //     fontWeight: "bold",
-          //     formatter: function(item){
-          //       return `{${item.name} : ${item.value}%}`
-          //     },
-          //   },
-          // },
           labelLine: {
             show: false,
           },
           data: data,
         },
       ],
+
+      legend: {
+        orient: "vertical",
+        // bottom: "10%",
+        // left: "bottom",
+        x:"center",
+        y:"bottom",
+        // padding:[500,0,30,0],
+
+        formatter: function (params, ii) {
+          let _p = 0;
+          data.map((item, index) => {
+            if (item.name == params) {
+              _p = item.value;
+            }
+          });
+          return `${params}` + " " + " " + `${_p}%`;
+        },
+        // bottom: "bottom",
+      },
     };
     var myChart = echarts.init(_node);
     option && myChart.setOption(option);
@@ -981,12 +976,11 @@ const SearchResult = (props) => {
       });
     if (_flag) {
       let bar2 = document.getElementById("bar2");
-      initColumnar(bar2, cutFin, financeInx);
+      initColumnar(bar2, cutFin, financeInx, d1, d2, d3, d4);
     }
 
     if (d1.data && d1.data.length > 0 && d2.data && d3.data && d4.data) {
       let line1 = document.getElementById("line1");
-      console.log("打印下dsa", d1, d2, d3, d4);
       initLine(line1, d1, d2, d3, d4, years);
     }
   }, [financeInx, cutFin]);
@@ -1452,8 +1446,9 @@ const SearchResult = (props) => {
                 <div
                   id="pie1"
                   style={{
-                    height: "3rem",
+                    minHeight: "3rem",
                     width: "100%",
+                    // border: "1px solid red",
                   }}
                 ></div>
               ) : (
@@ -1466,7 +1461,7 @@ const SearchResult = (props) => {
                 <div
                   id="pie2"
                   style={{
-                    height: "3rem",
+                    minHeight: "3rem",
                     width: "100%",
                   }}
                 ></div>

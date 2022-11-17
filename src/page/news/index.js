@@ -122,7 +122,7 @@ function News(props) {
         >
           <div className="newsTitle">{obj && obj.title}</div>
           <div style={{ color: "rgba(0,0,0,0.6)" }}>
-            发布时间: {obj && obj.releaseTime}
+            发布时间: {obj && (obj.releaseTime).substring(0,10)}
           </div>
         </section>
       </div>
@@ -143,7 +143,7 @@ function News(props) {
           style={{
             margin: "0 0",
           }}
-        >
+         className="_article">
           <div
             dangerouslySetInnerHTML={{ __html: obj && obj.content }}
             style={{ width: "100%" }}

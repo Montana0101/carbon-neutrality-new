@@ -7,7 +7,7 @@ const assetJsonT = require("../json/asset_t.json"); //资产负债展示文案js
 
 const InputCmt = (props) => {
   let { data, line } = props;
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState(null);
   // var amount;
   useEffect(() => {
     getCacheData();
@@ -36,7 +36,7 @@ const InputCmt = (props) => {
 
   return (
     <>
-      {(amount > 0 || amount<0) && (
+      {(amount > 0 || amount < 0) && (
         <InputNumber
           bordered={false}
           controls={false}
@@ -47,12 +47,23 @@ const InputCmt = (props) => {
         />
       )}
 
-      {(amount == 0 || amount == null) && (
+      {amount == 0 && (
+        <InputNumber
+          bordered={false}
+          controls={false}
+          defaultValue={amount}
+          onChange={(e) => {
+            props.event({ value: e, line: line });
+          }}
+        />
+      )}
+
+      {amount == null && (
         <InputNumber
           bordered={false}
           controls={false}
           onChange={(e) => {
-          props.event({ value: e, line: line });
+            props.event({ value: e, line: line });
           }}
         />
       )}
