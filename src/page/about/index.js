@@ -511,7 +511,7 @@ const AboutLeague = () => {
               width: "100%",
               height: "3.2rem",
               padding: "0.2rem",
-              
+              marginBottom:'0.2rem',
               display: "flex",
               flexDirection: "column",
             }}
@@ -1008,13 +1008,21 @@ const AboutLeague = () => {
                         </span>
                       </p>
                     </p>
-                    <p className="jiagou_item_right_out jiagou_item_right_out_last">
-                      <p className="jiagou_item_col_right">
+                    <p className="jiagou_item_right_out jiagou_item_right_out_last"
+                    style={{
+                      justifyContent:"flex-start"
+                    }}>
+                      <p className="jiagou_item_col_right" style={{
+                        width:"30% !important",
+                        // border:"1px solid red"
+                      }}>
                         <span className="value">
                           盟浪可持续数字科技（深圳）有限责任公司{" "}
                         </span>
                       </p>
-                      <p className="jiagou_item_col_right">
+                      {/* <p className="jiagou_item_col_right" style={{
+                        width:"15% !important"
+                      }}>
                         <span className="value"> </span>
                       </p>
                       <p className="jiagou_item_col_right">
@@ -1022,7 +1030,7 @@ const AboutLeague = () => {
                       </p>
                       <p className="jiagou_item_col_right">
                         <span className="value"> </span>
-                      </p>
+                      </p> */}
                     </p>
                   </div>
                
