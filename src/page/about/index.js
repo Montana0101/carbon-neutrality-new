@@ -507,7 +507,7 @@ const AboutLeague = () => {
           />
           <section
             style={{
-              border: `1px solid ${ThemeColor}`,
+              border: `0.5px solid ${ThemeColor}`,
               width: "100%",
               height: "3rem",
               padding: "0.2rem",
@@ -665,7 +665,14 @@ const AboutLeague = () => {
                 }}
                 className="article"
               >
-                <div style={{ width: "1rem" ,height:"100%",display:"flex",flexDirection:'column',}}>
+                <div
+                  style={{
+                    width: "1rem",
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
                   <p className="jiagou_item_col">
                     <span className="title">秘书长</span>
                     <span className="hide">内容</span>
@@ -734,6 +741,216 @@ const AboutLeague = () => {
                       <span className="value">内容</span>
                     </p>
                   </p>
+                </div>
+              </article>
+            )}
+
+            {tab == 4 && (
+              <article
+                style={{
+                  flex: 1,
+                  // border: "1px solid red",
+                  display: "flex",
+                }}
+                className="article"
+              >
+                <div style={{ width: "1rem" }}>
+                  <p className="jiagou_item_col">
+                    <span className="title">理事单位</span>
+                    <span className="hide">内容</span>
+                  </p>
+                  {/* <p className="jiagou_item_col">
+                    <span className="title">副理事长</span>
+                    <span className="hide">内容</span>
+                  </p> */}
+                </div>
+                <div style={{ flex: 1 }}>
+                  <p className="jiagou_item_right_out jiagou_item_right_out_last">
+                    <p className="jiagou_item_col_right">
+                      <span className="value">中国科学院上海硅酸盐研究所</span>
+                    </p>
+                    <p className="jiagou_item_col_right">
+                      <span className="value">上海长三角技术创新研究院</span>
+                    </p>
+                    <p className="jiagou_item_col_right">
+                      <span className="value">上海市计量协会</span>
+                    </p>
+                    <p className="jiagou_item_col_right">
+                      <span className="value">上海市国资国企改革发展中心</span>
+                    </p>
+                  </p>
+                  <p className="jiagou_item_right_out jiagou_item_right_out_last">
+                    <p className="jiagou_item_col_right">
+                      <span className="value">中科院上海高等研究院 </span>
+                    </p>
+                    <p className="jiagou_item_col_right">
+                      <span className="value">
+                        中国科学院上海技术物理研究所
+                      </span>
+                    </p>
+                    <p className="jiagou_item_col_right">
+                      <span className="value">
+                        上海社会科学院绿色数字化发展研究中心{" "}
+                      </span>
+                    </p>
+                    <p className="jiagou_item_col_right">
+                      <span className="value">上海科学院新能源技术研究所</span>
+                    </p>
+                  </p>
+                  <p className="jiagou_item_right_out jiagou_item_right_out_last">
+                    <p className="jiagou_item_col_right">
+                      <span className="value">上海院士中心 </span>
+                    </p>
+                    <p className="jiagou_item_col_right">
+                      <span className="value">上海航天技术研究院 </span>
+                    </p>
+                    <p className="jiagou_item_col_right">
+                      <span className="value">
+                        上海新能源科技成果转化与产业促进中心{" "}
+                      </span>
+                    </p>
+                    <p className="jiagou_item_col_right">
+                      <span className="value"> 上海市能效中心</span>
+                    </p>
+                  </p>
+
+                  <p className="jiagou_item_right_out jiagou_item_right_out_last">
+                    <p className="jiagou_item_col_right">
+                      <span className="value">上海植物园 </span>
+                    </p>
+                    <p className="jiagou_item_col_right">
+                      <span className="value">上海市城市更新研究会 </span>
+                    </p>
+                    <p className="jiagou_item_col_right">
+                      <span className="value">上海市太阳能学会 </span>
+                    </p>
+                    <p className="jiagou_item_col_right">
+                      <span className="value"></span>
+                    </p>
+                  </p>
+
+                  <p className="jiagou_item_right_out jiagou_item_right_out_last"></p>
+
+                  <p className="jiagou_item_right_out jiagou_item_right_out_last">
+                    <p className="jiagou_item_col_right">
+                      <span className="value">中国华能集团有限公司 </span>
+                    </p>
+                    <p className="jiagou_item_col_right">
+                      <span className="value">
+                        中国铁建股份有限公司华东总部{" "}
+                      </span>
+                    </p>
+                    <p className="jiagou_item_col_right">
+                      <span className="value">长兴企业集团有限公司 </span>
+                    </p>
+                    <p className="jiagou_item_col_right">
+                      <span className="value"> 宝武清洁能源有限公司</span>
+                    </p>
+                  </p>
+                  <p className="jiagou_item_right_out jiagou_item_right_out_last">
+                    <p className="jiagou_item_col_right">
+                      <span className="value">上海电气集团股份有限公司 </span>
+                    </p>
+                    <p className="jiagou_item_col_right">
+                      <span className="value">
+                      申能（集团）有限公司 {" "}
+                      </span>
+                    </p>
+                    <p className="jiagou_item_col_right">
+                      <span className="value">上海隧道工程股份有限公司   </span>
+                    </p>
+                    <p className="jiagou_item_col_right">
+                      <span className="value"> 上海华谊集团技术研究院</span>
+                    </p>
+                  </p>
+                  <p className="jiagou_item_right_out jiagou_item_right_out_last">
+                    <p className="jiagou_item_col_right">
+                      <span className="value">中国商用飞机有限责任公司   </span>
+                    </p>
+                    <p className="jiagou_item_col_right">
+                      <span className="value">
+                      上海电力股份有限公司 {" "}
+                      </span>
+                    </p>
+                    <p className="jiagou_item_col_right">
+                      <span className="value">上海工业投资（集团）有限公司     </span>
+                    </p>
+                    <p className="jiagou_item_col_right">
+                      <span className="value"> 上海市节能减排中心</span>
+                    </p>
+                  </p>
+             
+                  <p className="jiagou_item_right_out jiagou_item_right_out_last">
+                    <p className="jiagou_item_col_right">
+                      <span className="value">上海能源建设集团有限公司   </span>
+                    </p>
+                    <p className="jiagou_item_col_right">
+                      <span className="value">
+                      上海亚通股份有限公司    {" "}
+                      </span>
+                    </p>
+                    <p className="jiagou_item_col_right">
+                      <span className="value">中化创新（北京）科技研究院有限公司      </span>
+                    </p>
+                    <p className="jiagou_item_col_right">
+                      <span className="value"> 深圳创新投资集团有限公司</span>
+                    </p>
+                  </p>
+             
+             
+                  <p className="jiagou_item_right_out jiagou_item_right_out_last">
+                    <p className="jiagou_item_col_right">
+                      <span className="value">长江三峡投资管理有限公司    </span>
+                    </p>
+                    <p className="jiagou_item_col_right">
+                      <span className="value">
+                      阿里云计算有限公司             {" "}
+                      </span>
+                    </p>
+                    <p className="jiagou_item_col_right">
+                      <span className="value">绿技行（上海）科技发展有限公司      </span>
+                    </p>
+                    <p className="jiagou_item_col_right">
+                      <span className="value"> 华为技术有限公司</span>
+                    </p>
+                  </p>
+
+                   
+                  <p className="jiagou_item_right_out jiagou_item_right_out_last">
+                    <p className="jiagou_item_col_right">
+                      <span className="value">上海北斗卫星导航平台有限公司    </span>
+                    </p>
+                    <p className="jiagou_item_col_right">
+                      <span className="value">
+                      上海德衡数据科技有限公司                    {" "}
+                      </span>
+                    </p>
+                    <p className="jiagou_item_col_right">
+                      <span className="value">中国合伙人（上海）股权投资基金管理有限公司          </span>
+                    </p>
+                    <p className="jiagou_item_col_right">
+                      <span className="value"> </span>
+                    </p>
+                  </p>
+
+                  <p className="jiagou_item_right_out jiagou_item_right_out_last"></p>
+                  <p className="jiagou_item_right_out" style={{
+                    display:"flex",
+                    justifyContent:"space-between",
+                    fontSize:"0.12rem",
+                    color:'rgba(0,0,0,0.6)'
+                  }}>
+                  <span className="value"> 上海交通大学</span>
+                  <span className="value"> 同济大学</span>
+                  <span className="value"> 华东理工大学</span>
+                  <span className="value"> 华东师范大学</span>
+                  <span className="value"> 上海大学</span>
+                  <span className="value"> 上海科技大学</span>
+                  <span className="value"> 上海电力大学</span>
+                  <span className="value"> 上海理工大学</span>
+                  </p>
+
+                  <p className="jiagou_item_right_out jiagou_item_right_out_last"></p>
                 </div>
               </article>
             )}
