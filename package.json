@@ -90,7 +90,7 @@
   },
   "scripts": {
     "dev": "node scripts/start.js",
-    "build": "rm -rf build.zip && node scripts/build.js && zip -r build.zip build",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider node scripts/build.js",
     "transfer": "./transfer.sh",
     "test": "node scripts/test.js",
     "git": "./git.sh"
@@ -145,6 +145,7 @@
       "^react-native$": "react-native-web",
       "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
     },
+    
     "moduleFileExtensions": [
       "web.js",
       "js",
