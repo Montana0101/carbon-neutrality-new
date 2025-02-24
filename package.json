@@ -2,6 +2,13 @@
   "name": "beidou",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "dev": "node scripts/start.js",
+    "build": "export NODE_OPTIONS=--openssl-legacy-provider && node scripts/build.js",
+    "transfer": "./transfer.sh",
+    "test": "node scripts/test.js",
+    "git": "./git.sh"
+  },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "@ant-design/plots": "^1.0.9",
@@ -88,13 +95,6 @@
     "webpack-dev-server": "3.11.1",
     "webpack-manifest-plugin": "2.2.0",
     "workbox-webpack-plugin": "5.1.4"
-  },
-  "scripts": {
-    "dev": "node scripts/start.js",
-    "build": "export NODE_OPTIONS=--openssl-legacy-provider & node scripts/build.js",
-    "transfer": "./transfer.sh",
-    "test": "node scripts/test.js",
-    "git": "./git.sh"
   },
   "eslintConfig": {
     "extends": [
