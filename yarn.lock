@@ -4246,6 +4246,11 @@
     "ansi-styles" "^4.1.0"
     "supports-color" "^7.1.0"
 
+"chalk@^5.4.1":
+  "integrity" "sha512-zgVZuo2WcZgfUEmsn6eO3kINexW8RAE4maiQ8QNs8CtpPCSyMiYsULR3HQYkm3w8FIA3SberyMJMSldGsW+U3w=="
+  "resolved" "https://registry.npmjs.org/chalk/-/chalk-5.4.1.tgz"
+  "version" "5.4.1"
+
 "chalk@2.4.2":
   "integrity" "sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ=="
   "resolved" "https://registry.npmjs.org/chalk/-/chalk-2.4.2.tgz"
